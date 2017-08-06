@@ -65,3 +65,7 @@ C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\bin\Microsoft.AI
 C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\obj\Debug\DocuPath.csprojResolveAssemblyReference.cache
 C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\obj\Debug\DocuPath.dll
 C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\obj\Debug\DocuPath.pdb
+C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\bin\EntityFramework.dll
+C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\bin\EntityFramework.SqlServer.dll
+C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\bin\EntityFramework.xml
+C:\Users\Luke\Documents\GitHub\final.DocuPath\DocuPath\DocuPath\bin\EntityFramework.SqlServer.xml
