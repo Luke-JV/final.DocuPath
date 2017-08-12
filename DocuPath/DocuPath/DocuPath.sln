@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuPath", "DocuPath\DocuPath.csproj", "{B8C98100-6411-4C51-9641-050D0D42785F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocuPath.Tests", "DocuPath.Tests\DocuPath.Tests.csproj", "{667ACFE7-EB63-4B36-BA5E-3CE8E0052DA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8C98100-6411-4C51-9641-050D0D42785F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C98100-6411-4C51-9641-050D0D42785F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C98100-6411-4C51-9641-050D0D42785F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C98100-6411-4C51-9641-050D0D42785F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667ACFE7-EB63-4B36-BA5E-3CE8E0052DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667ACFE7-EB63-4B36-BA5E-3CE8E0052DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667ACFE7-EB63-4B36-BA5E-3CE8E0052DA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667ACFE7-EB63-4B36-BA5E-3CE8E0052DA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
