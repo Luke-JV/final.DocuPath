@@ -241,6 +241,7 @@
     <Compile Include="DBLayer\CONTENT_TAG.cs">
       <DependentUpon>DocuPath.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBLayer\CustomIdentity.cs" />
     <Compile Include="DBLayer\DocuPath.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

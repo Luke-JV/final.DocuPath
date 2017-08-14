@@ -9,10 +9,11 @@
 
 namespace DocuPath.DBLayer
 {
+    using Microsoft.AspNet.Identity;
     using System;
     using System.Collections.Generic;
     
-    public partial class USER
+    public partial class USER : IUser<int>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USER()
@@ -28,7 +29,9 @@ namespace DocuPath.DBLayer
             this.SESSION_USER = new HashSet<SESSION_USER>();
             this.TOKEN_LOG = new HashSet<TOKEN_LOG>();
         }
-    
+
+        public int Id { get; set; }
+        public string UserName { get; set; }
         public int UserID { get; set; }
         public int TitleID { get; set; }
         public Nullable<int> UserLoginID { get; set; }
