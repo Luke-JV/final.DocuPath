@@ -7,9 +7,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace DocuPath.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class USER : IdentityUser<int, CustomUserLogin, CustomUserRole,CustomUserClaim>
+    public class ApplicationUser : IdentityUser
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<USER,int> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
@@ -18,42 +18,16 @@ namespace DocuPath.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<USER, CustomRole,int, CustomUserLogin, CustomUserRole, CustomUserClaim>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DocuPathEntities")
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
-        }
-    }
-    public class CustomUserRole : IdentityUserRole<int> { }
-    public class CustomUserClaim : IdentityUserClaim<int> { }
-    public class CustomUserLogin : IdentityUserLogin<int> { }
-
-    public class CustomRole : IdentityRole<int, CustomUserRole>
-    {
-        public CustomRole() { }
-        public CustomRole(string name) { Name = name; }
-    }
-
-    public class CustomUserStore : UserStore<USER, CustomRole, int,
-        CustomUserLogin, CustomUserRole, CustomUserClaim>
-    {
-        public CustomUserStore(ApplicationDbContext context)
-            : base(context)
-        {
-        }
-    }
-
-    public class CustomRoleStore : RoleStore<CustomRole, int, CustomUserRole>
-    {
-        public CustomRoleStore(ApplicationDbContext context)
-            : base(context)
-        {
         }
     }
 }
