@@ -26,8 +26,6 @@ namespace DocuPath.DataLayer
         }
     
         public virtual DbSet<ABDOMEN_OBSERVATION> ABDOMEN_OBSERVATION { get; set; }
-        public virtual DbSet<ACCESS_AREA> ACCESS_AREA { get; set; }
-        public virtual DbSet<ACCESS_LEVEL> ACCESS_LEVEL { get; set; }
         public virtual DbSet<ACTIVE_LOGIN> ACTIVE_LOGIN { get; set; }
         public virtual DbSet<ADDITIONAL_EVIDENCE> ADDITIONAL_EVIDENCE { get; set; }
         public virtual DbSet<ALLOCATION_STATUS> ALLOCATION_STATUS { get; set; }
@@ -61,7 +59,6 @@ namespace DocuPath.DataLayer
         public virtual DbSet<INDIVIDUAL_RACE> INDIVIDUAL_RACE { get; set; }
         public virtual DbSet<LEGACY_CASE> LEGACY_CASE { get; set; }
         public virtual DbSet<LEGACY_DOCUMENT> LEGACY_DOCUMENT { get; set; }
-        public virtual DbSet<LEVEL_AREA> LEVEL_AREA { get; set; }
         public virtual DbSet<MDR_DAY_COMMENT> MDR_DAY_COMMENT { get; set; }
         public virtual DbSet<MEDIA> MEDIA { get; set; }
         public virtual DbSet<MEDIA_PURPOSE> MEDIA_PURPOSE { get; set; }
@@ -100,5 +97,8 @@ namespace DocuPath.DataLayer
         public virtual DbSet<USER> USER { get; set; }
         public virtual DbSet<USER_CLAIM> USER_CLAIM { get; set; }
         public virtual DbSet<USER_LOGIN> USER_LOGIN { get; set; }
+        public virtual DbSet<ACCESS_AREA> ACCESS_AREA { get; set; }
+        public virtual DbSet<ACCESS_LEVEL> ACCESS_LEVEL { get; set; }
+        public virtual DbSet<LEVEL_AREA> LEVEL_AREA { get; set; }
     }
 }

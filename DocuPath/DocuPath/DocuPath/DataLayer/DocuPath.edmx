@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DocuPathModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DocuPathModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ABDOMEN_OBSERVATION">
           <Key>
             <PropertyRef Name="ObsAbdomenID" />
@@ -88,8 +88,8 @@
           <Property Name="AuditLogTxID" Type="int" Nullable="false" />
           <Property Name="AuditLogTxTypeID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="TxDateStamp" Type="datetime" Nullable="false" />
-          <Property Name="TxTimeStamp" Type="datetime" Nullable="false" />
+          <Property Name="TxDateStamp" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TxTimeStamp" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="TxCriticalDataString" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="TxOldRecord" Type="varchar" MaxLength="1000" />
           <Property Name="TxNewRecord" Type="varchar" MaxLength="1000" />
@@ -406,11 +406,10 @@
           <Key>
             <PropertyRef Name="AccessAreaID" />
             <PropertyRef Name="AccessLevelID" />
-            <PropertyRef Name="UserAccessLevelID" />
           </Key>
           <Property Name="AccessAreaID" Type="int" Nullable="false" />
           <Property Name="AccessLevelID" Type="int" Nullable="false" />
-          <Property Name="UserAccessLevelID" Type="int" Nullable="false" />
+          <Property Name="LevelAreaDescription" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MDR_DAY_COMMENT">
           <Key>
@@ -816,30 +815,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ACCESS_AREA_LEVEL_AREA_FK1">
-          <End Role="ACCESS_AREA" Type="Self.ACCESS_AREA" Multiplicity="1" />
-          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_AREA">
-              <PropertyRef Name="AccessAreaID" />
-            </Principal>
-            <Dependent Role="LEVEL_AREA">
-              <PropertyRef Name="AccessAreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ACCESS_LEVEL_LEVEL_AREA_FK1">
-          <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
-          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_LEVEL">
-              <PropertyRef Name="AccessLevelID" />
-            </Principal>
-            <Dependent Role="LEVEL_AREA">
-              <PropertyRef Name="UserAccessLevelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="ACCESS_LEVEL_TOKEN_LOG_FK1">
           <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
           <End Role="TOKEN_LOG" Type="Self.TOKEN_LOG" Multiplicity="*" />
@@ -1151,6 +1126,30 @@
             </Principal>
             <Dependent Role="CONTENT_TAG">
               <PropertyRef Name="TagSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LEVEL_AREA_ACCESS_AREA">
+          <End Role="ACCESS_AREA" Type="Self.ACCESS_AREA" Multiplicity="1" />
+          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_AREA">
+              <PropertyRef Name="AccessAreaID" />
+            </Principal>
+            <Dependent Role="LEVEL_AREA">
+              <PropertyRef Name="AccessAreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LEVEL_AREA_ACCESS_LEVEL">
+          <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
+          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_LEVEL">
+              <PropertyRef Name="AccessLevelID" />
+            </Principal>
+            <Dependent Role="LEVEL_AREA">
+              <PropertyRef Name="AccessLevelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1898,14 +1897,6 @@
             <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
             <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
-          <AssociationSet Name="ACCESS_AREA_LEVEL_AREA_FK1" Association="Self.ACCESS_AREA_LEVEL_AREA_FK1">
-            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
-            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="ACCESS_LEVEL_LEVEL_AREA_FK1" Association="Self.ACCESS_LEVEL_LEVEL_AREA_FK1">
-            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
-            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
-          </AssociationSet>
           <AssociationSet Name="ACCESS_LEVEL_TOKEN_LOG_FK1" Association="Self.ACCESS_LEVEL_TOKEN_LOG_FK1">
             <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
             <End Role="TOKEN_LOG" EntitySet="TOKEN_LOG" />
@@ -2005,6 +1996,14 @@
           <AssociationSet Name="FK_CONTENT_TAG_TAG_SUBCATEGORY" Association="Self.FK_CONTENT_TAG_TAG_SUBCATEGORY">
             <End Role="TAG_SUBCATEGORY" EntitySet="TAG_SUBCATEGORY" />
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LEVEL_AREA_ACCESS_AREA" Association="Self.FK_LEVEL_AREA_ACCESS_AREA">
+            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
+            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LEVEL_AREA_ACCESS_LEVEL" Association="Self.FK_LEVEL_AREA_ACCESS_LEVEL">
+            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
+            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
           </AssociationSet>
           <AssociationSet Name="FK_USER_CLAIM_USER" Association="Self.FK_USER_CLAIM_USER">
             <End Role="USER" EntitySet="USER" />
@@ -2227,8 +2226,7 @@
             <End Role="TOKEN_LOG" EntitySet="TOKEN_LOG" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DocuPathModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2255,27 +2253,6 @@
           <Property Name="PelvicWalls" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GenitalOrgans" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="FORENSIC_CASE" Relationship="Self.FORENSIC_CASE_ABDOMEN_OBSERVATION_FK1" FromRole="ABDOMEN_OBSERVATION" ToRole="FORENSIC_CASE" />
-        </EntityType>
-        <EntityType Name="ACCESS_AREA">
-          <Key>
-            <PropertyRef Name="AccessAreaID" />
-          </Key>
-          <Property Name="AccessAreaID" Type="Int32" Nullable="false" />
-          <Property Name="FunctionGroupID" Type="Int32" Nullable="false" />
-          <Property Name="AccessAreaDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="LEVEL_AREA" Relationship="Self.ACCESS_AREA_LEVEL_AREA_FK1" FromRole="ACCESS_AREA" ToRole="LEVEL_AREA" />
-          <NavigationProperty Name="FUNCTION_GROUP" Relationship="Self.groups" FromRole="ACCESS_AREA" ToRole="FUNCTION_GROUP" />
-        </EntityType>
-        <EntityType Name="ACCESS_LEVEL">
-          <Key>
-            <PropertyRef Name="AccessLevelID" />
-          </Key>
-          <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
-          <Property Name="LevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsDeactivated" Type="Decimal" Precision="1" Scale="0" Nullable="false" />
-          <NavigationProperty Name="LEVEL_AREA" Relationship="Self.ACCESS_LEVEL_LEVEL_AREA_FK1" FromRole="ACCESS_LEVEL" ToRole="LEVEL_AREA" />
-          <NavigationProperty Name="TOKEN_LOG" Relationship="Self.ACCESS_LEVEL_TOKEN_LOG_FK1" FromRole="ACCESS_LEVEL" ToRole="TOKEN_LOG" />
-          <NavigationProperty Name="USER_LOGIN" Relationship="Self.ACCESS_LEVEL_USER_LOGIN_FK1" FromRole="ACCESS_LEVEL" ToRole="USER_LOGIN" />
         </EntityType>
         <EntityType Name="ACTIVE_LOGIN">
           <Key>
@@ -2325,8 +2302,8 @@
           <Property Name="AuditLogTxID" Type="Int32" Nullable="false" />
           <Property Name="AuditLogTxTypeID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="TxDateStamp" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TxTimeStamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TxDateStamp" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TxTimeStamp" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="TxCriticalDataString" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TxOldRecord" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="TxNewRecord" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
@@ -2622,7 +2599,7 @@
           </Key>
           <Property Name="FunctionGroupID" Type="Int32" Nullable="false" />
           <Property Name="FunctionGroupDescription" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ACCESS_AREA" Relationship="Self.groups" FromRole="FUNCTION_GROUP" ToRole="ACCESS_AREA" />
+          <NavigationProperty Name="ACCESS_AREA" Relationship="DocuPathModel.groups" FromRole="FUNCTION_GROUP" ToRole="ACCESS_AREA" />
         </EntityType>
         <EntityType Name="GENERAL_OBSERVATION">
           <Key>
@@ -2705,18 +2682,6 @@
           <Property Name="LegacyDocumentTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LegacyDocumentLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="LEGACY_CASE" Relationship="Self.LEGACY_CASE_LEGACY_DOCUMENT_FK1" FromRole="LEGACY_DOCUMENT" ToRole="LEGACY_CASE" />
-        </EntityType>
-        <EntityType Name="LEVEL_AREA">
-          <Key>
-            <PropertyRef Name="AccessAreaID" />
-            <PropertyRef Name="AccessLevelID" />
-            <PropertyRef Name="UserAccessLevelID" />
-          </Key>
-          <Property Name="AccessAreaID" Type="Int32" Nullable="false" />
-          <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
-          <Property Name="UserAccessLevelID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ACCESS_AREA" Relationship="Self.ACCESS_AREA_LEVEL_AREA_FK1" FromRole="LEVEL_AREA" ToRole="ACCESS_AREA" />
-          <NavigationProperty Name="ACCESS_LEVEL" Relationship="Self.ACCESS_LEVEL_LEVEL_AREA_FK1" FromRole="LEVEL_AREA" ToRole="ACCESS_LEVEL" />
         </EntityType>
         <EntityType Name="MDR_DAY_COMMENT">
           <Key>
@@ -3109,8 +3074,8 @@
           <Property Name="IssueTimestamp" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RedemptionTimestamp" Type="DateTime" Precision="3" />
           <Property Name="DestinationEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ACCESS_LEVEL" Relationship="Self.ACCESS_LEVEL_TOKEN_LOG_FK1" FromRole="TOKEN_LOG" ToRole="ACCESS_LEVEL" />
           <NavigationProperty Name="USER" Relationship="Self.USER_TOKEN_LOG_FK1" FromRole="TOKEN_LOG" ToRole="USER" />
+          <NavigationProperty Name="ACCESS_LEVEL" Relationship="DocuPathModel.ACCESS_LEVEL_TOKEN_LOG_FK1" FromRole="TOKEN_LOG" ToRole="ACCESS_LEVEL" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
@@ -3174,8 +3139,8 @@
           <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="ACCESS_LEVEL" Relationship="Self.ACCESS_LEVEL_USER_LOGIN_FK1" FromRole="USER_LOGIN" ToRole="ACCESS_LEVEL" />
           <NavigationProperty Name="USER" Relationship="Self.USER_LOGIN_USER_FK1" FromRole="USER_LOGIN" ToRole="USER" />
+          <NavigationProperty Name="ACCESS_LEVEL" Relationship="DocuPathModel.ACCESS_LEVEL_USER_LOGIN_FK1" FromRole="USER_LOGIN" ToRole="ACCESS_LEVEL" />
         </EntityType>
         <Association Name="FORENSIC_CASE_ABDOMEN_OBSERVATION_FK1">
           <End Role="FORENSIC_CASE" Type="Self.FORENSIC_CASE" Multiplicity="1" />
@@ -3186,66 +3151,6 @@
             </Principal>
             <Dependent Role="ABDOMEN_OBSERVATION">
               <PropertyRef Name="ForensicCaseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ACCESS_AREA_LEVEL_AREA_FK1">
-          <End Role="ACCESS_AREA" Type="Self.ACCESS_AREA" Multiplicity="1" />
-          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_AREA">
-              <PropertyRef Name="AccessAreaID" />
-            </Principal>
-            <Dependent Role="LEVEL_AREA">
-              <PropertyRef Name="AccessAreaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="groups">
-          <End Role="FUNCTION_GROUP" Type="Self.FUNCTION_GROUP" Multiplicity="1" />
-          <End Role="ACCESS_AREA" Type="Self.ACCESS_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FUNCTION_GROUP">
-              <PropertyRef Name="FunctionGroupID" />
-            </Principal>
-            <Dependent Role="ACCESS_AREA">
-              <PropertyRef Name="FunctionGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ACCESS_LEVEL_LEVEL_AREA_FK1">
-          <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
-          <End Role="LEVEL_AREA" Type="Self.LEVEL_AREA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_LEVEL">
-              <PropertyRef Name="AccessLevelID" />
-            </Principal>
-            <Dependent Role="LEVEL_AREA">
-              <PropertyRef Name="UserAccessLevelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ACCESS_LEVEL_TOKEN_LOG_FK1">
-          <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
-          <End Role="TOKEN_LOG" Type="Self.TOKEN_LOG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_LEVEL">
-              <PropertyRef Name="AccessLevelID" />
-            </Principal>
-            <Dependent Role="TOKEN_LOG">
-              <PropertyRef Name="AccessLevelID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ACCESS_LEVEL_USER_LOGIN_FK1">
-          <End Role="ACCESS_LEVEL" Type="Self.ACCESS_LEVEL" Multiplicity="1" />
-          <End Role="USER_LOGIN" Type="Self.USER_LOGIN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ACCESS_LEVEL">
-              <PropertyRef Name="AccessLevelID" />
-            </Principal>
-            <Dependent Role="USER_LOGIN">
-              <PropertyRef Name="AccessLevelID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4151,8 +4056,6 @@
         </Association>
         <EntityContainer Name="DocuPathEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ABDOMEN_OBSERVATION" EntityType="Self.ABDOMEN_OBSERVATION" />
-          <EntitySet Name="ACCESS_AREA" EntityType="Self.ACCESS_AREA" />
-          <EntitySet Name="ACCESS_LEVEL" EntityType="Self.ACCESS_LEVEL" />
           <EntitySet Name="ACTIVE_LOGIN" EntityType="Self.ACTIVE_LOGIN" />
           <EntitySet Name="ADDITIONAL_EVIDENCE" EntityType="Self.ADDITIONAL_EVIDENCE" />
           <EntitySet Name="ALLOCATION_STATUS" EntityType="Self.ALLOCATION_STATUS" />
@@ -4186,7 +4089,6 @@
           <EntitySet Name="INDIVIDUAL_RACE" EntityType="Self.INDIVIDUAL_RACE" />
           <EntitySet Name="LEGACY_CASE" EntityType="Self.LEGACY_CASE" />
           <EntitySet Name="LEGACY_DOCUMENT" EntityType="Self.LEGACY_DOCUMENT" />
-          <EntitySet Name="LEVEL_AREA" EntityType="Self.LEVEL_AREA" />
           <EntitySet Name="MDR_DAY_COMMENT" EntityType="Self.MDR_DAY_COMMENT" />
           <EntitySet Name="MEDIA" EntityType="Self.MEDIA" />
           <EntitySet Name="MEDIA_PURPOSE" EntityType="Self.MEDIA_PURPOSE" />
@@ -4228,26 +4130,6 @@
           <AssociationSet Name="FORENSIC_CASE_ABDOMEN_OBSERVATION_FK1" Association="Self.FORENSIC_CASE_ABDOMEN_OBSERVATION_FK1">
             <End Role="FORENSIC_CASE" EntitySet="FORENSIC_CASE" />
             <End Role="ABDOMEN_OBSERVATION" EntitySet="ABDOMEN_OBSERVATION" />
-          </AssociationSet>
-          <AssociationSet Name="ACCESS_AREA_LEVEL_AREA_FK1" Association="Self.ACCESS_AREA_LEVEL_AREA_FK1">
-            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
-            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="groups" Association="Self.groups">
-            <End Role="FUNCTION_GROUP" EntitySet="FUNCTION_GROUP" />
-            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="ACCESS_LEVEL_LEVEL_AREA_FK1" Association="Self.ACCESS_LEVEL_LEVEL_AREA_FK1">
-            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
-            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
-          </AssociationSet>
-          <AssociationSet Name="ACCESS_LEVEL_TOKEN_LOG_FK1" Association="Self.ACCESS_LEVEL_TOKEN_LOG_FK1">
-            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
-            <End Role="TOKEN_LOG" EntitySet="TOKEN_LOG" />
-          </AssociationSet>
-          <AssociationSet Name="ACCESS_LEVEL_USER_LOGIN_FK1" Association="Self.ACCESS_LEVEL_USER_LOGIN_FK1">
-            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
-            <End Role="USER_LOGIN" EntitySet="USER_LOGIN" />
           </AssociationSet>
           <AssociationSet Name="USER_ACTIVE_LOGIN_FK1" Association="Self.USER_ACTIVE_LOGIN_FK1">
             <End Role="USER" EntitySet="USER" />
@@ -4549,7 +4431,122 @@
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
             <End Role="MEDIA" EntitySet="MEDIA" />
           </AssociationSet>
+          <EntitySet Name="ACCESS_AREA" EntityType="DocuPathModel.ACCESS_AREA" />
+          <EntitySet Name="ACCESS_LEVEL" EntityType="DocuPathModel.ACCESS_LEVEL" />
+          <EntitySet Name="LEVEL_AREA" EntityType="DocuPathModel.LEVEL_AREA" />
+          <AssociationSet Name="FK_LEVEL_AREA_ACCESS_AREA" Association="DocuPathModel.FK_LEVEL_AREA_ACCESS_AREA">
+            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
+            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="groups" Association="DocuPathModel.groups">
+            <End Role="FUNCTION_GROUP" EntitySet="FUNCTION_GROUP" />
+            <End Role="ACCESS_AREA" EntitySet="ACCESS_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="ACCESS_LEVEL_TOKEN_LOG_FK1" Association="DocuPathModel.ACCESS_LEVEL_TOKEN_LOG_FK1">
+            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
+            <End Role="TOKEN_LOG" EntitySet="TOKEN_LOG" />
+          </AssociationSet>
+          <AssociationSet Name="ACCESS_LEVEL_USER_LOGIN_FK1" Association="DocuPathModel.ACCESS_LEVEL_USER_LOGIN_FK1">
+            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
+            <End Role="USER_LOGIN" EntitySet="USER_LOGIN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LEVEL_AREA_ACCESS_LEVEL" Association="DocuPathModel.FK_LEVEL_AREA_ACCESS_LEVEL">
+            <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
+            <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ACCESS_AREA">
+          <Key>
+            <PropertyRef Name="AccessAreaID" />
+          </Key>
+          <Property Name="AccessAreaID" Type="Int32" Nullable="false" />
+          <Property Name="FunctionGroupID" Type="Int32" Nullable="false" />
+          <Property Name="AccessAreaDescription" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LEVEL_AREA" Relationship="DocuPathModel.FK_LEVEL_AREA_ACCESS_AREA" FromRole="ACCESS_AREA" ToRole="LEVEL_AREA" />
+          <NavigationProperty Name="FUNCTION_GROUP" Relationship="DocuPathModel.groups" FromRole="ACCESS_AREA" ToRole="FUNCTION_GROUP" />
+        </EntityType>
+        <EntityType Name="ACCESS_LEVEL">
+          <Key>
+            <PropertyRef Name="AccessLevelID" />
+          </Key>
+          <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
+          <Property Name="LevelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeactivated" Type="Decimal" Nullable="false" Precision="1" Scale="0" />
+          <NavigationProperty Name="TOKEN_LOG" Relationship="DocuPathModel.ACCESS_LEVEL_TOKEN_LOG_FK1" FromRole="ACCESS_LEVEL" ToRole="TOKEN_LOG" />
+          <NavigationProperty Name="USER_LOGIN" Relationship="DocuPathModel.ACCESS_LEVEL_USER_LOGIN_FK1" FromRole="ACCESS_LEVEL" ToRole="USER_LOGIN" />
+          <NavigationProperty Name="LEVEL_AREA" Relationship="DocuPathModel.FK_LEVEL_AREA_ACCESS_LEVEL" FromRole="ACCESS_LEVEL" ToRole="LEVEL_AREA" />
+        </EntityType>
+        <EntityType Name="LEVEL_AREA">
+          <Key>
+            <PropertyRef Name="AccessAreaID" />
+            <PropertyRef Name="AccessLevelID" />
+          </Key>
+          <Property Name="AccessAreaID" Type="Int32" Nullable="false" />
+          <Property Name="AccessLevelID" Type="Int32" Nullable="false" />
+          <Property Name="LevelAreaDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ACCESS_AREA" Relationship="DocuPathModel.FK_LEVEL_AREA_ACCESS_AREA" FromRole="LEVEL_AREA" ToRole="ACCESS_AREA" />
+          <NavigationProperty Name="ACCESS_LEVEL" Relationship="DocuPathModel.FK_LEVEL_AREA_ACCESS_LEVEL" FromRole="LEVEL_AREA" ToRole="ACCESS_LEVEL" />
+        </EntityType>
+        <Association Name="FK_LEVEL_AREA_ACCESS_AREA">
+          <End Type="DocuPathModel.ACCESS_AREA" Role="ACCESS_AREA" Multiplicity="1" />
+          <End Type="DocuPathModel.LEVEL_AREA" Role="LEVEL_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_AREA">
+              <PropertyRef Name="AccessAreaID" />
+            </Principal>
+            <Dependent Role="LEVEL_AREA">
+              <PropertyRef Name="AccessAreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="groups">
+          <End Type="DocuPathModel.FUNCTION_GROUP" Role="FUNCTION_GROUP" Multiplicity="1" />
+          <End Type="DocuPathModel.ACCESS_AREA" Role="ACCESS_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FUNCTION_GROUP">
+              <PropertyRef Name="FunctionGroupID" />
+            </Principal>
+            <Dependent Role="ACCESS_AREA">
+              <PropertyRef Name="FunctionGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ACCESS_LEVEL_TOKEN_LOG_FK1">
+          <End Type="DocuPathModel.ACCESS_LEVEL" Role="ACCESS_LEVEL" Multiplicity="1" />
+          <End Type="DocuPathModel.TOKEN_LOG" Role="TOKEN_LOG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_LEVEL">
+              <PropertyRef Name="AccessLevelID" />
+            </Principal>
+            <Dependent Role="TOKEN_LOG">
+              <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ACCESS_LEVEL_USER_LOGIN_FK1">
+          <End Type="DocuPathModel.ACCESS_LEVEL" Role="ACCESS_LEVEL" Multiplicity="1" />
+          <End Type="DocuPathModel.USER_LOGIN" Role="USER_LOGIN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_LEVEL">
+              <PropertyRef Name="AccessLevelID" />
+            </Principal>
+            <Dependent Role="USER_LOGIN">
+              <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LEVEL_AREA_ACCESS_LEVEL">
+          <End Type="DocuPathModel.ACCESS_LEVEL" Role="ACCESS_LEVEL" Multiplicity="1" />
+          <End Type="DocuPathModel.LEVEL_AREA" Role="LEVEL_AREA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ACCESS_LEVEL">
+              <PropertyRef Name="AccessLevelID" />
+            </Principal>
+            <Dependent Role="LEVEL_AREA">
+              <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4576,24 +4573,6 @@
                 <ScalarProperty Name="UrinaryBladderUrethra" ColumnName="UrinaryBladderUrethra" />
                 <ScalarProperty Name="PelvicWalls" ColumnName="PelvicWalls" />
                 <ScalarProperty Name="GenitalOrgans" ColumnName="GenitalOrgans" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ACCESS_AREA">
-            <EntityTypeMapping TypeName="DocuPathModel.ACCESS_AREA">
-              <MappingFragment StoreEntitySet="ACCESS_AREA">
-                <ScalarProperty Name="AccessAreaID" ColumnName="AccessAreaID" />
-                <ScalarProperty Name="FunctionGroupID" ColumnName="FunctionGroupID" />
-                <ScalarProperty Name="AccessAreaDescription" ColumnName="AccessAreaDescription" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ACCESS_LEVEL">
-            <EntityTypeMapping TypeName="DocuPathModel.ACCESS_LEVEL">
-              <MappingFragment StoreEntitySet="ACCESS_LEVEL">
-                <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
-                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
-                <ScalarProperty Name="IsDeactivated" ColumnName="IsDeactivated" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4964,15 +4943,6 @@
                 <ScalarProperty Name="LegacyCaseID" ColumnName="LegacyCaseID" />
                 <ScalarProperty Name="LegacyDocumentTitle" ColumnName="LegacyDocumentTitle" />
                 <ScalarProperty Name="LegacyDocumentLocation" ColumnName="LegacyDocumentLocation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LEVEL_AREA">
-            <EntityTypeMapping TypeName="DocuPathModel.LEVEL_AREA">
-              <MappingFragment StoreEntitySet="LEVEL_AREA">
-                <ScalarProperty Name="AccessAreaID" ColumnName="AccessAreaID" />
-                <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
-                <ScalarProperty Name="UserAccessLevelID" ColumnName="UserAccessLevelID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5393,7 +5363,34 @@
               <ScalarProperty Name="MediaID" ColumnName="MediaID" />
             </EndProperty>
           </AssociationSetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="ACCESS_AREA">
+            <EntityTypeMapping TypeName="DocuPathModel.ACCESS_AREA">
+              <MappingFragment StoreEntitySet="ACCESS_AREA">
+                <ScalarProperty Name="AccessAreaDescription" ColumnName="AccessAreaDescription" />
+                <ScalarProperty Name="FunctionGroupID" ColumnName="FunctionGroupID" />
+                <ScalarProperty Name="AccessAreaID" ColumnName="AccessAreaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ACCESS_LEVEL">
+            <EntityTypeMapping TypeName="DocuPathModel.ACCESS_LEVEL">
+              <MappingFragment StoreEntitySet="ACCESS_LEVEL">
+                <ScalarProperty Name="IsDeactivated" ColumnName="IsDeactivated" />
+                <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+                <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LEVEL_AREA">
+            <EntityTypeMapping TypeName="DocuPathModel.LEVEL_AREA">
+              <MappingFragment StoreEntitySet="LEVEL_AREA">
+                <ScalarProperty Name="LevelAreaDescription" ColumnName="LevelAreaDescription" />
+                <ScalarProperty Name="AccessLevelID" ColumnName="AccessLevelID" />
+                <ScalarProperty Name="AccessAreaID" ColumnName="AccessAreaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

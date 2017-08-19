@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DocuPath.Models.DPViewModels
 {
-    public class AccesslevelViewModel
+    public class AccessLevelViewModel
     {
     }
 }

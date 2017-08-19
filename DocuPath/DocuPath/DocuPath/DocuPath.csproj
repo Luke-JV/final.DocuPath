@@ -451,8 +451,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AuditModel.cs" />
+    <Compile Include="Models\AuthorizeByAccessArea.cs" />
     <Compile Include="Models\DPIdentity.cs" />
-    <Compile Include="Models\DPViewModels\AccesslevelViewModel.cs" />
+    <Compile Include="Models\DPViewModels\AccessLevelViewModel.cs" />
     <Compile Include="Models\DPViewModels\ContentTagViewModel.cs" />
     <Compile Include="Models\DPViewModels\ExternalReviewCaseViewModel.cs" />
     <Compile Include="Models\DPViewModels\ForensicCaseViewModel.cs" />
@@ -489,13 +491,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="DataLayer\DocuPath.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DocuPath.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DataLayer\DocuPath.edmx.diagram">
-      <DependentUpon>DocuPath.edmx</DependentUpon>
-    </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -504,6 +499,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="DataLayer\DocuPath.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DocuPath.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataLayer\DocuPath.edmx.diagram">
+      <DependentUpon>DocuPath.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

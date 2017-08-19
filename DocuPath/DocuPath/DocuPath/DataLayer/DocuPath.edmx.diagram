@@ -4,88 +4,80 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ed4fceca6f754ce1af0c71d7f2defed1" Name="Diagram1">
-        <EntityTypeShape EntityType="DocuPathModel.ABDOMEN_OBSERVATION" Width="1.5" PointX="9.75" PointY="49" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.ACCESS_AREA" Width="1.5" PointX="0.75" PointY="48.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.ACCESS_LEVEL" Width="1.5" PointX="0.75" PointY="51.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.ACTIVE_LOGIN" Width="1.5" PointX="7.5" PointY="55.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.ADDITIONAL_EVIDENCE" Width="1.5" PointX="9.75" PointY="66.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.ALLOCATION_STATUS" Width="1.5" PointX="11.25" PointY="45.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.APPARENT_MANNER_DEATH" Width="1.5" PointX="13.5" PointY="52.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.AUDIT_LOG" Width="1.5" PointX="7.5" PointY="58.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.AUDIT_TX_TYPE" Width="1.5" PointX="5.25" PointY="65.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.AUTOPSY_AREA" Width="1.5" PointX="5.25" PointY="68" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.AUTOPSY_TYPE" Width="1.5" PointX="13.5" PointY="49.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.CASE_COD_ESTIMATION" Width="1.5" PointX="12.75" PointY="64.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.CASE_STATISTICS" Width="1.5" PointX="15.75" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.CHEST_OBSERVATION" Width="1.5" PointX="9.75" PointY="69.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.COD_PROMINENCE" Width="1.5" PointX="10.5" PointY="77.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.CONTENT_TAG" Width="1.5" PointX="13.5" PointY="39.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.EVENT" Width="1.5" PointX="18.75" PointY="71" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_CAUSE" Width="1.5" PointX="15.75" PointY="76.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_REPORT" Width="1.5" PointX="12.75" PointY="93" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_REVIEW_CASE" Width="1.5" PointX="10.5" PointY="58.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FORENSIC_CASE" Width="1.5" PointX="7.5" PointY="62.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_ASSISTANT" Width="1.5" PointX="10.5" PointY="106.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_AUTOPSY_SCHEDULE" Width="1.5" PointX="7.5" PointY="88.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_CASE" Width="1.5" PointX="9.75" PointY="88.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_DOCTOR" Width="1.5" PointX="10.5" PointY="101.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_SCHEDULE_ASSISTANT" Width="1.5" PointX="12.75" PointY="89.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_SCHEDULE_DOCTOR" Width="1.5" PointX="12.75" PointY="86.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FPS_STAFF_RANK" Width="1.5" PointX="10.5" PointY="103.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.FUNCTION_GROUP" Width="1.5" PointX="1.5" PointY="45.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.GENERAL_OBSERVATION" Width="1.5" PointX="9.75" PointY="79.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.HEAD_NECK_OBSERVATION" Width="1.5" PointX="9.75" PointY="83.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.HOSPITAL_CLINIC" Width="1.5" PointX="13.5" PointY="76" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.INDIVIDUAL_GENDER" Width="1.5" PointX="13.5" PointY="78.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.INDIVIDUAL_RACE" Width="1.5" PointX="13.5" PointY="80.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.LEGACY_CASE" Width="1.5" PointX="10.5" PointY="54.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.LEGACY_DOCUMENT" Width="1.5" PointX="12.75" PointY="55" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.LEVEL_AREA" Width="1.5" PointX="3" PointY="51.75" IsExpanded="true" />
+      <Diagram DiagramId="d4a9af24443a46ea90f498dcd03dd018" Name="Diagram1">
+        <EntityTypeShape EntityType="DocuPathModel.ABDOMEN_OBSERVATION" Width="1.5" PointX="8.25" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.ACTIVE_LOGIN" Width="1.5" PointX="3" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.ADDITIONAL_EVIDENCE" Width="1.5" PointX="8.25" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.ALLOCATION_STATUS" Width="1.5" PointX="3.75" PointY="44.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.APPARENT_MANNER_DEATH" Width="1.5" PointX="12" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.AUDIT_LOG" Width="1.5" PointX="6" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.AUDIT_TX_TYPE" Width="1.5" PointX="3.75" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.AUTOPSY_AREA" Width="1.5" PointX="3.75" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.AUTOPSY_TYPE" Width="1.5" PointX="12" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.CASE_COD_ESTIMATION" Width="1.5" PointX="11.25" PointY="33.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.CASE_STATISTICS" Width="1.5" PointX="14.25" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.CHEST_OBSERVATION" Width="1.5" PointX="8.25" PointY="35.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.COD_PROMINENCE" Width="1.5" PointX="9" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.CONTENT_TAG" Width="1.5" PointX="9" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.EVENT" Width="1.5" PointX="17.25" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_CAUSE" Width="1.5" PointX="14.25" PointY="45.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_REPORT" Width="1.5" PointX="11.25" PointY="52" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_REVIEW_CASE" Width="1.5" PointX="3" PointY="33.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FORENSIC_CASE" Width="1.5" PointX="6" PointY="31.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_ASSISTANT" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_AUTOPSY_SCHEDULE" Width="1.5" PointX="3" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_CASE" Width="1.5" PointX="9.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_DOCTOR" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_SCHEDULE_ASSISTANT" Width="1.5" PointX="5.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_SCHEDULE_DOCTOR" Width="1.5" PointX="5.25" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FPS_STAFF_RANK" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.FUNCTION_GROUP" Width="1.5" PointX="1.5" PointY="47.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.GENERAL_OBSERVATION" Width="1.5" PointX="8.25" PointY="48.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.HEAD_NECK_OBSERVATION" Width="1.5" PointX="8.25" PointY="52.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.HOSPITAL_CLINIC" Width="1.5" PointX="12" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.INDIVIDUAL_GENDER" Width="1.5" PointX="12" PointY="44.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.INDIVIDUAL_RACE" Width="1.5" PointX="12" PointY="46.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.LEGACY_CASE" Width="1.5" PointX="3" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.LEGACY_DOCUMENT" Width="1.5" PointX="5.25" PointY="29" IsExpanded="true" />
         <EntityTypeShape EntityType="DocuPathModel.MDR_DAY_COMMENT" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.MEDIA" Width="1.5" PointX="15.75" PointY="56.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.MEDIA_PURPOSE" Width="1.5" PointX="13.5" PointY="62.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.MEDICAL_TREATMENTS" Width="1.5" PointX="15.75" PointY="54.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION" Width="1.5" PointX="10.5" PointY="62.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION_TYPE" Width="1.5" PointX="8.25" PointY="77.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.PRIMARY_CAUSE_DEATH" Width="1.5" PointX="13.5" PointY="83" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.PROVINCE" Width="1.5" PointX="18.75" PointY="73.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.REQUEST_TYPE" Width="1.5" PointX="10.5" PointY="98.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SAMPLE_INVESTIGATION" Width="1.5" PointX="18.75" PointY="56.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SCENE_OF_INJURY" Width="1.5" PointX="15.75" PointY="51.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SERVICE_PROVIDER" Width="1.5" PointX="15.75" PointY="78.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SERVICE_REQUEST" Width="1.5" PointX="12.75" PointY="68.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SESSION" Width="1.5" PointX="11.25" PointY="74" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SESSION_USER" Width="1.5" PointX="13.5" PointY="58.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SLOT" Width="1.5" PointX="9" PointY="74.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SPECIAL_CATEGORY" Width="1.5" PointX="18.75" PointY="76.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SPECIMEN" Width="1.5" PointX="15" PointY="71.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.SPINE_OBSERVATION" Width="1.5" PointX="9.75" PointY="95.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATION_ROLE" Width="1.5" PointX="15.75" PointY="83.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_EXTERNAL_CAUSE" Width="1.5" PointX="18" PointY="64.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_INJURY_SCENE" Width="1.5" PointX="18" PointY="61.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_POLICE_STATION" Width="1.5" PointX="18" PointY="67.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_PROVINCE_EVENT" Width="1.5" PointX="21" PointY="64.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_SAMPLES_INVESTIGATION" Width="1.5" PointX="21" PointY="60.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_SPECIAL_CATEGORY" Width="1.5" PointX="21" PointY="68.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATS_TREATMENTS" Width="1.5" PointX="18" PointY="58.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.STATUS" Width="1.5" PointX="8.25" PointY="46" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.MEDIA" Width="1.5" PointX="11.25" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.MEDIA_PURPOSE" Width="1.5" PointX="9" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.MEDICAL_TREATMENTS" Width="1.5" PointX="14.25" PointY="28.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION" Width="1.5" PointX="12" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION_TYPE" Width="1.5" PointX="9.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.PRIMARY_CAUSE_DEATH" Width="1.5" PointX="12" PointY="49" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.PROVINCE" Width="1.5" PointX="17.25" PointY="42.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.REQUEST_TYPE" Width="1.5" PointX="9" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SAMPLE_INVESTIGATION" Width="1.5" PointX="17.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SCENE_OF_INJURY" Width="1.5" PointX="14.25" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SERVICE_PROVIDER" Width="1.5" PointX="14.25" PointY="47.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SERVICE_REQUEST" Width="1.5" PointX="11.25" PointY="37.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SESSION" Width="1.5" PointX="3.75" PointY="50.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SESSION_USER" Width="1.5" PointX="6" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SLOT" Width="1.5" PointX="1.5" PointY="50.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SPECIAL_CATEGORY" Width="1.5" PointX="17.25" PointY="45.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SPECIMEN" Width="1.5" PointX="13.5" PointY="40.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.SPINE_OBSERVATION" Width="1.5" PointX="8.25" PointY="64.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATION_ROLE" Width="1.5" PointX="14.25" PointY="52.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_EXTERNAL_CAUSE" Width="2.125" PointX="16.5" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_INJURY_SCENE" Width="1.5" PointX="16.5" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_POLICE_STATION" Width="1.5" PointX="16.5" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_PROVINCE_EVENT" Width="1.5" PointX="19.5" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_SAMPLES_INVESTIGATION" Width="1.5" PointX="19.5" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_SPECIAL_CATEGORY" Width="1.5" PointX="19.5" PointY="37.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATS_TREATMENTS" Width="1.5" PointX="16.5" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.STATUS" Width="1.5" PointX="0.75" PointY="34" IsExpanded="true" />
         <EntityTypeShape EntityType="DocuPathModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="DocuPathModel.SYSTEM_FLAG" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.TAG_CATEGORY" Width="1.5" PointX="11.25" PointY="38" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.TAG_CONDITION" Width="1.5" PointX="11.25" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.TAG_SUBCATEGORY" Width="1.5" PointX="11.25" PointY="42.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.TITLE" Width="1.5" PointX="3" PointY="61" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.TOKEN_LOG" Width="1.5" PointX="6" PointY="51.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.USER" Width="1.5" PointX="5.25" PointY="55.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.USER_CLAIM" Width="1.5" PointX="7.5" PointY="103.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DocuPathModel.USER_LOGIN" Width="1.5" PointX="3" PointY="57.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.TAG_CATEGORY" Width="1.5" PointX="6.75" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.TAG_CONDITION" Width="1.5" PointX="6.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.TAG_SUBCATEGORY" Width="1.5" PointX="6.75" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.TITLE" Width="1.5" PointX="1.5" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.TOKEN_LOG" Width="1.5" PointX="3.75" PointY="40.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.USER" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.USER_CLAIM" Width="1.5" PointX="3" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DocuPathModel.USER_LOGIN" Width="1.5" PointX="1.5" PointY="38.125" IsExpanded="true" />
         <AssociationConnector Association="DocuPathModel.FORENSIC_CASE_ABDOMEN_OBSERVATION_FK1" ManuallyRouted="false" />
-        <AssociationConnector Association="DocuPathModel.ACCESS_AREA_LEVEL_AREA_FK1" ManuallyRouted="false" />
-        <AssociationConnector Association="DocuPathModel.groups" ManuallyRouted="false" />
-        <AssociationConnector Association="DocuPathModel.ACCESS_LEVEL_LEVEL_AREA_FK1" ManuallyRouted="false" />
-        <AssociationConnector Association="DocuPathModel.ACCESS_LEVEL_TOKEN_LOG_FK1" ManuallyRouted="false" />
-        <AssociationConnector Association="DocuPathModel.ACCESS_LEVEL_USER_LOGIN_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="DocuPathModel.USER_ACTIVE_LOGIN_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="DocuPathModel.FORENSIC_CASE_ADDITIONAL_EVIDENCE_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="DocuPathModel.ALLOCATION_STATUS_SESSION_USER_FK1" ManuallyRouted="false" />
@@ -161,7 +153,15 @@
         <AssociationConnector Association="DocuPathModel.USER_LOGIN_USER_FK1" ManuallyRouted="false" />
         <AssociationConnector Association="DocuPathModel.FPS_SCHEDULE_LINE" ManuallyRouted="false" />
         <AssociationConnector Association="DocuPathModel.MEDIA_TAG" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="DocuPathModel.ACCESS_AREA" Width="1.5" PointX="0.75" PointY="42.75" />
+        <EntityTypeShape EntityType="DocuPathModel.ACCESS_LEVEL" Width="1.5" PointX="0.75" PointY="39.625" />
+        <EntityTypeShape EntityType="DocuPathModel.LEVEL_AREA" Width="1.5" PointX="3" PointY="41.75" />
+        <AssociationConnector Association="DocuPathModel.FK_LEVEL_AREA_ACCESS_AREA" />
+        <AssociationConnector Association="DocuPathModel.groups" />
+        <AssociationConnector Association="DocuPathModel.ACCESS_LEVEL_TOKEN_LOG_FK1" />
+        <AssociationConnector Association="DocuPathModel.ACCESS_LEVEL_USER_LOGIN_FK1" />
+        <AssociationConnector Association="DocuPathModel.FK_LEVEL_AREA_ACCESS_LEVEL" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

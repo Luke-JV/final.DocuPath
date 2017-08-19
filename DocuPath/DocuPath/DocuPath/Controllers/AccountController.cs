@@ -79,7 +79,12 @@ namespace DocuPath.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        
+                        int id = UserManager.FindByName(model.Email).Id ;
+                        AuditModel.WriteTransaction(id,"Login");
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

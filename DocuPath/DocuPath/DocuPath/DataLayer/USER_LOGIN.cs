@@ -25,8 +25,8 @@ namespace DocuPath.DataLayer
         public string Username { get; set; }
         public string Password { get; set; }
     
-        public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER> USER { get; set; }
+        public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }
     }
 }

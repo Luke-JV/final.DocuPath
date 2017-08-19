@@ -17,9 +17,9 @@ namespace DocuPath.DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ACCESS_LEVEL()
         {
-            this.LEVEL_AREA = new HashSet<LEVEL_AREA>();
             this.TOKEN_LOG = new HashSet<TOKEN_LOG>();
             this.USER_LOGIN = new HashSet<USER_LOGIN>();
+            this.LEVEL_AREA = new HashSet<LEVEL_AREA>();
         }
     
         public int AccessLevelID { get; set; }
@@ -27,10 +27,10 @@ namespace DocuPath.DataLayer
         public decimal IsDeactivated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LEVEL_AREA> LEVEL_AREA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TOKEN_LOG> TOKEN_LOG { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_LOGIN> USER_LOGIN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LEVEL_AREA> LEVEL_AREA { get; set; }
     }
 }

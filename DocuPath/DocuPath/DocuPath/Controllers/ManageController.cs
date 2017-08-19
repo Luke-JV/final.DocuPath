@@ -62,8 +62,9 @@ namespace DocuPath.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
-
             var userId = User.Identity.GetUserId<int>();
+            var user = UserManager.FindById<DPUser, int>(User.Identity.GetUserId<int>());
+            ViewBag.message = user.UserName;
             var model = new IndexViewModel
             {
                 //HasPassword = HasPassword(),

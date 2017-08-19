@@ -16,7 +16,7 @@ namespace DocuPath.DataLayer
     {
         public int AccessAreaID { get; set; }
         public int AccessLevelID { get; set; }
-        public int UserAccessLevelID { get; set; }
+        public string LevelAreaDescription { get; set; }
     
         public virtual ACCESS_AREA ACCESS_AREA { get; set; }
         public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }
