@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DocuPath.Models;
+using DocuPath.DataLayer;
 
 namespace DocuPath.Controllers
 {
@@ -138,7 +139,26 @@ namespace DocuPath.Controllers
                     return View(model);
             }
         }
+        [AllowAnonymous]
+        public ActionResult RedeemToken(string token,string email)
+        {
+            using (DocuPathEntities db = new DocuPathEntities())
+            {
+                foreach (var tk in db.TOKEN_LOG)
+                {
+                    PasswordHasher x = new PasswordHasher();
+                    string hash = x.HashPassword(tk.TokenValue);
+                    if (hash == token)
+                    {
+                        return View("Register");
 
+                    }
+                }
+                   
+
+            }
+            return View("Login");
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
