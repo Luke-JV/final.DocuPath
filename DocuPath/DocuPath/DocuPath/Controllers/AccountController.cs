@@ -144,14 +144,13 @@ namespace DocuPath.Controllers
         {
             using (DocuPathEntities db = new DocuPathEntities())
             {
+                PasswordHasher x = new PasswordHasher();
+                string hash = x.HashPassword(token);
                 foreach (var tk in db.TOKEN_LOG)
                 {
-                    PasswordHasher x = new PasswordHasher();
-                    string hash = x.HashPassword(tk.TokenValue);
-                    if (hash == token)
+                    if (x.VerifyHashedPassword(hash,tk.TokenValue) == PasswordVerificationResult.Failed)
                     {
                         return View("Register");
-
                     }
                 }
                    
