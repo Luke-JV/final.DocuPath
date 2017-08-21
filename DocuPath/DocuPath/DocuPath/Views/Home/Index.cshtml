@@ -1,31 +1,212 @@
-﻿@{
+﻿<link rel="stylesheet" href="~/Content/DNADecoration.css" type="text/css" />
+@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="grid homepage-grid">
+    <div grid-area="decoration" style="overflow: hidden; padding-left: 20px; padding-right: 20px; margin-top: -50px">
+        <div class="dna-decor">
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            <div class="ele-decor"></div>
+            @*<div class="ele-decor"></div>
+                        <div class="ele-decor"></div>
+                <div class="ele-decor"></div>
+                <div class="ele-decor"></div>
+                <div class="ele-decor"></div>
+                <div class="ele-decor"></div>
+                <div class="ele-decor"></div>*@
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="homepage-menu-container">
+        <div class="panel-group" id="HomepageAccordion">
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-target="#CORTEXpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <img src="~/Content/Resources/CortexLogo.png" style="max-height: 60px" />
+                </div>
+                <div id="CORTEXpanel" class="panel-collapse collapse">
+                    <div class="panel-body apad5" style="margin-bottom: 0px">
+                        <div class="grid homepage-tile-grid">
+                            <p class="homepage-panel-flavourtext">Case Management</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/ForensicCase/All" method="post">
+                                <button id="FCTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-fc" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">FORENSIC CASES</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/LegacyCase/All" method="post">
+                                <button id="LCTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-lc" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">LEGACY CASES</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/ExternalReviewCase/All" method="post">
+                                <button id="ERCTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-erc" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">EXTERNAL REVIEW CASES</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" style="margin-top: 10px; margin-bottom: 10px">
+                <div class="panel-heading" data-toggle="collapse" data-target="#CORNEApanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <img src="~/Content/Resources/CorneaLogo.png" style="max-height: 60px" />
+                </div>
+                <div id="CORNEApanel" class="panel-collapse collapse">
+                    <div class="panel-body apad5" style="margin-bottom: 0px">
+                        <div class="grid homepage-tile-grid">
+                            <p class="homepage-panel-flavourtext">Media Management</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/Media/All" method="post">
+                                <button id="MediaTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-media" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">MEDIA REPOSITORY</span>
+                                </button>
+                            </form>
+                            <p class="homepage-panel-flavourtext">Reporting</p>
+                            <form class="homepage-tile-subgrid" action="~/Reporting/INSIGHT" method="post">
+                                <button id="InsightTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-reporting" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">INSIGHT REPORTING</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/Reporting/VISION" method="post">
+                                <button id="VisionTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-sysoverview" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">VISION DASHBOARD</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-target="#PULSEpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <img src="~/Content/Resources/PulseLogo.png" style="max-height: 60px" />
+                </div>
+                <div id="PULSEpanel" class="panel-collapse collapse">
+                    <div class="panel-body apad5" style="margin-bottom: 0px">
+                        <div class="grid homepage-tile-grid">
+                            <p class="homepage-panel-flavourtext">External Interactions</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/ServiceProvider/All" method="post">
+                                <button id="SPTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-serviceprovider" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">SERVICE PROVIDERS</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/ServiceRequest/All" method="post">
+                                <button id="SRTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-servicerequest" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">SERVICE REQUESTS</span>
+                                </button>
+                            </form>
+                            <p class="homepage-panel-flavourtext">Scheduling &amp; Calendar</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/SessionUser/Calendar" method="post">
+                                <button id="GCTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-date" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">PERSONAL GOOGLE CALENDAR</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/SessionUser/MonthlyDutyRoster" method="post">
+                                <button id="MDRTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-mdrcompile" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">MONTHLY DUTY ROSTER</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/SessionUser/DailyAutopsySchedule" method="post">
+                                <button id="DASTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-autopsyschedule" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">DAILY AUTOPSY SCHEDULE</span>
+                                </button>
+                            </form>
+                            <p class="homepage-panel-flavourtext">System Management</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/ContentTag/All" method="post">
+                                <button id="SPTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-tag" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">CONTENT TAGS</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/ContentTag/All" method="post">
+                                <button id="SRTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-cog" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">SYSTEM PARAMETERS</span>
+                                </button>
+                            </form>
+                            <p class="homepage-panel-flavourtext">User Management</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/User/All" method="post">
+                                <button id="SPTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-user" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">USERS</span>
+                                </button>
+                            </form>
+                            <form class="homepage-tile-subgrid" action="~/AccessLevel/All" method="post">
+                                <button id="SRTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-login" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">ACCESS LEVELS</span>
+                                </button>
+                            </form>
+                            <p class="homepage-panel-flavourtext">Accountability Management</p> <!-- SECTION HEADER -->
+                            <form class="homepage-tile-subgrid" action="~/AuditTrail/All" method="post">
+                                <button id="SRTile" type="submit" class="btn homepage-tile-body align-vc-hl">
+                                    <i class="homepage-tile-icon mdl2icon mdl2-auditlog" grid-area="icon"></i>
+                                    <span class="homepage-tile-text" grid-area="text">AUDIT TRAIL</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

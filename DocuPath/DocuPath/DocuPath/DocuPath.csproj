@@ -475,6 +475,28 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Resources\CircuitryMotifLeft.png" />
+    <Content Include="Content\Resources\CircuitryMotifRight.png" />
+    <Content Include="Content\Resources\CircularMotifLeft.png" />
+    <Content Include="Content\Resources\CorneaLogo.png" />
+    <Content Include="Content\Resources\CortexLogo.png" />
+    <Content Include="Content\Resources\DPCircularLogoGreyBG.png" />
+    <Content Include="Content\Resources\DPCircularLogoWhiteBG.png" />
+    <Content Include="Content\Resources\DPHorizontalLogoGreyBG.PNG" />
+    <Content Include="Content\Resources\DPHorizontalLogoWhiteBG.png" />
+    <Content Include="Content\Resources\DPTextBlackTransparentBG.png" />
+    <Content Include="Content\Resources\DPTextGreyTransparentBG.png" />
+    <Content Include="Content\Resources\DPTextGreyTransparentBGCropped.png" />
+    <Content Include="Content\Resources\DPTextLightGreyTransparentBG.png" />
+    <Content Include="Content\Resources\DPTextLogoBlack.png" />
+    <Content Include="Content\Resources\DPTextLogoDarkGrey.png" />
+    <Content Include="Content\Resources\DPTextLogoLightGrey.png" />
+    <Content Include="Content\Resources\DPTextLogoRed.png" />
+    <Content Include="Content\Resources\DPTextLogoWhite.png" />
+    <Content Include="Content\Resources\DPTextRedTransparentBG.png" />
+    <Content Include="Content\Resources\DPTextWhiteTransparentBG.png" />
+    <Content Include="Content\Resources\PulseLogo.png" />
+    <Content Include="Content\Resources\SlantedDivider.png" />
     <Content Include="DataLayer\DocuPath.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DocuPath.edmx</DependentUpon>

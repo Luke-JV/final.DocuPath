@@ -3,42 +3,527 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - DocuPath</title>
+    <script src="jquery.js" type="text/javascript"></script>
+    <style type="text/css">
+        .js #NEURONsidenav {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">document.documentElement.className = 'js';</script>
+    @*<script src="jquery.maskedinput.js" type="text/javascript"></script>*@
     @Styles.Render("~/Content/css")
+    @*@if (loggedinuser == null)
+        {
+            @Styles.Render("~/Content/css")
+        } else if (loggedinuser.uipref == 1)
+        {
+             /**/
+        }*@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+<body class="grid main-page-grid">
+    <div id="NEURONsidenav" class="sidenav grid sidenav-grid" grid-area="neuron">
+        <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
+            <div class="align-vc-hc" grid-area="icon">
+                <span id="noNotificationsToggle" class="mdl2icon mdl2-neuronnew" style="font-size: 22px; color: #cccccc"></span>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+            <div class="align-vc-hc" grid-area="hdrtext">
+                <p class="fullwidth" style="font-size: 29px; margin: 0; padding: 3px 0 0 5px">NEURON NOTIFICATION CENTRE</p>
+            </div>
+            <div class="align-vc-hc" grid-area="closebtn">
+                <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" onclick="closeNav()"></a>
             </div>
         </div>
+        <div id="sidenavbody" class="sidenav-body" grid-area="neuron_body">
+            <div id="noNotifications" class="sidenav-notification border-generic sidenav-nonotifications">
+                <p style="margin: auto">NO NEURON<br />NOTIFICATIONS</p>
+            </div>
+            @* NOTIFICATION CSS GRID LAYOUT: *@
+            @*@{
+                    int iCurrentlyLoggedInUserID = 1;
+                }
+                @foreach (var neuron in ViewBag.unhandledNeurons)
+                {
+                    if (neuron.HandledDateTimeStamp != null && neuron.UserID == iCurrentlyLoggedInUserID)
+                    {
+                        <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
+                            <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
+                                @if (@neuron.NotificationTitle.ToLower().Contains("forensic"))
+                                {
+                                    <div><span class="mdl2icon mdl2-info neuron-mdl2icon"></span></div>
+                                }
+                                else
+                                {
+                                    <div><span class="mdl2icon mdl2-info neuron-mdl2icon"></span></div>
+                                }
+                                <div grid-area="title" class="sidenav-notification-title">@neuron.NotificationTitle</div>
+                                <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.CreationDateTimeStamp.ToString("dd MMM HH:mm")</div>
+                            </div>
+                            <div grid-area="summary" class="sidenav-notification-summary">@neuron.NotificationSummary</div>
+                            <div grid-area="detail" class="panel-group" id="n_pnl_@neuron.NotificationID">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#n_detail_@neuron.NotificationID" data-parent="#n_pnl_@neuron.NotificationID">
+                                        View Details &amp; Actions
+                                        <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
+                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
+                                            @neuron.NotificationDetail
+                                        </p>
+                                        <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
+                                            <div class="sidenav-button-bar">
+                                                @if (neuron.NotificationTypeID == 1)
+                                                {
+                                                    <input type="submit" id="n_btnOK_@neuron.AuditLogTxID" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                } else if (neuron.NotificationTypeID == 2)
+                                                {
+                                                    <input type="submit" id="n_btnAcpt_@neuron.AuditLogTxID" value="Accept" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnRjct_@neuron.AuditLogTxID" value="Reject" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                }
+                                                else if (neuron.NotificationTypeID == 3)
+                                                {
+                                                    <input type="submit" id="n_btnAprv_@neuron.AuditLogTxID" value="Approve" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnDeny_@neuron.AuditLogTxID" value="Deny" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }*@
+
+            <div id="N1" class="grid sidenav-notification-grid sidenav-notification border-generic">
+                <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
+                    <div>
+                        <span class="mdl2icon mdl2-info neuron-mdl2icon"></span>
+                    </div>
+                    <div grid-area="title" class="sidenav-notification-title">Incoming Migrated Forensic Case</div>
+                    <div grid-area="timestamp" class="sidenav-notification-timestamp">
+                        <span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 02 Jun 12:34
+                    </div>
+                </div>
+                <div grid-area="summary" class="sidenav-notification-summary">A Forensic Case has been migrated to you.</div>
+                <div grid-area="detail" class="panel-group" id="Neuron1">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron1Details" data-parent="#Neuron1">
+                            View Details &amp; Actions
+                            <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                        </div>
+                        <div id="Neuron1Details" class="panel-collapse collapse sidenav-notification-detail">
+                            <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
+                                User
+                                <kbd>Piet Pompies</kbd> has migrated authorship of a Forensic Case to you. The Forensic Case that was migrated is
+                                <kbd>DR256/2017</kbd>. The following message was provided: "
+                                <kbd>Still waiting for XYZ from ABC, contact John Smith.</kbd>".
+                            </p>
+                            <div class="panel-footer" data-parent="#Neuron1">
+                                <div class="sidenav-button-bar">
+                                    <input type="submit" id="N1OK" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div id="N1" class="sidenav-notification border-generic">
+                    <div class="row" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-info" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
+                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">Incoming Migrated Forensic Case</div>
+                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 02 Jun 12:34</div>
+                    </div>
+                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-12">A Forensic Case has been migrated to you.</div>
+                    </div>
+                    <div class="panel-group" id="Neuron1">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron1Details" data-parent="#Neuron1">
+                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                            </div>
+                            <div id="Neuron1Details" class="panel-collapse collapse sidenav-notification-detail">
+                                <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">User <kbd>Piet Pompies</kbd> has migrated authorship of a Forensic Case to you. The Forensic Case that was migrated is <kbd>DR256/2017</kbd>. The following message was provided: "<kbd>Still waiting for XYZ from ABC, contact John Smith.</kbd>".</p>
+                                <div class="panel-footer" data-parent="#Neuron1">
+                                    <div class="sidenav-button-bar">
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
+                                            <input type="submit" id="N1OK" value="OK" class="btn btn-modal-generic btn-xs" style="margin-top: 0px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="N2" class="sidenav-notification border-generic">
+                    <div class="row" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-approvedeny" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
+                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">New Authorisation Request</div>
+                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 12 Jun 18:31</div>
+                    </div>
+                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-12">A user has requested authorisation for a deletion.</div>
+                    </div>
+                    <div class="panel-group" id="Neuron2">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron2Details" data-parent="#Neuron2">
+                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                            </div>
+                            <div id="Neuron2Details" class="panel-collapse collapse sidenav-notification-detail">
+                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
+                                    <li>User Piet Pompies has requested authorisation to delete a Forensic Case.</li>
+                                    <li>The Forensic Case to be deleted is DR20156/2017.</li>
+                                    <li>The reason provided is "Incorrect setup, need to restart this case.".</li>
+                                </ul>
+                                <div class="panel-footer" data-parent="#Neuron2">
+                                    <div class="sidenav-button-bar">
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col">
+                                            <input type="submit" id="N2Approve" value="Approve" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
+                                        </div>
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
+                                            <input type="button" id="N2Deny" value="Deny" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="N3" class="sidenav-notification border-generic">
+                    <div class="row" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-date" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
+                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">New Duty Roster Allocation</div>
+                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 18 Jun 09:12</div>
+                    </div>
+                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-12">You have been given a new Monthly Duty Roster Allocation.</div>
+                    </div>
+                    <div class="panel-group" id="Neuron3">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron3Details" data-parent="#Neuron3">
+                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                            </div>
+                            <div id="Neuron3Details" class="panel-collapse collapse sidenav-notification-detail">
+                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
+                                    <li>Superser Jannie Jansen has assigned you a Duty Roster slot.</li>
+                                    <li>The assigned slot is Slot 1A on Mon, 26 Jun 2017.</li>
+                                    <li>Note that Slot 1A starts promptly at 07:30.</li>
+                                </ul>
+                                <div class="panel-footer" data-parent="#Neuron3">
+                                    <div class="sidenav-button-bar">
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col">
+                                            <input type="submit" id="N3Accept" value="Accept" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
+                                        </div>
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
+                                            <input type="button" id="N3Reject" value="Reject" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="N4" class="sidenav-notification border-generic">
+                    <div class="row" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-history" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
+                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">Aged Cases Auto-Archived</div>
+                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 22 Jun 10:08</div>
+                    </div>
+                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
+                        <div class="col-md-12">All aged Forensic Cases were successfully auto-archived.</div>
+                    </div>
+                    <div class="panel-group" id="Neuron4">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron4Details" data-parent="#Neuron4">
+                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                            </div>
+                            <div id="Neuron4Details" class="panel-collapse collapse sidenav-notification-detail">
+                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
+                                    <li>For a full list of auto-archived Forensic Cases, access the Audit Trail and filter entries using the <kbd>Auto-Archive Operation</kbd> transaction type.</li>
+                                    <li>Aged Forensic Cases are all closed cases older than 11 years, based on the 5th day of the current calendar month.</li>
+                                    <li>Note that this occurs automatically on the 5th of every calendar month.</li>
+                                </ul>
+                                <div class="panel-footer" data-parent="#Neuron4">
+                                    <div class="sidenav-button-bar">
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col"></div>
+                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
+                                            <input type="submit" id="N4OK" value="OK" class="btn btn-modal-generic btn-xs" style="margin-top: 0px" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
+    <div id="content" class="grid content-subgrid" grid-area="main">
+        @* TOP NAVBAR: *@
+        <div id="topNav" class="navbar navbar-inverse navbar-fixed-top" grid-area="hdr" role="navigation">
+            <div class="container container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href='@Url.Action("Index", "Home")'>
+                        <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
+                        <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
+                        <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <!--CORTEX-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Case Management</li>
+                                <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                            </ul>
+                        </li>
+                        <!--CORNEA-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Media Management</li>
+                                <li>@Html.ActionLink("Media Repository", "Index", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Reporting</li>
+                                <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                            </ul>
+                        </li>
+                        <!--PULSE-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                            <ul class="dropdown-menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">External Interactions</li>
+                                <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Scheduling &amp; Calendar</li>
+                                <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">System Management</li>
+                                <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("System Parameters", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">User Management</li>
+                                <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Access Levels", "All", "AccessLevel", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Accountability Management</li>
+                                <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                            </ul>
+                        </li>
+                        <!--HAPTIC-->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                @*<li class="divider"></li>
+                                    <li class="dropdown-header">HELP &amp; ASSISTANCE</li>
+                                    <li>@Html.ActionLink("HAPTIC Help Centre", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Frequently Asked Questions", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                <li class="divider"></li>
+                                <li class="dropdown-header">INFORMATION</li>
+                                <li>@Html.ActionLink("About DocuPath", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("About The Developers", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">CONTACT US</li>
+                                <li>@Html.ActionLink("Report A Bug", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Request A Feature", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("Contact Us", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void('0')" class="dropdown-toggle neuron" onclick="openNav()" style="padding: 11px"><span id="neuronicon" class="mdl2icon mdl2-neuronnew inline-mdl2icon" style="font-size: 18pt; font-weight: normal; color: white"></span><span class="badge active" id="neuronBadge" style="margin-left: -6px">4</span></a>
+                        </li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        @* PAGE CONTENT: *@
+        <div id="page-body" class="container container-fluid body-content" grid-area="content" style="margin-bottom: 15px">
+            @RenderBody()
+        </div>
+        @* FOOTER: *@
+        <div id="bottomNav" class="grid navbar-fixed-bottom ftr-grid footer-text" grid-area="ftr">
+            <div class="ftr-pad-left">
+                <p class="align-vc-hc par-fit-container">&copy; @DateTime.Now.Year - CLDRM DocuPath@*<span class="proto-warn-text">   INTERNAL</span>*@</p>
+            </div>
+            <div>
+                <p class="align-vc-hc par-fit-container">
+                    <img class="hricon" src="~/Content/Resources/DPHorizontalLogoWhiteBG.png" />
+                </p>
+            </div>
+            <div class="ftr-pad-right">
+                <p class="align-vc-hc par-fit-container">
+                    @*<span class="proto-warn-text">     v0.5.5</span>*@
+                    <span class="mdl2icon mdl2-date inline-mdl2icon"></span>
+                    <span>@DateTime.Now.ToString("ddd dd MMM yyyy")</span>
+                    <span class="mdl2icon mdl2-time inline-mdl2icon"></span>
+                    <span>@DateTime.Now.ToString("HH:mm")</span>
+                </p>
+            </div>
+        </div>
+
+        <a href="#" class="back-to-top" style="display: inline">
+            <i class="mdl2icon mdl2-up"></i>
+            <span>Top</span>
+        </a>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/materialdatetime")
+    @Scripts.Render("~/bundles/tagsinput")
+    @Scripts.Render("~/bundles/inputmask")
     @RenderSection("scripts", required: false)
+
+    @* TOOLTIPS: *@
+    @*// TODO: Use this for help tooltips:*@
+    @*<script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>*@
+
+    @* BACK TO TOP: *@
+    <script>
+    jQuery(document).ready(function () {
+        document.getElementById("NEURONsidenav").style.width = "0";
+        $('.back-to-top').css({ "display": "none" });
+        var offset = 250;
+        var duration = 300;
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery('.back-to-top').fadeIn(duration);
+            } else {
+                jQuery('.back-to-top').fadeOut(duration);
+            }
+        });
+
+        jQuery('.back-to-top').click(function (event) {
+            event.preventDefault();
+            jQuery('html, body').animate({ scrollTop: 0 }, duration);
+            return false;
+        })
+    });
+    </script>
+
+    @* NEURON OPEN/CLOSE: *@
+    <script type="text/javascript">
+    /* Check to see whether NEURON SideNav is open */
+    //function checkNEURONstate() {
+    //    if (document.getElementById("NEURONsidenav").style.width != "0px" ) {
+    //        closeNav();
+    //    }
+    //    else {
+    //        openNav();
+    //    }
+    //}
+
+    function openNav() {
+        document.getElementById("NEURONsidenav").style.display = "initial";
+        document.getElementById("NEURONsidenav").style.width = "400px";
+        document.getElementById("content").style.marginRight = "400px";
+        document.getElementById("topNav").style.paddingRight = "400px";
+    }
+
+    function closeNav() {
+        document.getElementById("NEURONsidenav").style.width = "0";
+        document.getElementById("content").style.marginRight = "0";
+        document.getElementById("topNav").style.paddingRight = "0";
+    }
+    </script>
+
+    @* NOTIFICATION HANDLING: *@
+    <script type="text/javascript">
+        $(document).ready(function () {
+        // TODO: jQuery to handle each individual notification, loop-style...
+        $("#noNotifications").hide();
+        $("#N1").show();
+        $("#N2").show();
+        $("#N3").show();
+        $("#N4").show();
+        //$("#N5").show();
+        //$("#N6").show();
+
+        $('#noNotificationsToggle').click(function () { $('#noNotifications').show("slow"); });
+
+        $('#repopulateNEURON').click(function () {
+            $("#noNotifications").hide();
+            $("#neuronBadge").show();
+            $("#neuronBadge").text("4");
+            $("#N1").show();
+            $("#N2").show();
+            $("#N3").show();
+            $("#N4").show();
+            //$("#N5").show();
+            //$("#N6").show();
+            $("#neuronicon").removeClass("mdl2-neuron");
+            $("#neuronicon").addClass("mdl2-neuronnew");
+        });
+
+        $('#noNotifications').click(function () { $('#noNotifications').hide("slow"); });
+        $('#N1OK').click(function () { $('#N1').hide("slow") });
+        $('#N2Approve').click(function () { $('#N2').hide("slow") });
+        $('#N2Deny').click(function () { $('#N2').hide("slow") });
+        $('#N3Accept').click(function () { $('#N3').hide("slow"); });
+        $('#N3Reject').click(function () { $('#N3').hide("slow") });
+        $('#N4OK').click(function () { $('#N4').hide("slow") });
+        //$('#N5Approve').click(function () { $('#N5').hide("slow") });
+        //$('#N5Deny').click(function () { $('#N5').hide("slow") });
+        //$('#N6Approve').click(function () { $('#N6').hide("slow") });
+        //$('#N6Deny').click(function () { $('#N6').hide("slow") });
+    });
+    </script>
+
+    @* BADGE COUNTER HANDLING: *@
+    <script type="text/javascript">
+    // TODO: jQuery to properly decrement NEURON badge counter on notification handled...
+    $(document).on("click", ".btn-modal-generic", function (e) {
+        e.preventDefault();
+
+        var $badge = $("#neuronBadge"),
+            count = parseInt($badge.text()),
+            active = $("#neuronBadge").hasClass('active');
+
+        $badge.text(active ? count - 1 : count + 1);
+        if ($badge.text() == "0") {
+            $badge.hide("slow"),
+            $("#neuronicon").removeClass("mdl2-neuronnew"),
+            $("#neuronicon").addClass("mdl2-neuron")
+        } else {
+            $badge.show("slow")
+        }
+        //$badge(count == 0 ? $badge.hide("slow") : $badge.show("slow"));
+    });
+    </script>
+
 </body>
 </html>
