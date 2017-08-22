@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -41,12 +42,11 @@
                 <p style="margin: auto">NO NEURON<br />NOTIFICATIONS</p>
             </div>
             @* NOTIFICATION CSS GRID LAYOUT: *@
-            @*@{
-                    int iCurrentlyLoggedInUserID = 1;
-                }
-                @foreach (var neuron in ViewBag.unhandledNeurons)
+            @if (Request.IsAuthenticated)
+            {
+                foreach (var neuron in ViewBag.Neurons)
                 {
-                    if (neuron.HandledDateTimeStamp != null && neuron.UserID == iCurrentlyLoggedInUserID)
+                    if (neuron.HandledDateTimeStamp != null && neuron.UserID == User.Identity.GetUserId<int>())
                     {
                         <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
                             <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
@@ -59,7 +59,7 @@
                                     <div><span class="mdl2icon mdl2-info neuron-mdl2icon"></span></div>
                                 }
                                 <div grid-area="title" class="sidenav-notification-title">@neuron.NotificationTitle</div>
-                                <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.CreationDateTimeStamp.ToString("dd MMM HH:mm")</div>
+                                <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.DateID.ToString("dd MMM HH:mm")</div>
                             </div>
                             <div grid-area="summary" class="sidenav-notification-summary">@neuron.NotificationSummary</div>
                             <div grid-area="detail" class="panel-group" id="n_pnl_@neuron.NotificationID">
@@ -69,23 +69,22 @@
                                         <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
                                     </div>
                                     <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
-                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
-                                            @neuron.NotificationDetail
-                                        </p>
+                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@neuron.NotificationDetail</p>
                                         <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
                                             <div class="sidenav-button-bar">
                                                 @if (neuron.NotificationTypeID == 1)
                                                 {
-                                                    <input type="submit" id="n_btnOK_@neuron.AuditLogTxID" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                                } else if (neuron.NotificationTypeID == 2)
+                                                    <input type="submit" id="n_btnOK_@neuron.NotificationID" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                }
+                                                else if (neuron.NotificationTypeID == 2)
                                                 {
-                                                    <input type="submit" id="n_btnAcpt_@neuron.AuditLogTxID" value="Accept" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                                    <input type="submit" id="n_btnRjct_@neuron.AuditLogTxID" value="Reject" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnAcpt_@neuron.NotificationID" value="Accept" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnRjct_@neuron.NotificationID" value="Reject" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
                                                 }
                                                 else if (neuron.NotificationTypeID == 3)
                                                 {
-                                                    <input type="submit" id="n_btnAprv_@neuron.AuditLogTxID" value="Approve" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                                    <input type="submit" id="n_btnDeny_@neuron.AuditLogTxID" value="Deny" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnAprv_@neuron.NotificationID" value="Approve" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnDeny_@neuron.NotificationID" value="Deny" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
                                                 }
                                             </div>
                                         </div>
@@ -94,9 +93,11 @@
                             </div>
                         </div>
                     }
-                }*@
+                }
+            }
 
-            <div id="N1" class="grid sidenav-notification-grid sidenav-notification border-generic">
+
+            @*<div id="N1" class="grid sidenav-notification-grid sidenav-notification border-generic">
                 <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
                     <div>
                         <span class="mdl2icon mdl2-info neuron-mdl2icon"></span>
@@ -128,7 +129,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             @*<div id="N1" class="sidenav-notification border-generic">
                     <div class="row" style="padding-left: 5px; padding-right: 5px">
                         <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-info" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
@@ -399,9 +400,9 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/materialdatetime")
-    @Scripts.Render("~/bundles/tagsinput")
-    @Scripts.Render("~/bundles/inputmask")
+    @*@Scripts.Render("~/bundles/materialdatetime")*@
+    @*@Scripts.Render("~/bundles/tagsinput")*@
+    @*@Scripts.Render("~/bundles/inputmask")*@
     @RenderSection("scripts", required: false)
 
     @* TOOLTIPS: *@

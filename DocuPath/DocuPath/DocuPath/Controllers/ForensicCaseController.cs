@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DocuPath.DataLayer;
+using DocuPath.Models;
 
 namespace DocuPath.Controllers
 {
     public class ForensicCaseController : Controller
     {
+        DocuPathEntities db = new DocuPathEntities();
         // GET: ForensicCase
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: ForensicCase/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
+        #region CREATES:
         // GET: ForensicCase/Create
         public ActionResult Create()
         {
@@ -41,7 +39,31 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
+        #endregion
 
+        #region READS:
+        // GET: ForensicCase/All
+        public ActionResult All()
+        {
+            try
+            {
+                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                return View(db.FORENSIC_CASE.ToList());
+            }
+            catch (Exception x)
+            {
+                return RedirectToAction("Error", "Home", x.Message);
+            }
+        }
+
+        // GET: ForensicCase/Details/5
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
+        #endregion
+
+        #region UPDATES:
         // GET: ForensicCase/Edit/5
         public ActionResult Edit(int id)
         {
@@ -63,7 +85,9 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
+        #endregion
 
+        #region DELETES:
         // GET: ForensicCase/Delete/5
         public ActionResult Delete(int id)
         {
@@ -85,5 +109,16 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
+        #endregion
+
+        #region NON-CRUD ACTIONS:
+
+        #endregion
+
+
+
+
+
+
     }
 }

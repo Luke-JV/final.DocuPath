@@ -9724,7 +9724,7 @@ a.cal-event-week {
 @media (min-width : 768px){
 	.grid {
 		display: grid;
-		width: auto;
+		width: 100%;
 		/*grid-gap: 5px;*/
 		/*text-align: center;*/
 	}
@@ -9778,13 +9778,13 @@ a.cal-event-week {
 
 
     .content-subgrid {
+        width: 100%;
         grid-gap: 0px;
         grid-template-columns: minmax(auto, 1fr);
         grid-template-rows: minmax(50.4px, 102.2px) 1fr minmax(50px, 150px);
         grid-template-areas: "hdr"
                              "content"
                              "ftr";
-        overflow: visible;
         transition: all 0.5s;
     }
 
@@ -10346,7 +10346,7 @@ a.cal-event-week {
     }
 /*#endregion */
 
-/*#region DNA Decoration: */
+/*#region DNA DECORATION: */
 
 /* ANIMATED DNA DECORATION                          */
 /* Sourced from:    codepen.io                      */

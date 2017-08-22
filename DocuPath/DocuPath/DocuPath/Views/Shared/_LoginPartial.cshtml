@@ -5,12 +5,42 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" style="background-color: #979797; border-bottom: 1px solid black; border-radius: 25px; padding-left: 5px; padding-right: 5px; color: #373737" data-toggle="dropdown"><i class="mdl2icon mdl2-individual inline-mdl2icon" style="color: #fff"></i>MY PROFILE<i class="mdl2icon mdl2-down inline-mdl2icon" style="color: rgba(174,31,31,1)"></i></a>
+                <ul class="dropdown-menu account-dropdown">
+                    <li>
+                        <div class="navbar-content grid account-grid">
+                            <div grid-area="initials_name" class="grid account-initials-name-subgrid">
+                                <!-- TODO: current [DisplayInitials] -->
+                                <div grid-area="initials" class="icon-circle display-initials-account" style="height: 45px; width: 45px; margin: 0px">SU</div>
+                                <div grid-area="name_email" class="text-left">
+                                    <!-- TODO: current [TitleValue][FirstName][LastName] -->
+                                    <span grid-area="name" style="text-overflow: ellipsis; text-transform: uppercase; letter-spacing: 1px">MR. SUPER USER</span>
+                                    <span class="text-muted" grid-area="email">@User.Identity.GetUserName()</span>
+                                </div>
+                            </div>
+                            <div grid-area="divider" class="divider" style="margin: 0px"></div>
+                            <div grid-area="btn_view_password" class="grid account-btns-subgrid">
+                                <!-- TODO: link to view current profile -->
+                                <form action="#" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">View Profile</button></form>
+                                <!-- TODO: link to edit password -->
+                                <form action="#" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">Change Password</button></form>
+                            </div>
+                            <!-- TODO: link to logout -->
+                            <form grid-area="btnLogout" action="javascript:document.getElementById('logoutForm').submit()" method="post"><button type="submit" class="btn btn-default btn-generic btn-sm fullwidth">Log Out</button></form>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    @*<ul class="nav navbar-nav navbar-right">
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+    </ul>*@
     }
 }
 else

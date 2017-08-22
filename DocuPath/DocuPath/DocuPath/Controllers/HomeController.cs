@@ -1,4 +1,5 @@
-﻿using DocuPath.Models;
+﻿using DocuPath.DataLayer;
+using DocuPath.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -11,6 +12,7 @@ namespace DocuPath.Controllers
 {
     public class HomeController : Controller
     {
+        DocuPathEntities db = new DocuPathEntities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -49,6 +51,7 @@ namespace DocuPath.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
             return View();
         }
         [Authorize]
@@ -65,6 +68,13 @@ namespace DocuPath.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ViewResult Error(string errorMessage)
+        {
+            ModelState.AddModelError("", "error/failure"); // Add the ModelState error
+            ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
             return View();
         }
     }
