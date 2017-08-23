@@ -1,4 +1,13 @@
 ﻿@using Microsoft.AspNet.Identity
+@using DocuPath.DataLayer;
+
+@{
+    DocuPathEntities db = new DocuPathEntities();
+    int id = User.Identity.GetUserId<int>();
+    USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
+    currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
+    currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
+ }
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -12,12 +21,10 @@
                     <li>
                         <div class="navbar-content grid account-grid">
                             <div grid-area="initials_name" class="grid account-initials-name-subgrid">
-                                <!-- TODO: current [DisplayInitials] -->
-                                <div grid-area="initials" class="icon-circle display-initials-account" style="height: 45px; width: 45px; margin: 0px">SU</div>
+                                <div grid-area="initials" class="icon-circle display-initials-account" style="height: 45px; width: 45px; margin: 0px">@currentUser.DisplayInitials.ToUpper()</div>
                                 <div grid-area="name_email" class="text-left">
-                                    <!-- TODO: current [TitleValue][FirstName][LastName] -->
-                                    <span grid-area="name" style="text-overflow: ellipsis; text-transform: uppercase; letter-spacing: 1px">MR. SUPER USER</span>
-                                    <span class="text-muted" grid-area="email">@User.Identity.GetUserName()</span>
+                                    <span grid-area="name" style="text-overflow: ellipsis; text-transform: uppercase; letter-spacing: 1px">@currentUser.TITLE.TitleValue @currentUser.FirstName @currentUser.LastName</span>
+                                    <span class="text-muted" grid-area="email">@currentUser.USER_LOGIN.Username</span>
                                 </div>
                             </div>
                             <div grid-area="divider" class="divider" style="margin: 0px"></div>
