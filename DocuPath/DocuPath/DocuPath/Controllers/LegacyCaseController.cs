@@ -23,6 +23,7 @@ namespace DocuPath.Controllers
             LegacyCaseViewModel model = new LegacyCaseViewModel();
             model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
             model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
+            
             model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
             return View(model);
         }

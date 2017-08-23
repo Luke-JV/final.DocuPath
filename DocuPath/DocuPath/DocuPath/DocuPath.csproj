@@ -590,13 +590,13 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ForensicCase\All.cshtml" />
+    <Content Include="Views\LegacyCase\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccessLevel\" />
     <Folder Include="Views\ContentTag\" />
     <Folder Include="Views\ExternalReviewCase\" />
-    <Folder Include="Views\LegacyCase\" />
     <Folder Include="Views\Media\" />
     <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />
