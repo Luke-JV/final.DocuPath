@@ -1,13 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
 @using DocuPath.DataLayer;
+@using DocuPath.Models;
 
-@{
-    DocuPathEntities db = new DocuPathEntities();
-    int id = User.Identity.GetUserId<int>();
-    USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
-    currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
-    currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
- }
+@{ 
+    var currentUser = VERTEBRAE.getCurrentUser();
+}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

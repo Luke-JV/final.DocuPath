@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DocuPath.DataLayer;
+using DocuPath.Models.DPViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +10,7 @@ namespace DocuPath.Controllers
 {
     public class LegacyCaseController : Controller
     {
+        DocuPathEntities db = new DocuPathEntities();
         // GET: LegacyCase
         public ActionResult Index()
         {
@@ -17,7 +20,11 @@ namespace DocuPath.Controllers
         // GET: LegacyCase/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            LegacyCaseViewModel model = new LegacyCaseViewModel();
+            model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
+            model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
+            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
+            return View(model);
         }
 
         // GET: LegacyCase/Create

@@ -1,8 +1,11 @@
 ﻿using DocuPath.DataLayer;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+
+
 
 namespace DocuPath.Models
 {
@@ -22,7 +25,18 @@ namespace DocuPath.Models
                 return unhandledNeurons;
             }
         }
+        public static USER getCurrentUser()
+        {
+            
+            DocuPathEntities db = new DocuPathEntities();
+            //int id = User.Identity.GetUserId<int>();
+            int id = HttpContext.Current.User.Identity.GetUserId<int>();
+            USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
+            currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
+            currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
 
+            return currentUser;
+        }
         //public static List<METRIC> FetchVisionMetrics()
         //{
                 // TODO: Compile a list of metrics for use in VISION dashboard.
