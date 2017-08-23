@@ -542,15 +542,16 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.bootgrid.fa.js" />
-    <Content Include="Scripts\jquery.bootgrid.fa.min.js" />
     <Content Include="Scripts\jquery.bootgrid.js" />
-    <Content Include="Scripts\jquery.bootgrid.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -591,12 +592,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\ForensicCase\All.cshtml" />
     <Content Include="Views\LegacyCase\test.cshtml" />
+    <Content Include="Views\ExternalReviewCase\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccessLevel\" />
     <Folder Include="Views\ContentTag\" />
-    <Folder Include="Views\ExternalReviewCase\" />
     <Folder Include="Views\Media\" />
     <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />

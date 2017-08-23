@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+@using DocuPath.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,14 @@
         }*@
     @Scripts.Render("~/bundles/modernizr")
 
+    @{ 
+            ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+
+       
+
+        // js function -> VERTEBRAE.HandleNotification();
+    }
+
 </head>
 <body class="grid main-page-grid">
     <div id="NEURONsidenav" class="sidenav grid sidenav-grid" grid-area="neuron">
@@ -46,7 +55,7 @@
             {
                 foreach (var neuron in ViewBag.Neurons)
                 {
-                    if (neuron.HandledDateTimeStamp != null && neuron.UserID == User.Identity.GetUserId<int>())
+                    if (neuron.HandledDateTimeStamp == null && neuron.UserID == User.Identity.GetUserId<int>())
                     {
                         <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
                             <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
@@ -69,7 +78,7 @@
                                         <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
                                     </div>
                                     <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
-                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@neuron.NotificationDetail</p>
+                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@neuron.NotificationDetails</p>
                                         <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
                                             <div class="sidenav-button-bar">
                                                 @if (neuron.NotificationTypeID == 1)
@@ -273,100 +282,151 @@
 
     <div id="content" class="grid content-subgrid" grid-area="main">
         @* TOP NAVBAR: *@
-        <div id="topNav" class="navbar navbar-inverse navbar-fixed-top" grid-area="hdr" role="navigation">
-            <div class="container container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href='@Url.Action("Index", "Home")'>
-                        <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
-                        <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
-                        <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
-                    </a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <!--CORTEX-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Case Management</li>
-                                <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                            </ul>
-                        </li>
-                        <!--CORNEA-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Media Management</li>
-                                <li>@Html.ActionLink("Media Repository", "Index", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Reporting</li>
-                                <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                            </ul>
-                        </li>
-                        <!--PULSE-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                            <ul class="dropdown-menu">
-                                <li class="divider"></li>
-                                <li class="dropdown-header">External Interactions</li>
-                                <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Scheduling &amp; Calendar</li>
-                                <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">System Management</li>
-                                <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("System Parameters", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">User Management</li>
-                                <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Access Levels", "All", "AccessLevel", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Accountability Management</li>
-                                <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                            </ul>
-                        </li>
-                        <!--HAPTIC-->
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                @*<li class="divider"></li>
-                                    <li class="dropdown-header">HELP &amp; ASSISTANCE</li>
-                                    <li>@Html.ActionLink("HAPTIC Help Centre", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("Frequently Asked Questions", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
-                                <li class="divider"></li>
-                                <li class="dropdown-header">INFORMATION</li>
-                                <li>@Html.ActionLink("About DocuPath", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("About The Developers", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">CONTACT US</li>
-                                <li>@Html.ActionLink("Report A Bug", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Request A Feature", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("Contact Us", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void('0')" class="dropdown-toggle neuron" onclick="openNav()" style="padding: 11px"><span id="neuronicon" class="mdl2icon mdl2-neuronnew inline-mdl2icon" style="font-size: 18pt; font-weight: normal; color: white"></span><span class="badge active" id="neuronBadge" style="margin-left: -6px">4</span></a>
-                        </li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
+        @if (Request.IsAuthenticated)
+        {
+            <div id="topNav" class="navbar navbar-inverse navbar-fixed-top" grid-area="hdr" role="navigation">
+                <div class="container container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href='@Url.Action("Index", "Home")'>
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                        </a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <!--CORTEX-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Case Management</li>
+                                    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                            <!--CORNEA-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Media Management</li>
+                                    <li>@Html.ActionLink("Media Repository", "Index", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Reporting</li>
+                                    <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                            <!--PULSE-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">External Interactions</li>
+                                    <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Scheduling &amp; Calendar</li>
+                                    <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">System Management</li>
+                                    <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("System Parameters", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">User Management</li>
+                                    <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Access Levels", "All", "AccessLevel", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Accountability Management</li>
+                                    <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                            @*<li href='@Url.Action("Index", "Home")'>
+                                <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                            </li>*@
+                            <!--HAPTIC-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @*<li class="divider"></li>
+                                        <li class="dropdown-header">HELP &amp; ASSISTANCE</li>
+                                        <li>@Html.ActionLink("HAPTIC Help Centre", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                        <li>@Html.ActionLink("Frequently Asked Questions", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">INFORMATION</li>
+                                    <li>@Html.ActionLink("About DocuPath", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("About The Developers", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">CONTACT US</li>
+                                    <li>@Html.ActionLink("Report A Bug", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Request A Feature", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Contact Us", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void('0')" class="dropdown-toggle neuron" onclick="openNav()" style="padding: 11px"><span id="neuronicon" class="mdl2icon mdl2-neuronnew inline-mdl2icon" style="font-size: 18pt; font-weight: normal; color: white"></span><span class="badge active" id="neuronBadge" style="margin-left: -6px">4</span></a>
+                            </li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div id="topNav" class="navbar navbar-inverse navbar-fixed-top" grid-area="hdr" role="navigation">
+                <div class="container container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href='@Url.Action("Index", "Home")'>
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                        </a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <!--ABOUT-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">ABOUT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("ABOUT DOCUPATH", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("ABOUT THE DEVELOPERS", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                            <!--CONTACT-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CONTACT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("REPORT A BUG", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("REQUEST A FEATURE", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("CONTACT US", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div>
+
+        }
         @* PAGE CONTENT: *@
         <div id="page-body" class="container container-fluid body-content" grid-area="content" style="margin-bottom: 15px">
             @RenderBody()
@@ -451,13 +511,13 @@
     function openNav() {
         document.getElementById("NEURONsidenav").style.display = "initial";
         document.getElementById("NEURONsidenav").style.width = "400px";
-        document.getElementById("content").style.marginRight = "400px";
+        document.getElementById("content").style.paddingRight = "400px";
         document.getElementById("topNav").style.paddingRight = "400px";
     }
 
     function closeNav() {
         document.getElementById("NEURONsidenav").style.width = "0";
-        document.getElementById("content").style.marginRight = "0";
+        document.getElementById("content").style.paddingRight = "0";
         document.getElementById("topNav").style.paddingRight = "0";
     }
     </script>
@@ -465,6 +525,14 @@
     @* NOTIFICATION HANDLING: *@
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var db = 
+
+            // foreach element in neuronbody
+            //{
+            //  if
+            //}
+
         // TODO: jQuery to handle each individual notification, loop-style...
         $("#noNotifications").hide();
         $("#N1").show();

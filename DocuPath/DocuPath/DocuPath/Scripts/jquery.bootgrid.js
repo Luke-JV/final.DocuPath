@@ -1355,15 +1355,15 @@
          **/
         templates: {
             actionButton: "<button class=\"btn btn-default\" type=\"button\" title=\"{{ctx.text}}\">{{ctx.content}}</button>",
-            actionDropDown: "<div class=\"{{css.dropDownMenu}}\"><button class=\"btn btn-default dropdown-toggle\" type=\"button\" style=\"text-align: left; padding: 3px\" data-toggle=\"dropdown\"><span class=\"{{css.dropDownMenuText}}\" style=\"color: #000\">{{ctx.content}}</span><span class=\"mdl2icon mdl2-down inline-mdl2icon\" style=\"padding-right: 0px\"></span></button><ul class=\"{{css.dropDownMenuItems}}\" role=\"menu\"></ul></div>",
+            actionDropDown: "<div class=\"{{css.dropDownMenu}}\"><button class=\"btn btn-default dropdown-toggle\" type=\"button\" style=\"text-align: left; padding: 3px; height: 34px\" data-toggle=\"dropdown\"><span class=\"{{css.dropDownMenuText}}\" style=\"color: #000\">{{ctx.content}}</span><span class=\"mdl2icon mdl2-down inline-mdl2icon\" style=\"padding: 0 0 0 2px\"></span></button><ul class=\"{{css.dropDownMenuItems}}\" role=\"menu\"></ul></div>",
             actionDropDownItem: "<li><a data-action=\"{{ctx.action}}\" class=\"{{css.dropDownItem}} {{css.dropDownItemButton}}\">{{ctx.text}}</a></li>",
             actionDropDownCheckboxItem: "<li><label class=\"{{css.dropDownItem}}\"><input name=\"{{ctx.name}}\" type=\"checkbox\" value=\"1\" class=\"{{css.dropDownItemCheckbox}}\" {{ctx.checked}} /> {{ctx.label}}</label></li>",
             actions: "<div class=\"{{css.actions}}\"></div>",
             body: "<tbody></tbody>",
             cell: "<td class=\"{{ctx.css}}\" style=\"{{ctx.style}}\">{{ctx.content}}</td>",
             footer: "<div id=\"{{ctx.id}}\" class=\"{{css.footer}}\"><div class=\"row\"><div class=\"col-sm-6 col-md-6 col-xs-12 paginationBar\"><p class=\"{{css.pagination}}\"></p></div><div class=\"col-sm-6 col-md-6 col-xs-12 infoBar\"><p class=\"{{css.infos}}\"></p></div></div></div>",
-            header: "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-md-12 col-sm-12 actionBar\" style=\"text-align: right; padding-right: 0px\"><div class=\"col-lg-10 col-md-9 col-sm-9 col-xs-8\"><p class=\"{{css.search}}\"></p></div><div class=\"col-lg-2 col-md-3 col-sm-3 col-xs-4 text-center\" style=\"padding-left: 0px; padding-right: 0px\"><p class=\"{{css.actions}}\"></p></div></div></div></div>",
-            headerCell: "<th data-column-id=\"{{ctx.column.id}}\" class=\"{{ctx.css}}\" style=\"{{ctx.style}}\"><a href=\"javascript:void(0);\" class=\"{{css.columnHeaderAnchor}} {{ctx.sortable}}\"><span class=\"colour-dpred {{css.columnHeaderText}}\">{{ctx.column.text}}</span>{{ctx.icon}}</a></th>",
+            header: "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 actionBar\" style=\"text-align: right; padding-right: 0px\"><div class=\"col-lg-11 col-md-10 col-sm-10 col-xs-9\" style=\"padding: 0 0 0 15px; margin-left: -15px\"><p class=\"{{css.search}}\"></p></div><div class=\"col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center\" style=\"padding: 0px\"><p class=\"{{css.actions}}\"></p></div></div></div></div>",
+            headerCell: "<th data-column-id=\"{{ctx.column.id}}\" class=\"{{ctx.css}}\" style=\"{{ctx.style}}; border-bottom: 2px solid rgba(174,31,31,0.75); padding-top: 4px; padding-bottom: 2px\"><a href=\"javascript:void(0);\" class=\"{{css.columnHeaderAnchor}} {{ctx.sortable}}\"><span class=\"colour-dpred {{css.columnHeaderText}}\">{{ctx.column.text}}</span>{{ctx.icon}}</a></th>",
             icon: "<span class=\"{{css.icon}} {{ctx.iconCss}}\"></span>",
             infos: "<div class=\"{{css.infos}}\" style=\"height: 42.2px; line-height: 42.2px; vertical-align: middle\">{{lbl.infos}}</div>",
             loading: "<tr><td colspan=\"{{ctx.columns}}\" class=\"loading\">{{lbl.loading}}</td></tr>",
@@ -1372,7 +1372,7 @@
             paginationItem: "<li class=\"{{ctx.css}}\"><a data-page=\"{{ctx.page}}\" class=\"{{css.paginationButton}}\">{{ctx.text}}</a></li>",
             rawHeaderCell: "<th class=\"{{ctx.css}}\">{{ctx.content}}</th>", // Used for the multi select box
             row: "<tr{{ctx.attr}}>{{ctx.cells}}</tr>",
-            search: "<div class=\"{{css.search}}\"><div class=\"input-group\"><div class=\"input-group-btn\"><i id=\"btnSearchClear\" class=\"btn btn-default mdl2icon mdl2-search btn-mdl2icon\" style=\"margin: 0px; top: 0; width: 35px\"></i></div><input type=\"text\" id=\"txtSearch\" style=\"width: 100%\" class=\"{{css.searchField}}\" placeholder=\"{{lbl.search}}\" /></div></div>",
+            search: "<div class=\"{{css.search}}\" style=\"margin: 0\"><div class=\"input-group\"><div class=\"input-group-btn\"><i class=\"btn btn-default mdl2icon mdl2-search btn-mdl2icon disabled\" style=\"margin: 0px; top: 0; width: 35px; background-color: #d9d9d9\"></i></div><input type=\"text\" id=\"txtSearch\" style=\"width: 100%\" class=\"{{css.searchField}}\" placeholder=\"{{lbl.search}}\"/></div></div>",
             select: "<input name=\"select\" type=\"{{ctx.type}}\" class=\"{{css.selectBox}}\" value=\"{{ctx.value}}\" {{ctx.checked}} />"
         }
     };

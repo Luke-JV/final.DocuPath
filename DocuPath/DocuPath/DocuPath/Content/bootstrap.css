@@ -9789,6 +9789,7 @@ a.cal-event-week {
     }
 
     .homepage-grid {
+        max-height: 100%;
         grid-gap: 50px;
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "decoration menu";
@@ -10183,7 +10184,7 @@ a.cal-event-week {
         display: inline-block;
         margin: 0 20px 0 0;
         vertical-align: middle;
-        width: 100%;
+        width: auto;
     }
 
         .bootgrid-header .search .glyphicon,
@@ -10296,7 +10297,13 @@ a.cal-event-week {
 
     .bootgrid-table th:hover,
     .bootgrid-table th:active {
-        background: #fafafa;
+        background-color: rgba(174,31,31,0.20);
+        color: #fff;
+    }
+
+    .bootgrid-table > .column-header-anchor:hover {
+        background-color: rgba(174,31,31,0.20);
+        color: #fff;
     }
 
     .bootgrid-table td {
@@ -10368,7 +10375,7 @@ a.cal-event-week {
 }
 
 .dna-decor {
-    margin-top: -15px;
+    margin-top: -25px;
     z-index: 2000;
     /*display: table;
     margin-left: auto;
@@ -10376,6 +10383,7 @@ a.cal-event-week {
     width: 300px;
     height: 100%;
     perspective: 2000px;
+    margin: auto;
     /*transform-style: preserve-3d;*/
 }
 
@@ -10817,6 +10825,35 @@ a.cal-event-week {
 }
 .ele-decor-broken :nth-of-type(61) {
   animation-delay: -30.5s;
+}
+
+/*#endregion */
+
+/*#region HOMEPAGE TOASTS: */
+
+.toast-heading {
+    font-family: 'U.S. 101';
+    font-size: 40pt;
+    line-height: 1;
+    font-weight: normal;
+    color: rgba(174,31,31,1);
+}
+
+.toast-divider {
+    width: 100%;
+    height: 1px;
+    background-color: #cccccc;
+}
+
+.toast-subheading {
+    width: 50%;
+    margin: auto;
+    text-wrap: normal;
+    font-family: 'Segoe UI';
+    font-size: 15pt;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #000;
 }
 
 /*#endregion */

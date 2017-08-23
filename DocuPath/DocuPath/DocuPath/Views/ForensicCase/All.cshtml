@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<DocuPath.DataLayer.FORENSIC_CASE>
-
-@{
-    ViewBag.Title = "All";
-}
+@{ ViewBag.Title = "All"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -19,18 +16,26 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-one">
+        <div class="page-buttons-subgrid buttons-two">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
-            <div grid-area="btn1"></div>
-            <form class="minimalform" action="#" method="post" style="margin-top: 2px"> @* TODO: Link form action to ADD FC *@
-                <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD FORENSIC CASE"></button>
-            </form>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px"> @* TODO: Link form action to ADD FC *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD FORENSIC CASE"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnCondense" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-collapse btn-mdl2icon" onclick="collapseTable()" data-toggle="tooltip" title="CONDENSE TABLE"></button>
+                    <button id="btnExpand" class="btn hidden btn-default btn-generic btn-page-action mdl2icon mdl2-expand btn-mdl2icon" onclick="expandTable()" data-toggle="tooltip" title="EXPAND TABLE"></button>
+                </form>
+            </div>
             <div></div>
             <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
         </div>
     </div>
 </div>
-
+@* ASPTABLE WITH ALL FORENSIC CASES: *@
 <table id="allFC" class="table table-striped table-hover">
     <thead>
         <tr>
@@ -79,40 +84,15 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateClosed)
                     </td>
-                    @* DEPRECATED ACTION ICONS CODE RETAINED UNTIL FURTHER NOTICE: *@
-                    @*<td>
-                            @switch (item.STATUS.StatusValue)
-                            {
-                                case "Locked":
-                                    @Html.ActionLink(" ", "Details", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
-                                    @Html.ActionLink(" ", null, new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-unlock colour-dpblack", @datatoggle = "tooltip", @title = "Unlock" })
-                                    break;
-                                case "Active":
-                                    @Html.ActionLink(" ", "Details", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
-                                    @Html.ActionLink(" ", "Edit", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-edit colour-dpblack", @datatoggle = "tooltip", @title = "Edit" })
-                                    @Html.ActionLink(" ", "Delete", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-delete colour-dpblack", @datatoggle = "tooltip", @title = "Delete" })
-                                    @Html.ActionLink(" ", null, new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-lock colour-dpblack", @datatoggle = "tooltip", @title = "Lock" })
-                                    @Html.ActionLink(" ", "Migrate", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-migrate colour-dpblack", @datatoggle = "tooltip", @title = "Migrate" })
-                                    break;
-                                case "Pending":
-                                    @Html.ActionLink(" ", "Details", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
-                                    break;
-                                default:
-                                    @Html.ActionLink(" ", "Details", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
-                                    @Html.ActionLink(" ", "Edit", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-edit colour-dpblack", @datatoggle = "tooltip", @title = "Edit" })
-                                    @Html.ActionLink(" ", "Delete", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-delete colour-dpblack", @datatoggle = "tooltip", @title = "Delete" })
-                                    @Html.ActionLink(" ", null, new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-lock colour-dpblack", @datatoggle = "tooltip", @title = "Lock" })
-                                    @Html.ActionLink(" ", "Migrate", new { id = item.ForensicCaseID }, new { @class = "mdl2icon mdl2-migrate colour-dpblack", @datatoggle = "tooltip", @title = "Migrate" })
-                                    break;
-                            }
-                        </td>*@
-                </tr>}
+                </tr>
+            }
         }
     </tbody>
 </table>
 
 @section Scripts {
 @Scripts.Render("~/bundles/bootgrid")
+@Scripts.Render("~/bundles/moment")
 @Scripts.Render("~/bundles/materialdatetime")
 
 <script id="loadBootgrid" type="text/javascript">
@@ -158,30 +138,19 @@
             // Enable tooltips:
             $('[data-toggle="tooltip"]').tooltip();
 
-            // Handle hovering of search button for textbox clearing:
-            $("#btnSearchClear").hover(function () {
-                $(this)
-                    .style.color = "rgba(174,31,31,1)"
-                    .removeClass("mdl2-search")
-                    .addClass("mdl2-cancel");
-            }, function () {
-                $(this)
-                    .style.color = "initial"
-                    .removeClass("mdl2-cancel")
-                    .addClass("mdl2-search");
+            // Expanding ASPTable:
+            $("#btnCondense").click(function () {
+                $("#btnCondense").addClass("hidden");
+                $("#btnExpand").removeClass("hidden");
+                $("#allFC").addClass("table-condensed");
             });
 
-            // Clear search textbox on click:
-            $("#btnSearchClear").click(function () { document.getElementById("txtSearch").value = "" });
-
-
-            //$(function () {
-            //    $("#allFC").tooltip({
-            //        selector: "[data-toggle='tooltip']"
-            //    });
-            //});
+            // Condensing ASPTable:
+            $("#btnExpand").click(function () {
+                $("#btnCondense").removeClass("hidden");
+                $("#btnExpand").addClass("hidden");
+                $("#allFC").removeClass("table-condensed");
+            });
         });
 </script>
-
-
     }

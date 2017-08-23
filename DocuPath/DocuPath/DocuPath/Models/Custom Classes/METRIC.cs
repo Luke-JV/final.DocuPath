@@ -5,7 +5,7 @@ using System.Web;
 
 namespace DocuPath.Models.Custom_Classes
 {
-    public partial class METRIC
+    public class METRIC
     {
         // Members:
         private string mMetricName;

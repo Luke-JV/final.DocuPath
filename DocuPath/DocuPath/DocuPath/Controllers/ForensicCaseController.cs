@@ -1,22 +1,23 @@
-﻿using System;
+﻿using DocuPath.DataLayer;
+using DocuPath.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DocuPath.DataLayer;
-using DocuPath.Models;
 
 namespace DocuPath.Controllers
 {
     public class ForensicCaseController : Controller
     {
+        
         DocuPathEntities db = new DocuPathEntities();
         // GET: ForensicCase
         public ActionResult Index()
         {
             return View();
         }
-
+        //----------------------------------------------------------------------------------------------//
         #region CREATES:
         // GET: ForensicCase/Create
         public ActionResult Create()
@@ -40,7 +41,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-
+        //----------------------------------------------------------------------------------------------//
         #region READS:
         // GET: ForensicCase/All
         public ActionResult All()
@@ -62,7 +63,7 @@ namespace DocuPath.Controllers
             return View();
         }
         #endregion
-
+        //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         // GET: ForensicCase/Edit/5
         public ActionResult Edit(int id)
@@ -86,7 +87,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-
+        //----------------------------------------------------------------------------------------------//
         #region DELETES:
         // GET: ForensicCase/Delete/5
         public ActionResult Delete(int id)
@@ -110,7 +111,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-
+        //----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
 
         #endregion

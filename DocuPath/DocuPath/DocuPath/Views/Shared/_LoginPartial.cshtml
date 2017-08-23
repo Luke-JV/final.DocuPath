@@ -2,15 +2,13 @@
 @using DocuPath.DataLayer;
 @using DocuPath.Models;
 
-@{ 
-    var currentUser = VERTEBRAE.getCurrentUser();
-}
+@{ var currentUser = VERTEBRAE.getCurrentUser(); }
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
     @Html.AntiForgeryToken()
-
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" style="background-color: #979797; border-bottom: 1px solid black; border-radius: 25px; padding-left: 5px; padding-right: 5px; color: #373737" data-toggle="dropdown"><i class="mdl2icon mdl2-individual inline-mdl2icon" style="color: #fff"></i>MY PROFILE<i class="mdl2icon mdl2-down inline-mdl2icon" style="color: rgba(174,31,31,1)"></i></a>
@@ -27,9 +25,9 @@
                             <div grid-area="divider" class="divider" style="margin: 0px"></div>
                             <div grid-area="btn_view_password" class="grid account-btns-subgrid">
                                 <!-- TODO: link to view current profile -->
-                                <form action="#" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">View Profile</button></form>
+                                <form action="javascript:void(0)" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">View Profile</button></form>
                                 <!-- TODO: link to edit password -->
-                                <form action="#" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">Change Password</button></form>
+                                <form action="javascript:void(0)" method="post"><button type="submit" class="btn btn-default btn-sm fullwidth">Change Password</button></form>
                             </div>
                             <!-- TODO: link to logout -->
                             <form grid-area="btnLogout" action="javascript:document.getElementById('logoutForm').submit()" method="post"><button type="submit" class="btn btn-default btn-generic btn-sm fullwidth">Log Out</button></form>
