@@ -1,0 +1,96 @@
+﻿@model IEnumerable<DocuPath.DataLayer.LEGACY_CASE>
+@{ ViewBag.Title = "All"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("Legacy Cases", "All") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-lc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ALL LEGACY CASES</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                    @* TODO: Link form action to ADD LC *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD LEGACY CASE"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnCondense" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-collapse btn-mdl2icon" onclick="collapseTable()" data-toggle="tooltip" title="CONDENSE TABLE"></button>
+                    <button id="btnExpand" class="btn hidden btn-default btn-generic btn-page-action mdl2icon mdl2-expand btn-mdl2icon" onclick="expandTable()" data-toggle="tooltip" title="EXPAND TABLE"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LegacyCaseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LegacyDRNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BriefDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateClosed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LegacyCaseID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LegacyDRNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BriefDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAdded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateClosed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

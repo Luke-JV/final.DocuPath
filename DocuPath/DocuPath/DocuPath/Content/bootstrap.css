@@ -2257,11 +2257,46 @@ fieldset[disabled] .btn {
 }
 
 .btn-default {
-    
     color: #000;
     background-color: #d9d9d9;
+    border-color: #cccccc;    
+}
+
+.btn-neuron {
+    width: 75px;
+    height: 28px;
+    font-size: 10pt !important;
+    margin-left: 5px !important;
+    text-transform: uppercase;
+    font-family:'Segoe UI';
+    background-color: #333333;
+    color: #fff;
+    margin-top: 0px;
+    margin-right: 0px;
     border-color: #cccccc;
-    
+}
+
+    .btn-neuron:hover {
+        font-weight: 700;
+        color: #fff !important;
+        border-radius: 14px !important;
+    }
+
+.btn-neuron-dark {
+    width: 40px !important;
+}
+
+.btn-neuron-red {
+    background-color: rgba(174, 31, 31, 1) !important;
+}
+
+.btn-neuron-green {
+    width: 75px;
+    height: 28px;
+    margin-left: 5px !important;
+    background-color: #468847 !important;
+    font-size: 10pt !important;
+    text-transform: uppercase;
 }
 
 .login-dropdown {
@@ -9752,10 +9787,6 @@ a.cal-event-week {
         grid-template-areas: "icon hdrtxt closebtn";
     }
 
-        /*.sidenav-hdr-subgrid div {
-            border: 1px solid white;
-        }*/
-
     .sidenav-notification-grid {
         grid-gap: 2.5px;
         grid-template-columns: 1fr;
@@ -9771,11 +9802,6 @@ a.cal-event-week {
         grid-template-rows: 24px;
         grid-template-areas:    "icon title timestamp";
     }
-
-        /*.sidenav-notification-grid div {
-            border: 1px solid black;
-        }*/
-
 
     .content-subgrid {
         width: 100%;
@@ -9799,7 +9825,7 @@ a.cal-event-week {
         grid-area: "menu";
         margin: auto;
         transition: all 1s;
-        width: 300px;
+        width: 325px;
     }
 
     .page-hdr {
@@ -10377,11 +10403,10 @@ a.cal-event-week {
 .dna-decor {
     margin-top: -25px;
     z-index: 2000;
-    /*display: table;
-    margin-left: auto;
-    margin-right: auto;*/
-    width: 300px;
-    height: 100%;
+    width: 325px;
+    overflow: hidden;
+    height: calc(100vh - 50px);
+    padding: 0 12px 0 12px;
     perspective: 2000px;
     margin: auto;
     /*transform-style: preserve-3d;*/
@@ -10847,7 +10872,7 @@ a.cal-event-week {
 
 .toast-subheading {
     width: 50%;
-    margin: auto;
+    margin: 0 auto 20px auto;
     text-wrap: normal;
     font-family: 'Segoe UI';
     font-size: 15pt;

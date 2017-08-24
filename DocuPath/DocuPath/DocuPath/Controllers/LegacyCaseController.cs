@@ -1,4 +1,5 @@
 ﻿using DocuPath.DataLayer;
+using DocuPath.Models;
 using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,8 @@ namespace DocuPath.Controllers
         {
             return View();
         }
-
-        // GET: LegacyCase/Details/5
-        public ActionResult Details(int id)
-        {
-            LegacyCaseViewModel model = new LegacyCaseViewModel();
-            model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
-            model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
-            
-            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
-            return View(model);
-        }
-
+        //----------------------------------------------------------------------------------------------//
+        #region CREATES:
         // GET: LegacyCase/Create
         public ActionResult Create()
         {
@@ -49,7 +40,36 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region READS:
+        // GET: LegacyCase/All
+        public ActionResult All()
+        {
+            try
+            {
+                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                return View(db.LEGACY_CASE.ToList());
+            }
+            catch (Exception x)
+            {
+                return RedirectToAction("Error", "Home", x.Message);
+            }
+        }
 
+        // GET: LegacyCase/Details/5
+        public ActionResult Details(int id)
+        {
+            LegacyCaseViewModel model = new LegacyCaseViewModel();
+            model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
+            model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
+            
+            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
+            return View(model);
+        }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region UPDATES:
         // GET: LegacyCase/Edit/5
         public ActionResult Edit(int id)
         {
@@ -71,7 +91,9 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
-
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region DELETES:
         // GET: LegacyCase/Delete/5
         public ActionResult Delete(int id)
         {
@@ -93,5 +115,10 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region NON-CRUD ACTIONS:
+
+        #endregion
     }
 }

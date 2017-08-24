@@ -593,6 +593,7 @@
     <Content Include="Views\ForensicCase\All.cshtml" />
     <Content Include="Views\LegacyCase\test.cshtml" />
     <Content Include="Views\ExternalReviewCase\All.cshtml" />
+    <Content Include="Views\LegacyCase\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,10 +25,7 @@
     @Scripts.Render("~/bundles/modernizr")
 
     @{ 
-            ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-
-       
-
+        ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
         // js function -> VERTEBRAE.HandleNotification();
     }
 
@@ -83,17 +80,17 @@
                                             <div class="sidenav-button-bar">
                                                 @if (neuron.NotificationTypeID == 1)
                                                 {
-                                                    <input type="submit" id="n_btnOK_@neuron.NotificationID" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnOK_@neuron.NotificationID" value="OK" class="btn btn-neuron btn-neuron-dark btn-xs pull-right"/>
                                                 }
                                                 else if (neuron.NotificationTypeID == 2)
                                                 {
-                                                    <input type="submit" id="n_btnAcpt_@neuron.NotificationID" value="Accept" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                                    <input type="submit" id="n_btnRjct_@neuron.NotificationID" value="Reject" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnRjct_@neuron.NotificationID" value="Reject" class="btn btn-neuron btn-neuron-red btn-xs pull-right"/>
+                                                    <input type="submit" id="n_btnAcpt_@neuron.NotificationID" value="Accept" class="btn btn-neuron btn-neuron-green btn-xs pull-right"/>
                                                 }
                                                 else if (neuron.NotificationTypeID == 3)
                                                 {
-                                                    <input type="submit" id="n_btnAprv_@neuron.NotificationID" value="Approve" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                                    <input type="submit" id="n_btnDeny_@neuron.NotificationID" value="Deny" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
+                                                    <input type="submit" id="n_btnDeny_@neuron.NotificationID" value="Deny" class="btn btn-neuron btn-neuron-red btn-xs pull-right"/>
+                                                    <input type="submit" id="n_btnAprv_@neuron.NotificationID" value="Approve" class="btn btn-neuron btn-neuron-green btn-xs pull-right"/>
                                                 }
                                             </div>
                                         </div>
@@ -374,7 +371,7 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void('0')" class="dropdown-toggle neuron" onclick="openNav()" style="padding: 11px"><span id="neuronicon" class="mdl2icon mdl2-neuronnew inline-mdl2icon" style="font-size: 18pt; font-weight: normal; color: white"></span><span class="badge active" id="neuronBadge" style="margin-left: -6px">4</span></a>
+                                <a href="javascript:void('0')" class="dropdown-toggle neuron" onclick="openNav()" style="padding: 11px"><span id="neuronicon" class="mdl2icon mdl2-neuronnew inline-mdl2icon" style="font-size: 18pt; font-weight: normal; color: white"></span><span class="badge active" id="neuronBadge" style="margin-left: -6px">@ViewBag.Neurons.Count</span></a>
                             </li>
                         </ul>
                         @Html.Partial("_LoginPartial")
@@ -525,13 +522,21 @@
     @* NOTIFICATION HANDLING: *@
     <script type="text/javascript">
         $(document).ready(function () {
+            var $badge = $("#neuronBadge"),
+            count = parseInt($badge.text()),
+            active = $("#neuronBadge").hasClass('active');
 
-            var db = 
+            if (!$badge.hasClass("active")) {
+                $("#noNotifications").show("slow")
+            }
 
-            // foreach element in neuronbody
-            //{
-            //  if
-            //}
+            if ($badge.text() == "0") {
+                $badge.hide("slow"),
+                $("#neuronicon").removeClass("mdl2-neuronnew"),
+                $("#neuronicon").addClass("mdl2-neuron")
+            } else {
+                $badge.show("slow")
+            }
 
         // TODO: jQuery to handle each individual notification, loop-style...
         $("#noNotifications").hide();
@@ -590,9 +595,7 @@
         } else {
             $badge.show("slow")
         }
-        //$badge(count == 0 ? $badge.hide("slow") : $badge.show("slow"));
     });
     </script>
-
 </body>
 </html>
