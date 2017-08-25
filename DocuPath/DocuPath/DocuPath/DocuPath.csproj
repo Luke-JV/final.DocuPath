@@ -605,6 +605,7 @@
     <Content Include="Views\ExternalReviewCase\All.cshtml" />
     <Content Include="Views\LegacyCase\All.cshtml" />
     <Content Include="Views\Media\All.cshtml" />
+    <Content Include="Views\ServiceProvider\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -612,7 +613,6 @@
     <Folder Include="Views\ContentTag\" />
     <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />
-    <Folder Include="Views\ServiceProvider\" />
     <Folder Include="Views\ServiceRequest\" />
   </ItemGroup>
   <ItemGroup>

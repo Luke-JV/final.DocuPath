@@ -28,7 +28,7 @@
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
-                    @* TODO: Link form action to ADD MEDIA *@
+                    @* TODO: Link form action to HANDLE INBOUND MEDIA *@
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-inbound btn-mdl2icon" type="submit" data-toggle="tooltip" title="HANDLE INBOUND MEDIA"></button>
                 </form>
             </div>
@@ -55,9 +55,9 @@
             <th data-id="identifier" data-column-id="MediaID" data-visible="false" data-identifier="true" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.MediaID)
             </th>
-            <td data-column-id="thumbnail" class="colour-dpred" data-sortable="false">
+            <th data-column-id="thumbnail" class="colour-dpred" data-sortable="false">
                 @Html.DisplayName("Thumbnail")
-            </td>
+            </th>
             <th data-column-id="caption" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.MediaCaption)
             </th>
@@ -86,17 +86,16 @@
     <tbody>
         @foreach (var item in Model)
         {
+            imgHTML = "<img src='@Url.Content(item.MediaLocation)' class='media-thumb thumbsize-normal' />";
             if (item.StatusID != 2)
             {
-                imgHTML += "<img src='@item.MediaLocation' class='media-thumb thumbsize-normal' />";
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.MediaID)
                     </td>
-
                     <td>
+                      @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
                         @imgHTML
-                        @{ imgHTML = ""; }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MediaCaption)
@@ -130,6 +129,7 @@
                     </td>*@
                 </tr>
             }
+            imgHTML = "";
         }
     </tbody>
 </table>
