@@ -14,21 +14,15 @@
     </style>
     <script type="text/javascript">document.documentElement.className = 'js';</script>
     @*<script src="jquery.maskedinput.js" type="text/javascript"></script>*@
-    @Styles.Render("~/Content/css")
-    @*@if (loggedinuser == null)
-        {
-            @Styles.Render("~/Content/css")
-        } else if (loggedinuser.uipref == 1)
-        {
-             /**/
-        }*@
-    @Scripts.Render("~/bundles/modernizr")
-
-    @{ 
+    @if (Request.IsAuthenticated)
+    {
         ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-        // js function -> VERTEBRAE.HandleNotification();
+        var currentUser = VERTEBRAE.getCurrentUser();
+        if (currentUser.DarkUIPref == 1) { @Styles.Render("~/Content/css") }
+        else { @Styles.Render("~/Content/css") }
     }
-
+    else { @Styles.Render("~/Content/css") }
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="grid main-page-grid">
     <div id="NEURONsidenav" class="sidenav grid sidenav-grid" grid-area="neuron">
@@ -101,179 +95,6 @@
                     }
                 }
             }
-
-
-            @*<div id="N1" class="grid sidenav-notification-grid sidenav-notification border-generic">
-                <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
-                    <div>
-                        <span class="mdl2icon mdl2-info neuron-mdl2icon"></span>
-                    </div>
-                    <div grid-area="title" class="sidenav-notification-title">Incoming Migrated Forensic Case</div>
-                    <div grid-area="timestamp" class="sidenav-notification-timestamp">
-                        <span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 02 Jun 12:34
-                    </div>
-                </div>
-                <div grid-area="summary" class="sidenav-notification-summary">A Forensic Case has been migrated to you.</div>
-                <div grid-area="detail" class="panel-group" id="Neuron1">
-                    <div class="modal-help-panel">
-                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron1Details" data-parent="#Neuron1">
-                            View Details &amp; Actions
-                            <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                        </div>
-                        <div id="Neuron1Details" class="panel-collapse collapse sidenav-notification-detail">
-                            <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
-                                User
-                                <kbd>Piet Pompies</kbd> has migrated authorship of a Forensic Case to you. The Forensic Case that was migrated is
-                                <kbd>DR256/2017</kbd>. The following message was provided: "
-                                <kbd>Still waiting for XYZ from ABC, contact John Smith.</kbd>".
-                            </p>
-                            <div class="panel-footer" data-parent="#Neuron1">
-                                <div class="sidenav-button-bar">
-                                    <input type="submit" id="N1OK" value="OK" class="btn btn-modal-generic btn-xs pull-right" style="margin-top: 0px" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-            @*<div id="N1" class="sidenav-notification border-generic">
-                    <div class="row" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-info" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
-                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">Incoming Migrated Forensic Case</div>
-                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 02 Jun 12:34</div>
-                    </div>
-                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-12">A Forensic Case has been migrated to you.</div>
-                    </div>
-                    <div class="panel-group" id="Neuron1">
-                        <div class="modal-help-panel">
-                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron1Details" data-parent="#Neuron1">
-                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                            </div>
-                            <div id="Neuron1Details" class="panel-collapse collapse sidenav-notification-detail">
-                                <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">User <kbd>Piet Pompies</kbd> has migrated authorship of a Forensic Case to you. The Forensic Case that was migrated is <kbd>DR256/2017</kbd>. The following message was provided: "<kbd>Still waiting for XYZ from ABC, contact John Smith.</kbd>".</p>
-                                <div class="panel-footer" data-parent="#Neuron1">
-                                    <div class="sidenav-button-bar">
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
-                                            <input type="submit" id="N1OK" value="OK" class="btn btn-modal-generic btn-xs" style="margin-top: 0px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div id="N2" class="sidenav-notification border-generic">
-                    <div class="row" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-approvedeny" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
-                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">New Authorisation Request</div>
-                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 12 Jun 18:31</div>
-                    </div>
-                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-12">A user has requested authorisation for a deletion.</div>
-                    </div>
-                    <div class="panel-group" id="Neuron2">
-                        <div class="modal-help-panel">
-                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron2Details" data-parent="#Neuron2">
-                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                            </div>
-                            <div id="Neuron2Details" class="panel-collapse collapse sidenav-notification-detail">
-                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
-                                    <li>User Piet Pompies has requested authorisation to delete a Forensic Case.</li>
-                                    <li>The Forensic Case to be deleted is DR20156/2017.</li>
-                                    <li>The reason provided is "Incorrect setup, need to restart this case.".</li>
-                                </ul>
-                                <div class="panel-footer" data-parent="#Neuron2">
-                                    <div class="sidenav-button-bar">
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col">
-                                            <input type="submit" id="N2Approve" value="Approve" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
-                                        </div>
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
-                                            <input type="button" id="N2Deny" value="Deny" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div id="N3" class="sidenav-notification border-generic">
-                    <div class="row" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-date" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
-                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">New Duty Roster Allocation</div>
-                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 18 Jun 09:12</div>
-                    </div>
-                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-12">You have been given a new Monthly Duty Roster Allocation.</div>
-                    </div>
-                    <div class="panel-group" id="Neuron3">
-                        <div class="modal-help-panel">
-                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron3Details" data-parent="#Neuron3">
-                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                            </div>
-                            <div id="Neuron3Details" class="panel-collapse collapse sidenav-notification-detail">
-                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
-                                    <li>Superser Jannie Jansen has assigned you a Duty Roster slot.</li>
-                                    <li>The assigned slot is Slot 1A on Mon, 26 Jun 2017.</li>
-                                    <li>Note that Slot 1A starts promptly at 07:30.</li>
-                                </ul>
-                                <div class="panel-footer" data-parent="#Neuron3">
-                                    <div class="sidenav-button-bar">
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col">
-                                            <input type="submit" id="N3Accept" value="Accept" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
-                                        </div>
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
-                                            <input type="button" id="N3Reject" value="Reject" class="btn btn-modal-generic btn-xs" style="margin-top: 0px; width: 75px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="N4" class="sidenav-notification border-generic">
-                    <div class="row" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-1" style="padding: 0px"><span class="mdl2icon mdl2-history" style="font-size: 13pt; margin-left: 10px; margin-top: 2.5px"></span></div>
-                        <div class="col-md-7 sidenav-notification-title" style="padding-left: 5px">Aged Cases Auto-Archived</div>
-                        <div class="col-md-4" style="text-align: right; font-size: 8pt; margin-top: 5.2px"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span> 22 Jun 10:08</div>
-                    </div>
-                    <div class="row sidenav-notification-summary" style="padding-left: 5px; padding-right: 5px">
-                        <div class="col-md-12">All aged Forensic Cases were successfully auto-archived.</div>
-                    </div>
-                    <div class="panel-group" id="Neuron4">
-                        <div class="modal-help-panel">
-                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#Neuron4Details" data-parent="#Neuron4">
-                                View Details &amp; Actions <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                            </div>
-                            <div id="Neuron4Details" class="panel-collapse collapse sidenav-notification-detail">
-                                <ul style="margin-bottom: 0px; margin-left: 15px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">
-                                    <li>For a full list of auto-archived Forensic Cases, access the Audit Trail and filter entries using the <kbd>Auto-Archive Operation</kbd> transaction type.</li>
-                                    <li>Aged Forensic Cases are all closed cases older than 11 years, based on the 5th day of the current calendar month.</li>
-                                    <li>Note that this occurs automatically on the 5th of every calendar month.</li>
-                                </ul>
-                                <div class="panel-footer" data-parent="#Neuron4">
-                                    <div class="sidenav-button-bar">
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-left: 0px"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col"></div>
-                                        <div class="col-md-3 sidenav-btn-col" style="padding-right: 0px">
-                                            <input type="submit" id="N4OK" value="OK" class="btn btn-modal-generic btn-xs" style="margin-top: 0px" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
         </div>
     </div>
 
@@ -514,7 +335,7 @@
 
     function closeNav() {
         document.getElementById("NEURONsidenav").style.width = "0";
-        document.getElementById("content").style.paddingRight = "0";
+        document.getElementById("content").style.paddingRight= "0";
         document.getElementById("topNav").style.paddingRight = "0";
     }
     </script>

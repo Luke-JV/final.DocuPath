@@ -1528,7 +1528,8 @@ th {
 .table thead > tr > td,
 .table tbody > tr > td,
 .table tfoot > tr > td {
-  padding: 8px;
+  /* initial padding: 8px*/
+    padding: 12px;
   line-height: 1.428571429;
   vertical-align: middle;
   border-top: 1px solid #dddddd;
@@ -1562,8 +1563,20 @@ th {
 .table-condensed thead > tr > td,
 .table-condensed tbody > tr > td,
 .table-condensed tfoot > tr > td {
-  padding-top: 3.5px;
-  padding-bottom: 3.5px;
+  /* initial padding: 3.5px */
+    padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.table-minimal thead > tr > th,
+.table-minimal tbody > tr > th,
+.table-minimal tfoot > tr > th,
+.table-minimal thead > tr > td,
+.table-minimal tbody > tr > td,
+.table-minimal tfoot > tr > td {
+  /* initial padding: new class */
+    padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .table-bordered {
@@ -2363,7 +2376,8 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
-  color: rgba(174,31,31,1);
+  /*color: rgba(174,31,31,1);*/
+  color: #fff;
   border-color: #adadad;
 }
 
@@ -8047,6 +8061,14 @@ td.visible-print {
     content: '\E974'
 }
 
+.mdl2-density:before {
+    content: '\E2B2';
+}
+
+.mdl2-inbound:before {
+    content: '\E19C';
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -8649,18 +8671,17 @@ td.visible-print {
     border: 1px solid #f2f2f2;
     margin-top: -5px;
     margin-bottom: -5px;
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
 }
 
-.mthumbsize-medium {
+.media-thumb-nopreview {
+    background-image: url(http://placehold.it/30x30.png);
+}
+
+.thumbsize-expanded {
     height: 80px;
     width: 80px;
-}
-
-.mthumbsize-large {
-    height: 150px;
-    width: 150px;
 }
 
 .media-filename {
@@ -9804,7 +9825,7 @@ a.cal-event-week {
     }
 
     .content-subgrid {
-        width: 100%;
+        width: auto;
         grid-gap: 0px;
         grid-template-columns: minmax(auto, 1fr);
         grid-template-rows: minmax(50.4px, 102.2px) 1fr minmax(50px, 150px);

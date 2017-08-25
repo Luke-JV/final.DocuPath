@@ -477,6 +477,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\2.1.Pyogenic_Brain_Abscess.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\3.1.Multiple_Myeloma_%28Calvaria%29.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\4.2.DCMO.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\5.2.Fibrolipoma.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\6.Liver_Cirrhosis.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\7.ORIF_Distal_Humerus.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\8.Pond_Fracture.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\9.Great_Arteries.JPG" />
+    <Content Include="Content\DocuPathRepositories\MEDIA_REPO\10.Arterial_Thrombosis_+_Spinal_Cord.JPG" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\Resources\CircuitryMotifLeft.png" />
@@ -594,12 +604,12 @@
     <Content Include="Views\LegacyCase\test.cshtml" />
     <Content Include="Views\ExternalReviewCase\All.cshtml" />
     <Content Include="Views\LegacyCase\All.cshtml" />
+    <Content Include="Views\Media\All.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AccessLevel\" />
     <Folder Include="Views\ContentTag\" />
-    <Folder Include="Views\Media\" />
     <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />
     <Folder Include="Views\ServiceProvider\" />

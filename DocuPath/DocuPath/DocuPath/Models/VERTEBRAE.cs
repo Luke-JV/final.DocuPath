@@ -115,5 +115,15 @@ namespace DocuPath.Models
                 return visionMetrics;
             }
         }
+        public static string ExtractMediaFileName(string inLocation)
+        {
+            string location = inLocation;
+            string filename = inLocation.Substring(inLocation.LastIndexOf('/',0));
+
+            if (filename == null)
+                return "File Name Null";
+            else
+                return filename;
+        }
     }
 }

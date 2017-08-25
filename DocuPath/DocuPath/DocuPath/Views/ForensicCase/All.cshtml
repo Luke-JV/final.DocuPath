@@ -26,8 +26,7 @@
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnCondense" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-collapse btn-mdl2icon" onclick="collapseTable()" data-toggle="tooltip" title="CONDENSE TABLE"></button>
-                    <button id="btnExpand" class="btn hidden btn-default btn-generic btn-page-action mdl2icon mdl2-expand btn-mdl2icon" onclick="expandTable()" data-toggle="tooltip" title="EXPAND TABLE"></button>
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
             <div></div>
@@ -134,23 +133,20 @@
 </script>
 
 <script id="onDomReady" type="text/javascript">
+        // Enable tooltips:
         $(document).ready(function () {
-            // Enable tooltips:
             $('[data-toggle="tooltip"]').tooltip();
+        });
 
-            // Expanding ASPTable:
-            $("#btnCondense").click(function () {
-                $("#btnCondense").addClass("hidden");
-                $("#btnExpand").removeClass("hidden");
-                $("#allFC").addClass("table-condensed");
-            });
-
-            // Condensing ASPTable:
-            $("#btnExpand").click(function () {
-                $("#btnCondense").removeClass("hidden");
-                $("#btnExpand").addClass("hidden");
-                $("#allFC").removeClass("table-condensed");
-            });
+        // Toggle Table Density:
+        $("#btnDensityToggle").click(function () {
+            var $target = $("#allFC");
+            var $condensed = "table-condensed";
+            var $minimal = "table-minimal"
+            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+            $("#btnDensityToggle").blur()
         });
 </script>
-    }
+}
