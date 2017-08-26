@@ -35,26 +35,26 @@
         </div>
     </div>
 </div>
-@* ASPTABLE WITH ALL FORENSIC CASES: *@
-<table id="allSP" class="table table-striped table-hover">
+@* ASPTABLE WITH ALL SERVICE PROVIDERS: *@
+<table id="allSP" class="table table-striped table-hover table-responsive">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="SPID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-headerCssClass="header-sizing" data-column-id="SPID" data-visible="false" data-identifier="true" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ServiceProviderID)
             </th>
-            <th data-column-id="companyName" class="colour-dpred">
+            <th data-column-id="companyName" data-headerCssClass="header-sizing" data-order="asc" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
-            <th data-column-id="companyTel" class="colour-dpred">
+            <th data-column-id="companyTel" data-headerCssClass="header-sizing" data-formatter="companyTel" data-sortable="false" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.CompanyTelNum)
             </th>
-            <th data-column-id="companyEmail" class="colour-dpred">
+            <th data-column-id="companyEmail" data-headerCssClass="header-sizing" data-formatter="companyEmail" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.CompanyEmail)
             </th>
-            <th data-column-id="repName" data-converter="dpdate" data-order="desc" class="colour-dpred">
+            <th data-column-id="repName" data-headerCssClass="header-sizing" data-converter="dpdate" class="colour-dpred">
                 @Html.DisplayName("Representative Name")
             </th>
-            <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
+            <th data-column-id="commands" data-headerCssClass="header-sizing" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -84,113 +84,6 @@
     </tbody>
 </table>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ServiceProviderID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TitleID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyTelNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyFaxNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyPhysicalAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CompanyPostalAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepFirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepLastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepJobDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepCellNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepWorkNum)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RepEmail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeactivated)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ServiceProviderID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TitleID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyTelNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyFaxNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyPhysicalAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CompanyPostalAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepFirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepLastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepJobDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepCellNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepWorkNum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RepEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeactivated)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>
-
 @section Scripts {
     @Scripts.Render("~/bundles/bootgrid")
     @Scripts.Render("~/bundles/moment")
@@ -199,37 +92,22 @@
     <script id="loadBootgrid" type="text/javascript">
         var grid = $("#allSP").bootgrid({
             caseSensitive: false,
-            converters: {
-                dpdate: {
-                    from: function (value) { return moment(value); },
-                    to: function (value) { return value.format("ddd D MMM YYYY"); }
-                }
-            },
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-                    }
-                 },
-                "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-                }
+                    return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceProvider/Details/" + row.SPID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ServiceProvider/Edit/" + row.SPID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ServiceProvider/Delete/" + row.SPID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
+                },
+                "companyTel": function (column, row) {
+                    var tel = row.companyTel.trim();
+                    return "<span style=\"font-weight: bold\"><span style=\"color: #666\">(" + tel.substring(0, 3) + ")</span> " + tel.substring(3, 6) + " " + tel.substring(6, 11) + "</span>";
+                },
+                "companyEmail": function (column, row) {
+                    var address = row.companyEmail.trim();
+                    var idxAt = address.search('@@');
+                    return "<span style=\"font-weight: bold; color: #666\">" + address.substring(0, idxAt) + "</span><span style=\"font-weight: bold\"><span style=\"color: rgba(174,31,31,1)\">" + address.substring(idxAt, idxAt + 1) + "</span>" + address.substr(idxAt + 1) + "</span>";
+                },
             }
         });
     </script>

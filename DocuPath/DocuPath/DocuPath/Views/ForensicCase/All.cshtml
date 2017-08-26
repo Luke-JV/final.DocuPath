@@ -47,8 +47,11 @@
             <th data-column-id="status" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.StatusID)
             </th>
-            <th data-column-id="FCDR" data-cssClass="table-large-identifier" data-formatter="drnumbers" class="colour-dpred">
+            <th data-column-id="FCDR" data-formatter="drnumbers" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ForensicDRNumber)
+            </th>
+            <th data-column-id="briefDesc" class="colour-dpred">
+                @Html.DisplayNameFor(model => model.BriefDescription)
             </th>
             <th data-column-id="dateAdded" data-converter="dpdate" data-order="desc" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.DateAdded)
@@ -74,8 +77,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
                     </td>
-                    <td class="table-large-identifier">
+                    <td>
                         @Html.DisplayFor(modelItem => item.ForensicDRNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BriefDescription)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)

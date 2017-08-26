@@ -11,6 +11,8 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class CONTENT_TAG
     {
@@ -20,12 +22,18 @@ namespace DocuPath.DataLayer
             this.CASE_COD_ESTIMATION = new HashSet<CASE_COD_ESTIMATION>();
             this.MEDIA = new HashSet<MEDIA>();
         }
-    
+
+        [DisplayName("ID")]
         public int ContentTagID { get; set; }
+        [DisplayName("Category")]
         public int TagCategoryID { get; set; }
+        [DisplayName("Subcategory")]
         public int TagSubCategoryID { get; set; }
+        [DisplayName("Condition")]
         public int TagConditionID { get; set; }
+        [DisplayName("Tag Code")]
         public string ContentTagCode { get; set; }
+        [DisplayName("Tag Text")]
         public string ContentTagText { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1293,7 +1293,7 @@
          **/
         labels: {
             all: "All",
-            infos: "Showing {{ctx.start}} to {{ctx.end}} of {{ctx.total}} entries",
+            infos: "Showing Items: {{ctx.start}} to {{ctx.end}} of {{ctx.total}}",
             loading: "Loading...",
             noResults: "No results found!",
             refresh: "Refresh",

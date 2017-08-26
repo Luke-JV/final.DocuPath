@@ -1528,8 +1528,10 @@ th {
 .table thead > tr > td,
 .table tbody > tr > td,
 .table tfoot > tr > td {
+  padding-left: 5px;
   /* initial padding: 8px*/
-    padding: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   line-height: 1.428571429;
   vertical-align: middle;
   border-top: 1px solid #dddddd;
@@ -1563,9 +1565,10 @@ th {
 .table-condensed thead > tr > td,
 .table-condensed tbody > tr > td,
 .table-condensed tfoot > tr > td {
+  padding-left: 5px;
   /* initial padding: 3.5px */
-    padding-top: 7px;
-  padding-bottom: 7px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .table-minimal thead > tr > th,
@@ -1574,8 +1577,9 @@ th {
 .table-minimal thead > tr > td,
 .table-minimal tbody > tr > td,
 .table-minimal tfoot > tr > td {
+  padding-left: 5px;
   /* initial padding: new class */
-    padding-top: 2px;
+  padding-top: 2px;
   padding-bottom: 2px;
 }
 
@@ -1927,6 +1931,36 @@ input[type="number"]::-webkit-inner-spin-button {
     font-family: 'Consolas';
     font-weight: bold;
     font-size: 14pt;
+}
+
+.table-critical-data {
+    font-size: 9pt;
+    text-align: justify;
+    text-justify: auto;
+    white-space: normal;
+}
+
+.table-timestamp {
+    font-weight: bold;
+}
+
+.table-timestamp:before {
+  padding: 0 5px 0 0;
+  font-weight: normal;
+  color: #999;
+  vertical-align:central;
+  font-family: 'Segoe UI';
+  content: "@";
+}
+
+.table-timestamp:after {
+  padding: 0 0 0 5px;
+  font-weight: normal;
+  color: #999;
+  vertical-align:central;
+  font-family: 'Segoe MDL2 Assets';
+  font-size: 70%;
+  content: "\E26B";
 }
 
 .emphasis-text {
@@ -7358,7 +7392,6 @@ td.visible-print {
     color: #fff;
 }
 
-
 .display-initials-faded {
     text-align: center;
     vertical-align: middle;
@@ -8913,7 +8946,7 @@ td > img {
     right: 20px;
     width: 92px;
     height: 42px;
-    z-index: 250;
+    z-index: 98;
     display: none;
     color: #ffffff;
     border-radius: 5px;
@@ -9733,7 +9766,7 @@ a.cal-event-week {
 		border-radius: 100%;
 		border: 1.5px solid grey;
 		background-color: rgba(174,31,31,1);
-		font-size: 21pt;
+		font-size: 19pt;
 		text-align: center;
 		vertical-align: middle;
 		line-height: 45px;
@@ -9924,6 +9957,11 @@ a.cal-event-week {
 		text-align: center;
 		padding-top: 3px;
 		justify-content: center;
+	}
+
+    .buttons-none {
+		grid-template-columns: 54.01px 1fr 84.38px;
+        grid-template-areas: "left blank right";
 	}
 
 	.buttons-one {
@@ -10132,6 +10170,11 @@ a.cal-event-week {
 		justify-content: center;
 	}
 
+    .buttons-none {
+		grid-template-columns: 54.01px 1fr 95px;
+        grid-template-areas: "left blank right";
+	}
+
 	.buttons-one {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, 45px) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 blank right";
@@ -10235,6 +10278,10 @@ a.cal-event-week {
     margin: 15px 0;
 }
 
+.bootgrid-footer {
+    margin-bottom: 55px;
+}
+
     .bootgrid-header a,
     .bootgrid-footer a {
         outline: 0;
@@ -10274,6 +10321,11 @@ a.cal-event-week {
     .bootgrid-footer .infoBar {
         text-align: right;
     }
+
+.paginationBar > a.button,
+.pagination > a.button {
+    color: #666 !important;
+}
 
     @media (max-width: 767px) {
         .bootgrid-footer .infoBar,
@@ -10320,12 +10372,20 @@ a.cal-event-week {
                 }
 
 .bootgrid-table {
-    table-layout: fixed;
+    table-layout: auto;
 }
 
     .bootgrid-table a {
         outline: 0;
     }
+
+.table-display-initials {
+    font-family: 'Consolas';
+    font-weight: bold;
+    font-size: 14pt;
+    display: table;
+    margin: 0 auto;
+}
 
     .bootgrid-table th > .column-header-anchor {
         color: #333;
@@ -10378,6 +10438,8 @@ a.cal-event-week {
         .bootgrid-table td.loading,
         .bootgrid-table td.no-results {
             background: #fff;
+            font-family: 'U.S. 101';
+            font-size: 20pt;
             text-align: center;
         }
 
@@ -10885,6 +10947,142 @@ a.cal-event-week {
 }
 .ele-decor-broken :nth-of-type(61) {
   animation-delay: -30.5s;
+}
+
+/*#endregion */
+
+/*#region DNA LOADING MODAL: */
+
+/* CUSTOMISED DOCUPATH DNA LOADING ANIMATION        */
+/* Sourced from:    codepen.io                      */
+/* Author:          Ghost                           */
+/* Available At:    codepen.io/ghost028/pen/KgrZAN  */
+/* Customized By:   Ruco Pretorius                  */
+
+.dna-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle at center, #ffffff, #cccccc);
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
+.dna {
+    margin-top: 300px;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    width: 360px;
+    height: 70px;
+    perspective: 400px;
+    transform-style: preserve-3d;
+}
+
+.loading-text{
+    font-family: 'U.S. 101';
+    font-size: 30px;
+    text-align: center;
+    color: #6f6f6f;
+    margin-top: 30px;
+}
+
+.ele {
+  width: 1px;
+  height: 70px;
+  float: left;
+  margin: 0 8px;
+  border-left: 1px #B0B0B0 dashed;
+  position: relative;
+  transform: rotateX(-360deg);
+  animation: run 2s linear infinite;
+}
+.ele:before, .ele:after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #ae1f1f;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.ele:before {
+  top: -2px;
+  background: #6f6f6f;
+}
+.ele:after {
+  bottom: -2px;
+}
+.ele:nth-of-type(1) {
+  animation-delay: -0.15s;
+}
+.ele:nth-of-type(2) {
+  animation-delay: -0.3s;
+}
+.ele:nth-of-type(3) {
+  animation-delay: -0.45s;
+}
+.ele:nth-of-type(4) {
+  animation-delay: -0.6s;
+}
+.ele:nth-of-type(5) {
+  animation-delay: -0.75s;
+}
+.ele:nth-of-type(6) {
+  animation-delay: -0.9s;
+}
+.ele:nth-of-type(7) {
+  animation-delay: -1.05s;
+}
+.ele:nth-of-type(8) {
+  animation-delay: -1.2s;
+}
+.ele:nth-of-type(9) {
+  animation-delay: -1.35s;
+}
+.ele:nth-of-type(10) {
+  animation-delay: -1.5s;
+}
+.ele:nth-of-type(11) {
+  animation-delay: -1.65s;
+}
+.ele:nth-of-type(12) {
+  animation-delay: -1.8s;
+}
+.ele:nth-of-type(13) {
+  animation-delay: -1.95s;
+}
+.ele:nth-of-type(14) {
+  animation-delay: -2.1s;
+}
+.ele:nth-of-type(15) {
+  animation-delay: -2.25s;
+}
+.ele:nth-of-type(16) {
+  animation-delay: -2.4s;
+}
+.ele:nth-of-type(17) {
+  animation-delay: -2.55s;
+}
+.ele:nth-of-type(18) {
+  animation-delay: -2.7s;
+}
+.ele:nth-of-type(19) {
+  animation-delay: -2.85s;
+}
+.ele:nth-of-type(20) {
+  animation-delay: -3s;
+}
+
+@keyframes run {
+  to {
+    transform: none;
+  }
 }
 
 /*#endregion */

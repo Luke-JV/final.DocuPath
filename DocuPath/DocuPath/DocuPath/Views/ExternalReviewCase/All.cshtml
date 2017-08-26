@@ -52,6 +52,9 @@
             <th data-column-id="ERCDR" data-cssClass="table-large-identifier" data-formatter="drnumbers" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ExternalDRNumber)
             </th>
+            <th data-column-id="briefDesc" class="colour-dpred">
+                @Html.DisplayNameFor(model => model.BriefDescription)
+            </th>
             <th data-column-id="dateAdded" data-converter="dpdate" data-order="desc" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.DateAdded)
             </th>
@@ -75,6 +78,9 @@
                     </td>
                     <td class="table-large-identifier">
                         @Html.DisplayFor(modelItem => item.ExternalDRNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BriefDescription)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)

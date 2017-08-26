@@ -8,23 +8,23 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
-    public class AccessLevelController : Controller
+    public class AuditTrailController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: AccessLevel
+        // GET: AuditTrail
         public ActionResult Index()
         {
             return View();
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: AccessLevel/Create
+        // GET: AuditTrail/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AccessLevel/Create
+        // POST: AuditTrail/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -42,21 +42,20 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: AccessLevel/All
+        // GET: AuditTrail/All
         public ActionResult All()
         {
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-                return View(db.ACCESS_LEVEL.ToList());
+                return View(db.AUDIT_LOG.ToList());
             }
             catch (Exception x)
             {
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-
-        // GET: AccessLevel/Details/5
+        // GET: AuditTrail/Details/5
         public ActionResult Details(int id)
         {
             return View();
@@ -64,13 +63,13 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: AccessLevel/Edit/5
+        // GET: AuditTrail/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: AccessLevel/Edit/5
+        // POST: AuditTrail/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -88,13 +87,13 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: AccessLevel/Delete/5
+        // GET: AuditTrail/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AccessLevel/Delete/5
+        // POST: AuditTrail/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

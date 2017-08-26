@@ -11,6 +11,8 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class SERVICE_REQUEST
     {
@@ -20,12 +22,19 @@ namespace DocuPath.DataLayer
             this.SPECIMEN = new HashSet<SPECIMEN>();
         }
     
+        [DisplayName("ID")]
         public int ServiceRequestID { get; set; }
+        [DisplayName("Company Name")]
         public int ServiceProviderID { get; set; }
+        [DisplayName("Request Type")]
         public int RequestTypeID { get; set; }
+        [DisplayName("Related Case")]
         public Nullable<int> ForensicCaseID { get; set; }
+        [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [DisplayName("Request Note")]
         public string RequestNote { get; set; }
+        [DisplayName("Status")]
         public decimal IsCancelled { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

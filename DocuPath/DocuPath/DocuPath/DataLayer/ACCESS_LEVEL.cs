@@ -11,6 +11,8 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class ACCESS_LEVEL
     {
@@ -22,8 +24,11 @@ namespace DocuPath.DataLayer
             this.LEVEL_AREA = new HashSet<LEVEL_AREA>();
         }
     
+        [DisplayName("ID")]
         public int AccessLevelID { get; set; }
+        [DisplayName("Level Name")]
         public string LevelName { get; set; }
+        [DisplayName("Status")]
         public decimal IsDeactivated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
