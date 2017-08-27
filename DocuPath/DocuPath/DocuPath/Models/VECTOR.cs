@@ -21,5 +21,14 @@ namespace DocuPath.Models
 
             }
         }
+
+        public static bool ValidateAccess(int userID)
+        {
+            if (VERTEBRAE.getCurrentUser().UserID == userID)
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }

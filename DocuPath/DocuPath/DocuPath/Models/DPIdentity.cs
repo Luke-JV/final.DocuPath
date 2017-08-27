@@ -40,8 +40,8 @@ namespace DocuPath.Models
         public string AcademicEmail { get; set; }
         public string PhysicalAddress { get; set; }
         public string PostalAddress { get; set; }
-        public decimal IsDeactivated { get; set; }
-        public Nullable<decimal> DarkUIPref { get; set; }
+        public bool IsDeactivated { get; set; }
+        public Nullable<bool> DarkUIPref { get; set; }
 
         public string SecurityStamp { get; set; }
         public string Discriminator { get; set; }
@@ -259,7 +259,7 @@ namespace DocuPath.Models
             user.Discriminator = "x";
             user.DisplayInitials = "x";
             user.CellNum = "xxxxxxxxxx";
-            user.DarkUIPref = 0;
+            user.DarkUIPref = false;
             user.WorkNum = "xxxxxxxxxx";
             user.HPCSARegNumber = "xxxxxxxxx";
 
@@ -277,7 +277,7 @@ namespace DocuPath.Models
             }
             adduser.USER_LOGIN.UserLoginID = (int)adduser.UserLoginID;
             db.USER.Add(adduser);
-            //db.USER_LOGIN.Add(user.getLogin());
+            
             db.SaveChanges();
             return Task.FromResult<object>(null);
         }

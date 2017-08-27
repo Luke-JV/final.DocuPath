@@ -22,7 +22,7 @@ namespace DocuPath.DataLayer
         public Nullable<System.DateTime> RedemptionTimestamp { get; set; }
         public string DestinationEmail { get; set; }
     
-        public virtual USER USER { get; set; }
         public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }
+        public virtual USER USER { get; set; }
     }
 }

@@ -14,6 +14,9 @@ namespace DocuPath.Controllers
         // GET: User
         public ActionResult Index()
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
         //----------------------------------------------------------------------------------------------//
@@ -21,6 +24,9 @@ namespace DocuPath.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -31,11 +37,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -48,10 +59,16 @@ namespace DocuPath.Controllers
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View(db.USER.ToList());
             }
             catch (Exception x)
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
@@ -59,6 +76,9 @@ namespace DocuPath.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
         #endregion
@@ -67,6 +87,9 @@ namespace DocuPath.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -77,11 +100,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -91,6 +119,9 @@ namespace DocuPath.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -101,11 +132,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }

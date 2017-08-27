@@ -14,7 +14,7 @@
         ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
         var currentUser = VERTEBRAE.getCurrentUser();
         // TODO: Reference proper light/dark CSS versions
-        if (currentUser.DarkUIPref == 1) { @Styles.Render("~/Content/css") }
+        if (currentUser.DarkUIPref == true) { @Styles.Render("~/Content/css") }
         else { @Styles.Render("~/Content/css") }
     }
     else { @Styles.Render("~/Content/css") }

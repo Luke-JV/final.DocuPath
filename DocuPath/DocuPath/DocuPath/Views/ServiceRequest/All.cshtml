@@ -65,7 +65,7 @@
         @{ DocuPathEntities db = new DocuPathEntities(); }
         @foreach (var item in Model)
         {
-            if (item.IsCancelled != 1)
+            if (item.IsCancelled != true)
             {
                 <tr>
                     <td>

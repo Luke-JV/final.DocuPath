@@ -14,7 +14,7 @@ namespace DocuPath.Controllers
 
         // GET: Reporting
         public ActionResult Index()
-        {
+        {            
             return View();
         }
 
@@ -50,7 +50,9 @@ namespace DocuPath.Controllers
             //    selectActivityTypes.Add(new SelectListItem { Value = (item.AuditLogTxTypeID + 1).ToString(), Text = item.TypeValue });
             //}
             //ViewBag.ActivityTypes = selectActivityTypes;
-
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 

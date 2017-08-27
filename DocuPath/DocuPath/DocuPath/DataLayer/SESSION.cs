@@ -22,7 +22,7 @@ namespace DocuPath.DataLayer
         }
     
         public int SessionID { get; set; }
-        public System.DateTime SessionDate { get; set; }
+        public System.DateTime DateID { get; set; }
         public int SlotID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

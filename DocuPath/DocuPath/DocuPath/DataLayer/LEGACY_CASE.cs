@@ -11,8 +11,6 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class LEGACY_CASE
     {
@@ -21,20 +19,13 @@ namespace DocuPath.DataLayer
         {
             this.LEGACY_DOCUMENT = new HashSet<LEGACY_DOCUMENT>();
         }
-
-        [DisplayName("ID")]
+    
         public int LegacyCaseID { get; set; }
-        [DisplayName("Status")]
         public int StatusID { get; set; }
-        [DisplayName("Added By")]
         public int UserID { get; set; }
-        [DisplayName("DR Number")]
         public string LegacyDRNumber { get; set; }
-        [DisplayName("Brief Description")]
-        public string BriefDescription { get; set; }
-        [DisplayName("Date Added")]
+        public string LCBriefDescription { get; set; }
         public System.DateTime DateAdded { get; set; }
-        [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
     
         public virtual STATUS STATUS { get; set; }

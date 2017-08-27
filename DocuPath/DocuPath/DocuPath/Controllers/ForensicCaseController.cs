@@ -15,6 +15,7 @@ namespace DocuPath.Controllers
         // GET: ForensicCase
         public ActionResult Index()
         {
+            //404 - redirect to /All
             return View();
         }
         //----------------------------------------------------------------------------------------------//
@@ -22,6 +23,9 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Create
         public ActionResult Create()
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -33,10 +37,17 @@ namespace DocuPath.Controllers
             {
                 // TODO: Add insert logic here
 
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -49,10 +60,18 @@ namespace DocuPath.Controllers
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
                 return View(db.FORENSIC_CASE.ToList());
             }
             catch (Exception x)
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
@@ -60,6 +79,10 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Details/5
         public ActionResult Details(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
+
             return View();
         }
         #endregion
@@ -68,6 +91,9 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Edit/5
         public ActionResult Edit(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -78,11 +104,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -92,6 +123,9 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Delete/5
         public ActionResult Delete(int id)
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -102,11 +136,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }

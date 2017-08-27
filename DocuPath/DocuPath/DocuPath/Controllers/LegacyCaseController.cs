@@ -15,6 +15,7 @@ namespace DocuPath.Controllers
         // GET: LegacyCase
         public ActionResult Index()
         {
+            //404 - redirect to /All
             return View();
         }
         //----------------------------------------------------------------------------------------------//
@@ -22,6 +23,9 @@ namespace DocuPath.Controllers
         // GET: LegacyCase/Create
         public ActionResult Create()
         {
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -32,11 +36,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -49,10 +58,16 @@ namespace DocuPath.Controllers
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View(db.LEGACY_CASE.ToList());
             }
             catch (Exception x)
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
@@ -64,7 +79,14 @@ namespace DocuPath.Controllers
             model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
             model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
             
-            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
+            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();]
+            #region VALIDATE_ACCESS
+                bool access = VECTOR.ValidateAccess(model.legacyCase.UserID);
+            #endregion
+
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View(model);
         }
         #endregion
@@ -73,6 +95,13 @@ namespace DocuPath.Controllers
         // GET: LegacyCase/Edit/5
         public ActionResult Edit(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -82,12 +111,18 @@ namespace DocuPath.Controllers
         {
             try
             {
+                
                 // TODO: Add update logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }
@@ -97,6 +132,13 @@ namespace DocuPath.Controllers
         // GET: LegacyCase/Delete/5
         public ActionResult Delete(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
             return View();
         }
 
@@ -107,11 +149,16 @@ namespace DocuPath.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
                 return View();
             }
         }

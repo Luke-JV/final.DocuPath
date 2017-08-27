@@ -11,8 +11,6 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class MEDIA
     {
@@ -21,29 +19,18 @@ namespace DocuPath.DataLayer
         {
             this.CONTENT_TAG = new HashSet<CONTENT_TAG>();
         }
-
-        [DisplayName("ID")]
+    
         public int MediaID { get; set; }
-        [DisplayName("Status")]
         public int StatusID { get; set; }
-        [DisplayName("Related Case")]
         public Nullable<int> ForensicCaseID { get; set; }
-        [DisplayName("Purpose")]
         public int MediaPurposeID { get; set; }
-        [DisplayName("Added By")]
         public int UserID { get; set; }
-        [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
-        [DisplayName("Caption")]
         public string MediaCaption { get; set; }
-        [DisplayName("Description")]
         public string MediaDescription { get; set; }
-        [DisplayName("Accessibility")]
-        public decimal IsPubliclyAccessible { get; set; }
-        [DisplayName("Location")]
+        public bool IsPubliclyAccessible { get; set; }
         public string MediaLocation { get; set; }
-
-        //public virtual STATUS STATUS { get; set; }
+    
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
         public virtual MEDIA_PURPOSE MEDIA_PURPOSE { get; set; }
         public virtual USER USER { get; set; }
