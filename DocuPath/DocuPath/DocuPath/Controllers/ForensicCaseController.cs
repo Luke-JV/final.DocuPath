@@ -1,5 +1,6 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
+using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,7 +88,35 @@ namespace DocuPath.Controllers
             //AuditModel.WriteTransaction(0, "404");
             #endregion
 
-            return View();
+            #region PREPARE VIEWMODEL
+            ForensicCaseViewModel model = new ForensicCaseViewModel();
+            FORENSIC_CASE modelCase = new FORENSIC_CASE();
+            CASE_STATISTICS modelStats = new CASE_STATISTICS();
+            modelCase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+            modelStats = modelCase.CASE_STATISTICS.FirstOrDefault();
+
+            model.forensicCase = modelCase;
+            model.genObservation = modelCase.GENERAL_OBSERVATION.FirstOrDefault();
+            model.headNeckObservation = modelCase.HEAD_NECK_OBSERVATION.FirstOrDefault();
+            model.abdObservation = modelCase.ABDOMEN_OBSERVATION.FirstOrDefault();
+            model.spineObservation = modelCase.SPINE_OBSERVATION.FirstOrDefault();
+            model.chestObservation = modelCase.CHEST_OBSERVATION.FirstOrDefault();
+            model.serviceRequests = modelCase.SERVICE_REQUEST.ToList();
+            model.media = modelCase.MEDIA.ToList();
+            model.additionalEvidence = modelCase.ADDITIONAL_EVIDENCE.ToList();
+            model.stats = modelCase.CASE_STATISTICS.FirstOrDefault();
+            model.caseCODEstimations = modelCase.CASE_COD_ESTIMATION.ToList();
+            model.sampleInvestigations = modelStats.STATS_SAMPLES_INVESTIGATION.ToList();
+            model.medTreatments = modelStats.STATS_TREATMENTS.ToList();
+            model.injuryScenes = modelStats.STATS_INJURY_SCENE.ToList();
+            model.externalCause = modelStats.STATS_EXTERNAL_CAUSE.ToList();
+            model.sampleInvestigations = modelStats.STATS_SAMPLES_INVESTIGATION.ToList();
+            model.specialCategory = modelStats.STATS_SPECIAL_CATEGORY.ToList();
+            model.provinces = modelStats.STATS_PROVINCE_EVENT.Where(x => x.ForensicCaseID == modelCase.ForensicCaseID).ToList();
+            model.stations = modelStats.STATS_POLICE_STATION.Where(x => x.ForensicCaseID == modelCase.ForensicCaseID).ToList();
+            #endregion
+
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//

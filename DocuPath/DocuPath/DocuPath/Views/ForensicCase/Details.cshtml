@@ -1,0 +1,1090 @@
+﻿@model DocuPath.Models.DPViewModels.ForensicCaseViewModel
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("View Forensic Case", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW FORENSIC CASE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ForensicCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnExpandCollapse" accordion-id="#FCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED FORENSIC CASE: *@
+<div class="form-horizontal border-generic apad5" style="margin: 10px 0 75px 0; width: 100%">
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div class="panel-group" id="FCDetailsAccordion">
+                @* CORE DATA *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#CorePanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-fc panel-mdl2icon"></span>
+                        <span>Core Data</span>
+                    </div>
+                    <div id="CorePanel" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.forensicCase.ForensicDRNumber)
+                                </dt>
+
+                                <dd class="large-identifier">
+                                    @Html.DisplayFor(model => model.forensicCase.ForensicDRNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayName("Brief Description")
+                                </dt>
+
+                                <dd>
+                                    Fatal Thoracic GSW &amp; Cholera Infection
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.UserID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.USER.FirstName) @Html.DisplayFor(model => model.forensicCase.USER.LastName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.DateAdded)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.DateAdded)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.DateClosed)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.DateClosed)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.STATUS.StatusValue)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.STATUS.StatusValue)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    Autopsy @Html.DisplayNameFor(model => model.forensicCase.AUTOPSY_AREA.AreaNote)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.AUTOPSY_AREA.AreaNote)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.SESSION.SessionID) Description
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.SESSION.SLOT.Description) on @if (Model.forensicCase.SESSION.DateID != null)
+                                    {
+                                        @Model.forensicCase.SESSION.DateID.ToString("ddd dd MMM yyyy")
+                                    }
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.CauseOfDeathConclusion)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.CauseOfDeathConclusion)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.DHANoticeDeathID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.DHANoticeDeathID)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.forensicCase.ActingOfficerNameSurname) Name &amp; Surname
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.ActingOfficerNameSurname)
+                                </dd>
+
+                                <dt>
+                                    Acting Officer @Html.DisplayNameFor(model => model.forensicCase.ActingOfficerContactNum)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.forensicCase.ActingOfficerContactNum)
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                @* OBSERVATIONS *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#ObsPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-observations panel-mdl2icon"></span>
+                        <span>Observations</span>
+                    </div>
+                    <div id="ObsPanel" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
+                                        <span>General Observations</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.GeneralDescription)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.GeneralDescription)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.Physique)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.Physique)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.Nutrition)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.Nutrition)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.SpecialIdentifyingFeatures)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.SpecialIdentifyingFeatures)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.SecondaryPostMortemChanges)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.SecondaryPostMortemChanges)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.ExtAppearanceLimbCondition)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.genObservation.ExtAppearanceLimbCondition)
+                                        </dd>
+                                        <hr class="details-hr" />
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.HeightMeters)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.genObservation.HeightMeters)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.genObservation.MassKg)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.genObservation.MassKg)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
+                                        <span>Head &amp; Neck Observations</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.ScalpSkull)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.headNeckObservation.ScalpSkull)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.IntracranialContents)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.headNeckObservation.IntracranialContents)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.OrbitalNasalAuralCavities)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.headNeckObservation.OrbitalNasalAuralCavities)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.MouthTonguePharynx)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.headNeckObservation.MouthTonguePharynx)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.NeckStructures)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.headNeckObservation.NeckStructures)
+                                        </dd>
+                                        <hr class="details-hr" />
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.headNeckObservation.BrainMassKg)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.headNeckObservation.BrainMassKg)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
+                                        <span>Chest Observations</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.ThoracicCageDiaphragm)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.ThoracicCageDiaphragm)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.MediastinumOesophagus)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.MediastinumOesophagus)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.TracheaBronchi)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.TracheaBronchi)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.PleuraLungs)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.PleuraLungs)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.HeartPericardium)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.HeartPericardium)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.LargeBloodVessels)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.chestObservation.LargeBloodVessels)
+                                        </dd>
+                                        <hr class="details-hr" />
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.LeftLungMassKg)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.chestObservation.LeftLungMassKg)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.RightLungMassKg)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.chestObservation.RightLungMassKg)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.chestObservation.HeartMassKg)
+                                        </dt>
+
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.chestObservation.HeartMassKg)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
+                                        <span>Abdomen Observations</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.PeritonealCavity)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.PeritonealCavity)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.StomachContents)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.StomachContents)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.IntestinesMesentery)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.IntestinesMesentery)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.LiverGallbladderBilliaryPassages)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.LiverGallbladderBilliaryPassages)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.Pancreas)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.Pancreas)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.Spleen)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.Spleen)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.Adrenals)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.Adrenals)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.KidneysUreters)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.KidneysUreters)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.UrinaryBladderUrethra)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.UrinaryBladderUrethra)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.PelvicWalls)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.PelvicWalls)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.GenitalOrgans)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.abdObservation.GenitalOrgans)
+                                        </dd>
+                                        <hr class="details-hr" />
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.LiverMassKg)
+                                        </dt>
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.abdObservation.LiverMassKg)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.SplenicMassKg)
+                                        </dt>
+
+                                        @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.SplenicMassKg == 0)
+                                        {
+                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        }
+                                        else
+                                        {
+                                            <dd class="detailsview-measurement-text">
+                                                @Html.DisplayFor(model => model.abdObservation.SplenicMassKg)
+                                            </dd>
+                                        }
+
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.LeftKidneyMassKg)
+                                        </dt>
+
+                                        @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.LeftKidneyMassKg == 0)
+                                        {
+                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        }
+                                        else
+                                        {
+                                            <dd class="detailsview-measurement-text">
+                                                @Html.DisplayFor(model => model.abdObservation.LeftKidneyMassKg)
+                                            </dd>
+                                        }
+
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.abdObservation.RightKidneyMassKg)
+                                        </dt>
+
+
+                                        @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.RightKidneyMassKg == 0)
+                                        {
+                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        }
+                                        else
+                                        {
+                                            <dd class="detailsview-measurement-text">
+                                                @Html.DisplayFor(model => model.abdObservation.RightKidneyMassKg)
+                                            </dd>
+                                        }
+                                    </dl>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
+                                        <span>Spine Observations</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.spineObservation.SpinalColumn)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.spineObservation.SpinalColumn)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.spineObservation.SpinalCord)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.spineObservation.SpinalCord)
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* SERVICE REQUESTS *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#SRPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>Service Requests</span>
+                    </div>
+                    <div id="SRPanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 25px">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred" style="min-width: 250px">Service Provider</th>
+                                    <th class="colour-dpred" style="min-width: 150px">Request Type</th>
+                                    <th class="colour-dpred">Request Note</th>
+                                    <th class="colour-dpred" style="min-width: 200px">Date Added</th>
+                                    <th class="colour-dpred">Actions</th>
+                                    @*<th class="colour-dpred">Request Closed</th>*@
+                                </tr>
+                                @foreach (var item in Model.serviceRequests)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.RequestNote)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
+                                        <td>@Html.ActionLink(" ", "Details", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                        @*@if (item.IsClosed == true)
+                                            {
+                                                <td><div class="mdl2icon mdl2-greenticked"></div>Closed</td>
+                                            }
+                                            else
+                                            {
+                                                <td><div class="mdl2icon mdl2-redunticked"></div>Not Closed</td>
+                                            }*@
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @* MEDIA ITEMS *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#MediaPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-media panel-mdl2icon"></span>
+                        <span>Media Items</span>
+                    </div>
+                    <div id="MediaPanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 25px">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred">Thumbnail</th>
+                                    <th class="colour-dpred">Caption</th>
+                                    <th class="colour-dpred">Description</th>
+                                    <th class="colour-dpred">Actions</th>
+                                </tr>
+                                @foreach (var item in Model.media)
+                                {
+                                    <tr>
+                                        <td class="text-center"><img id="thumb_@item.MediaID" class="media-thumb mthumbsize-small media-thumb-@item.MediaID" /></td>
+                                        <td>@Html.DisplayFor(modelItem => item.MediaCaption)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
+                                        <td>@Html.ActionLink(" ", "Details", "Media", new { id = item.MediaID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @* ADDITIONAL EVIDENCE *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#AEPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-additionalevidence panel-mdl2icon"></span>
+                        <span>Additional Evidence</span>
+                    </div>
+                    <div id="AEPanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 25px">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred">Serial Number</th>
+                                    <th class="colour-dpred">Description</th>
+                                    <th class="colour-dpred">Contact Person</th>
+                                    <th class="colour-dpred">Contact Number</th>
+                                    <th class="colour-dpred">Actions</th>
+                                </tr>
+                                @foreach (var item in Model.additionalEvidence)
+                                {
+                                    <tr>
+                                        <td class="table-large-identifier">@Html.DisplayFor(modelItem => item.EvidenceSerialNumber)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.EvidenceDescription)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ContactPersonNameSurname)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.ContactPersonContactNum)</td>
+                                        <td>@Html.ActionLink(" ", "Details", "AdditionalEvidence", new { id = item.AdditionalEvidenceID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @* CAUSE OF DEATH *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#CODPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-cod panel-mdl2icon"></span>
+                        <span>Cause Of Death</span>
+                    </div>
+                    <div id="CODPanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 25px">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred">Prominence</th>
+                                    <th class="colour-dpred">Cause Of Death</th>
+                                    <th class="colour-dpred">Motivation</th>
+                                </tr>
+
+                                @* TEMP FIX FOR PROMINENCE ORDERING FREAKING OUT: *@
+                                @*<tr>
+                                        <td>@Html.DisplayName("Primary")</td>
+                                        <td style="width: 30%">@Html.DisplayName("Airgun discharge, undetermined intent")</td>
+                                        <td style="max-width: 50%; text-align: justify">As is evidenced by points 1.1, 1.2 and 1.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Primary Estimation for the main reason that XYZ.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayName("Secondary")</td>
+                                        <td style="width: 30%">@Html.DisplayName("Cholera due to Vibrio cholerae 01, biovar cholerae")</td>
+                                        <td style="max-width: 50%; text-align: justify">As is evidenced by points 2.1, 2.2 and 2.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Secondary Estimation for the main reason that XYZ.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayName("Tertiary")</td>
+                                        <td style="width: 30%">@Html.DisplayName("Cholera due to Vibrio cholerae 01, biovar eltor")</td>
+                                        <td style="max-width: 50%; text-align: justify">As is evidenced by points 3.1, 3.2 and 3.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Tertiary Estimation for the main reason that XYZ.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>@Html.DisplayName("Quaternary")</td>
+                                        <td style="width: 30%">@Html.DisplayName("Cholera, unspecified")</td>
+                                        <td style="max-width: 50%; text-align: justify">As is evidenced by points 4.1, 4.2 and 4.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Quaternary Estimation for the main reason that XYZ.</td>
+                                    </tr>*@
+
+                                @foreach (var item in Model.caseCODEstimations)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.COD_PROMINENCE.ProminenceValue)</td>
+                                        <td style="width: 30%">@Html.DisplayFor(modelItem => item.CONTENT_TAG.ContentTagText)</td>
+                                        @if (item.ForensicCaseID == Model.forensicCase.ForensicCaseID && item.ProminenceID == 1)
+                                        {
+                                            <td style="max-width: 50%; text-align: justify">As is evidenced by points 1.1, 1.2 and 1.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Primary Estimation for the main reason that XYZ.</td>
+                                        }
+                                        else if (item.ForensicCaseID == Model.forensicCase.ForensicCaseID && item.ProminenceID == 2)
+                                        {
+                                            <td style="max-width: 50%; text-align: justify">As is evidenced by points 2.1, 2.2 and 2.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Secondary Estimation for the main reason that XYZ.</td>
+                                        }
+                                        else if (item.ForensicCaseID == Model.forensicCase.ForensicCaseID && item.ProminenceID == 3)
+                                        {
+                                            <td style="max-width: 50%; text-align: justify">As is evidenced by points 3.1, 3.2 and 3.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Tertiary Estimation for the main reason that XYZ.</td>
+                                        }
+                                        else if (item.ForensicCaseID == Model.forensicCase.ForensicCaseID && item.ProminenceID == 4)
+                                        {
+                                            <td style="max-width: 50%; text-align: justify">As is evidenced by points 4.1, 4.2 and 4.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Quaternary Estimation for the main reason that XYZ.</td>
+                                        }
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                @* STATS *@
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#StatsPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-stats panel-mdl2icon"></span>
+                        <span>Statistics</span>
+                    </div>
+                    <div id="StatsPanel" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @* CORE STATS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-stats details-subheading-mdl2icon"></span>
+                                        <span>Core Statistical Data</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.BodyCollectorSurname)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.BodyCollectorSurname)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.EvisceratorSurname)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.EvisceratorSurname)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.OrganDissectorSurname)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.OrganDissectorSurname)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* AUTOPSY STATISTICS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-autopsysession details-subheading-mdl2icon"></span>
+                                        <span>Autopsy Statistics</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.AUTOPSY_TYPE.AutopsyTypeValue)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.AUTOPSY_TYPE.AutopsyTypeValue)
+                                        </dd>
+
+                                        <dt>
+                                            @Html.Label("Samples & Investigations", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd>
+                                            @foreach (var investigation in Model.sampleInvestigations)
+                                            {
+                                                @Html.Label(investigation.SAMPLE_INVESTIGATION.SampleInvestigationDescription, new { @class = "details-tag" })
+                                            }
+                                        </dd>
+
+                                        @foreach (var investigation in Model.sampleInvestigations)
+                                        {
+                                            if (investigation.SAMPLE_INVESTIGATION.SampleInvestigationDescription == "Other")
+                                            {
+                                                <dt>
+                                                    @Html.Label(investigation.SampleInvestigationOtherDescription, new { @style = "font-size: 11pt" })
+                                                </dt>
+
+                                                <dd>
+                                                    @Html.Display(investigation.SampleInvestigationOtherDescription)
+                                                </dd>
+                                            }
+                                        }
+
+                                        <dt>
+                                            @Html.Label("Description (If 'Other')", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd style="margin-top: 2.8px">
+                                            Skin grafts for histology analysis.
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* DATE STATISTICS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-datetime details-subheading-mdl2icon"></span>
+                                        <span>Date &amp; Time Statistics</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.DiscoveryDate)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.DiscoveryDate)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.EstimatedInjuryDate)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.EstimatedInjuryDate)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.EstimatedDeathDate)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.EstimatedDeathDate)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* DECEASED INDIVIDUAL STATISTICS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-individual details-subheading-mdl2icon"></span>
+                                        <span>Deceased Individual Statistics</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.INDIVIDUAL_RACE.IndividualRaceValue)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.INDIVIDUAL_RACE.IndividualRaceValue)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.INDIVIDUAL_GENDER.IndividualGenderValue)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.INDIVIDUAL_GENDER.IndividualGenderValue)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.IndividualEstimatedAge)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.IndividualEstimatedAge)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* MEDICAL HISTORY STATISTICS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-history details-subheading-mdl2icon"></span>
+                                        <span>Medical History Statistics</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.MedicalHistory)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.MedicalHistory)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.HOSPITAL_CLINIC.HospitalClinicName)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.HOSPITAL_CLINIC.HospitalClinicName)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.TreatmentDuration)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.TreatmentDuration)
+                                        </dd>
+
+                                        <dt>
+                                            @Html.Label("Medical Treatments", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd>
+                                            @foreach (var treatment in Model.medTreatments)
+                                            {
+                                                @Html.Label(treatment.MEDICAL_TREATMENTS.MedicalTreatmentDescription, new { @class = "details-tag" })
+                                            }
+                                        </dd>
+
+                                        <dt>
+                                            @Html.Label("Description (If 'Other')", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd style="margin-top: 2.8px">
+                                            Attempted topical treatment of burns.
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* GEOLOCATION STATISTICS - EVENTS & PROVINCES *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-world details-subheading-mdl2icon"></span>
+                                        <span>Geolocation Statistics - Events &amp; Provinces</span>
+                                    </div>
+                                    <table class="table table-striped table-condensed">
+                                        <tr>
+                                            <th class="colour-dpred">Event</th>
+                                            <th class="colour-dpred">Province</th>
+                                        </tr>
+                                        @foreach (var item in Model.provinces)
+                                        {
+                                            <tr>
+                                                <td>Province of @Html.DisplayFor(modelItem => item.EVENT.EventDescription)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.PROVINCE.ProvinceName)</td>
+                                            </tr>
+                                        }
+                                    </table>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @* GEOLOCATION STATISTICS - POLICE STATIONS & ROLES *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-world details-subheading-mdl2icon"></span>
+                                        <span>Geolocation Statistics - Police Stations &amp; Roles</span>
+                                    </div>
+                                    <table class="table table-striped table-condensed">
+                                        <tr>
+                                            <th class="colour-dpred">Role</th>
+                                            <th class="colour-dpred">Police Station</th>
+                                            <th class="colour-dpred">Actions</th>
+                                        </tr>
+                                        @foreach (var item in Model.stations)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.STATION_ROLE.StationRoleDescription)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
+                                                <td>@Html.ActionLink(" ", "Details", "ServiceProvider", new { id = item.ServiceProviderID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    @* INCIDENT STATISTICS *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-warning details-subheading-mdl2icon"></span>
+                                        <span>Incident Statistics</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.PRIMARY_CAUSE_DEATH.PrimaryCauseDescription)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.PRIMARY_CAUSE_DEATH.PrimaryCauseDescription)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.stats.APPARENT_MANNER_DEATH.ApparentMannerDescription)
+                                        </dt>
+
+                                        <dd>
+                                            @Html.DisplayFor(model => model.stats.APPARENT_MANNER_DEATH.ApparentMannerDescription)
+                                        </dd>
+
+                                        <dt>
+                                            @Html.Label("Scenes of Injury", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd>
+                                            @foreach (var scene in Model.injuryScenes)
+                                            {
+                                                @Html.Label(scene.SCENE_OF_INJURY.InjurySceneDescription, new { @class = "details-tag" })
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-6">
+                                    @* EXTERNAL CAUSES *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-event details-subheading-mdl2icon"></span>
+                                        <span>External Causes</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.Label("External Causes", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd>
+                                            @foreach (var extcause in Model.externalCause)
+                                            {
+                                                @Html.Label(extcause.EXTERNAL_CAUSE.ExternalCauseDescription, new { @class = "details-tag" })
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-10 col-md-offset-1">
+                                    @* SPECIAL CATEGORIES *@
+                                    <div class="details-subheading">
+                                        <span class="mdl2icon mdl2-special details-subheading-mdl2icon"></span>
+                                        <span>Special Categories</span>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.Label("Special Categories", new { @style = "font-size: 11pt" })
+                                        </dt>
+
+                                        <dd>
+                                            @foreach (var speccat in Model.specialCategory)
+                                            {
+                                                @Html.Label(speccat.SPECIAL_CATEGORY.SpecialCategoryDescription, new { @class = "details-tag" })
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/bootgrid")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    @*<script id="loadBootgrid" type="text/javascript">
+        var grid = $("#allFC").bootgrid({
+            caseSensitive: false,
+            converters: {
+                dpdate: {
+                    from: function (value) { return moment(value); },
+                    to: function (value) { return value.format("ddd D MMM YYYY"); }
+                }
+            },
+            formatters: {
+                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
+                "commands": function (column, row) {
+                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
+                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
+                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
+                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+                    }
+                 },
+                "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+                    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
+                }
+            }
+        });
+    </script>*@
+
+    <script>
+        // Expand/Collapse All Panels:
+        $(document).ready(function () {
+
+            $(".toggle-accordion").on("click", function () {
+                var accordionId = $(this).attr("accordion-id"),
+                    numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+                $(this).toggleClass("active");
+
+                if (numPanelOpen == 0) {
+                    openAllPanels(accordionId);
+                } else {
+                    closeAllPanels(accordionId);
+                }
+                $("#btnExpandCollapse").blur()
+            })
+
+            openAllPanels = function (aId) {
+                console.log("setAllPanelOpen");
+                $(aId + ' .panel-collapse:not(".in")').collapse('show');
+            }
+            closeAllPanels = function (aId) {
+                console.log("setAllPanelclose");
+                $(aId + ' .panel-collapse.in').collapse('hide');
+            }
+
+        });
+    </script>
+
+    <script id="onDomReady" type="text/javascript">
+        // Enable tooltips:
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        // Toggle Table Density:
+        $("#btnDensityToggle").click(function () {
+            var $target = $("#allFC");
+            var $condensed = "table-condensed";
+            var $minimal = "table-minimal"
+            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+            $("#btnDensityToggle").blur()
+        });
+    </script>
+}

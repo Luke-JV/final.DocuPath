@@ -106,17 +106,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.AcademicID)
                 </td>
-                @if (Convert.ToString(item.IsDeactivated) == "1")
-                {
-                    <td>
-                        @Html.Display("Deactivated")
-                    </td>
-                } else
-	            {
-	                <td>
-                        @Html.Display("Active")
-                    </td>
-	            }
+                @if (item.IsDeactivated == true)
+                { <td>Deactivated</td> }
+                else
+	            { <td>Active</td> }
             </tr>
         }
     </tbody>
@@ -142,10 +135,10 @@
                     if (row.status.trim() == "Active") { /* CHECK IF THE USER IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'EDIT' AND 'TOGGLE ACTIVATION': */
                         return "<a class=\"mdl2icon colour-dpblack\" href=\"/User/Details/" + row.UID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/User/Edit/" + row.UID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Activation\" href=\"/User/ToggleActivation/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Status\" href=\"/User/ToggleStatus/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
                     } else if (row.status.trim() == "Deactivated") { /* CHECK IF THE USER IS DEACTIVATED, IF TRUE, THEN SHOW 'VIEW' and 'TOGGLE ACTIVATION': */
                         return "<a class=\"mdl2icon colour-dpblack\" href=\"/User/Details/" + row.UID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Activation\" href=\"/User/ToggleActivation/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Status\" href=\"/User/ToggleStatus/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
                     }
                  },
                 "initials": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL INITIALS: */

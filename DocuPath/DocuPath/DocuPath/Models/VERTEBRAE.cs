@@ -17,7 +17,6 @@ namespace DocuPath.Models
             List<NOTIFICATION> unhandledNeurons = new List<NOTIFICATION>();
             using (DocuPathEntities db = new DocuPathEntities())
             {
-
                 foreach (var neuron in db.NOTIFICATION)
                 {
                     if (neuron.HandledDateTimeStamp == null)

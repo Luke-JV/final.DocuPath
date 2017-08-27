@@ -473,7 +473,7 @@
             <PropertyRef Name="NotificationTypeID" />
           </Key>
           <Property Name="NotificationTypeID" Type="int" Nullable="false" />
-          <Property Name="NotificatonTypeValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NotificationTypeValue" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PRIMARY_CAUSE_DEATH">
           <Key>
@@ -3178,8 +3178,8 @@
             <PropertyRef Name="NotificationTypeID" />
           </Key>
           <Property Name="NotificationTypeID" Type="Int32" Nullable="false" />
-          <Property Name="NotificatonTypeValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NOTIFICATION" Relationship="DocuPathModel.C_classifies" FromRole="NOTIFICATION_TYPE" ToRole="NOTIFICATION" />
+          <Property Name="NotificationTypeValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PRIMARY_CAUSE_DEATH">
           <Key>
@@ -5030,7 +5030,7 @@
           <EntitySetMapping Name="NOTIFICATION_TYPE">
             <EntityTypeMapping TypeName="DocuPathModel.NOTIFICATION_TYPE">
               <MappingFragment StoreEntitySet="NOTIFICATION_TYPE">
-                <ScalarProperty Name="NotificatonTypeValue" ColumnName="NotificatonTypeValue" />
+                <ScalarProperty Name="NotificationTypeValue" ColumnName="NotificationTypeValue" />
                 <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
               </MappingFragment>
             </EntityTypeMapping>

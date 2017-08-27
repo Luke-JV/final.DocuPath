@@ -613,6 +613,7 @@
     <Content Include="Views\AuditTrail\All.cshtml" />
     <Content Include="Views\User\All.cshtml" />
     <Content Include="Views\AccessLevel\All.cshtml" />
+    <Content Include="Views\ForensicCase\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

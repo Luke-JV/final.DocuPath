@@ -21,7 +21,7 @@ namespace DocuPath.DataLayer
         }
     
         public int NotificationTypeID { get; set; }
-        public string NotificatonTypeValue { get; set; }
+        public string NotificationTypeValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTIFICATION> NOTIFICATION { get; set; }
