@@ -23,7 +23,8 @@ namespace DocuPath.DataLayer
         public string NotificationDetails { get; set; }
         public Nullable<System.DateTime> HandledDateTimeStamp { get; set; }
     
-        public virtual NOTIFICATION_TYPE NOTIFICATION_TYPE { get; set; }
         public virtual USER USER { get; set; }
+        public virtual NOTIFICATION_TYPE NOTIFICATION_TYPE { get; set; }
+        public virtual NOTIFICATION_TYPE NOTIFICATION_TYPE1 { get; set; }
     }
 }
