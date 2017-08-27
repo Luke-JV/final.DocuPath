@@ -73,6 +73,10 @@ namespace DocuPath.Controllers
         // GET: ExternalReviewCase/Details/5
         public ActionResult Details(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
@@ -85,6 +89,10 @@ namespace DocuPath.Controllers
         // GET: ExternalReviewCase/Edit/5
         public ActionResult Edit(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
@@ -117,10 +125,7 @@ namespace DocuPath.Controllers
         // GET: ExternalReviewCase/Delete/5
         public ActionResult Delete(int id)
         {
-            #region VALIDATE_ACCESS
-            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
-            #endregion
-
+           
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion

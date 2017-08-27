@@ -85,6 +85,10 @@ namespace DocuPath.Controllers
         // GET: Media/Edit/5
         public ActionResult Edit(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
@@ -117,6 +121,10 @@ namespace DocuPath.Controllers
         // GET: Media/Delete/5
         public ActionResult Delete(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion

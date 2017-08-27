@@ -79,6 +79,10 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Details/5
         public ActionResult Details(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
@@ -91,6 +95,9 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Edit/5
         public ActionResult Edit(int id)
         {
+            #region VALIDATE_ACCESS
+            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+            #endregion
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
@@ -123,9 +130,7 @@ namespace DocuPath.Controllers
         // GET: ForensicCase/Delete/5
         public ActionResult Delete(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
+           
             return View();
         }
 
