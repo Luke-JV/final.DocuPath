@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class EXTERNAL_REPORT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +21,14 @@ namespace DocuPath.DataLayer
         {
             this.SPECIMEN = new HashSet<SPECIMEN>();
         }
-    
+
+        [DisplayName("ID")]
         public int ExternalReportID { get; set; }
+        [DisplayName("Date Received")]
         public System.DateTime DateReceived { get; set; }
+        [DisplayName("Date Captured")]
         public System.DateTime DateCaptured { get; set; }
+        [DisplayName("External Report Location")]
         public string ExternalReportLocation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

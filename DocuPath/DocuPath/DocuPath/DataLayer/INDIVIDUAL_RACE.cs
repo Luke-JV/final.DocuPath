@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class INDIVIDUAL_RACE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +21,10 @@ namespace DocuPath.DataLayer
         {
             this.CASE_STATISTICS = new HashSet<CASE_STATISTICS>();
         }
-    
+
+        [DisplayName("ID")]
         public int IndividualRaceID { get; set; }
+        [DisplayName("Individual Race")]
         public string IndividualRaceValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

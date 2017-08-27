@@ -11,16 +11,26 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AUDIT_LOG
     {
+        [DisplayName("ID")]
         public int AuditLogTxID { get; set; }
+        [DisplayName("Transaction Type")]
         public int AuditLogTxTypeID { get; set; }
+        [DisplayName("Origin")]
         public int UserID { get; set; }
+        [DisplayName("Datestamp")]
         public System.DateTime TxDateStamp { get; set; }
+        [DisplayName("Timestamp")]
         public System.DateTime TxTimeStamp { get; set; }
+        [DisplayName("Description")]
         public string TxCriticalDataString { get; set; }
+        [DisplayName("Old Record")]
         public string TxOldRecord { get; set; }
+        [DisplayName("New Record")]
         public string TxNewRecord { get; set; }
     
         public virtual AUDIT_TX_TYPE AUDIT_TX_TYPE { get; set; }

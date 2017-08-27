@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class APPARENT_MANNER_DEATH
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +21,10 @@ namespace DocuPath.DataLayer
         {
             this.CASE_STATISTICS = new HashSet<CASE_STATISTICS>();
         }
-    
+
+        [DisplayName("ID")]
         public int ApparentMannerID { get; set; }
+        [DisplayName("Apparent Manner of Death Description")]
         public string ApparentMannerDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

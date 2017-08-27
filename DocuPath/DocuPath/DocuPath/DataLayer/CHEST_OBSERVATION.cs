@@ -11,19 +11,32 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class CHEST_OBSERVATION
     {
+        [DisplayName("Chest Observation ID")]
         public int ObsChestID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Thoracic Cage & Diaphragm")]
         public string ThoracicCageDiaphragm { get; set; }
+        [DisplayName("Mediastinum & Oesophagus")]
         public string MediastinumOesophagus { get; set; }
+        [DisplayName("Trachea & Bronchi")]
         public string TracheaBronchi { get; set; }
+        [DisplayName("Pleura & Lungs")]
         public string PleuraLungs { get; set; }
+        [DisplayName("Left Lung Mass (kg)")]
         public decimal LeftLungMassKg { get; set; }
+        [DisplayName("Right Lung Mass (kg)")]
         public decimal RightLungMassKg { get; set; }
+        [DisplayName("Heart & Pericardium")]
         public string HeartPericardium { get; set; }
+        [DisplayName("Heart Mass (kg)")]
         public decimal HeartMassKg { get; set; }
+        [DisplayName("Large Blood Vessels")]
         public string LargeBloodVessels { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

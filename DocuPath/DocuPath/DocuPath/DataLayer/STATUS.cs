@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class STATUS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,8 +24,10 @@ namespace DocuPath.DataLayer
             this.LEGACY_CASE = new HashSet<LEGACY_CASE>();
             this.MEDIA = new HashSet<MEDIA>();
         }
-    
+
+        [DisplayName("ID")]
         public int StatusID { get; set; }
+        [DisplayName("Status")]
         public string StatusValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

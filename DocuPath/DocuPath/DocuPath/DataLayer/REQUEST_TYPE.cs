@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class REQUEST_TYPE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,8 +21,10 @@ namespace DocuPath.DataLayer
         {
             this.SERVICE_REQUEST = new HashSet<SERVICE_REQUEST>();
         }
-    
+
+        [DisplayName("ID")]
         public int RequestTypeID { get; set; }
+        [DisplayName("Request Type")]
         public string RequestTypeValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

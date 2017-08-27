@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class FORENSIC_CASE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -28,19 +30,32 @@ namespace DocuPath.DataLayer
             this.SERVICE_REQUEST = new HashSet<SERVICE_REQUEST>();
             this.SPINE_OBSERVATION = new HashSet<SPINE_OBSERVATION>();
         }
-    
+
+        [DisplayName("ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Status")]
         public int StatusID { get; set; }
+        [DisplayName("Autopsy Session")]
         public int SessionID { get; set; }
+        [DisplayName("Autopsy Area")]
         public int AutopsyAreaID { get; set; }
+        [DisplayName("Added By")]
         public int UserID { get; set; }
+        [DisplayName("DR Number")]
         public string ForensicDRNumber { get; set; }
+        [DisplayName("Brief Description")]
         public string FCBriefDescription { get; set; }
+        [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [DisplayName("Notice Of Death")]
         public string DHANoticeDeathID { get; set; }
+        [DisplayName("Acting Officer")]
         public string ActingOfficerNameSurname { get; set; }
+        [DisplayName("Contact Details")]
         public string ActingOfficerContactNum { get; set; }
+        [DisplayName("Cause Of Death Conclusion")]
         public string CauseOfDeathConclusion { get; set; }
+        [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

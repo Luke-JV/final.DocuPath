@@ -11,15 +11,24 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class ADDITIONAL_EVIDENCE
     {
+        [DisplayName("ID")]
         public int AdditionalEvidenceID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Item Description")]
         public string EvidenceDescription { get; set; }
+        [DisplayName("Serial/Seal Number")]
         public string EvidenceSerialNumber { get; set; }
+        [DisplayName("Contact Person")]
         public string ContactPersonNameSurname { get; set; }
+        [DisplayName("Contact Number")]
         public string ContactPersonContactNum { get; set; }
+        [DisplayName("Item Location")]
         public string AdditionalEvidenceLocation { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

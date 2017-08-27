@@ -11,16 +11,26 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class NOTIFICATION
     {
+        [DisplayName("ID")]
         public int NotificationID { get; set; }
+        [DisplayName("Target User")]
         public int UserID { get; set; }
+        [DisplayName("Type")]
         public int NotificationTypeID { get; set; }
+        [DisplayName("Creation Stamp")]
         public System.DateTime DateID { get; set; }
+        [DisplayName("Title")]
         public string NotificationTitle { get; set; }
+        [DisplayName("Summary")]
         public string NotificationSummary { get; set; }
+        [DisplayName("Details")]
         public string NotificationDetails { get; set; }
+        [DisplayName("Handling Stamp")]
         public Nullable<System.DateTime> HandledDateTimeStamp { get; set; }
     
         public virtual NOTIFICATION_TYPE NOTIFICATION_TYPE { get; set; }

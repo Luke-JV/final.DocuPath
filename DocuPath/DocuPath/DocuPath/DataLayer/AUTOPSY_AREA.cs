@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AUTOPSY_AREA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +21,12 @@ namespace DocuPath.DataLayer
         {
             this.FORENSIC_CASE = new HashSet<FORENSIC_CASE>();
         }
-    
+
+        [DisplayName("Autopsy Area")]
         public int AutopsyAreaID { get; set; }
+        [DisplayName("Area Number")]
         public string AreaCode { get; set; }
+        [DisplayName("Area Description")]
         public string AreaNote { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
