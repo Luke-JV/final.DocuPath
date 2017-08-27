@@ -74,10 +74,14 @@ namespace DocuPath.Controllers
         // GET: AccessLevel/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            ACCESS_LEVEL model = db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault();
+
+            #endregion
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
