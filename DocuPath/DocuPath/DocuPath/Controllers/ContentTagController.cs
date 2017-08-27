@@ -73,10 +73,13 @@ namespace DocuPath.Controllers
         // GET: ContentTag/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            CONTENT_TAG model =  db.CONTENT_TAG.Where(x => x.ContentTagID == id).FirstOrDefault();
+            #endregion
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//

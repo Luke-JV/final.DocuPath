@@ -76,10 +76,16 @@ namespace DocuPath.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            USER model = new USER();
+            model = db.USER.Where(x => x.UserID == id).FirstOrDefault();
+            
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
