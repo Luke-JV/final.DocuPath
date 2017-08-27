@@ -20,6 +20,7 @@ namespace DocuPath.DataLayer
             this.EXTERNAL_REVIEW_CASE = new HashSet<EXTERNAL_REVIEW_CASE>();
             this.FORENSIC_CASE = new HashSet<FORENSIC_CASE>();
             this.LEGACY_CASE = new HashSet<LEGACY_CASE>();
+            this.MEDIA = new HashSet<MEDIA>();
         }
     
         public int StatusID { get; set; }
@@ -31,5 +32,7 @@ namespace DocuPath.DataLayer
         public virtual ICollection<FORENSIC_CASE> FORENSIC_CASE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LEGACY_CASE> LEGACY_CASE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEDIA> MEDIA { get; set; }
     }
 }

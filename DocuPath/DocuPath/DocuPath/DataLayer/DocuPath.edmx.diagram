@@ -47,7 +47,6 @@
         <EntityTypeShape EntityType="DocuPathModel.MEDIA_PURPOSE" Width="1.5" PointX="11.5" PointY="69.75" />
         <EntityTypeShape EntityType="DocuPathModel.MEDICAL_TREATMENTS" Width="1.5" PointX="19.75" PointY="62.125" />
         <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION" Width="1.5" PointX="7.5" PointY="62.5" />
-        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION_TYPE" Width="1.5" PointX="5.25" PointY="73.125" />
         <EntityTypeShape EntityType="DocuPathModel.PRIMARY_CAUSE_DEATH" Width="1.5" PointX="14.5" PointY="66.625" />
         <EntityTypeShape EntityType="DocuPathModel.PROVINCE" Width="1.5" PointX="22.75" PointY="47" />
         <EntityTypeShape EntityType="DocuPathModel.REQUEST_TYPE" Width="1.5" PointX="11.5" PointY="40.5" />
@@ -140,7 +139,6 @@
         <AssociationConnector Association="DocuPathModel.MEDIA_PURPOSE_MEDIA_FK1" />
         <AssociationConnector Association="DocuPathModel.USER_MEDIA_FK1" />
         <AssociationConnector Association="DocuPathModel.MEDICAL_TREATMENTS_STATS_TREATMENTS_FK1" />
-        <AssociationConnector Association="DocuPathModel.C_classifies" />
         <AssociationConnector Association="DocuPathModel.receives" />
         <AssociationConnector Association="DocuPathModel.PROVINCE_STATS_PROVINCE_EVENT_FK1" />
         <AssociationConnector Association="DocuPathModel.REQUEST_TYPE_SERVICE_REQUEST_FK1" />
@@ -161,6 +159,10 @@
         <AssociationConnector Association="DocuPathModel.USER_LOGIN_USER_FK1" />
         <AssociationConnector Association="DocuPathModel.FPS_SCHEDULE_LINE" />
         <AssociationConnector Association="DocuPathModel.MEDIA_TAG" />
+        <AssociationConnector Association="DocuPathModel.FK_MEDIA_STATUS" />
+        <EntityTypeShape EntityType="DocuPathModel.NOTIFICATION_TYPE" Width="1.5" PointX="3.375" PointY="3.875" />
+        <AssociationConnector Association="DocuPathModel.C_classifies" />
+        <AssociationConnector Association="DocuPathModel.FK_NOTIFICATION_NOTIFICATIONTYPE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

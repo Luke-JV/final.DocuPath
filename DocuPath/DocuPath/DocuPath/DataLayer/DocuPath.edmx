@@ -473,7 +473,7 @@
             <PropertyRef Name="NotificationTypeID" />
           </Key>
           <Property Name="NotificationTypeID" Type="int" Nullable="false" />
-          <Property Name="NotificatonTypeValue" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NotificationTypeValue" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="PRIMARY_CAUSE_DEATH">
           <Key>
@@ -1081,6 +1081,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="CONTENT_TAG_MEDIA_TAG_FK2">
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="1" />
+          <End Role="MEDIA_TAG" Type="Self.MEDIA_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTENT_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Principal>
+            <Dependent Role="MEDIA_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="EVENT_STATS_PROVINCE_EVENT_FK1">
           <End Role="EVENT" Type="Self.EVENT" Multiplicity="1" />
           <End Role="STATS_PROVINCE_EVENT" Type="Self.STATS_PROVINCE_EVENT" Multiplicity="*" />
@@ -1117,6 +1129,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CATEGORY">
+          <End Role="TAG_CATEGORY" Type="Self.TAG_CATEGORY" Multiplicity="1" />
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CATEGORY">
+              <PropertyRef Name="TagCategoryID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CONDITION">
+          <End Role="TAG_CONDITION" Type="Self.TAG_CONDITION" Multiplicity="1" />
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CONDITION">
+              <PropertyRef Name="TagConditionID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagConditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONTENT_TAG_TAG_SUBCATEGORY">
           <End Role="TAG_SUBCATEGORY" Type="Self.TAG_SUBCATEGORY" Multiplicity="1" />
           <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
@@ -1150,6 +1186,42 @@
             </Principal>
             <Dependent Role="LEVEL_AREA">
               <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDIA_STATUS">
+          <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+          <End Role="MEDIA" Type="Self.MEDIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MEDIA">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICATION_NOTIFICATIONTYPE">
+          <End Role="NOTIFICATION_TYPE" Type="Self.NOTIFICATION_TYPE" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTIFICATION_TYPE">
+              <PropertyRef Name="NotificationTypeID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICATION_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1981,6 +2053,10 @@
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
             <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
           </AssociationSet>
+          <AssociationSet Name="CONTENT_TAG_MEDIA_TAG_FK2" Association="Self.CONTENT_TAG_MEDIA_TAG_FK2">
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+            <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
+          </AssociationSet>
           <AssociationSet Name="EVENT_STATS_PROVINCE_EVENT_FK1" Association="Self.EVENT_STATS_PROVINCE_EVENT_FK1">
             <End Role="EVENT" EntitySet="EVENT" />
             <End Role="STATS_PROVINCE_EVENT" EntitySet="STATS_PROVINCE_EVENT" />
@@ -1993,6 +2069,14 @@
             <End Role="EXTERNAL_REPORT" EntitySet="EXTERNAL_REPORT" />
             <End Role="SPECIMEN" EntitySet="SPECIMEN" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CATEGORY" Association="Self.FK_CONTENT_TAG_TAG_CATEGORY">
+            <End Role="TAG_CATEGORY" EntitySet="TAG_CATEGORY" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CONDITION" Association="Self.FK_CONTENT_TAG_TAG_CONDITION">
+            <End Role="TAG_CONDITION" EntitySet="TAG_CONDITION" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTENT_TAG_TAG_SUBCATEGORY" Association="Self.FK_CONTENT_TAG_TAG_SUBCATEGORY">
             <End Role="TAG_SUBCATEGORY" EntitySet="TAG_SUBCATEGORY" />
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
@@ -2004,6 +2088,18 @@
           <AssociationSet Name="FK_LEVEL_AREA_ACCESS_LEVEL" Association="Self.FK_LEVEL_AREA_ACCESS_LEVEL">
             <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
             <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDIA_STATUS" Association="Self.FK_MEDIA_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
+            <End Role="MEDIA" EntitySet="MEDIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICATION_NOTIFICATIONTYPE" Association="Self.FK_NOTIFICATION_NOTIFICATIONTYPE">
+            <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICATION_USER" Association="Self.FK_NOTIFICATION_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
           <AssociationSet Name="FK_USER_CLAIM_USER" Association="Self.FK_USER_CLAIM_USER">
             <End Role="USER" EntitySet="USER" />
@@ -2273,7 +2369,6 @@
           <EntitySet Name="MEDIA_PURPOSE" EntityType="DocuPathModel.MEDIA_PURPOSE" />
           <EntitySet Name="MEDICAL_TREATMENTS" EntityType="DocuPathModel.MEDICAL_TREATMENTS" />
           <EntitySet Name="NOTIFICATION" EntityType="DocuPathModel.NOTIFICATION" />
-          <EntitySet Name="NOTIFICATION_TYPE" EntityType="DocuPathModel.NOTIFICATION_TYPE" />
           <EntitySet Name="PRIMARY_CAUSE_DEATH" EntityType="DocuPathModel.PRIMARY_CAUSE_DEATH" />
           <EntitySet Name="PROVINCE" EntityType="DocuPathModel.PROVINCE" />
           <EntitySet Name="REQUEST_TYPE" EntityType="DocuPathModel.REQUEST_TYPE" />
@@ -2546,10 +2641,6 @@
             <End Role="MEDICAL_TREATMENTS" EntitySet="MEDICAL_TREATMENTS" />
             <End Role="STATS_TREATMENTS" EntitySet="STATS_TREATMENTS" />
           </AssociationSet>
-          <AssociationSet Name="C_classifies" Association="DocuPathModel.C_classifies">
-            <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
-            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
-          </AssociationSet>
           <AssociationSet Name="receives" Association="DocuPathModel.receives">
             <End Role="USER" EntitySet="USER" />
             <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
@@ -2629,6 +2720,19 @@
           <AssociationSet Name="MEDIA_TAG" Association="DocuPathModel.MEDIA_TAG">
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
             <End Role="MEDIA" EntitySet="MEDIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDIA_STATUS" Association="DocuPathModel.FK_MEDIA_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
+            <End Role="MEDIA" EntitySet="MEDIA" />
+          </AssociationSet>
+          <EntitySet Name="NOTIFICATION_TYPE" EntityType="DocuPathModel.NOTIFICATION_TYPE" />
+          <AssociationSet Name="C_classifies" Association="DocuPathModel.C_classifies">
+            <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICATION_NOTIFICATIONTYPE" Association="DocuPathModel.FK_NOTIFICATION_NOTIFICATIONTYPE">
+            <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ABDOMEN_OBSERVATION">
@@ -3141,6 +3245,7 @@
           <NavigationProperty Name="MEDIA_PURPOSE" Relationship="DocuPathModel.MEDIA_PURPOSE_MEDIA_FK1" FromRole="MEDIA" ToRole="MEDIA_PURPOSE" />
           <NavigationProperty Name="USER" Relationship="DocuPathModel.USER_MEDIA_FK1" FromRole="MEDIA" ToRole="USER" />
           <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.MEDIA_TAG" FromRole="MEDIA" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="STATUS" Relationship="DocuPathModel.FK_MEDIA_STATUS" FromRole="MEDIA" ToRole="STATUS" />
         </EntityType>
         <EntityType Name="MEDIA_PURPOSE">
           <Key>
@@ -3170,16 +3275,9 @@
           <Property Name="NotificationSummary" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="NotificationDetails" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="HandledDateTimeStamp" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="NOTIFICATION_TYPE" Relationship="DocuPathModel.C_classifies" FromRole="NOTIFICATION" ToRole="NOTIFICATION_TYPE" />
           <NavigationProperty Name="USER" Relationship="DocuPathModel.receives" FromRole="NOTIFICATION" ToRole="USER" />
-        </EntityType>
-        <EntityType Name="NOTIFICATION_TYPE">
-          <Key>
-            <PropertyRef Name="NotificationTypeID" />
-          </Key>
-          <Property Name="NotificationTypeID" Type="Int32" Nullable="false" />
-          <Property Name="NotificatonTypeValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="NOTIFICATION" Relationship="DocuPathModel.C_classifies" FromRole="NOTIFICATION_TYPE" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="NOTIFICATION_TYPE" Relationship="DocuPathModel.C_classifies" FromRole="NOTIFICATION" ToRole="NOTIFICATION_TYPE" />
+          <NavigationProperty Name="NOTIFICATION_TYPE1" Relationship="DocuPathModel.FK_NOTIFICATION_NOTIFICATIONTYPE" FromRole="NOTIFICATION" ToRole="NOTIFICATION_TYPE" />
         </EntityType>
         <EntityType Name="PRIMARY_CAUSE_DEATH">
           <Key>
@@ -3445,6 +3543,7 @@
           <NavigationProperty Name="EXTERNAL_REVIEW_CASE" Relationship="DocuPathModel.CASE_STATUS_EXTERNAL_REVIEW_CASE_FK1" FromRole="STATUS" ToRole="EXTERNAL_REVIEW_CASE" />
           <NavigationProperty Name="FORENSIC_CASE" Relationship="DocuPathModel.CASE_STATUS_FORENSIC_CASE_FK1" FromRole="STATUS" ToRole="FORENSIC_CASE" />
           <NavigationProperty Name="LEGACY_CASE" Relationship="DocuPathModel.CASE_STATUS_LEGACY_CASE_FK1" FromRole="STATUS" ToRole="LEGACY_CASE" />
+          <NavigationProperty Name="MEDIA" Relationship="DocuPathModel.FK_MEDIA_STATUS" FromRole="STATUS" ToRole="MEDIA" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -4309,18 +4408,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="C_classifies">
-          <End Type="DocuPathModel.NOTIFICATION_TYPE" Role="NOTIFICATION_TYPE" Multiplicity="1" />
-          <End Type="DocuPathModel.NOTIFICATION" Role="NOTIFICATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NOTIFICATION_TYPE">
-              <PropertyRef Name="NotificationTypeID" />
-            </Principal>
-            <Dependent Role="NOTIFICATION">
-              <PropertyRef Name="NotificationTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="receives">
           <End Type="DocuPathModel.USER" Role="USER" Multiplicity="1" />
           <End Type="DocuPathModel.NOTIFICATION" Role="NOTIFICATION" Multiplicity="*" />
@@ -4546,6 +4633,51 @@
         <Association Name="MEDIA_TAG">
           <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
           <End Type="DocuPathModel.MEDIA" Role="MEDIA" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_MEDIA_STATUS">
+          <End Type="DocuPathModel.STATUS" Role="STATUS" Multiplicity="1" />
+          <End Type="DocuPathModel.MEDIA" Role="MEDIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MEDIA">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NOTIFICATION_TYPE">
+          <Key>
+            <PropertyRef Name="NotificationTypeID" />
+          </Key>
+          <Property Name="NotificationTypeID" Type="Int32" Nullable="false" />
+          <Property Name="NotificationTypeValue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NOTIFICATION" Relationship="DocuPathModel.C_classifies" FromRole="NOTIFICATION_TYPE" ToRole="NOTIFICATION" />
+          <NavigationProperty Name="NOTIFICATION1" Relationship="DocuPathModel.FK_NOTIFICATION_NOTIFICATIONTYPE" FromRole="NOTIFICATION_TYPE" ToRole="NOTIFICATION" />
+        </EntityType>
+        <Association Name="C_classifies">
+          <End Type="DocuPathModel.NOTIFICATION_TYPE" Role="NOTIFICATION_TYPE" Multiplicity="1" />
+          <End Type="DocuPathModel.NOTIFICATION" Role="NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTIFICATION_TYPE">
+              <PropertyRef Name="NotificationTypeID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICATION_NOTIFICATIONTYPE">
+          <End Type="DocuPathModel.NOTIFICATION_TYPE" Role="NOTIFICATION_TYPE" Multiplicity="1" />
+          <End Type="DocuPathModel.NOTIFICATION" Role="NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTIFICATION_TYPE">
+              <PropertyRef Name="NotificationTypeID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -5027,14 +5159,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="NOTIFICATION_TYPE">
-            <EntityTypeMapping TypeName="DocuPathModel.NOTIFICATION_TYPE">
-              <MappingFragment StoreEntitySet="NOTIFICATION_TYPE">
-                <ScalarProperty Name="NotificatonTypeValue" ColumnName="NotificatonTypeValue" />
-                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PRIMARY_CAUSE_DEATH">
             <EntityTypeMapping TypeName="DocuPathModel.PRIMARY_CAUSE_DEATH">
               <MappingFragment StoreEntitySet="PRIMARY_CAUSE_DEATH">
@@ -5390,6 +5514,14 @@
               <ScalarProperty Name="ContentTagID" ColumnName="ContentTagID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="NOTIFICATION_TYPE">
+            <EntityTypeMapping TypeName="DocuPathModel.NOTIFICATION_TYPE">
+              <MappingFragment StoreEntitySet="NOTIFICATION_TYPE">
+                <ScalarProperty Name="NotificationTypeValue" ColumnName="NotificationTypeValue" />
+                <ScalarProperty Name="NotificationTypeID" ColumnName="NotificationTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

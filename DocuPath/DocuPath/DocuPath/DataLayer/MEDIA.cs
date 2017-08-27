@@ -36,5 +36,6 @@ namespace DocuPath.DataLayer
         public virtual USER USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTENT_TAG> CONTENT_TAG { get; set; }
+        public virtual STATUS STATUS { get; set; }
     }
 }
