@@ -73,6 +73,11 @@ namespace DocuPath.Controllers
         // GET: ExternalReviewCase/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            EXTERNAL_REVIEW_CASE model = new EXTERNAL_REVIEW_CASE();
+            model = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault();
+            #endregion
+            
             #region VALIDATE_ACCESS
             bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
             #endregion
@@ -80,7 +85,8 @@ namespace DocuPath.Controllers
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+
+            return View(model);
         }
 
         #endregion

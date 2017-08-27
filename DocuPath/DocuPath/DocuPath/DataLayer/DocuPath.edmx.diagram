@@ -20,7 +20,6 @@
         <EntityTypeShape EntityType="DocuPathModel.CASE_STATISTICS" Width="1.5" PointX="16.75" PointY="49.875" />
         <EntityTypeShape EntityType="DocuPathModel.CHEST_OBSERVATION" Width="1.5" PointX="10.75" PointY="82" />
         <EntityTypeShape EntityType="DocuPathModel.COD_PROMINENCE" Width="1.5" PointX="11.5" PointY="66.625" />
-        <EntityTypeShape EntityType="DocuPathModel.CONTENT_TAG" Width="1.5" PointX="11.5" PointY="29.25" />
         <EntityTypeShape EntityType="DocuPathModel.EVENT" Width="1.5" PointX="22.75" PointY="59.375" />
         <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_CAUSE" Width="1.5" PointX="16.75" PointY="42.125" />
         <EntityTypeShape EntityType="DocuPathModel.EXTERNAL_REPORT" Width="1.5" PointX="13.75" PointY="42" />
@@ -95,7 +94,6 @@
         <AssociationConnector Association="DocuPathModel.AUTOPSY_AREA_FORENSIC_CASE_FK1" />
         <AssociationConnector Association="DocuPathModel.AUTOPSY_TYPE_CASE_STATISTICS_FK1" />
         <AssociationConnector Association="DocuPathModel.COD_PROMINENCE_CASE_COD_ESTIMATION_FK1" />
-        <AssociationConnector Association="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" />
         <AssociationConnector Association="DocuPathModel.FORENSIC_CASE_CASE_COD_ESTIMATION_FK1" />
         <AssociationConnector Association="DocuPathModel.CASE_STATISTICS_STATS_EXTERNAL_CAUSE_FK1" />
         <AssociationConnector Association="DocuPathModel.CASE_STATISTICS_STATS_INJURY_SCENE_FK1" />
@@ -110,9 +108,6 @@
         <AssociationConnector Association="DocuPathModel.INDIVIDUAL_RACE_CASE_STATISTICS_FK1" />
         <AssociationConnector Association="DocuPathModel.PRIMARY_CAUSE_DEATH_CASE_STATISTICS_FK1" />
         <AssociationConnector Association="DocuPathModel.FORENSIC_CASE_CHEST_OBSERVATION_FK1" />
-        <AssociationConnector Association="DocuPathModel.classifies" />
-        <AssociationConnector Association="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY" />
-        <AssociationConnector Association="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" />
         <AssociationConnector Association="DocuPathModel.EVENT_STATS_PROVINCE_EVENT_FK1" />
         <AssociationConnector Association="DocuPathModel.EXTERNAL_CAUSE_STATS_EXTERNAL_CAUSE_FK1" />
         <AssociationConnector Association="DocuPathModel.EXTERNAL_REPORT_SPECIMEN_FK1" />
@@ -160,7 +155,18 @@
         <AssociationConnector Association="DocuPathModel.FK_USER_CLAIM_USER" />
         <AssociationConnector Association="DocuPathModel.USER_LOGIN_USER_FK1" />
         <AssociationConnector Association="DocuPathModel.FPS_SCHEDULE_LINE" />
-        <AssociationConnector Association="DocuPathModel.MEDIA_TAG" />
+        <EntityTypeShape EntityType="DocuPathModel.CONTENT_TAG" Width="1.5" PointX="11.5" PointY="29" />
+        <EntityTypeShape EntityType="DocuPathModel.MEDIA_TAG" Width="1.5" PointX="17" PointY="39.25" />
+        <AssociationConnector Association="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" />
+        <AssociationConnector Association="DocuPathModel.classifies" />
+        <AssociationConnector Association="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK1" />
+        <AssociationConnector Association="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK2" />
+        <AssociationConnector Association="DocuPathModel.FK_CONTENT_TAG_TAG_CATEGORY" />
+        <AssociationConnector Association="DocuPathModel.FK_CONTENT_TAG_TAG_CONDITION" />
+        <AssociationConnector Association="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY" />
+        <AssociationConnector Association="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" />
+        <AssociationConnector Association="DocuPathModel.FK_MEDIA_STATUS" />
+        <AssociationConnector Association="DocuPathModel.MEDIA_MEDIA_TAG_FK1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

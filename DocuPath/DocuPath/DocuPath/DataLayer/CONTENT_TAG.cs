@@ -18,7 +18,8 @@ namespace DocuPath.DataLayer
         public CONTENT_TAG()
         {
             this.CASE_COD_ESTIMATION = new HashSet<CASE_COD_ESTIMATION>();
-            this.MEDIA = new HashSet<MEDIA>();
+            this.MEDIA_TAG = new HashSet<MEDIA_TAG>();
+            this.MEDIA_TAG1 = new HashSet<MEDIA_TAG>();
         }
     
         public int ContentTagID { get; set; }
@@ -31,9 +32,13 @@ namespace DocuPath.DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CASE_COD_ESTIMATION> CASE_COD_ESTIMATION { get; set; }
         public virtual TAG_CONDITION TAG_CONDITION { get; set; }
-        public virtual TAG_SUBCATEGORY TAG_SUBCATEGORY { get; set; }
-        public virtual TAG_CATEGORY TAG_CATEGORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MEDIA> MEDIA { get; set; }
+        public virtual ICollection<MEDIA_TAG> MEDIA_TAG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEDIA_TAG> MEDIA_TAG1 { get; set; }
+        public virtual TAG_CATEGORY TAG_CATEGORY { get; set; }
+        public virtual TAG_CONDITION TAG_CONDITION1 { get; set; }
+        public virtual TAG_SUBCATEGORY TAG_SUBCATEGORY { get; set; }
+        public virtual TAG_CATEGORY TAG_CATEGORY1 { get; set; }
     }
 }

@@ -40,7 +40,6 @@ namespace DocuPath.DataLayer
         public virtual DbSet<CASE_STATISTICS> CASE_STATISTICS { get; set; }
         public virtual DbSet<CHEST_OBSERVATION> CHEST_OBSERVATION { get; set; }
         public virtual DbSet<COD_PROMINENCE> COD_PROMINENCE { get; set; }
-        public virtual DbSet<CONTENT_TAG> CONTENT_TAG { get; set; }
         public virtual DbSet<EVENT> EVENT { get; set; }
         public virtual DbSet<EXTERNAL_CAUSE> EXTERNAL_CAUSE { get; set; }
         public virtual DbSet<EXTERNAL_REPORT> EXTERNAL_REPORT { get; set; }
@@ -67,6 +66,7 @@ namespace DocuPath.DataLayer
         public virtual DbSet<MEDIA_PURPOSE> MEDIA_PURPOSE { get; set; }
         public virtual DbSet<MEDICAL_TREATMENTS> MEDICAL_TREATMENTS { get; set; }
         public virtual DbSet<NOTIFICATION> NOTIFICATION { get; set; }
+        public virtual DbSet<NOTIFICATION_TYPE> NOTIFICATION_TYPE { get; set; }
         public virtual DbSet<PRIMARY_CAUSE_DEATH> PRIMARY_CAUSE_DEATH { get; set; }
         public virtual DbSet<PROVINCE> PROVINCE { get; set; }
         public virtual DbSet<REQUEST_TYPE> REQUEST_TYPE { get; set; }
@@ -99,6 +99,7 @@ namespace DocuPath.DataLayer
         public virtual DbSet<USER> USER { get; set; }
         public virtual DbSet<USER_CLAIM> USER_CLAIM { get; set; }
         public virtual DbSet<USER_LOGIN> USER_LOGIN { get; set; }
-        public virtual DbSet<NOTIFICATION_TYPE> NOTIFICATION_TYPE { get; set; }
+        public virtual DbSet<CONTENT_TAG> CONTENT_TAG { get; set; }
+        public virtual DbSet<MEDIA_TAG> MEDIA_TAG { get; set; }
     }
 }

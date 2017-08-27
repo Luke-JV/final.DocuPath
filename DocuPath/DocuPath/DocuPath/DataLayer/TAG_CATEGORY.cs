@@ -18,6 +18,7 @@ namespace DocuPath.DataLayer
         public TAG_CATEGORY()
         {
             this.CONTENT_TAG = new HashSet<CONTENT_TAG>();
+            this.CONTENT_TAG1 = new HashSet<CONTENT_TAG>();
         }
     
         public int TagCategoryID { get; set; }
@@ -25,5 +26,7 @@ namespace DocuPath.DataLayer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTENT_TAG> CONTENT_TAG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTENT_TAG> CONTENT_TAG1 { get; set; }
     }
 }

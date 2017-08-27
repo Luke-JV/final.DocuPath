@@ -12,15 +12,14 @@ namespace DocuPath.DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class CASE_COD_ESTIMATION
+    public partial class MEDIA_TAG
     {
-        public int ProminenceID { get; set; }
         public int ContentTagID { get; set; }
-        public int ForensicCaseID { get; set; }
-        public string CODMotivation { get; set; }
+        public int MediaID { get; set; }
+        public string MediaTagOtherDescription { get; set; }
     
-        public virtual COD_PROMINENCE COD_PROMINENCE { get; set; }
-        public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
         public virtual CONTENT_TAG CONTENT_TAG { get; set; }
+        public virtual CONTENT_TAG CONTENT_TAG1 { get; set; }
+        public virtual MEDIA MEDIA { get; set; }
     }
 }

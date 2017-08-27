@@ -344,6 +344,9 @@
     <Compile Include="DataLayer\MEDIA_PURPOSE.cs">
       <DependentUpon>DocuPath.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataLayer\MEDIA_TAG.cs">
+      <DependentUpon>DocuPath.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataLayer\MEDICAL_TREATMENTS.cs">
       <DependentUpon>DocuPath.tt</DependentUpon>
     </Compile>

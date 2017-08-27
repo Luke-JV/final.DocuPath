@@ -73,6 +73,12 @@ namespace DocuPath.Controllers
         // GET: ServiceRequest/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            SERVICE_REQUEST model = new SERVICE_REQUEST();
+            model = db.SERVICE_REQUEST.Where(x => x.ServiceRequestID == id).FirstOrDefault();
+            model.SPECIMEN = db.SPECIMEN.Where(x => x.ServiceRequestID == model.ServiceRequestID).ToList();
+            model.FORENSIC_CASE = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == model.ForensicCaseID).FirstOrDefault();
+            #endregion
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion

@@ -18,7 +18,6 @@ namespace DocuPath.DataLayer
         public NOTIFICATION_TYPE()
         {
             this.NOTIFICATION = new HashSet<NOTIFICATION>();
-            this.NOTIFICATION1 = new HashSet<NOTIFICATION>();
         }
     
         public int NotificationTypeID { get; set; }
@@ -26,7 +25,5 @@ namespace DocuPath.DataLayer
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTIFICATION> NOTIFICATION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NOTIFICATION> NOTIFICATION1 { get; set; }
     }
 }

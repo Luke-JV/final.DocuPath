@@ -17,7 +17,7 @@ namespace DocuPath.DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MEDIA()
         {
-            this.CONTENT_TAG = new HashSet<CONTENT_TAG>();
+            this.MEDIA_TAG = new HashSet<MEDIA_TAG>();
         }
     
         public int MediaID { get; set; }
@@ -34,8 +34,8 @@ namespace DocuPath.DataLayer
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
         public virtual MEDIA_PURPOSE MEDIA_PURPOSE { get; set; }
         public virtual USER USER { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTENT_TAG> CONTENT_TAG { get; set; }
         public virtual STATUS STATUS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEDIA_TAG> MEDIA_TAG { get; set; }
     }
 }

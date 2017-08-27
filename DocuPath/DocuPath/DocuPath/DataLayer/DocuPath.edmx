@@ -447,6 +447,7 @@
           </Key>
           <Property Name="ContentTagID" Type="int" Nullable="false" />
           <Property Name="MediaID" Type="int" Nullable="false" />
+          <Property Name="MediaTagOtherDescription" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MEDICAL_TREATMENTS">
           <Key>
@@ -1081,6 +1082,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="CONTENT_TAG_MEDIA_TAG_FK2">
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="1" />
+          <End Role="MEDIA_TAG" Type="Self.MEDIA_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTENT_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Principal>
+            <Dependent Role="MEDIA_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="EVENT_STATS_PROVINCE_EVENT_FK1">
           <End Role="EVENT" Type="Self.EVENT" Multiplicity="1" />
           <End Role="STATS_PROVINCE_EVENT" Type="Self.STATS_PROVINCE_EVENT" Multiplicity="*" />
@@ -1117,6 +1130,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CATEGORY">
+          <End Role="TAG_CATEGORY" Type="Self.TAG_CATEGORY" Multiplicity="1" />
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CATEGORY">
+              <PropertyRef Name="TagCategoryID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CONDITION">
+          <End Role="TAG_CONDITION" Type="Self.TAG_CONDITION" Multiplicity="1" />
+          <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CONDITION">
+              <PropertyRef Name="TagConditionID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagConditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONTENT_TAG_TAG_SUBCATEGORY">
           <End Role="TAG_SUBCATEGORY" Type="Self.TAG_SUBCATEGORY" Multiplicity="1" />
           <End Role="CONTENT_TAG" Type="Self.CONTENT_TAG" Multiplicity="*" />
@@ -1150,6 +1187,42 @@
             </Principal>
             <Dependent Role="LEVEL_AREA">
               <PropertyRef Name="AccessLevelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDIA_STATUS">
+          <End Role="STATUS" Type="Self.STATUS" Multiplicity="1" />
+          <End Role="MEDIA" Type="Self.MEDIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MEDIA">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICATION_NOTIFICATIONTYPE">
+          <End Role="NOTIFICATION_TYPE" Type="Self.NOTIFICATION_TYPE" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTIFICATION_TYPE">
+              <PropertyRef Name="NotificationTypeID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="NotificationTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICATION_USER">
+          <End Role="USER" Type="Self.USER" Multiplicity="1" />
+          <End Role="NOTIFICATION" Type="Self.NOTIFICATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="NOTIFICATION">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1981,6 +2054,10 @@
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
             <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
           </AssociationSet>
+          <AssociationSet Name="CONTENT_TAG_MEDIA_TAG_FK2" Association="Self.CONTENT_TAG_MEDIA_TAG_FK2">
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+            <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
+          </AssociationSet>
           <AssociationSet Name="EVENT_STATS_PROVINCE_EVENT_FK1" Association="Self.EVENT_STATS_PROVINCE_EVENT_FK1">
             <End Role="EVENT" EntitySet="EVENT" />
             <End Role="STATS_PROVINCE_EVENT" EntitySet="STATS_PROVINCE_EVENT" />
@@ -1993,6 +2070,14 @@
             <End Role="EXTERNAL_REPORT" EntitySet="EXTERNAL_REPORT" />
             <End Role="SPECIMEN" EntitySet="SPECIMEN" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CATEGORY" Association="Self.FK_CONTENT_TAG_TAG_CATEGORY">
+            <End Role="TAG_CATEGORY" EntitySet="TAG_CATEGORY" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CONDITION" Association="Self.FK_CONTENT_TAG_TAG_CONDITION">
+            <End Role="TAG_CONDITION" EntitySet="TAG_CONDITION" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTENT_TAG_TAG_SUBCATEGORY" Association="Self.FK_CONTENT_TAG_TAG_SUBCATEGORY">
             <End Role="TAG_SUBCATEGORY" EntitySet="TAG_SUBCATEGORY" />
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
@@ -2004,6 +2089,18 @@
           <AssociationSet Name="FK_LEVEL_AREA_ACCESS_LEVEL" Association="Self.FK_LEVEL_AREA_ACCESS_LEVEL">
             <End Role="ACCESS_LEVEL" EntitySet="ACCESS_LEVEL" />
             <End Role="LEVEL_AREA" EntitySet="LEVEL_AREA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDIA_STATUS" Association="Self.FK_MEDIA_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
+            <End Role="MEDIA" EntitySet="MEDIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICATION_NOTIFICATIONTYPE" Association="Self.FK_NOTIFICATION_NOTIFICATIONTYPE">
+            <End Role="NOTIFICATION_TYPE" EntitySet="NOTIFICATION_TYPE" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICATION_USER" Association="Self.FK_NOTIFICATION_USER">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="NOTIFICATION" EntitySet="NOTIFICATION" />
           </AssociationSet>
           <AssociationSet Name="FK_USER_CLAIM_USER" Association="Self.FK_USER_CLAIM_USER">
             <End Role="USER" EntitySet="USER" />
@@ -2246,7 +2343,6 @@
           <EntitySet Name="CASE_STATISTICS" EntityType="DocuPathModel.CASE_STATISTICS" />
           <EntitySet Name="CHEST_OBSERVATION" EntityType="DocuPathModel.CHEST_OBSERVATION" />
           <EntitySet Name="COD_PROMINENCE" EntityType="DocuPathModel.COD_PROMINENCE" />
-          <EntitySet Name="CONTENT_TAG" EntityType="DocuPathModel.CONTENT_TAG" />
           <EntitySet Name="EVENT" EntityType="DocuPathModel.EVENT" />
           <EntitySet Name="EXTERNAL_CAUSE" EntityType="DocuPathModel.EXTERNAL_CAUSE" />
           <EntitySet Name="EXTERNAL_REPORT" EntityType="DocuPathModel.EXTERNAL_REPORT" />
@@ -2366,10 +2462,6 @@
             <End Role="COD_PROMINENCE" EntitySet="COD_PROMINENCE" />
             <End Role="CASE_COD_ESTIMATION" EntitySet="CASE_COD_ESTIMATION" />
           </AssociationSet>
-          <AssociationSet Name="CONTENT_TAG_CASE_COD_ESTIMATION_FK1" Association="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1">
-            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
-            <End Role="CASE_COD_ESTIMATION" EntitySet="CASE_COD_ESTIMATION" />
-          </AssociationSet>
           <AssociationSet Name="FORENSIC_CASE_CASE_COD_ESTIMATION_FK1" Association="DocuPathModel.FORENSIC_CASE_CASE_COD_ESTIMATION_FK1">
             <End Role="FORENSIC_CASE" EntitySet="FORENSIC_CASE" />
             <End Role="CASE_COD_ESTIMATION" EntitySet="CASE_COD_ESTIMATION" />
@@ -2425,18 +2517,6 @@
           <AssociationSet Name="FORENSIC_CASE_CHEST_OBSERVATION_FK1" Association="DocuPathModel.FORENSIC_CASE_CHEST_OBSERVATION_FK1">
             <End Role="FORENSIC_CASE" EntitySet="FORENSIC_CASE" />
             <End Role="CHEST_OBSERVATION" EntitySet="CHEST_OBSERVATION" />
-          </AssociationSet>
-          <AssociationSet Name="classifies" Association="DocuPathModel.classifies">
-            <End Role="TAG_CONDITION" EntitySet="TAG_CONDITION" />
-            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTENT_TAG_TAG_SUBCATEGORY" Association="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY">
-            <End Role="TAG_SUBCATEGORY" EntitySet="TAG_SUBCATEGORY" />
-            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
-          </AssociationSet>
-          <AssociationSet Name="TAG_CATEGORY_CONTENT_TAG_FK1" Association="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1">
-            <End Role="TAG_CATEGORY" EntitySet="TAG_CATEGORY" />
-            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
           </AssociationSet>
           <AssociationSet Name="EVENT_STATS_PROVINCE_EVENT_FK1" Association="DocuPathModel.EVENT_STATS_PROVINCE_EVENT_FK1">
             <End Role="EVENT" EntitySet="EVENT" />
@@ -2626,9 +2706,47 @@
             <End Role="FPS_AUTOPSY_SCHEDULE" EntitySet="FPS_AUTOPSY_SCHEDULE" />
             <End Role="FPS_CASE" EntitySet="FPS_CASE" />
           </AssociationSet>
-          <AssociationSet Name="MEDIA_TAG" Association="DocuPathModel.MEDIA_TAG">
+          <EntitySet Name="CONTENT_TAG" EntityType="DocuPathModel.CONTENT_TAG" />
+          <EntitySet Name="MEDIA_TAG" EntityType="DocuPathModel.MEDIA_TAG" />
+          <AssociationSet Name="CONTENT_TAG_CASE_COD_ESTIMATION_FK1" Association="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1">
             <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+            <End Role="CASE_COD_ESTIMATION" EntitySet="CASE_COD_ESTIMATION" />
+          </AssociationSet>
+          <AssociationSet Name="classifies" Association="DocuPathModel.classifies">
+            <End Role="TAG_CONDITION" EntitySet="TAG_CONDITION" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="CONTENT_TAG_MEDIA_TAG_FK1" Association="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK1">
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+            <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="CONTENT_TAG_MEDIA_TAG_FK2" Association="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK2">
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+            <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CATEGORY" Association="DocuPathModel.FK_CONTENT_TAG_TAG_CATEGORY">
+            <End Role="TAG_CATEGORY" EntitySet="TAG_CATEGORY" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_CONDITION" Association="DocuPathModel.FK_CONTENT_TAG_TAG_CONDITION">
+            <End Role="TAG_CONDITION" EntitySet="TAG_CONDITION" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTENT_TAG_TAG_SUBCATEGORY" Association="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY">
+            <End Role="TAG_SUBCATEGORY" EntitySet="TAG_SUBCATEGORY" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="TAG_CATEGORY_CONTENT_TAG_FK1" Association="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1">
+            <End Role="TAG_CATEGORY" EntitySet="TAG_CATEGORY" />
+            <End Role="CONTENT_TAG" EntitySet="CONTENT_TAG" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MEDIA_STATUS" Association="DocuPathModel.FK_MEDIA_STATUS">
+            <End Role="STATUS" EntitySet="STATUS" />
             <End Role="MEDIA" EntitySet="MEDIA" />
+          </AssociationSet>
+          <AssociationSet Name="MEDIA_MEDIA_TAG_FK1" Association="DocuPathModel.MEDIA_MEDIA_TAG_FK1">
+            <End Role="MEDIA" EntitySet="MEDIA" />
+            <End Role="MEDIA_TAG" EntitySet="MEDIA_TAG" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="ABDOMEN_OBSERVATION">
@@ -2768,8 +2886,8 @@
           <Property Name="ForensicCaseID" Type="Int32" Nullable="false" />
           <Property Name="CODMotivation" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="COD_PROMINENCE" Relationship="DocuPathModel.COD_PROMINENCE_CASE_COD_ESTIMATION_FK1" FromRole="CASE_COD_ESTIMATION" ToRole="COD_PROMINENCE" />
-          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" FromRole="CASE_COD_ESTIMATION" ToRole="CONTENT_TAG" />
           <NavigationProperty Name="FORENSIC_CASE" Relationship="DocuPathModel.FORENSIC_CASE_CASE_COD_ESTIMATION_FK1" FromRole="CASE_COD_ESTIMATION" ToRole="FORENSIC_CASE" />
+          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" FromRole="CASE_COD_ESTIMATION" ToRole="CONTENT_TAG" />
         </EntityType>
         <EntityType Name="CASE_STATISTICS">
           <Key>
@@ -2839,22 +2957,6 @@
           <Property Name="ProminenceID" Type="Int32" Nullable="false" />
           <Property Name="ProminenceValue" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CASE_COD_ESTIMATION" Relationship="DocuPathModel.COD_PROMINENCE_CASE_COD_ESTIMATION_FK1" FromRole="COD_PROMINENCE" ToRole="CASE_COD_ESTIMATION" />
-        </EntityType>
-        <EntityType Name="CONTENT_TAG">
-          <Key>
-            <PropertyRef Name="ContentTagID" />
-          </Key>
-          <Property Name="ContentTagID" Type="Int32" Nullable="false" />
-          <Property Name="TagCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="TagSubCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="TagConditionID" Type="Int32" Nullable="false" />
-          <Property Name="ContentTagCode" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="ContentTagText" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CASE_COD_ESTIMATION" Relationship="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" FromRole="CONTENT_TAG" ToRole="CASE_COD_ESTIMATION" />
-          <NavigationProperty Name="TAG_CONDITION" Relationship="DocuPathModel.classifies" FromRole="CONTENT_TAG" ToRole="TAG_CONDITION" />
-          <NavigationProperty Name="TAG_SUBCATEGORY" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY" FromRole="CONTENT_TAG" ToRole="TAG_SUBCATEGORY" />
-          <NavigationProperty Name="TAG_CATEGORY" Relationship="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" FromRole="CONTENT_TAG" ToRole="TAG_CATEGORY" />
-          <NavigationProperty Name="MEDIA" Relationship="DocuPathModel.MEDIA_TAG" FromRole="CONTENT_TAG" ToRole="MEDIA" />
         </EntityType>
         <EntityType Name="EVENT">
           <Key>
@@ -3140,7 +3242,8 @@
           <NavigationProperty Name="FORENSIC_CASE" Relationship="DocuPathModel.FORENSIC_CASE_MEDIA_FK1" FromRole="MEDIA" ToRole="FORENSIC_CASE" />
           <NavigationProperty Name="MEDIA_PURPOSE" Relationship="DocuPathModel.MEDIA_PURPOSE_MEDIA_FK1" FromRole="MEDIA" ToRole="MEDIA_PURPOSE" />
           <NavigationProperty Name="USER" Relationship="DocuPathModel.USER_MEDIA_FK1" FromRole="MEDIA" ToRole="USER" />
-          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.MEDIA_TAG" FromRole="MEDIA" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="STATUS" Relationship="DocuPathModel.FK_MEDIA_STATUS" FromRole="MEDIA" ToRole="STATUS" />
+          <NavigationProperty Name="MEDIA_TAG" Relationship="DocuPathModel.MEDIA_MEDIA_TAG_FK1" FromRole="MEDIA" ToRole="MEDIA_TAG" />
         </EntityType>
         <EntityType Name="MEDIA_PURPOSE">
           <Key>
@@ -3445,6 +3548,7 @@
           <NavigationProperty Name="EXTERNAL_REVIEW_CASE" Relationship="DocuPathModel.CASE_STATUS_EXTERNAL_REVIEW_CASE_FK1" FromRole="STATUS" ToRole="EXTERNAL_REVIEW_CASE" />
           <NavigationProperty Name="FORENSIC_CASE" Relationship="DocuPathModel.CASE_STATUS_FORENSIC_CASE_FK1" FromRole="STATUS" ToRole="FORENSIC_CASE" />
           <NavigationProperty Name="LEGACY_CASE" Relationship="DocuPathModel.CASE_STATUS_LEGACY_CASE_FK1" FromRole="STATUS" ToRole="LEGACY_CASE" />
+          <NavigationProperty Name="MEDIA" Relationship="DocuPathModel.FK_MEDIA_STATUS" FromRole="STATUS" ToRole="MEDIA" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -3469,7 +3573,8 @@
           </Key>
           <Property Name="TagCategoryID" Type="Int32" Nullable="false" />
           <Property Name="TagCategoryName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" FromRole="TAG_CATEGORY" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_CATEGORY" FromRole="TAG_CATEGORY" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="CONTENT_TAG1" Relationship="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" FromRole="TAG_CATEGORY" ToRole="CONTENT_TAG" />
         </EntityType>
         <EntityType Name="TAG_CONDITION">
           <Key>
@@ -3478,6 +3583,7 @@
           <Property Name="TagConditionID" Type="Int32" Nullable="false" />
           <Property Name="TagConditionName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.classifies" FromRole="TAG_CONDITION" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="CONTENT_TAG1" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_CONDITION" FromRole="TAG_CONDITION" ToRole="CONTENT_TAG" />
         </EntityType>
         <EntityType Name="TAG_SUBCATEGORY">
           <Key>
@@ -3755,18 +3861,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CONTENT_TAG_CASE_COD_ESTIMATION_FK1">
-          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="1" />
-          <End Type="DocuPathModel.CASE_COD_ESTIMATION" Role="CASE_COD_ESTIMATION" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CONTENT_TAG">
-              <PropertyRef Name="ContentTagID" />
-            </Principal>
-            <Dependent Role="CASE_COD_ESTIMATION">
-              <PropertyRef Name="ContentTagID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FORENSIC_CASE_CASE_COD_ESTIMATION_FK1">
           <End Type="DocuPathModel.FORENSIC_CASE" Role="FORENSIC_CASE" Multiplicity="1" />
           <End Type="DocuPathModel.CASE_COD_ESTIMATION" Role="CASE_COD_ESTIMATION" Multiplicity="*" />
@@ -3946,42 +4040,6 @@
             </Principal>
             <Dependent Role="CHEST_OBSERVATION">
               <PropertyRef Name="ForensicCaseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="classifies">
-          <End Type="DocuPathModel.TAG_CONDITION" Role="TAG_CONDITION" Multiplicity="1" />
-          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TAG_CONDITION">
-              <PropertyRef Name="TagConditionID" />
-            </Principal>
-            <Dependent Role="CONTENT_TAG">
-              <PropertyRef Name="TagConditionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTENT_TAG_TAG_SUBCATEGORY">
-          <End Type="DocuPathModel.TAG_SUBCATEGORY" Role="TAG_SUBCATEGORY" Multiplicity="1" />
-          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TAG_SUBCATEGORY">
-              <PropertyRef Name="TagSubCategoryID" />
-            </Principal>
-            <Dependent Role="CONTENT_TAG">
-              <PropertyRef Name="TagSubCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="TAG_CATEGORY_CONTENT_TAG_FK1">
-          <End Type="DocuPathModel.TAG_CATEGORY" Role="TAG_CATEGORY" Multiplicity="1" />
-          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TAG_CATEGORY">
-              <PropertyRef Name="TagCategoryID" />
-            </Principal>
-            <Dependent Role="CONTENT_TAG">
-              <PropertyRef Name="TagCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4543,9 +4601,156 @@
           <End Type="DocuPathModel.FPS_AUTOPSY_SCHEDULE" Role="FPS_AUTOPSY_SCHEDULE" Multiplicity="*" />
           <End Type="DocuPathModel.FPS_CASE" Role="FPS_CASE" Multiplicity="*" />
         </Association>
-        <Association Name="MEDIA_TAG">
+        <EntityType Name="CONTENT_TAG">
+          <Key>
+            <PropertyRef Name="ContentTagID" />
+          </Key>
+          <Property Name="ContentTagID" Type="Int32" Nullable="false" />
+          <Property Name="TagCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="TagSubCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="TagConditionID" Type="Int32" Nullable="false" />
+          <Property Name="ContentTagCode" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="ContentTagText" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CASE_COD_ESTIMATION" Relationship="DocuPathModel.CONTENT_TAG_CASE_COD_ESTIMATION_FK1" FromRole="CONTENT_TAG" ToRole="CASE_COD_ESTIMATION" />
+          <NavigationProperty Name="TAG_CONDITION" Relationship="DocuPathModel.classifies" FromRole="CONTENT_TAG" ToRole="TAG_CONDITION" />
+          <NavigationProperty Name="MEDIA_TAG" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK1" FromRole="CONTENT_TAG" ToRole="MEDIA_TAG" />
+          <NavigationProperty Name="MEDIA_TAG1" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK2" FromRole="CONTENT_TAG" ToRole="MEDIA_TAG" />
+          <NavigationProperty Name="TAG_CATEGORY" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_CATEGORY" FromRole="CONTENT_TAG" ToRole="TAG_CATEGORY" />
+          <NavigationProperty Name="TAG_CONDITION1" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_CONDITION" FromRole="CONTENT_TAG" ToRole="TAG_CONDITION" />
+          <NavigationProperty Name="TAG_SUBCATEGORY" Relationship="DocuPathModel.FK_CONTENT_TAG_TAG_SUBCATEGORY" FromRole="CONTENT_TAG" ToRole="TAG_SUBCATEGORY" />
+          <NavigationProperty Name="TAG_CATEGORY1" Relationship="DocuPathModel.TAG_CATEGORY_CONTENT_TAG_FK1" FromRole="CONTENT_TAG" ToRole="TAG_CATEGORY" />
+        </EntityType>
+        <EntityType Name="MEDIA_TAG">
+          <Key>
+            <PropertyRef Name="ContentTagID" />
+            <PropertyRef Name="MediaID" />
+          </Key>
+          <Property Name="ContentTagID" Type="Int32" Nullable="false" />
+          <Property Name="MediaID" Type="Int32" Nullable="false" />
+          <Property Name="MediaTagOtherDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK1" FromRole="MEDIA_TAG" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="CONTENT_TAG1" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK2" FromRole="MEDIA_TAG" ToRole="CONTENT_TAG" />
+          <NavigationProperty Name="MEDIA" Relationship="DocuPathModel.MEDIA_MEDIA_TAG_FK1" FromRole="MEDIA_TAG" ToRole="MEDIA" />
+        </EntityType>
+        <Association Name="CONTENT_TAG_CASE_COD_ESTIMATION_FK1">
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="1" />
+          <End Type="DocuPathModel.CASE_COD_ESTIMATION" Role="CASE_COD_ESTIMATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTENT_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Principal>
+            <Dependent Role="CASE_COD_ESTIMATION">
+              <PropertyRef Name="ContentTagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="classifies">
+          <End Type="DocuPathModel.TAG_CONDITION" Role="TAG_CONDITION" Multiplicity="1" />
           <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CONDITION">
+              <PropertyRef Name="TagConditionID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagConditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONTENT_TAG_MEDIA_TAG_FK1">
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="1" />
+          <End Type="DocuPathModel.MEDIA_TAG" Role="MEDIA_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTENT_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Principal>
+            <Dependent Role="MEDIA_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CONTENT_TAG_MEDIA_TAG_FK2">
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="1" />
+          <End Type="DocuPathModel.MEDIA_TAG" Role="MEDIA_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTENT_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Principal>
+            <Dependent Role="MEDIA_TAG">
+              <PropertyRef Name="ContentTagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CATEGORY">
+          <End Type="DocuPathModel.TAG_CATEGORY" Role="TAG_CATEGORY" Multiplicity="1" />
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CATEGORY">
+              <PropertyRef Name="TagCategoryID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_CONDITION">
+          <End Type="DocuPathModel.TAG_CONDITION" Role="TAG_CONDITION" Multiplicity="1" />
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CONDITION">
+              <PropertyRef Name="TagConditionID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagConditionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTENT_TAG_TAG_SUBCATEGORY">
+          <End Type="DocuPathModel.TAG_SUBCATEGORY" Role="TAG_SUBCATEGORY" Multiplicity="1" />
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_SUBCATEGORY">
+              <PropertyRef Name="TagSubCategoryID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagSubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TAG_CATEGORY_CONTENT_TAG_FK1">
+          <End Type="DocuPathModel.TAG_CATEGORY" Role="TAG_CATEGORY" Multiplicity="1" />
+          <End Type="DocuPathModel.CONTENT_TAG" Role="CONTENT_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAG_CATEGORY">
+              <PropertyRef Name="TagCategoryID" />
+            </Principal>
+            <Dependent Role="CONTENT_TAG">
+              <PropertyRef Name="TagCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MEDIA_STATUS">
+          <End Type="DocuPathModel.STATUS" Role="STATUS" Multiplicity="1" />
           <End Type="DocuPathModel.MEDIA" Role="MEDIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATUS">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="MEDIA">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MEDIA_MEDIA_TAG_FK1">
+          <End Type="DocuPathModel.MEDIA" Role="MEDIA" Multiplicity="1" />
+          <End Type="DocuPathModel.MEDIA_TAG" Role="MEDIA_TAG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MEDIA">
+              <PropertyRef Name="MediaID" />
+            </Principal>
+            <Dependent Role="MEDIA_TAG">
+              <PropertyRef Name="MediaID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -4733,18 +4938,6 @@
               <MappingFragment StoreEntitySet="COD_PROMINENCE">
                 <ScalarProperty Name="ProminenceValue" ColumnName="ProminenceValue" />
                 <ScalarProperty Name="ProminenceID" ColumnName="ProminenceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONTENT_TAG">
-            <EntityTypeMapping TypeName="DocuPathModel.CONTENT_TAG">
-              <MappingFragment StoreEntitySet="CONTENT_TAG">
-                <ScalarProperty Name="ContentTagText" ColumnName="ContentTagText" />
-                <ScalarProperty Name="ContentTagCode" ColumnName="ContentTagCode" />
-                <ScalarProperty Name="TagConditionID" ColumnName="TagConditionID" />
-                <ScalarProperty Name="TagSubCategoryID" ColumnName="TagSubCategoryID" />
-                <ScalarProperty Name="TagCategoryID" ColumnName="TagCategoryID" />
-                <ScalarProperty Name="ContentTagID" ColumnName="ContentTagID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5382,14 +5575,27 @@
               <ScalarProperty Name="FPSScheduleDate" ColumnName="FPSScheduleDate" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="MEDIA_TAG" TypeName="DocuPathModel.MEDIA_TAG" StoreEntitySet="MEDIA_TAG">
-            <EndProperty Name="MEDIA">
-              <ScalarProperty Name="MediaID" ColumnName="MediaID" />
-            </EndProperty>
-            <EndProperty Name="CONTENT_TAG">
-              <ScalarProperty Name="ContentTagID" ColumnName="ContentTagID" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="CONTENT_TAG">
+            <EntityTypeMapping TypeName="DocuPathModel.CONTENT_TAG">
+              <MappingFragment StoreEntitySet="CONTENT_TAG">
+                <ScalarProperty Name="ContentTagText" ColumnName="ContentTagText" />
+                <ScalarProperty Name="ContentTagCode" ColumnName="ContentTagCode" />
+                <ScalarProperty Name="TagConditionID" ColumnName="TagConditionID" />
+                <ScalarProperty Name="TagSubCategoryID" ColumnName="TagSubCategoryID" />
+                <ScalarProperty Name="TagCategoryID" ColumnName="TagCategoryID" />
+                <ScalarProperty Name="ContentTagID" ColumnName="ContentTagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEDIA_TAG">
+            <EntityTypeMapping TypeName="DocuPathModel.MEDIA_TAG">
+              <MappingFragment StoreEntitySet="MEDIA_TAG">
+                <ScalarProperty Name="MediaTagOtherDescription" ColumnName="MediaTagOtherDescription" />
+                <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+                <ScalarProperty Name="ContentTagID" ColumnName="ContentTagID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

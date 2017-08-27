@@ -73,10 +73,16 @@ namespace DocuPath.Controllers
         // GET: ServiceProvider/Details/5
         public ActionResult Details(int id)
         {
+            #region MODEL POPULATION
+            SERVICE_PROVIDER model = new SERVICE_PROVIDER();
+            model = db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault();
+            model.TITLE = db.TITLE.Where(x=>x.TitleID == model.TitleID).FirstOrDefault();
+            #endregion
+
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
