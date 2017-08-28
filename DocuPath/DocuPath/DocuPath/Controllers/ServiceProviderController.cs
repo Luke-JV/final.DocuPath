@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace DocuPath.Controllers
 {
@@ -100,10 +101,15 @@ namespace DocuPath.Controllers
 
         // POST: ServiceProvider/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, SERVICE_PROVIDER updatedSP)
         {
             try
             {
+                #region DB UPDATE
+                db.SERVICE_PROVIDER.Attach(updatedSP);
+                db.Entry(updatedSP).State = EntityState.Modified;
+                db.SaveChanges();
+                #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

@@ -26,6 +26,10 @@ namespace DocuPath.Models
                 check = db.USER.Where(x => x.USER_LOGIN.Username == httpContext.User.Identity.Name).FirstOrDefault();
                 check.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == check.UserLoginID).FirstOrDefault();
                 ACCESS_LEVEL level = db.ACCESS_LEVEL.Where(x => x.AccessLevelID == check.USER_LOGIN.AccessLevelID).FirstOrDefault();
+                if (level.LevelName == "Superuser")
+                {
+                    return true;
+                }
                 foreach (LEVEL_AREA area in db.LEVEL_AREA)
                 {
                     if (area.ACCESS_AREA.AccessAreaDescription == AccessArea && area.AccessLevelID == level.AccessLevelID)

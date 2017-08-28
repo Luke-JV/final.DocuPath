@@ -3,6 +3,7 @@ using DocuPath.Models;
 using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -111,11 +112,16 @@ namespace DocuPath.Controllers
 
         // POST: LegacyCase/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, LEGACY_CASE updatedLC)
         {
             try
             {
-                
+                #region DB UPDATE
+                db.LEGACY_CASE.Attach(updatedLC);
+                db.Entry(updatedLC).State = EntityState.Modified;
+                db.SaveChanges();
+                #endregion
+
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

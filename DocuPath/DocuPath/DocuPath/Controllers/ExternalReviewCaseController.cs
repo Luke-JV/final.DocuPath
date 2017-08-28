@@ -2,6 +2,7 @@
 using DocuPath.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -109,10 +110,15 @@ namespace DocuPath.Controllers
 
         // POST: ExternalReviewCase/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, EXTERNAL_REVIEW_CASE updatedERC)
         {
             try
             {
+                #region DB UPDATE
+                db.EXTERNAL_REVIEW_CASE.Attach(updatedERC);
+                db.Entry(updatedERC).State = EntityState.Modified;
+                db.SaveChanges();
+                #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

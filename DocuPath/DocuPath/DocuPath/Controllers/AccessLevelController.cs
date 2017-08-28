@@ -2,6 +2,7 @@
 using DocuPath.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -99,10 +100,15 @@ namespace DocuPath.Controllers
 
         // POST: AccessLevel/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, ACCESS_LEVEL updatedLevel)
         {
             try
             {
+                #region DB UPDATE
+                db.ACCESS_LEVEL.Attach(updatedLevel);
+                db.Entry(updatedLevel).State = EntityState.Modified;
+                db.SaveChanges();
+                #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

@@ -63,7 +63,7 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        [AuthorizeByAccessArea(AccessArea ="Contact")]
+        [AuthorizeByAccessArea(AccessArea ="Delete Forensic Case")]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
