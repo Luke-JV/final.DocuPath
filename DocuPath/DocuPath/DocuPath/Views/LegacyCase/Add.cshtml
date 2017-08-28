@@ -42,6 +42,7 @@
     </div>
 </div>
 
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -60,7 +61,7 @@
                         <div class="form-group">
                             @Html.Label("Date Added", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.Editor("txtDateAdded", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = "02 Jun 2017 - 08:23" } })
+                                @Html.Editor("txtDateAdded", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = System.DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
                                 @Html.ValidationMessage("txtDateAdded", "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -103,7 +104,8 @@
                         <div class="row">
                             @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })
+                                <input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">
+                                @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                             </div>
                         </div>
                         <div class="row tpad15">
@@ -213,6 +215,13 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/fileinput")
     @Scripts.Render("~/bundles/materialdatetime")
+
+    <script>
+        $("#input-fa").fileinput({
+            theme: "fa",
+            uploadUrl: "/file-upload-batch/2"
+        });
+    </script>
 
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">

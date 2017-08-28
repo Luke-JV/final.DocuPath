@@ -22,7 +22,8 @@ namespace DocuPath
                             "~/Scripts/moment*"));
 
                 bundles.Add(new ScriptBundle("~/bundles/fileinput").Include(
-                            "~/Scripts/fileinput*"));
+                            "~/Scripts/fileinput*",
+                            "~/Scripts/plugins/theme.js"));
 
                 bundles.Add(new ScriptBundle("~/bundles/materialdatetime").Include(
                             "~/Scripts/bootstrap-material-datetimepicker.js"));
