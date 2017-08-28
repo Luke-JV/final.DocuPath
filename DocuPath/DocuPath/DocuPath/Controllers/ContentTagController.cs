@@ -30,10 +30,12 @@ namespace DocuPath.Controllers
 
         // POST: ContentTag/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CONTENT_TAG tag)
         {
             try
             {
+                db.CONTENT_TAG.Add(tag);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

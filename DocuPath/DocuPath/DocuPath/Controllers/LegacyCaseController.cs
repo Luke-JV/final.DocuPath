@@ -31,10 +31,12 @@ namespace DocuPath.Controllers
 
         // POST: LegacyCase/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(LEGACY_CASE LC)
         {
             try
             {
+                db.LEGACY_CASE.Add(LC);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

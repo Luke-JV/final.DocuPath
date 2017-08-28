@@ -30,10 +30,12 @@ namespace DocuPath.Controllers
 
         // POST: ServiceProvider/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(SERVICE_PROVIDER SP)
         {
             try
             {
+                db.SERVICE_PROVIDER.Add(SP);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

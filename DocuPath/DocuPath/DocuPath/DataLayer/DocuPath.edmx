@@ -4627,7 +4627,7 @@
           </Key>
           <Property Name="ContentTagID" Type="Int32" Nullable="false" />
           <Property Name="MediaID" Type="Int32" Nullable="false" />
-          <Property Name="MediaTagOtherDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MediaTagOtherDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
           <NavigationProperty Name="CONTENT_TAG" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK1" FromRole="MEDIA_TAG" ToRole="CONTENT_TAG" />
           <NavigationProperty Name="CONTENT_TAG1" Relationship="DocuPathModel.CONTENT_TAG_MEDIA_TAG_FK2" FromRole="MEDIA_TAG" ToRole="CONTENT_TAG" />
           <NavigationProperty Name="MEDIA" Relationship="DocuPathModel.MEDIA_MEDIA_TAG_FK1" FromRole="MEDIA_TAG" ToRole="MEDIA" />

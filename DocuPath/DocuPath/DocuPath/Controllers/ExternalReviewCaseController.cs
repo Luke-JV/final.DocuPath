@@ -30,10 +30,12 @@ namespace DocuPath.Controllers
 
         // POST: ExternalReviewCase/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(EXTERNAL_REVIEW_CASE ERC)
         {
             try
             {
+                db.EXTERNAL_REVIEW_CASE.Add(ERC);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

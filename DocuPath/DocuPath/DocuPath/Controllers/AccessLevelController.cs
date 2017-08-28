@@ -30,10 +30,12 @@ namespace DocuPath.Controllers
 
         // POST: AccessLevel/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ACCESS_LEVEL AL)
         {
             try
             {
+                db.ACCESS_LEVEL.Add(AL);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

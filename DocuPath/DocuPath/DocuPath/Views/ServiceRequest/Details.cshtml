@@ -1,4 +1,4 @@
-﻿@model DocuPath.Models.DPViewModels.ServiceRequestViewModel
+﻿@model DocuPath.DataLayer.SERVICE_REQUEST
 @{ ViewBag.Title = "Details"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -44,59 +44,59 @@
                         <div class="panel-body">
                             <dl class="dl-horizontal">
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.serviceRequest.SERVICE_PROVIDER.CompanyName)
+                                    @Html.DisplayNameFor(model => model.SERVICE_PROVIDER.CompanyName)
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.serviceRequest.SERVICE_PROVIDER.CompanyName)
+                                    @Html.DisplayFor(model => model.SERVICE_PROVIDER.CompanyName)
                                 </dd>
 
 
                                 <dt style="padding-top: 5.2px">
-                                    @Html.DisplayNameFor(model => model.serviceRequest.ForensicCaseID)
+                                    @Html.DisplayNameFor(model => model.ForensicCaseID)
                                 </dt>
 
                                 <dd class="large-identifier">
-                                    @Html.DisplayFor(model => model.serviceRequest.FORENSIC_CASE.ForensicDRNumber)
+                                    @Html.DisplayFor(model => model.FORENSIC_CASE.ForensicDRNumber)
                                 </dd>
                                 <hr class="details-hr" />
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.serviceRequest.REQUEST_TYPE.RequestTypeValue)
+                                    @Html.DisplayNameFor(model => model.REQUEST_TYPE.RequestTypeValue)
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.serviceRequest.REQUEST_TYPE.RequestTypeValue)
+                                    @Html.DisplayFor(model => model.REQUEST_TYPE.RequestTypeValue)
                                 </dd>
 
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.serviceRequest.RequestNote)
+                                    @Html.DisplayNameFor(model => model.RequestNote)
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.serviceRequest.RequestNote)
+                                    @Html.DisplayFor(model => model.RequestNote)
                                 </dd>
                                 <hr class="details-hr" />
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.serviceRequest.DateAdded)
+                                    @Html.DisplayNameFor(model => model.DateAdded)
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.serviceRequest.DateAdded)
+                                    @Html.DisplayFor(model => model.DateAdded)
                                 </dd>
 
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.serviceRequest.IsCancelled)
+                                    @Html.DisplayNameFor(model => model.IsCancelled)
                                 </dt>
                                 @* Luke, check this out for me? WTF is going on here? *@
-                                @if (Model.serviceRequest.IsCancelled == true)
+                                @if (Model.IsCancelled == true)
                                 {
                                     <dd>Cancelled</dd>
                                 }
-                                else if (Model.specimen.EXTERNAL_REPORT == null)
+                                else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
                                 {
                                     <dd>Active</dd>
                                 }
-                                else if (Model.specimen.EXTERNAL_REPORT != null)
+                                else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
                                 {
                                     <dd>Closed</dd>
                                 }
@@ -128,17 +128,17 @@
                     <div class="panel-collapse collapse in">
                         <div class="panel-body">
                             <dl class="dl-horizontal">
-                                <dt>@Html.DisplayNameFor(model => model.specimen.InvestigationRequired)</dt>
-                                <dd>@Html.DisplayFor(model => model.specimen.InvestigationRequired)</dd>
+                                <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().InvestigationRequired)</dt>
+                                <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
 
-                                <dt>@Html.DisplayNameFor(model => model.specimen.SpecimenNature)</dt>
-                                <dd>@Html.DisplayFor(model => model.specimen.SpecimenNature)</dd>
+                                <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenNature)</dt>
+                                <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
                                 <hr class="details-hr" />
-                                <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.specimen.SpecimenSerialNumber)</dt>
-                                <dd>@Html.DisplayFor(model => model.specimen.SpecimenSerialNumber)</dd>
+                                <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
+                                <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dd>
 
-                                <dt>@Html.DisplayNameFor(model => model.specimen.DisposalMechanism)</dt>
-                                <dd>@Html.DisplayFor(model => model.specimen.DisposalMechanism)</dd>
+                                <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
+                                <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
                             </dl>
                         </div>
                     </div>

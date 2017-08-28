@@ -30,10 +30,12 @@ namespace DocuPath.Controllers
 
         // POST: ServiceRequest/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(SERVICE_REQUEST SR)
         {
             try
             {
+                db.SERVICE_REQUEST.Add(SR);
+                db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
@@ -82,7 +84,7 @@ namespace DocuPath.Controllers
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
