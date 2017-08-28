@@ -1,4 +1,4 @@
-﻿@model DocuPath.Models.DPViewModels.ServiceProviderViewModel
+﻿@model DocuPath.DataLayer.EXTERNAL_REVIEW_CASE
 @{ ViewBag.Title = "Details"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -11,28 +11,18 @@
 <div class="grid hdr-grid">
     <div class="page-hdr">
         <div class="page-header-subgrid">
-            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="icon-circle mdl2icon mdl2-erc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
             <div class="page-header-text">VIEW EXTERNAL REVIEW CASE</div>
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-one">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
                 <form class="minimalform" action="~/ExternalReviewCase/All" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
-                </form>
-            </div>
-            <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnExpandCollapse" accordion-id="#ERCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
-                </form>
-            </div>
-            <div grid-area="btn3">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
             <div></div>
@@ -46,7 +36,7 @@
         <div class="row" style="margin-left: 0px">
             <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#ERCDetailsAccordion" href="#ERCPanel" style="cursor: pointer">
+                    <div class="panel-heading">
                         <span class="mdl2icon mdl2-erc panel-mdl2icon"></span>
                         <span>External Review Case Details</span>
                     </div>
@@ -125,7 +115,7 @@
         <div class="row" style="margin-top: 5px">
             <div class="col-md-6" style="margin-right: 0px; padding-right: 2.5px">
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#ERCDetailsAccordion" href="#CoverLetterPanel" style="cursor: pointer">
+                    <div class="panel-heading">
                         <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
                         <span>Cover Letter</span>
                     </div>
@@ -138,7 +128,7 @@
             </div>
             <div class="col-md-6" style="padding-left: 2.5px">
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#ERCDetailsAccordion" href="#ERCReportPanel" style="cursor: pointer">
+                    <div class="panel-heading">
                         <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
                         <span>External Review Case Report</span>
                     </div>
@@ -153,86 +143,11 @@
     </div>
 </div>
 
-
-<div>
-    <h4>EXTERNAL_REVIEW_CASE</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ExternalReviewCaseID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExternalReviewCaseID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StatusID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StatusID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExternalDRNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExternalDRNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ERCBriefDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ERCBriefDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateClosed)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateClosed)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CoverLetterLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CoverLetterLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ExtCaseReportLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ExtCaseReportLocation)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@section Scripts {
+    <script id="onDomReady" type="text/javascript">
+        // Enable tooltips:
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

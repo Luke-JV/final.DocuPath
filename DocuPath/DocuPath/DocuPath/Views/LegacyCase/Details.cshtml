@@ -1,0 +1,197 @@
+﻿@model DocuPath.Models.DPViewModels.LegacyCaseViewModel
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase") </li>
+    <li class="active">@Html.ActionLink("View Legacy Case", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-lc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW LEGACY CASE CASE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/LegacyCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnExpandCollapse" accordion-id="#LCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED LEGACY CASE: *@
+<div class="form-horizontal border-generic form-generic">
+    <div class="panel-group" id="LCDetailsAccordion">
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDetailsPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-lc panel-mdl2icon"></span>
+                        <span>Legacy Case Details</span>
+                    </div>
+                    <div id="LCDetailsPanel" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                @*<dt>
+                                        @Html.DisplayNameFor(model => model.legacyCase.LegacyCaseID)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.legacyCase.LegacyCaseID)
+                                    </dd>*@
+
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.legacyCase.LegacyDRNumber)
+                                </dt>
+
+                                <dd class="large-identifier">
+                                    @Html.DisplayFor(model => model.legacyCase.LegacyDRNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.legacyCase.LCBriefDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.LCBriefDescription)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.legacyCase.UserID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.USER.FirstName) @Html.DisplayFor(model => model.legacyCase.USER.LastName)
+                                </dd>
+
+                                @*<dt>
+                                        @Html.DisplayNameFor(model => model.legacyCase.STATUS.StatusValue)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.legacyCase.STATUS.StatusValue)
+                                    </dd>*@
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.legacyCase.DateAdded)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.DateAdded)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.legacyCase.DateClosed)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.DateClosed)
+                                </dd>
+                            </dl>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="padding-left: 0px; padding-right: 15px; margin-top: 5px">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>Legacy Case Documents</span>
+                    </div>
+                    <div id="LCDocsPanel" class="panel-collapse collapse">
+                        <div class="panel-body apad5" style="padding: 25px">
+                            <table id="tblLegacyDocs" class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred">Filename</th>
+                                    @*<th class="colour-dpred">Location</th>*@
+                                    <th class="colour-dpred" style="width: 75px">Actions</th>
+                                </tr>
+                                @foreach (var item in Model.legacyDocs)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.LegacyDocumentTitle)</td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.LegacyDocumentLocation)</td>*@
+                                        <td>@Html.ActionLink(" ", "Details", "LegacyCase", new { id = item.LegacyDocumentID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @* EXPAND/COLLAPSE ALL *@
+    <script>
+        $(document).ready(function () {
+
+            $(".toggle-accordion").on("click", function () {
+                var accordionId = $(this).attr("accordion-id"),
+                    numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+                $(this).toggleClass("active");
+
+                if (numPanelOpen == 0) {
+                    openAllPanels(accordionId);
+                } else {
+                    closeAllPanels(accordionId);
+                }
+                $("#btnExpandCollapse").blur();
+            })
+
+            openAllPanels = function (aId) {
+                console.log("setAllPanelOpen");
+                $(aId + ' .panel-collapse:not(".in")').collapse('show');
+            }
+            closeAllPanels = function (aId) {
+                console.log("setAllPanelclose");
+                $(aId + ' .panel-collapse.in').collapse('hide');
+            }
+
+        });
+    </script>
+
+    <script id="onDomReady" type="text/javascript">
+            // Enable tooltips:
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            // Toggle Table Density:
+            $("#btnDensityToggle").click(function () {
+                var $target = $("#tblLegacyDocs");
+                var $condensed = "table-condensed";
+                var $minimal = "table-minimal"
+                if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+                else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+                else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+                $("#btnDensityToggle").blur()
+            });
+    </script>
+}

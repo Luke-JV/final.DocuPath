@@ -1,0 +1,158 @@
+﻿@model DocuPath.Models.DPViewModels.ServiceRequestViewModel
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest") </li>
+    <li class="active">@Html.ActionLink("View Service Request", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-servicerequest"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW SERVICE REQUEST</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ServiceRequest/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED SERVICE REQUEST & RELATED SPECIMEN: *@
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>SERVICE REQUEST DETAILS</span>
+                    </div>
+                    <div class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.serviceRequest.SERVICE_PROVIDER.CompanyName)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.serviceRequest.SERVICE_PROVIDER.CompanyName)
+                                </dd>
+
+
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.serviceRequest.ForensicCaseID)
+                                </dt>
+
+                                <dd class="large-identifier">
+                                    @Html.DisplayFor(model => model.serviceRequest.FORENSIC_CASE.ForensicDRNumber)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.serviceRequest.REQUEST_TYPE.RequestTypeValue)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.serviceRequest.REQUEST_TYPE.RequestTypeValue)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.serviceRequest.RequestNote)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.serviceRequest.RequestNote)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.serviceRequest.DateAdded)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.serviceRequest.DateAdded)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.serviceRequest.IsCancelled)
+                                </dt>
+                                @* Luke, check this out for me? WTF is going on here? *@
+                                @if (Model.serviceRequest.IsCancelled == true)
+                                {
+                                    <dd>Cancelled</dd>
+                                }
+                                else if (Model.specimen.EXTERNAL_REPORT == null)
+                                {
+                                    <dd>Active</dd>
+                                }
+                                else if (Model.specimen.EXTERNAL_REPORT != null)
+                                {
+                                    <dd>Closed</dd>
+                                }
+
+                                @*<dt>
+                                        @Html.DisplayNameFor(model => model.IsCancelled)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.IsCancelled)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.IsClosed)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.IsClosed)
+                                    </dd>*@
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                        <span>SPECIMEN DETAILS</span>
+                    </div>
+                    <div class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>@Html.DisplayNameFor(model => model.specimen.InvestigationRequired)</dt>
+                                <dd>@Html.DisplayFor(model => model.specimen.InvestigationRequired)</dd>
+
+                                <dt>@Html.DisplayNameFor(model => model.specimen.SpecimenNature)</dt>
+                                <dd>@Html.DisplayFor(model => model.specimen.SpecimenNature)</dd>
+                                <hr class="details-hr" />
+                                <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.specimen.SpecimenSerialNumber)</dt>
+                                <dd>@Html.DisplayFor(model => model.specimen.SpecimenSerialNumber)</dd>
+
+                                <dt>@Html.DisplayNameFor(model => model.specimen.DisposalMechanism)</dt>
+                                <dd>@Html.DisplayFor(model => model.specimen.DisposalMechanism)</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script id="onDomReady" type="text/javascript">
+            // Enable tooltips:
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+    </script>
+    }

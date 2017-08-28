@@ -1,0 +1,191 @@
+﻿@model DocuPath.DataLayer.SERVICE_PROVIDER
+@using DocuPath.Models
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider") </li>
+    <li class="active">@Html.ActionLink("View Service Provider", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-serviceprovider"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW SERVICE PROVIDER</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ExternalReviewCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED SERVICE PROVIDER: *@
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-6" style="padding-left: 0px; padding-right: 2.5px">
+            <div class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-company panel-mdl2icon"></span>
+                    <span>Company Details</span>
+                </div>
+                <div id="CompanyPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5" style="min-height: 160px">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyPhysicalAddress)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyPhysicalAddress)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyPostalAddress)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyPostalAddress)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.IsDeactivated)
+                            </dt>
+                        @if (Model.IsDeactivated == true)
+	                    {
+                            <dd>
+                                Deactivated
+                            </dd>
+                        }
+                        else
+                        {
+                            <dd>
+                                Active
+                            </dd>
+                        }
+                            <hr class="details-hr"/>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyTelNum)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.PhoneNumberMarkup(Model.CompanyTelNum))
+                                @*@Html.DisplayFor(model => model.CompanyTelNum)*@
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyFaxNum)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.PhoneNumberMarkup(Model.CompanyFaxNum))
+                                @*@Html.DisplayFor(model => model.CompanyFaxNum)*@
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyEmail)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.EmailMarkup(Model.CompanyEmail))
+                                @*@Html.DisplayFor(model => model.CompanyEmail)*@
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="padding-left: 2.5px; padding-right: 15px">
+            <div class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-representative panel-mdl2icon"></span>
+                    <span>Representative Details</span>
+                </div>
+                <div id="RepPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5" style="min-height: 160px">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TitleID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TITLE.TitleValue)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepFirstName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.RepFirstName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepLastName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.RepLastName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepJobDescription)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.RepJobDescription)
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepCellNum)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.PhoneNumberMarkup(Model.RepCellNum))
+                                @*@Html.DisplayFor(model => model.RepCellNum)*@
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepWorkNum)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.PhoneNumberMarkup(Model.RepWorkNum))
+                                @*@Html.DisplayFor(model => model.RepWorkNum)*@
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RepEmail)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(VERTEBRAE.EmailMarkup(Model.RepEmail))
+                                @*@Html.DisplayFor(model => model.RepEmail)*@
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

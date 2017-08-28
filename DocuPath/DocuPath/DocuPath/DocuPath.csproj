@@ -514,8 +514,12 @@
     <Content Include="Content\Resources\DPTextLogoWhite.png" />
     <Content Include="Content\Resources\DPTextRedTransparentBG.png" />
     <Content Include="Content\Resources\DPTextWhiteTransparentBG.png" />
+    <Content Include="Content\Resources\ERCCoverLetterPreview.png" />
+    <Content Include="Content\Resources\NoERCCaseReport.png" />
+    <Content Include="Content\Resources\NoERCCoverLetter.png" />
     <Content Include="Content\Resources\PageHeaderBackgroundBar.png" />
     <Content Include="Content\Resources\PulseLogo.png" />
+    <Content Include="Content\Resources\ReportPreview.png" />
     <Content Include="Content\Resources\SlantedDivider.png" />
     <Content Include="DataLayer\DocuPath.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -618,6 +622,9 @@
     <Content Include="Views\AccessLevel\All.cshtml" />
     <Content Include="Views\ForensicCase\Details.cshtml" />
     <Content Include="Views\ExternalReviewCase\Details.cshtml" />
+    <Content Include="Views\LegacyCase\Details.cshtml" />
+    <Content Include="Views\ServiceProvider\Details.cshtml" />
+    <Content Include="Views\ServiceRequest\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

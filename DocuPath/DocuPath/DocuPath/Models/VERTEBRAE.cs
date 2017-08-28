@@ -124,5 +124,17 @@ namespace DocuPath.Models
             else
                 return filename;
         }
+
+        public static string PhoneNumberMarkup(string inNumber)
+        {
+            return "<strong><span style=\"color: #666\">(" + inNumber.Substring(0, 3) + ")</span> " + inNumber.Substring(3, 3) + " " + inNumber.Substring(6, 4) + "</strong>";
+        }
+
+        public static string EmailMarkup(string inEmail)
+        {
+            var address = inEmail;
+            var idxAt = address.IndexOf('@');
+            return "<strong><span style=\"color: #666\">" + address.Substring(0, idxAt) + "</span><span style=\"color: rgba(174,31,31,1)\">" + address.Substring(idxAt, 1) + "</span>" + address.Substring(idxAt + 1) + "</strong>";
+        }
     }
 }
