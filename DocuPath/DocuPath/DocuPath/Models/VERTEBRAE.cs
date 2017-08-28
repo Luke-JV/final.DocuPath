@@ -124,5 +124,14 @@ namespace DocuPath.Models
             else
                 return filename;
         }
+
+        public static void sendMail(string destination, string content)
+        {
+            //404 - mail logic here
+        }
+        public static void sendSMS(string destination, string content)
+        {
+            //404 - SMS logic here
+        }
     }
 }
