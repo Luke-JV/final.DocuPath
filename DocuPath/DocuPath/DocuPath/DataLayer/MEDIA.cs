@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class MEDIA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,16 +21,26 @@ namespace DocuPath.DataLayer
         {
             this.MEDIA_TAG = new HashSet<MEDIA_TAG>();
         }
-    
+
+        [DisplayName("ID")]
         public int MediaID { get; set; }
+        [DisplayName("Status")]
         public int StatusID { get; set; }
+        [DisplayName("Related Case")]
         public Nullable<int> ForensicCaseID { get; set; }
+        [DisplayName("Purpose")]
         public int MediaPurposeID { get; set; }
+        [DisplayName("Added By")]
         public int UserID { get; set; }
+        [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [DisplayName("Caption")]
         public string MediaCaption { get; set; }
+        [DisplayName("Description")]
         public string MediaDescription { get; set; }
+        [DisplayName("Accessibility")]
         public bool IsPubliclyAccessible { get; set; }
+        [DisplayName("Item Location")]
         public string MediaLocation { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

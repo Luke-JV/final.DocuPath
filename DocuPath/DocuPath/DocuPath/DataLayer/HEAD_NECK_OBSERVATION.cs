@@ -11,16 +11,26 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class HEAD_NECK_OBSERVATION
     {
+        [DisplayName("Head & Neck Observation ID")]
         public int ObsHeadNeckID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Scalp & Skull")]
         public string ScalpSkull { get; set; }
+        [DisplayName("Intracranial Contents")]
         public string IntracranialContents { get; set; }
+        [DisplayName("Brain Mass (kg)")]
         public decimal BrainMassKg { get; set; }
+        [DisplayName("Orbital, Nasal & Aural Cavities")]
         public string OrbitalNasalAuralCavities { get; set; }
+        [DisplayName("Mouth, Tongue & Pharynx")]
         public string MouthTonguePharynx { get; set; }
+        [DisplayName("Neck Structures")]
         public string NeckStructures { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

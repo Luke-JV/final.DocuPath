@@ -11,10 +11,14 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class SYSTEM_FLAG
     {
+        [DisplayName("ID")]
         public string SysFlagID { get; set; }
+        [DisplayName("Flag Description")]
         public string SysFlagDescription { get; set; }
     }
 }

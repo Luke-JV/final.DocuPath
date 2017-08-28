@@ -83,7 +83,7 @@ namespace DocuPath.Controllers
                     {
                         
                         int id = UserManager.FindByName(model.Email).Id ;
-                        AuditModel.WriteTransaction(id,"Login");
+                        AuditModel.WriteTransaction(id,"Login Operation");
                         return RedirectToLocal(returnUrl);
                     }
                 case SignInStatus.LockedOut:

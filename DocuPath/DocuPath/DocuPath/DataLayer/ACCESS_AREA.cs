@@ -11,7 +11,10 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
+
     public partial class ACCESS_AREA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,9 +22,12 @@ namespace DocuPath.DataLayer
         {
             this.LEVEL_AREA = new HashSet<LEVEL_AREA>();
         }
-    
+
+        [DisplayName("ID")]
         public int AccessAreaID { get; set; }
+        [DisplayName("Function Group")]
         public int FunctionGroupID { get; set; }
+        [DisplayName("Description")]
         public string AccessAreaDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

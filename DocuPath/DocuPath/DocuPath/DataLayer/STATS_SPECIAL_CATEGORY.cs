@@ -11,12 +11,15 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class STATS_SPECIAL_CATEGORY
     {
         public int CaseStatsID { get; set; }
         public int ForensicCaseID { get; set; }
         public int SpecialCategoryID { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string OtherSpecialCategoryDescription { get; set; }
     
         public virtual CASE_STATISTICS CASE_STATISTICS { get; set; }

@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class CONTENT_TAG
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,12 +23,18 @@ namespace DocuPath.DataLayer
             this.MEDIA_TAG = new HashSet<MEDIA_TAG>();
             this.MEDIA_TAG1 = new HashSet<MEDIA_TAG>();
         }
-    
+
+        [DisplayName("ID")]
         public int ContentTagID { get; set; }
+        [DisplayName("Category")]
         public int TagCategoryID { get; set; }
+        [DisplayName("Subcategory")]
         public int TagSubCategoryID { get; set; }
+        [DisplayName("Condition")]
         public int TagConditionID { get; set; }
+        [DisplayName("Tag Code")]
         public string ContentTagCode { get; set; }
+        [DisplayName("Tag Text")]
         public string ContentTagText { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

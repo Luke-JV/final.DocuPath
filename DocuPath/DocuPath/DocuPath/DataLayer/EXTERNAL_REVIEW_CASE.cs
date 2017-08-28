@@ -11,17 +11,28 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class EXTERNAL_REVIEW_CASE
     {
+        [DisplayName("ID")]
         public int ExternalReviewCaseID { get; set; }
+        [DisplayName("Status")]
         public int StatusID { get; set; }
+        [DisplayName("Assigned To")]
         public int UserID { get; set; }
+        [DisplayName("DR Number")]
         public string ExternalDRNumber { get; set; }
+        [DisplayName("Brief Description")]
         public string ERCBriefDescription { get; set; }
+        [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
+        [DisplayName("Cover Letter")]
         public string CoverLetterLocation { get; set; }
+        [DisplayName("External Review Case Report")]
         public string ExtCaseReportLocation { get; set; }
     
         public virtual STATUS STATUS { get; set; }

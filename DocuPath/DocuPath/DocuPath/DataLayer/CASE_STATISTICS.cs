@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class CASE_STATISTICS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,29 +27,52 @@ namespace DocuPath.DataLayer
             this.STATS_SPECIAL_CATEGORY = new HashSet<STATS_SPECIAL_CATEGORY>();
             this.STATS_TREATMENTS = new HashSet<STATS_TREATMENTS>();
         }
-    
+
+        [DisplayName("ID")]
         public int CaseStatsID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Apparent Manner of Death")]
         public int ApparentMannerID { get; set; }
+        [DisplayName("Autopsy Type")]
         public int AutopsyTypeID { get; set; }
+        [DisplayName("Hospital/Clinic")]
         public Nullable<int> HospitalClinicID { get; set; }
+        [DisplayName("Individual Gender")]
         public int IndividualGenderID { get; set; }
+        [DisplayName("Individual Race")]
         public int IndividualRaceID { get; set; }
+        [DisplayName("Primary Cause Of Death")]
         public Nullable<int> PrimaryCauseID { get; set; }
+        [DisplayName("Surname of Body Collector")]
         public string BodyCollectorSurname { get; set; }
+        [DisplayName("Surname of Eviscerator")]
         public string EvisceratorSurname { get; set; }
+        [DisplayName("Surname of Organ Dissector")]
         public string OrganDissectorSurname { get; set; }
+        [DisplayName("Estimated Date of Injury")]
         public Nullable<System.DateTime> EstimatedInjuryDate { get; set; }
+        [DisplayName("Date of Discovery")]
         public Nullable<System.DateTime> DiscoveryDate { get; set; }
+        [DisplayName("Estimated Date of Death")]
         public Nullable<System.DateTime> EstimatedDeathDate { get; set; }
+        [DisplayName("Individual Estimated Age")]
         public string IndividualEstimatedAge { get; set; }
+        [DisplayName("Medical History")]
         public string MedicalHistory { get; set; }
+        [DisplayName("Medical Treatment Duration")]
         public string TreatmentDuration { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string OtherPrimaryCauseDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string OtherApparentMannerDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string AutopsyTypeOtherDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string HospitalClinicOtherDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string IndividualGenderOtherDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string IndividualRaceOtherDescription { get; set; }
     
         public virtual APPARENT_MANNER_DEATH APPARENT_MANNER_DEATH { get; set; }

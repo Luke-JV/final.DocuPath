@@ -11,27 +11,46 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+        
     public partial class ABDOMEN_OBSERVATION
     {
+        [DisplayName("Abdomen Observation ID")]
         public int ObsAbdomenID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Peritoneal Cavity")]
         public string PeritonealCavity { get; set; }
+        [DisplayName("Stomach Contents")]
         public string StomachContents { get; set; }
+        [DisplayName("Intestines & Mesentery")]
         public string IntestinesMesentery { get; set; }
+        [DisplayName("Liver, Gallbladder & Biliary Passages")]
         public string LiverGallbladderBilliaryPassages { get; set; }
+        [DisplayName("Liver Mass (kg)")]
         public decimal LiverMassKg { get; set; }
+        [DisplayName("Pancreas")]
         public string Pancreas { get; set; }
+        [DisplayName("Spleen")]
         public string Spleen { get; set; }
+        [DisplayName("Splenic Mass (kg)")]
         public Nullable<decimal> SplenicMassKg { get; set; }
+        [DisplayName("Adrenals")]
         public string Adrenals { get; set; }
+        [DisplayName("Kidneys & Ureters")]
         public string KidneysUreters { get; set; }
+        [DisplayName("Left Kidney Mass (kg)")]
         public Nullable<decimal> LeftKidneyMassKg { get; set; }
+        [DisplayName("Right Kidney Mass (kg)")]
         public Nullable<decimal> RightKidneyMassKg { get; set; }
+        [DisplayName("Urinary Bladder & Urethra")]
         public string UrinaryBladderUrethra { get; set; }
+        [DisplayName("Pelvic Walls")]
         public string PelvicWalls { get; set; }
+        [DisplayName("Genital Organs")]
         public string GenitalOrgans { get; set; }
-    
+
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
     }
 }

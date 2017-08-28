@@ -11,12 +11,18 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class SPINE_OBSERVATION
     {
+        [DisplayName("Spine Observation ID")]
         public int ObsSpineID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("Spinal Column")]
         public string SpinalColumn { get; set; }
+        [DisplayName("Spinal Cord")]
         public string SpinalCord { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

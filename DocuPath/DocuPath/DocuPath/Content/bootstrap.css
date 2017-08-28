@@ -2211,6 +2211,12 @@ textarea.input-lg {
   }
 }
 
+.form-generic {
+    padding: 5px;
+    margin: 10px 0 75px 0;
+    width: 100%;
+}
+
 .form-horizontal .control-label,
 .form-horizontal .radio,
 .form-horizontal .checkbox,

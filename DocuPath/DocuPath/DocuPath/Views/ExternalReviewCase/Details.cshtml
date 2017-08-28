@@ -1,0 +1,153 @@
+﻿@model DocuPath.DataLayer.EXTERNAL_REVIEW_CASE
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase") </li>
+    <li class="active">@Html.ActionLink("View External Review Case", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-erc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW EXTERNAL REVIEW CASE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ExternalReviewCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED EXTERNAL REVIEW CASE: *@
+<div class="form-horizontal border-generic form-generic">
+    <div class="panel-group" id="ERCDetailsAccordion">
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-erc panel-mdl2icon"></span>
+                        <span>External Review Case Details</span>
+                    </div>
+                    <div id="ERCPanel" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.ExternalDRNumber)
+                                </dt>
+
+                                <dd class="large-identifier">
+                                    @Html.DisplayFor(model => model.ExternalDRNumber)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.ERCBriefDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.ERCBriefDescription)
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.UserID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.USER.FirstName) @Html.DisplayFor(model => model.USER.LastName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.DateAdded)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.DateAdded)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.DateClosed)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.DateClosed)
+                                </dd>
+
+                                @*<dt>
+                                        @Html.DisplayNameFor(model => model.CoverLetterLocation)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.CoverLetterLocation)
+                                    </dd>
+
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.ExtCaseReportLocation)
+                                    </dt>
+
+                                    <dd>
+                                        @Html.DisplayFor(model => model.ExtCaseReportLocation)
+                                    </dd>*@
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.STATUS.StatusValue)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.STATUS.StatusValue)
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5px">
+            <div class="col-md-6" style="margin-right: 0px; padding-right: 2.5px">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>Cover Letter</span>
+                    </div>
+                    <div id="CoverLetterPanel" class="panel-collapse collapse in">
+                        <div class="panel-body text-center apad5">
+                            <img src="~/Content/Resources/ERCCoverLetterPreview.png" style="max-width: 57%" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 2.5px">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>External Review Case Report</span>
+                    </div>
+                    <div id="ERCReportPanel" class="panel-collapse collapse in">
+                        <div class="panel-body text-center apad5">
+                            <img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script id="onDomReady" type="text/javascript">
+        // Enable tooltips:
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

@@ -11,18 +11,30 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class GENERAL_OBSERVATION
     {
+        [DisplayName("General Observation ID")]
         public int ObsGeneralID { get; set; }
+        [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DisplayName("General Description")]
         public string GeneralDescription { get; set; }
+        [DisplayName("Height (m)")]
         public decimal HeightMeters { get; set; }
+        [DisplayName("Mass (kg)")]
         public decimal MassKg { get; set; }
+        [DisplayName("Physique")]
         public string Physique { get; set; }
+        [DisplayName("Nutrition")]
         public string Nutrition { get; set; }
+        [DisplayName("Special Identifying Features")]
         public string SpecialIdentifyingFeatures { get; set; }
+        [DisplayName("Secondary Postmortem Changes")]
         public string SecondaryPostMortemChanges { get; set; }
+        [DisplayName("External Appearance & Limb Condition")]
         public string ExtAppearanceLimbCondition { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }

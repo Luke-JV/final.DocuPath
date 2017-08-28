@@ -11,7 +11,9 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,32 +31,58 @@ namespace DocuPath.DataLayer
             this.TOKEN_LOG = new HashSet<TOKEN_LOG>();
             this.USER_CLAIM = new HashSet<USER_CLAIM>();
         }
-    
+
+        [DisplayName("ID")]
         public int UserID { get; set; }
+        [DisplayName("Title")]
         public int TitleID { get; set; }
+        [DisplayName("Login ID")]
         public Nullable<int> UserLoginID { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Middle Name")]
         public string MiddleName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
+        [DisplayName("Initials")]
         public string DisplayInitials { get; set; }
+        [DisplayName("Qualification Description")]
         public string QualificationDescription { get; set; }
+        [DisplayName("HPCSA Registration Number")]
         public string HPCSARegNumber { get; set; }
+        [DisplayName("National ID")]
         public string NationalID { get; set; }
+        [DisplayName("Academic ID")]
         public string AcademicID { get; set; }
+        [DisplayName("Cellphone Number")]
         public string CellNum { get; set; }
+        [DisplayName("Telephone Number")]
         public string TelNum { get; set; }
+        [DisplayName("Work Number")]
         public string WorkNum { get; set; }
+        [DisplayName("Personal Email")]
         public string PersonalEmail { get; set; }
+        [DisplayName("Academic Email")]
         public string AcademicEmail { get; set; }
+        [DisplayName("Physical Address")]
         public string PhysicalAddress { get; set; }
+        [DisplayName("Postal Address")]
         public string PostalAddress { get; set; }
+        [DisplayName("Status")]
         public bool IsDeactivated { get; set; }
+        [DisplayName("Dark UI Preferred")]
         public Nullable<bool> DarkUIPref { get; set; }
+        [DisplayName("Username")]
         public string UserName { get; set; }
+        [DisplayName("Confirmation Status")]
         public bool IsConfirmed { get; set; }
+        [DisplayName("Security Stamp")]
         public string SecurityStamp { get; set; }
+        [DisplayName("Lockout Enabled")]
         public Nullable<bool> LockoutEnabled { get; set; }
+        [DisplayName("Lockout End Date")]
         public Nullable<bool> LockoutEndDate { get; set; }
+        [DisplayName("Access Failure Count")]
         public int AccessFailedCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
