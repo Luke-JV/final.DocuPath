@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 
@@ -12,17 +13,27 @@ namespace DocuPath.Models
 {
     public static class VERTEBRAE
     {
+        #region OUTGOING COMMUNICATION:
+        public static void sendMail(string destination, string content)
+        {
+            //404 - mail logic here
+        }
+        public static void sendSMS(string destination, string content)
+        {
+            //404 - SMS logic here
+        }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region FETCHES, GETS & QUERIES:
         public static List<NOTIFICATION> GetUnhandledNeurons()
         {
             List<NOTIFICATION> unhandledNeurons = new List<NOTIFICATION>();
             using (DocuPathEntities db = new DocuPathEntities())
             {
-                foreach (var neuron in db.NOTIFICATION)
+                var id = HttpContext.Current.User.Identity.GetUserId<int>();
+                foreach (var neuron in db.NOTIFICATION.Where(x => x.UserID == id && x.HandledDateTimeStamp == null))
                 {
-                    if (neuron.HandledDateTimeStamp == null)
-                    {
-                        unhandledNeurons.Add(neuron);
-                    }
+                    unhandledNeurons.Add(neuron);
                 }
             }
             return unhandledNeurons;
@@ -31,7 +42,6 @@ namespace DocuPath.Models
         {
             using (DocuPathEntities db = new DocuPathEntities())
             {
-                //int id = User.Identity.GetUserId<int>();
                 int id = HttpContext.Current.User.Identity.GetUserId<int>();
                 USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
                 currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
@@ -114,6 +124,9 @@ namespace DocuPath.Models
                 return visionMetrics;
             }
         }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region FORMATTING & MARKUP:
         public static string ExtractMediaFileName(string inLocation)
         {
             string location = inLocation;
@@ -137,13 +150,20 @@ namespace DocuPath.Models
             return "<strong><span style=\"color: #666\">" + address.Substring(0, idxAt) + "</span><span style=\"color: rgba(174,31,31,1)\">" + address.Substring(idxAt, 1) + "</span>" + address.Substring(idxAt + 1) + "</strong>";
         }
 
-        public static void sendMail(string destination, string content)
+        public static string ChunkString(string inRaw, int inChunkFactor, string inSeparator)
         {
-            //404 - mail logic here
+            var unchunked = inRaw;
+            string separator = inSeparator;
+
+            var list = Enumerable
+                .Range(0, inRaw.Length / inChunkFactor)
+                .Select(i => inRaw.Substring(i * inChunkFactor, inChunkFactor))
+                .ToList();
+            var chunked = string.Join(separator, list);
+                        
+            return chunked;
         }
-        public static void sendSMS(string destination, string content)
-        {
-            //404 - SMS logic here
-        }
+        #endregion
+        //----------------------------------------------------------------------------------------------//
     }
 }

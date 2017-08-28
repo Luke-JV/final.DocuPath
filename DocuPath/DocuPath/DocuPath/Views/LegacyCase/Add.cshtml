@@ -1,0 +1,233 @@
+﻿@model DocuPath.DataLayer.LEGACY_CASE
+@{ ViewBag.Title = "Add"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase") </li>
+    <li class="active">@Html.ActionLink("Add Legacy Case", "Add") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-lc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD LEGACY CASE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/LegacyCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                    @* TODO: Link form action to SAVE LC *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal border-generic form-generic">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-3" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                        <span>Legacy Case Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.Label("Date Added", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtDateAdded", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = "02 Jun 2017 - 08:23" } })
+                                @Html.ValidationMessage("txtDateAdded", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Brief Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtBriefDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 389.66px", @Value = "Fatal Aggravated Assault" } })
+                                @Html.ValidationMessage("txtBriefDesc", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LegacyDRNumber, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.LegacyDRNumber, new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 389.66px", @Value = "DR31625/1993" } })
+                                @Html.ValidationMessageFor(model => model.LegacyDRNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateClosed, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12 input-group">
+                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @style = "width: 227.6px", @id = "DateClosed" } })
+                                @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "text-danger" })
+                                <span class="input-group-addon" onclick="dateClosedDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>Legacy Case Documents</span>
+                    </div>
+                    <div class="panel-body" style="min-height: 267px">
+                        <div class="row">
+                            @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })
+                            </div>
+                        </div>
+                        <div class="row tpad15">
+                            @Html.Label("File List", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th class="colour-dpred">Filename</th>
+                                        <th class="colour-dpred">Actions</th>
+                                    </tr>
+                                    @{ DocuPath.DataLayer.DocuPathEntities ent = new DocuPath.DataLayer.DocuPathEntities();}
+                                    @foreach (var item in ent.LEGACY_DOCUMENT)
+                                    {
+                                        <tr>
+                                            <td>@item.LegacyDocumentTitle</td>
+                                            <td>
+                                                @Html.ActionLink(" ", null, null, new { @class = "mdl2icon mdl2-cancel colour-dpblack", @datatoggle = "tooltip", @title = "Remove" })
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </table>
+
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.LegacyCaseID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LegacyCaseID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LegacyCaseID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StatusID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StatusID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LegacyDRNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LegacyDRNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LegacyDRNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LCBriefDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.LCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LCBriefDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateClosed, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>*@
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    @* DATETIMEPICKERS: *@
+    <script name="DTPCallers" type="text/javascript">
+        $(function dateClosedDTP() {
+            $('#DateClosed').bootstrapMaterialDatePicker({
+                format: 'DD MMMM YYYY',
+                year: true,
+                date: true,
+                time: false,
+                clearButton: true,
+                nowButton: true,
+                nowText: "Now",
+                switchOnClick: true,
+                okText: "OK"
+            });
+        });
+    </script>
+}

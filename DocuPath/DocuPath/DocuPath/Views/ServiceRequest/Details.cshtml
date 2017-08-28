@@ -1,4 +1,5 @@
 ﻿@model DocuPath.DataLayer.SERVICE_REQUEST
+@using DocuPath.Models
 @{ ViewBag.Title = "Details"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -87,7 +88,6 @@
                                 <dt>
                                     @Html.DisplayNameFor(model => model.IsCancelled)
                                 </dt>
-                                @* Luke, check this out for me? WTF is going on here? *@
                                 @if (Model.IsCancelled == true)
                                 {
                                     <dd>Cancelled</dd>
@@ -98,7 +98,7 @@
                                 }
                                 else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
                                 {
-                                    <dd>Closed</dd>
+                                    <dd>Closed - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + Model.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
                                 }
 
                                 @*<dt>
@@ -135,7 +135,10 @@
                                 <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
                                 <hr class="details-hr" />
                                 <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
-                                <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dd>
+                                <dd class="large-identifier">
+                                    @VERTEBRAE.ChunkString(Model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
+                                    @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
+                                </dd>
 
                                 <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
                                 <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>

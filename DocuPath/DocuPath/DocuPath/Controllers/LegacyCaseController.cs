@@ -21,7 +21,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
         // GET: LegacyCase/Create
-        public ActionResult Create()
+        public ActionResult Add()
         {
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");

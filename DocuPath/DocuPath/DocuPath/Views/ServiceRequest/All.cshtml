@@ -47,7 +47,7 @@
                 @Html.DisplayNameFor(model => model.SERVICE_PROVIDER.CompanyName)
             </th>
             <th data-column-id="status" class="colour-dpred">
-                @Html.DisplayName("Status")
+                @Html.DisplayNameFor(model => model.IsCancelled)
             </th>
             <th data-column-id="requestType" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.RequestTypeID)
@@ -65,38 +65,48 @@
         @{ DocuPathEntities db = new DocuPathEntities(); }
         @foreach (var item in Model)
         {
-            if (item.IsCancelled != true)
-            {
-                <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceRequestID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)
+                </td>
+                @if (item.IsCancelled == true)
+                {
+                    <td>Cancelled</td>
+                }
+                else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                {
+                    <td>Active</td>
+                }
+                else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                {
+                    <td>Closed</td>
+                }
+
+            @*@if (db.SPECIMEN.Where(x => x.ServiceRequestID == item.ServiceRequestID && x.EXTERNAL_REPORT.DateCaptured != null).Count() == 0)
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.ServiceRequestID)
+                        Closed
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)
-                    </td>
-                @*@if (db.SPECIMEN.Where(x => x.ServiceRequestID == item.ServiceRequestID && x.EXTERNAL_REPORT.DateCaptured != null).Count() == 0)
-                  {
-                      <td>
-                          @Html.Display("Closed")
-                      </td>
-                  }
-                  else
-                  {*@
-                    <td>
-                        @Html.Display("Active")
-                    </td>
-               @* } *@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestNote)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateAdded)
-                    </td>
-                </tr>
-            }
+                }
+                else
+                {
+                <td>
+                    Active
+                </td>
+            }*@ 
+                <td>
+                    @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+            </tr>
         }
     </tbody>
 </table>

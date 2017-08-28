@@ -20,6 +20,12 @@ namespace DocuPath
 
                 bundles.Add(new ScriptBundle("~/bundles/moment").Include(
                             "~/Scripts/moment*"));
+
+                bundles.Add(new ScriptBundle("~/bundles/fileinput").Include(
+                            "~/Scripts/fileinput*"));
+
+                bundles.Add(new ScriptBundle("~/bundles/materialdatetime").Include(
+                            "~/Scripts/bootstrap-material-datetimepicker.js"));
             #endregion
 
             #region Stylesheet & Visual Script Bundles:
