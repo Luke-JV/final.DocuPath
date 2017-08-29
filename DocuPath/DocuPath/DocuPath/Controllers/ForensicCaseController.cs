@@ -196,11 +196,5 @@ namespace DocuPath.Controllers
         #region NON-CRUD ACTIONS:
 
         #endregion
-
-
-
-
-
-
     }
 }

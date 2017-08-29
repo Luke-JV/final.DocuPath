@@ -11674,3 +11674,108 @@ a.cal-event-week {
 }
 
 /*#endregion */
+
+/*#region ABOUT US: */
+
+.about-grid{
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto auto;
+		grid-template-areas: "hdr"
+							 "pulse"
+					 		 "blurbs";
+	}
+
+.pulse-grid {
+	grid-gap: 0px;
+	grid-template-columns: 1fr 75px 3fr repeat(2, 75px) 1fr ;
+	grid-template-rows: 50px;
+	grid-template-areas: "blank1 pulse1 blank2 pulse2 pulse3 blank3";
+	background-image: url("http://www.placehold.it/50x5.png");
+	background-size: contain;
+	background-repeat: repeat-x;
+	grid-area: pulse;
+}
+
+.header-par {
+	grid-area: hdr;
+	font-family: 'U.S. 101';
+	text-transform: uppercase;
+	font-size: 20pt;
+	text-align: center;
+	padding: 0 10% 0 10%;
+}
+
+.blurb-container {
+	grid-area: blurbs;
+	margin: 0 auto 0 auto;
+}
+
+.blurb-grid {
+	grid-template-columns: repeat(5, 210px);
+	grid-template-rows: auto;
+	grid-template-areas: "C L D R M";
+}
+
+.C {
+	grid-area: C;
+}
+
+.L {
+	grid-area: L;
+}
+
+.D {
+	grid-area: D;
+}
+
+.R {
+	grid-area: R;
+}
+
+.M {
+	grid-area: M;
+}
+
+.blurb-body {
+	height: 490px;
+	width: 200px ;
+	background-color: #ccc;
+	border-radius: 100px;
+	margin: 0 auto 0 auto;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.blurb-image {
+	border: 5px solid white;
+	border-radius: 100%;
+	margin: 8px auto 0 auto;
+}
+
+.blurb-name {
+	font-family: 'U.S. 101';
+	text-transform: uppercase;
+	font-size: 20pt;
+	text-align: center;
+	color: #000;
+	padding-top: 10px;
+}
+
+.blurb-hr {
+	height: 2px;
+	width: 90%;
+	margin: 5px 10px 10px 10px;
+	background-color: rgba(174,31,31,1);
+	border: none;
+}
+
+.blurb-flavortext {
+	font-family: 'Segoe UI';
+	font-size: 11pt;
+	color: #666;
+	font-weight: bold;
+	text-align: center;
+	padding: 0 5px 0 5px;
+}
+
+/*#endregion */
