@@ -11687,13 +11687,20 @@ a.cal-event-week {
 
 .pulse-grid {
 	grid-gap: 0px;
-	grid-template-columns: 1fr 75px 3fr repeat(2, 75px) 1fr ;
+	grid-template-columns: 1fr 60px 3fr repeat(2, 60px) 1fr ;
 	grid-template-rows: 50px;
 	grid-template-areas: "blank1 pulse1 blank2 pulse2 pulse3 blank3";
-	background-image: url("http://www.placehold.it/50x5.png");
+	background-image: url(Resources/PulseBGBar.png);
 	background-size: contain;
 	background-repeat: repeat-x;
 	grid-area: pulse;
+}
+
+.pulse-motif {
+    background-image: url(Resources/PulseMotif.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: center;
 }
 
 .header-par {
@@ -11702,18 +11709,18 @@ a.cal-event-week {
 	text-transform: uppercase;
 	font-size: 20pt;
 	text-align: center;
-	padding: 0 10% 0 10%;
+	padding: 30px 10% 30px 10%;
 }
 
 .blurb-container {
 	grid-area: blurbs;
 	margin: 0 auto 0 auto;
+    padding-top: 30px;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-areas: "C L D R M";
 }
 
 .blurb-grid {
-	grid-template-columns: repeat(5, 210px);
-	grid-template-rows: auto;
-	grid-template-areas: "C L D R M";
 }
 
 .C {
@@ -11740,16 +11747,48 @@ a.cal-event-week {
 	height: 490px;
 	width: 200px ;
 	background-color: #ccc;
-	border-radius: 100px;
+	border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 	margin: 0 auto 0 auto;
-	padding-bottom: 20px;
+    padding-bottom: 10px;
 	text-align: center;
+    transition: 0.75s all;
+}
+
+.blurb-body:hover > .blurb-flavortext {
+    display: none;
+    transition: 1s all;
+}
+
+.blurb-body:hover > .blurb-hr {
+    background-color: #666;
+    transition: 1s all;
+}
+
+.blurb-body:hover > .blurb-name {
+    color: rgba(174,31,31,1);
+    transition: 1s all;
+}
+
+.blurb-body:hover > .blurb-contact-info {
+    display: inline;
+    transition: 1s all;
+}
+
+.blurb-body:hover {
+    background-color: #fff;
+    box-shadow: 0 0 5px 5px rgba(174,31,31,1);
+    transition: 1s all;
 }
 
 .blurb-image {
 	border: 5px solid white;
 	border-radius: 100%;
 	margin: 8px auto 0 auto;
+    height: 175px;
+    width: 175px;
 }
 
 .blurb-name {
@@ -11775,7 +11814,11 @@ a.cal-event-week {
 	color: #666;
 	font-weight: bold;
 	text-align: center;
-	padding: 0 5px 0 5px;
+	padding: 0 10px 0 10px;
+}
+
+.blurb-contact-info {
+    display: none;
 }
 
 /*#endregion */

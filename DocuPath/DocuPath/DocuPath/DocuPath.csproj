@@ -512,6 +512,7 @@
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\10.Arterial_Thrombosis_+_Spinal_Cord.JPG" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
+    <Content Include="Content\Resources\CB.png" />
     <Content Include="Content\Resources\CircuitryMotifLeft.png" />
     <Content Include="Content\Resources\CircuitryMotifRight.png" />
     <Content Include="Content\Resources\CircularMotifLeft.png" />
@@ -532,12 +533,18 @@
     <Content Include="Content\Resources\DPTextLogoWhite.png" />
     <Content Include="Content\Resources\DPTextRedTransparentBG.png" />
     <Content Include="Content\Resources\DPTextWhiteTransparentBG.png" />
+    <Content Include="Content\Resources\DR.png" />
     <Content Include="Content\Resources\ERCCoverLetterPreview.png" />
+    <Content Include="Content\Resources\LV.png" />
+    <Content Include="Content\Resources\MH.png" />
     <Content Include="Content\Resources\NoERCCaseReport.png" />
     <Content Include="Content\Resources\NoERCCoverLetter.png" />
     <Content Include="Content\Resources\PageHeaderBackgroundBar.png" />
+    <Content Include="Content\Resources\PulseBGBar.png" />
     <Content Include="Content\Resources\PulseLogo.png" />
+    <Content Include="Content\Resources\PulseMotif.png" />
     <Content Include="Content\Resources\ReportPreview.png" />
+    <Content Include="Content\Resources\RP.png" />
     <Content Include="Content\Resources\SlantedDivider.png" />
     <Content Include="DataLayer\DocuPath.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -700,6 +707,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\DocuPathRepositories\LC_REPO\" />
     <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />
   </ItemGroup>

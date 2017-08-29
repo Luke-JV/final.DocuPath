@@ -4,6 +4,7 @@ using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -176,7 +177,61 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
+        [HttpPost]
+        public ActionResult UploadFiles()
+        {
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    string foldername = Request.Form.Get("LCDR");
+                    string rootpath = VERTEBRAE.LC_REPORootPath;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
 
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                        }
+                        else
+                        {
+                            fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            //fname = file.FileName;
+                            //fname = VERTEBRAE.RenameFileForStorage() 404;
+                        }
+
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                        bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+
+                        file.SaveAs(fname);
+                    }
+                    // Returns message that successfully uploaded  
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
         #endregion
     }
 }

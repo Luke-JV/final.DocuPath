@@ -24,6 +24,15 @@ namespace DocuPath.Models
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+        #region CONSTANTS:
+        public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
+        public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
+        public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
+        public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
+        public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+
+        #endregion
+        //----------------------------------------------------------------------------------------------//
         #region FETCHES, GETS & QUERIES:
         public static List<NOTIFICATION> GetUnhandledNeurons()
         {
@@ -186,6 +195,20 @@ namespace DocuPath.Models
         public static string StatusMarkup(string inStatusText, string inMarkupClassName)
         {
             return "<span class=\"" + inMarkupClassName + "\">" + inStatusText + "</span>";
+        }
+
+        public static string RemoveInvalidCharacters(string inRaw)
+        {
+            char[] invalidChars = new char[] {'\\','/', ':', '*', '?', '\"', '>', '<', '|', '.', '_' } ;
+
+            foreach (char checkChar in inRaw)
+            {
+                if (invalidChars.Contains(checkChar))
+                {
+                    inRaw = inRaw.Remove(inRaw.IndexOf(checkChar),1);
+                }
+            }
+            return inRaw;
         }
         #endregion
         //----------------------------------------------------------------------------------------------//

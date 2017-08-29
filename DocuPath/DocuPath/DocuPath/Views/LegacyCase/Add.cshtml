@@ -29,7 +29,7 @@
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
                     @* TODO: Link form action to SAVE LC *@
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
             @*<div grid-area="btn2">
@@ -50,7 +50,8 @@
 
     <div class="form-horizontal border-generic form-generic">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        <input id="btnPOST" class="hidden" type="submit" />
+        @*@Html.Hidden("btnPOST", new  { htmlAttributes = new { @type = "submit", @id = "btnPOST" } })*@
         <div class="row" style="margin-left: 0px">
             <div class="col-md-3" style="padding: 0px">
                 <div class="panel panel-default" style="margin-bottom: 0px">
@@ -62,7 +63,7 @@
                         <div class="form-group">
                             @Html.Label("Date Added", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.Editor("txtDateAdded", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = System.DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = System.DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
                                 @Html.ValidationMessage("txtDateAdded", "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -70,7 +71,7 @@
                         <div class="form-group">
                             @Html.Label("Brief Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.Editor("txtBriefDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 389.66px", @Value = "Fatal Aggravated Assault" } })
+                                @Html.EditorFor(model => model.LCBriefDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 389.66px"@*, @Value = "Fatal Aggravated Assault"*@ } })
                                 @Html.ValidationMessage("txtBriefDesc", "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -78,7 +79,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.LegacyDRNumber, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.LegacyDRNumber, new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 389.66px", @Value = "DR31625/1993" } })
+                                @Html.EditorFor(model => model.LegacyDRNumber, new { htmlAttributes = new { @id = "drnum", @class = "form-control large-identifier", @style = "width: 389.66px"@*, @Value = "DR31625/1993"*@ } })
                                 @Html.ValidationMessageFor(model => model.LegacyDRNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -101,37 +102,14 @@
                         <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
                         <span>Legacy Case Documents</span>
                     </div>
-                    <div class="panel-body" style="min-height: 267px">
+                    <div class="panel-body apad5">
                         <div class="row">
-                            @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10 file-input theme-fa file-input-ajax-new">
-                                <input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">
+                            @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                                <input id="LCDocs" type="file" multiple/>
+                                @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
                                 @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                             </div>
-                        </div>
-                        <div class="row tpad15">
-                            @Html.Label("File List", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                <table class="table table-striped">
-                                    <tr>
-                                        <th class="colour-dpred">Filename</th>
-                                        <th class="colour-dpred">Actions</th>
-                                    </tr>
-                                    @{ DocuPath.DataLayer.DocuPathEntities ent = new DocuPath.DataLayer.DocuPathEntities();}
-                                    @foreach (var item in ent.LEGACY_DOCUMENT)
-                                    {
-                                        <tr>
-                                            <td>@item.LegacyDocumentTitle</td>
-                                            <td>
-                                                @Html.ActionLink(" ", null, null, new { @class = "mdl2icon mdl2-cancel colour-dpblack", @datatoggle = "tooltip", @title = "Remove" })
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </table>
-
-                            </div>
-                            <input type="submit" value="Add" class="btn btn-default" />
                         </div>
 
                         @*<div class="form-group">
@@ -215,17 +193,65 @@
 
                                         }
 
-                                        @section Scripts {
-                                            @Scripts.Render("~/bundles/jqueryval")
-                                            @Scripts.Render("~/bundles/fileinput")
-                                            @Scripts.Render("~/bundles/materialdatetime")
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/fileinput")
+@Scripts.Render("~/bundles/materialdatetime")
 
-    <script>
-                                                $("#input-fa").fileinput({
-                                                theme: "fa",
-            uploadUrl: "/file-upload-batch/2"
-                                                });
-    </script>
+<script>
+
+$(document).ready(function(){
+    $('#btnSave').click(function () {
+
+        // Checking whether FormData is available in browser
+        if (window.FormData !== undefined) {
+
+            var fileUpload = $("#LCDocs").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object
+            fileData.append('LCDR', document.getElementById("drnum").value);
+
+            $.ajax({
+                url: '/LegacyCase/UploadFiles',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    alert(result); //Throw Success Modal
+                    document.getElementById("btnPOST").click();
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+    });
+});
+</script>  
+
+    @*<script>
+        @*var id = @Model.LegacyDRNumber;
+        var url = "/Content/DocuPathRepositories/LC_REPO/";
+
+        url += id;
+
+        $("#input-fa").fileinput({
+            theme: "fa",
+            uploadUrl: "/LegacyCase/Add",
+        });
+    </script>*@
                                         
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">
