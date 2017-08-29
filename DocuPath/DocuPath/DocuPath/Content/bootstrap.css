@@ -8108,6 +8108,30 @@ td.visible-print {
     content: '\E19C';
 }
 
+.mdl2-statusicon:before {
+    content: '\E1F5';
+}
+
+.status-ok {
+  font-weight: bold;
+  color: #468847;
+}
+
+.status-warning {
+  font-weight: bold;
+  color: #c09853;
+}
+
+.status-danger {
+  font-weight: bold;
+  color: #b94a48;
+}
+
+.status-inactive {
+  font-weight: bold;
+  color: #999;
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;

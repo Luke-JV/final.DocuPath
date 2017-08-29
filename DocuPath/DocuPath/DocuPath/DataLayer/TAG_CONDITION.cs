@@ -11,6 +11,8 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class TAG_CONDITION
     {
@@ -21,7 +23,9 @@ namespace DocuPath.DataLayer
             this.CONTENT_TAG1 = new HashSet<CONTENT_TAG>();
         }
     
+        [DisplayName("ID")]
         public int TagConditionID { get; set; }
+        [DisplayName("Tag Condition")]
         public string TagConditionName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

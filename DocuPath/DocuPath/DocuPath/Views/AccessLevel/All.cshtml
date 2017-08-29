@@ -61,17 +61,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.LevelName)
                 </td>
-                @if (item.IsDeactivated == 1)
+                @if (item.IsDeactivated == true)
                 {
-                    <td>
-                        @Html.Display("Deactivated")
-                    </td>
+                    <td>Deactivated</td>
                 }
                 else
                 {
-                    <td>
-                        @Html.Display("Active")
-                    </td>
+                    <td>Active</td>
                 }
             </tr>
         }

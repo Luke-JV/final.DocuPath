@@ -145,23 +145,47 @@ namespace DocuPath.Models
 
         public static string EmailMarkup(string inEmail)
         {
-            var address = inEmail;
+            var address = inEmail.ToLower();
             var idxAt = address.IndexOf('@');
             return "<strong><span style=\"color: #666\">" + address.Substring(0, idxAt) + "</span><span style=\"color: rgba(174,31,31,1)\">" + address.Substring(idxAt, 1) + "</span>" + address.Substring(idxAt + 1) + "</strong>";
         }
 
         public static string ChunkString(string inRaw, int inChunkFactor, string inSeparator)
         {
-            var unchunked = inRaw;
+            var stringToChunk = inRaw;
             string separator = inSeparator;
 
-            var list = Enumerable
-                .Range(0, inRaw.Length / inChunkFactor)
-                .Select(i => inRaw.Substring(i * inChunkFactor, inChunkFactor))
-                .ToList();
-            var chunked = string.Join(separator, list);
-                        
-            return chunked;
+            for (int i = inChunkFactor; i <= stringToChunk.Length; i += inChunkFactor)
+            {
+                stringToChunk = stringToChunk.Insert(i, separator);
+                i++;
+            }
+
+            return stringToChunk;
+        }
+
+        public static string SplitAddress(string inAddress, char inSplitter, char inTrimmer, string inHTMLtag)
+        {
+            string[] addressLines = inAddress.Split(inSplitter);
+
+            foreach (var entry in addressLines)
+            {
+                entry.Trim(inTrimmer);
+            }
+
+            string SplitAddress = "";
+
+            foreach (var entry in addressLines)
+            {
+                SplitAddress += inHTMLtag + entry + inHTMLtag.Insert(1, "/");
+            }
+
+            return SplitAddress;
+        }
+
+        public static string StatusMarkup(string inStatusText, string inMarkupClassName)
+        {
+            return "<span class=\"" + inMarkupClassName + "\">" + inStatusText + "</span>";
         }
         #endregion
         //----------------------------------------------------------------------------------------------//

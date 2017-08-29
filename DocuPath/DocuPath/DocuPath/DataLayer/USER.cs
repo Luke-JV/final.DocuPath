@@ -70,7 +70,7 @@ namespace DocuPath.DataLayer
         public string PostalAddress { get; set; }
         [DisplayName("Status")]
         public bool IsDeactivated { get; set; }
-        [DisplayName("Dark UI Preferred")]
+        [DisplayName("UI Theme Preference")]
         public Nullable<bool> DarkUIPref { get; set; }
         [DisplayName("Username")]
         public string UserName { get; set; }

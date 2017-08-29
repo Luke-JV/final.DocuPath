@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DocuPath.DataLayer.USER>
+@using DocuPath.Models
 @{ ViewBag.Title = "All"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -101,7 +102,8 @@
                     @Html.DisplayFor(modelItem => item.HPCSARegNumber)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NationalID)
+                    @VERTEBRAE.ChunkString(item.NationalID, 6, " ")
+                    @*@Html.DisplayFor(modelItem => item.NationalID)*@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AcademicID)

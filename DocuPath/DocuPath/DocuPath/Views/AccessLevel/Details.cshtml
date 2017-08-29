@@ -1,0 +1,403 @@
+﻿@model DocuPath.DataLayer.ACCESS_LEVEL
+@using DocuPath.Models
+@{ ViewBag.Title = "Details"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Access Levels", "All", "AccessLevel") </li>
+    <li class="active">@Html.ActionLink("View Access Level", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-login"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW ACCESS LEVEL</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/AccessLevel/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED ACCESS LEVEL: *@
+<div class="form-horizontal border-generic form-generic">
+    <div class="panel panel-default" style="margin-bottom: 0px">
+        <div class="panel-heading">
+            <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
+            <span>ACCESS LEVEL DETAILS</span>
+        </div>
+        <div class="panel-collapse collapse in">
+            <div class="panel-body">
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.LevelName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.LevelName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IsDeactivated)
+                    </dt>
+                    @if (Model.IsDeactivated == true)
+                    {
+                        <dd>@Html.Raw(VERTEBRAE.StatusMarkup("Deactivated", "status-danger"))</dd>
+                    }
+                    else
+                    {
+	                    <dd>@Html.Raw(VERTEBRAE.StatusMarkup("Active", "status-ok"))</dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default" style="margin-bottom: 0px; margin-top: 5px">
+        <div class="panel-heading">
+            <span class="mdl2icon mdl2-accessarea panel-mdl2icon"></span>
+            <span>FUNCTION GROUP &amp; ACCESS AREA DETAILS</span>
+        </div>
+        <div class="panel-collapse collapse in">
+            <div class="panel-body">
+                @* FC *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-fc details-subheading-mdl2icon"></span>
+                    <span>FORENSIC CASES</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var fclist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"); }
+                        @if (fclist.Count() > 0)
+                        {
+                            foreach (var area in fclist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* ERC *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-erc details-subheading-mdl2icon"></span>
+                    <span>EXTERNAL REVIEW CASES</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var erclist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"); }
+                        @if (erclist.Count() > 0)
+                        {
+                            foreach (var area in erclist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* LC *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-lc details-subheading-mdl2icon"></span>
+                    <span>LEGACY CASES</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var lclist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"); }
+                        @if (lclist.Count() > 0)
+                        {
+                            foreach (var area in lclist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* MEDIA *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-media details-subheading-mdl2icon"></span>
+                    <span>MEDIA REPOSITORY</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var medialist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"); }
+                        @if (medialist.Count() > 0)
+                        {
+                            foreach (var area in medialist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* INSIGHT *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-reporting details-subheading-mdl2icon"></span>
+                    <span>INSIGHT REPORTING</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var insightlist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"); }
+                        @if (insightlist.Count() > 0)
+                        {
+                            foreach (var area in insightlist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* VISION *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-sysoverview details-subheading-mdl2icon"></span>
+                    <span>VISION DASHBOARD</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var visionlist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Dashboard"); }
+                        @if (visionlist.Count() > 0)
+                        {
+                            foreach (var area in visionlist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* SP *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-serviceprovider details-subheading-mdl2icon"></span>
+                    <span>SERVICE PROVIDERS</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var splist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"); }
+                        @if (splist.Count() > 0)
+                        {
+                            foreach (var area in splist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* SR *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-servicerequest details-subheading-mdl2icon"></span>
+                    <span>SERVICE REQUESTS</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var srlist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"); }
+                        @if (srlist.Count() > 0)
+                        {
+                            foreach (var area in srlist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* SCHEDULING *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-datetime details-subheading-mdl2icon"></span>
+                    <span>SCHEDULING</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var schedulinglist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"); }
+                        @if (schedulinglist.Count() > 0)
+                        {
+                            foreach (var area in schedulinglist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* CT *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-tag details-subheading-mdl2icon"></span>
+                    <span>CONTENT TAGS</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var ctlist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"); }
+                        @if (ctlist.Count() > 0)
+                        {
+                            foreach (var area in ctlist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* USERS *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-user details-subheading-mdl2icon"></span>
+                    <span>USERS</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var userlist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"); }
+                        @if (userlist.Count() > 0)
+                        {
+                            foreach (var area in userlist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* UAL *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-login details-subheading-mdl2icon"></span>
+                    <span>ACCESS LEVELS</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var uallist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"); }
+                        @if (uallist.Count() > 0)
+                        {
+                            foreach (var area in uallist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+                @* AUDIT TRAIL *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-auditlog details-subheading-mdl2icon"></span>
+                    <span>AUDIT TRAIL</span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var audittraillist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"); }
+                        @if (audittraillist.Count() > 0)
+                        {
+                            foreach (var area in audittraillist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

@@ -85,10 +85,10 @@
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.DateClosed, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
-                            <div class="col-md-12 input-group">
-                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @style = "width: 227.6px", @id = "DateClosed" } })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @id = "DateClosed" } })
                                 @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "text-danger" })
-                                <span class="input-group-addon" onclick="dateClosedDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                @*<span class="input-group-addon" onclick="dateClosedDTP()"><span class="mdl2icon mdl2-datetime"></span></span>*@
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     <div class="panel-body" style="min-height: 267px">
                         <div class="row">
                             @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
+                            <div class="col-md-10 file-input theme-fa file-input-ajax-new">
                                 <input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">
                                 @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                             </div>
@@ -225,6 +225,20 @@
 
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">
+        $("#DateClosed").click(function () {
+            $('#DateClosed').bootstrapMaterialDatePicker({
+                format: 'DD MMMM YYYY',
+                year: true,
+                date: true,
+                time: false,
+                clearButton: true,
+                nowButton: true,
+                nowText: "Now",
+                switchOnClick: true,
+                okText: "OK"
+            });
+        });
+
         $(function dateClosedDTP() {
             $('#DateClosed').bootstrapMaterialDatePicker({
                 format: 'DD MMMM YYYY',

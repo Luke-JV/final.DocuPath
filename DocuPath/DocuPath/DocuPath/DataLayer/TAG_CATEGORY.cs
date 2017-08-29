@@ -11,6 +11,8 @@ namespace DocuPath.DataLayer
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class TAG_CATEGORY
     {
@@ -20,8 +22,10 @@ namespace DocuPath.DataLayer
             this.CONTENT_TAG = new HashSet<CONTENT_TAG>();
             this.CONTENT_TAG1 = new HashSet<CONTENT_TAG>();
         }
-    
+
+        [DisplayName("ID")]
         public int TagCategoryID { get; set; }
+        [DisplayName("Tag Category")]
         public string TagCategoryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
