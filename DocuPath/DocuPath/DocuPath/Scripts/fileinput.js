@@ -3770,7 +3770,7 @@
         showBrowse: true,
         showPreview: true,
         showRemove: true,
-        showUpload: true,
+        showUpload: false,
         showCancel: true,
         showClose: true,
         showUploadedThumbs: true,

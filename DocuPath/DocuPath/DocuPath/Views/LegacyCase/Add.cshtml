@@ -106,7 +106,7 @@
                         <div class="row">
                             @Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12 file-input theme-fa file-input-ajax-new">
-                                <input id="LCDocs" type="file" multiple/>
+                                <input id="LCDocs" name="LCDocs" type="file" multiple @*class="file-loading"*@/>
                                 @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
                                 @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                             </div>
@@ -200,14 +200,26 @@
 
 <script>
 
-$(document).ready(function(){
+    $(document).ready(function () {
+        $("#LCDocs").fileinput({
+            theme: "fa",
+            uploadUrl: "/LegacyCase/UploadFiles",
+            fileActionSettings: {
+                showUpload: false
+            },
+        });
+        
+
     $('#btnSave').click(function () {
 
         // Checking whether FormData is available in browser
         if (window.FormData !== undefined) {
 
-            var fileUpload = $("#LCDocs").get(0);
-            var files = fileUpload.files;
+            //var fileUpload = $("#LCDocs").fileinput({ theme: "fa", uploadUrl: "/LegacyCase/UploadFiles" });
+
+            //var fileUpload = $("#LCDocs").get(0);
+            //var files = fileUpload.files;
+            var files = $("#LCDocs").fileinput('getFileStack');
 
             // Create FormData object
             var fileData = new FormData();
@@ -242,14 +254,9 @@ $(document).ready(function(){
 </script>  
 
     @*<script>
-        @*var id = @Model.LegacyDRNumber;
-        var url = "/Content/DocuPathRepositories/LC_REPO/";
-
-        url += id;
-
-        $("#input-fa").fileinput({
+        $("#LCDocs").fileinput({
             theme: "fa",
-            uploadUrl: "/LegacyCase/Add",
+            uploadUrl: "/LegacyCase/UploadFiles",
         });
     </script>*@
                                         

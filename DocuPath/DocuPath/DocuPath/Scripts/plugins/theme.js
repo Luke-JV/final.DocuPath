@@ -14,7 +14,7 @@
     "use strict";
 
     $.fn.fileinputThemes.fa = {
-        fileActionSettings: {
+        fileActionSettings: {            
             removeIcon: '<i class="mdl2icon mdl2-delete text-danger"></i>',
             uploadIcon: '<i class="mdl2icon mdl2-upload text-info"></i>',
             uploadRetryIcon: '<i class="mdl2icon mdl2-sync text-info"></i>',
