@@ -57,6 +57,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region READS:
         // GET: ForensicCase/All
+        //[AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
         public ActionResult All()
         {
             try

@@ -1,4 +1,5 @@
 ﻿@model DocuPath.DataLayer.LEGACY_CASE
+@using DocuPath.DataLayer;
 @{ ViewBag.Title = "Add"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -43,10 +44,10 @@
 </div>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal border-generic form-generic">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -130,6 +131,7 @@
                                 </table>
 
                             </div>
+                            <input type="submit" value="Add" class="btn btn-default" />
                         </div>
 
                         @*<div class="form-group">
@@ -209,20 +211,22 @@
             </div>
         </div>*@
     </div>
-}
+    
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/fileinput")
-    @Scripts.Render("~/bundles/materialdatetime")
+                                        }
+
+                                        @section Scripts {
+                                            @Scripts.Render("~/bundles/jqueryval")
+                                            @Scripts.Render("~/bundles/fileinput")
+                                            @Scripts.Render("~/bundles/materialdatetime")
 
     <script>
-        $("#input-fa").fileinput({
-            theme: "fa",
+                                                $("#input-fa").fileinput({
+                                                theme: "fa",
             uploadUrl: "/file-upload-batch/2"
-        });
+                                                });
     </script>
-
+                                        
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">
         $("#DateClosed").click(function () {

@@ -696,6 +696,7 @@
     <Content Include="Views\ContentTag\Details.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\AccessLevel\Details.cshtml" />
+    <Content Include="Views\LegacyCase\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

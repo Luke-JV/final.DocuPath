@@ -24,15 +24,16 @@ namespace DocuPath.Controllers
         // GET: LegacyCase/Create
         public ActionResult Add()
         {
+            var model = new LEGACY_CASE();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return View(model);
         }
 
         // POST: LegacyCase/Create
         [HttpPost]
-        public ActionResult Create(LEGACY_CASE LC)
+        public ActionResult Add(LEGACY_CASE LC)
         {
             try
             {
