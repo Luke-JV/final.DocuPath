@@ -1,0 +1,90 @@
+﻿@model DocuPath.DataLayer.MEDIA
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MEDIA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MediaCaption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MediaCaption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MediaDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MediaDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPubliclyAccessible)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPubliclyAccessible)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MediaLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MediaLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FORENSIC_CASE.ForensicDRNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FORENSIC_CASE.ForensicDRNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MEDIA_PURPOSE.MediaPurposeValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MEDIA_PURPOSE.MediaPurposeValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USER.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USER.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STATUS.StatusValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STATUS.StatusValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MediaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

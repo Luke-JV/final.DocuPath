@@ -25,6 +25,7 @@ namespace DocuPath.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
+            VERTEBRAE.sendMail("404","404");
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
