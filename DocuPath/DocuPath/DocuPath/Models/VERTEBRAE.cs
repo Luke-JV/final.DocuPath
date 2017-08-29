@@ -4,6 +4,8 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -14,9 +16,24 @@ namespace DocuPath.Models
     public static class VERTEBRAE
     {
         #region OUTGOING COMMUNICATION:
+
         public static void sendMail(string destination, string content)
         {
             //404 - mail logic here
+            MailMessage outMail = new MailMessage();
+            outMail.To.Add("luke@cldrm.co.za");
+            outMail.From = new MailAddress("u13098536@tuks.co.za");
+            outMail.Subject = "DocuPath Registration Link";
+            outMail.Body = "Bruh, \n\n Hit up localhost:5069/Account/Register?token=Aafv=H#qafewwAdfdawFw/ in order to register your User Profile. \n\nThis limited offer ends like tomorrow though... \n\nLit Regards,\nLuke";
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.UseDefaultCredentials = false;
+            smtp.EnableSsl = true;
+            smtp.Credentials = new NetworkCredential("u13098536@tuks.co.za","Ktm200xcw");
+            smtp.Send(outMail);
+
         }
         public static void sendSMS(string destination, string content)
         {
