@@ -14,11 +14,13 @@ namespace DocuPath.Controllers
         DocuPathEntities db = new DocuPathEntities();
 
         // GET: Reporting
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
-        {            
+        {
             return View();
         }
 
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult VISION()
         {
             ViewBag.VISIONMetrics = VERTEBRAE.GetVisionMetrics();
@@ -56,77 +58,10 @@ namespace DocuPath.Controllers
             #endregion
             return View();
         }
-
-        // GET: Reporting/Details/5
-        public ActionResult Details(int id)
+        [AuthorizeByAccessArea(AccessArea = "404")]
+        public ActionResult INSIGHT()
         {
-            return View();
-        }
-
-        // GET: Reporting/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Reporting/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Reporting/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Reporting/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Reporting/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Reporting/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return null;//404
         }
     }
 }

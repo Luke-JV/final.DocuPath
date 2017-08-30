@@ -12,16 +12,15 @@ namespace DocuPath.Controllers
     public class ContentTagController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: ContentTag
+        
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult Index()
         {
-            //404 - redirect to /All
-            return View();
+            return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: ContentTag/Create
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
         {
             #region AUDIT_WRITE
@@ -30,8 +29,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ContentTag/Create
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create(CONTENT_TAG tag)
         {
             try
@@ -55,7 +54,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: ContentTag/All
+        
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult All()
         {
@@ -75,7 +74,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        // GET: ContentTag/Details/5
+        
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -89,7 +88,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: ContentTag/Edit/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
             #region AUDIT_WRITE
@@ -98,8 +97,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ContentTag/Edit/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -121,7 +120,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: ContentTag/Delete/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
             #region AUDIT_WRITE
@@ -130,8 +129,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ContentTag/Delete/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

@@ -18,7 +18,7 @@ namespace DocuPath.Controllers
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         // GET: AuditTrail/All

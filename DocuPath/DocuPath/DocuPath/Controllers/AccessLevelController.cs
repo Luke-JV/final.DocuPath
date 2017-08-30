@@ -17,8 +17,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Search User Access Level")]
         public ActionResult Index()
         {
-            //404 - redirect to /All
-            return View();
+
+            return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:

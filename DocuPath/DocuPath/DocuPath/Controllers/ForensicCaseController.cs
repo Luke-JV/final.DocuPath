@@ -15,15 +15,15 @@ namespace DocuPath.Controllers
     {
         
         DocuPathEntities db = new DocuPathEntities();
-        // GET: ForensicCase
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
-            //404 - redirect to /All
-            return View();
+            return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: ForensicCase/Create
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
         {
             #region AUDIT_WRITE
@@ -32,7 +32,7 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ForensicCase/Create
+        [AuthorizeByAccessArea(AccessArea = "404")]
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -57,8 +57,8 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: ForensicCase/All
-        //[AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
+        
+        [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
         public ActionResult All()
         {
             try
@@ -80,7 +80,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        // GET: ForensicCase/Details/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
             #region VALIDATE_ACCESS
@@ -124,7 +124,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: ForensicCase/Edit/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
             
@@ -137,8 +137,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ForensicCase/Edit/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, FORENSIC_CASE updatedFC)
         {
             try
@@ -165,15 +165,15 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: ForensicCase/Delete/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
            
             return View();
         }
 
-        // POST: ForensicCase/Delete/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

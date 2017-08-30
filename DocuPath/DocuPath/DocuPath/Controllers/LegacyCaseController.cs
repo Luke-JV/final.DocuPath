@@ -16,15 +16,14 @@ namespace DocuPath.Controllers
     public class LegacyCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: LegacyCase
+        
         public ActionResult Index()
         {
-            //404 - redirect to /All
-            return View();
+            return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: LegacyCase/Create
+        
         public ActionResult Add()
         {
             var model = new LEGACY_CASE();
@@ -34,7 +33,7 @@ namespace DocuPath.Controllers
             return View(model);
         }
 
-        // POST: LegacyCase/Create
+        
         [HttpPost]
         public ActionResult Add(LEGACY_CASE LC)
         {
@@ -66,7 +65,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: LegacyCase/All
+        
         public ActionResult All()
         {
             try
@@ -86,13 +85,13 @@ namespace DocuPath.Controllers
             }
         }
 
-        // GET: LegacyCase/Details/5
+        
         public ActionResult Details(int id)
         {
             LegacyCaseViewModel model = new LegacyCaseViewModel();
             model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
             model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
-            //model.legacyCase.USER.FirstOrDefault();
+            
 
             model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
 
@@ -131,7 +130,7 @@ namespace DocuPath.Controllers
             }         
             
 
-            //return null;
+            
         }
         public ActionResult ZipAll(int id)
         {
@@ -172,7 +171,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: LegacyCase/Edit/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
             #region VALIDATE_ACCESS
@@ -185,8 +184,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: LegacyCase/Edit/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, LEGACY_CASE updatedLC)
         {
             try
@@ -214,7 +213,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: LegacyCase/Delete/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
             #region VALIDATE_ACCESS
@@ -227,8 +226,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: LegacyCase/Delete/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

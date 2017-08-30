@@ -14,15 +14,17 @@ namespace DocuPath.Controllers
     public class MediaController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: Media
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
-            //404 - redirect to /all
-            return View();
+            return RedirectToAction("All");
         }
+
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: Media/Create
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
         {
             #region AUDIT_WRITE
@@ -31,8 +33,9 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: Media/Create
+        
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create(FormCollection collection)
         {
             try
@@ -54,7 +57,8 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: Media/All
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
             try
@@ -73,7 +77,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        // GET: Media/Details/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -97,7 +101,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: Media/Edit/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
             #region VALIDATE_ACCESS
@@ -110,8 +114,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: Media/Edit/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -133,7 +137,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: Media/Delete/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
             #region VALIDATE_ACCESS
@@ -146,8 +150,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: Media/Delete/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

@@ -14,12 +14,10 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
         // GET: User
+        [AuthorizeByAccessArea(AccessArea ="404")]
         public ActionResult Index()
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+            return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
@@ -57,6 +55,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region READS:
         // GET: User/All
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
             try
@@ -77,6 +76,7 @@ namespace DocuPath.Controllers
         }
 
         // GET: User/Details/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -94,6 +94,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         // GET: User/Edit/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
             #region AUDIT_WRITE
@@ -104,6 +105,7 @@ namespace DocuPath.Controllers
 
         // POST: User/Edit/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, USER updatedUser)
         {
             try
@@ -131,6 +133,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
         // GET: User/Delete/5
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
             #region AUDIT_WRITE
@@ -141,6 +144,7 @@ namespace DocuPath.Controllers
 
         // POST: User/Delete/5
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
