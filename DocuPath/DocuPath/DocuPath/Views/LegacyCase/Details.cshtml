@@ -134,22 +134,68 @@
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.LegacyDocumentTitle)</td>
                                         @*<td>@Html.DisplayFor(modelItem => item.LegacyDocumentLocation)</td>*@
-                                        <td>@Html.ActionLink(" ", "ViewDoc", "LegacyCase", new { id = item.LegacyDocumentID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View"  })</td>
+                                       @* <td>@Html.ActionLink(" ", "ViewDoc", "LegacyCase", new { id = item.LegacyDocumentID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View"  })</td>*@
                                         @*<td><a href="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" class = "mdl2icon mdl2-view colour-dpblack" datatoggle = "tooltip" title = "View"></a></td>*@                                      
                                         @*<td><a href="~/Content/DocuPathRepositories/LC_REPO/LENNY/30542017_015403_0.pdf" class="mdl2icon mdl2-view colour-dpblack" datatoggle="tooltip" title="View"></a></td>*@                                       
-                                        
+                                        <td>
+                                            <a href="" class="mdl2icon mdl2-view colour-dpblack" data-toggle="modal" datatoggle="tooltip" title="View" data-target="#@item.LegacyDocumentID"></a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="@item.LegacyDocumentID" role="dialog">
+                                                <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content" style="width:800px;height:800px;" >
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">@item.LegacyDocumentTitle</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" ></iframe>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </td>
                                         
                                     </tr>
+
                                 }
                             </table>
+                            
+                            
+
+
+                            
+
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
 </div>
-
+<style>
+    .frame1 {
+        width: 600px;
+        height: 600px;
+        /*border: 0;
+        -ms-transform: scale(0.5);
+        -moz-transform: scale(0.5);
+        -o-transform: scale(0.5);
+        -webkit-transform: scale(0.5);
+        transform: scale(0.5);
+        -ms-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+        transform-origin: 0 0;*/
+    }
+</style>
 @section Scripts
 {
     @* EXPAND/COLLAPSE ALL *@

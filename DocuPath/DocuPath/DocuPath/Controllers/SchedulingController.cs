@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class SchedulingController : Controller
     {
         // GET: Scheduling

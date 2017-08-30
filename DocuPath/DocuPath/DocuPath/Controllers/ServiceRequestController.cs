@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class ServiceRequestController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

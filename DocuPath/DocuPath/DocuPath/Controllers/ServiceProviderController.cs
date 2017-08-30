@@ -10,6 +10,7 @@ using DocuPath.Models.DPViewModels;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class ServiceProviderController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

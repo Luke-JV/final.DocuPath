@@ -8,10 +8,12 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class ContentTagController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
         // GET: ContentTag
+        [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult Index()
         {
             //404 - redirect to /All
@@ -54,6 +56,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region READS:
         // GET: ContentTag/All
+        [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult All()
         {
             try
