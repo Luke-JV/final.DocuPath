@@ -38,15 +38,22 @@ namespace DocuPath.Controllers
         {
             try
             {
-                db.LEGACY_CASE.Add(LC);
+                LEGACY_CASE update = new LEGACY_CASE();
+                update = db.LEGACY_CASE.Where(x=>x.LegacyDRNumber == LC.LegacyDRNumber).FirstOrDefault();
+                update.LCBriefDescription = LC.LCBriefDescription;
+                update.DateClosed = LC.DateClosed;
+
+
+                db.LEGACY_CASE.Attach(update);
+                db.Entry(update).State = EntityState.Modified;
                 db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return RedirectToAction("Index");
+                return RedirectToAction("All");
             }
-            catch
+            catch(Exception x)
             {
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
@@ -95,6 +102,15 @@ namespace DocuPath.Controllers
             //AuditModel.WriteTransaction(0, "404");
             #endregion
             return View(model);
+        }
+
+        public ActionResult ViewDoc(int id)
+        {
+            string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyDocumentID == id).FirstOrDefault().LegacyDocumentLocation;
+
+            
+            
+            return null;
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -180,6 +196,8 @@ namespace DocuPath.Controllers
         [HttpPost]
         public ActionResult UploadFiles()
         {
+            
+            
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
@@ -187,10 +205,33 @@ namespace DocuPath.Controllers
                 {
                     //  Get all files from Request object  
                     HttpFileCollectionBase files = Request.Files;
+                    List<LEGACY_DOCUMENT> docs = new List<LEGACY_DOCUMENT>();                    
+                    
+                    LEGACY_CASE LC = new LEGACY_CASE();
+                    try
+                    {
+                        LC.LegacyCaseID = db.LEGACY_CASE.Max(x => x.LegacyCaseID) + 1;
+                    }
+                    catch (Exception)
+                    {
+                        LC.LegacyCaseID = 0;
+                    }
+                    LC.LCBriefDescription = "N/A";
+                    LC.DateAdded = DateTime.Now;
+                    LC.DateClosed = default(DateTime);
+                    LC.LegacyDRNumber = Request.Form.Get("LCDR");
+                    LC.STATUS = db.STATUS.Where(x => x.StatusValue == "Active").First();
+                    LC.UserID = VERTEBRAE.getCurrentUser().UserID;
+                    db.LEGACY_CASE.Add(LC);
+                    db.SaveChanges();
+
+
+
                     string foldername = Request.Form.Get("LCDR");
                     string rootpath = VERTEBRAE.LC_REPORootPath;
                     for (int i = 0; i < files.Count; i++)
                     {
+                        LEGACY_DOCUMENT doc = new LEGACY_DOCUMENT();
                         //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
                         //string filename = Path.GetFileName(Request.Files[i].FileName);  
 
@@ -199,26 +240,38 @@ namespace DocuPath.Controllers
 
                         // Checking for Internet Explorer  
                         if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                        {
+                        {//404!?
                             string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                            fname = testfiles[testfiles.Length - 1];
+                            doc.LegacyDocumentTitle = testfiles[testfiles.Length - 1];
+                            fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
                         }
                         else
                         {
                             fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
-                            //fname = file.FileName;
-                            //fname = VERTEBRAE.RenameFileForStorage() 404;
+                            doc.LegacyDocumentTitle = file.FileName;
+                            
                         }
-
+                        
                         // Get the complete folder path and store the file inside it.  
                         fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
                         bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
 
                         if (!exists)
                             System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
-
+                        doc.LegacyDocumentLocation = fname;
+                        docs.Add(doc);
                         file.SaveAs(fname);
                     }
+                    int docId = db.LEGACY_DOCUMENT.Max(x => x.LegacyDocumentID);
+                    
+                    foreach (var item in docs)
+                    {
+                        docId++;
+                        item.LegacyDocumentID = docId;
+                        item.LegacyCaseID = LC.LegacyCaseID;
+                        db.LEGACY_DOCUMENT.Add(item);
+                    }
+                    db.SaveChanges();
                     // Returns message that successfully uploaded  
                     return Json("File Uploaded Successfully!");
                 }

@@ -150,6 +150,25 @@ namespace DocuPath.Models
                 return visionMetrics;
             }
         }
+        public static string GetUrl(string path)
+        {
+            var arr = path.Split('\\');
+            string url = "";
+            bool begin = false;
+            foreach (var item in arr)
+            {
+                if (item == "Content")
+                {
+                    begin = true;
+                }
+                if (begin)
+                {
+                    url += item + "/";
+                }
+            }
+            url = url.Remove(url.Length - 1);
+            return url;
+        }
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FORMATTING & MARKUP:

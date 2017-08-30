@@ -27,7 +27,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     @* TODO: Link form action to SAVE LC *@
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
@@ -208,13 +208,15 @@
                 showUpload: false
             },
         });
+
         
 
-    $('#btnSave').click(function () {
+        
 
+    $('#btnSave').click(function () {            
+        
         // Checking whether FormData is available in browser
         if (window.FormData !== undefined) {
-
             //var fileUpload = $("#LCDocs").fileinput({ theme: "fa", uploadUrl: "/LegacyCase/UploadFiles" });
 
             //var fileUpload = $("#LCDocs").get(0);
@@ -228,6 +230,7 @@
             for (var i = 0; i < files.length; i++) {
                 fileData.append(files[i].name, files[i]);
             }
+            gdata = fileData;
 
             // Adding one more key to FormData object
             fileData.append('LCDR', document.getElementById("drnum").value);
@@ -249,7 +252,16 @@
         } else {
             alert("FormData is not supported.");
         }
-    });
+        });
+
+    //$('#btnSave').click(function () {
+    //    document.getElementById("btnPOST").click();
+        
+    //});
+
+  
+
+    
 });
 </script>  
 
