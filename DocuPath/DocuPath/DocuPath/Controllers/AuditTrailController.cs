@@ -9,10 +9,11 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class AuditTrailController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: AuditTrail
+        
         public ActionResult Index()
         {
             #region AUDIT_WRITE
@@ -21,7 +22,6 @@ namespace DocuPath.Controllers
             return RedirectToAction("All");
         }
 
-        // GET: AuditTrail/All
         [AuthorizeByAccessArea(AccessArea = "Audit Trail - View")]
         public ActionResult All()
         {
@@ -41,7 +41,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        // GET: AuditTrail/Details/5
+
         [AuthorizeByAccessArea(AccessArea = "Full Access Master")]
         public ActionResult Details(int id)
         {

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class ForensicCaseController : Controller
     {
         
@@ -22,6 +23,7 @@ namespace DocuPath.Controllers
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
+
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
@@ -32,8 +34,8 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create(FormCollection collection)
         {
             try
@@ -56,6 +58,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region READS:
         
         [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
@@ -123,6 +126,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
@@ -164,6 +168,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
@@ -194,6 +199,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
 
         #endregion

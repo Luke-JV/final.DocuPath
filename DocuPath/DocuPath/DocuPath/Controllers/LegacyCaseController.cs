@@ -13,17 +13,20 @@ using System.IO.Compression;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class LegacyCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
+
         #region CREATES:
-        
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Add()
         {
             var model = new LEGACY_CASE();
@@ -32,9 +35,9 @@ namespace DocuPath.Controllers
             #endregion
             return View(model);
         }
-
         
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Add(LEGACY_CASE LC)
         {
             try
@@ -64,8 +67,9 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region READS:
-        
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
             try
@@ -85,7 +89,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
             LegacyCaseViewModel model = new LegacyCaseViewModel();
@@ -104,15 +108,8 @@ namespace DocuPath.Controllers
             #endregion
             return View(model);
         }
-        private string GetVirtualPath(string physicalPath)
-        {
-            string rootpath = Server.MapPath("~/");
 
-            physicalPath = physicalPath.Replace(rootpath, "");
-            physicalPath = physicalPath.Replace("\\", "/");
-
-            return "~/" + physicalPath;
-        }
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult ViewDoc(int id)
         {
             try
@@ -132,6 +129,8 @@ namespace DocuPath.Controllers
 
             
         }
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult ZipAll(int id)
         {
             string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == id).FirstOrDefault().LegacyDocumentLocation;
@@ -170,6 +169,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
@@ -212,6 +212,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
@@ -248,8 +249,10 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
         [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult UploadFiles()
         {
             
@@ -340,6 +343,16 @@ namespace DocuPath.Controllers
             {
                 return Json("No files selected.");
             }
+        }
+
+        private string GetVirtualPath(string physicalPath)
+        {
+            string rootpath = Server.MapPath("~/");
+
+            physicalPath = physicalPath.Replace(rootpath, "");
+            physicalPath = physicalPath.Replace("\\", "/");
+
+            return "~/" + physicalPath;
         }
         #endregion
     }

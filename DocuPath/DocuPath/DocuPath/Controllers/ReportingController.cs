@@ -9,11 +9,11 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class ReportingController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-
-        // GET: Reporting
+        
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
@@ -58,6 +58,7 @@ namespace DocuPath.Controllers
             #endregion
             return View();
         }
+
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult INSIGHT()
         {

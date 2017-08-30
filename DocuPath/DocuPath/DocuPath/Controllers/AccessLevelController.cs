@@ -10,10 +10,11 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class AccessLevelController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: AccessLevel
+        
         [AuthorizeByAccessArea(AccessArea = "Search User Access Level")]
         public ActionResult Index()
         {
@@ -22,7 +23,7 @@ namespace DocuPath.Controllers
         }
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
-        // GET: AccessLevel/Create
+        
         [AuthorizeByAccessArea(AccessArea = "Add User Access Level")]
         public ActionResult Create()
         {
@@ -32,7 +33,7 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: AccessLevel/Create
+        
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add User Access Level")]
         public ActionResult Create(ACCESS_LEVEL AL)
@@ -58,7 +59,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: AccessLevel/All
+        
         [AuthorizeByAccessArea(AccessArea = "Search User Access Level")]
         public ActionResult All()
         {
@@ -79,7 +80,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        // GET: AccessLevel/Details/5
+        
         [AuthorizeByAccessArea(AccessArea = "View User Access Level")]
         public ActionResult Details(int id)
         {
@@ -95,7 +96,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        // GET: AccessLevel/Edit/5
+        
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User Access Level")]
         public ActionResult Edit(int id)
         {
@@ -134,7 +135,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-        // GET: AccessLevel/Delete/5
+        
         [AuthorizeByAccessArea(AccessArea = "Deactivate User Access Level")]
         public ActionResult Delete(int id)
         {
@@ -144,7 +145,7 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: AccessLevel/Delete/5
+        
         [AuthorizeByAccessArea(AccessArea = "Deactivate User Access Level")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
