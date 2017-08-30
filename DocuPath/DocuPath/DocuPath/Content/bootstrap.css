@@ -8930,11 +8930,6 @@ td > img {
     margin-bottom: 0;
 }
 
-.autocomplete-wrapper > span {
-    display: normal !important;
-    width: 100% !important;
-}
-
 .twitter-typeahead .tt-hint
 {
     display: none;
@@ -8977,7 +8972,7 @@ td > img {
     color: #ffffff;
     text-decoration: none;
     outline: 0;
-    background-color: rgba(174, 31, 31, 1) !important;
+    background-color: rgba(174, 31, 31, 1);
 }
 
 .label-catD {
@@ -9731,11 +9726,6 @@ a.cal-event-week {
 
 /*#region CSS GRID LAYOUT: */
 /* ALL SCREENS: */
-
-.nocrumb {
-    padding-top: 15px;
-}
-
     .footer-text {
 		font-family: 'Segoe UI';
 		font-size: 12pt;
@@ -11868,73 +11858,5 @@ a.cal-event-week {
 .blurb-contact-info {
     display: none;
 }
-
-/*#endregion */
-
-/*#region TYPEAHEAD: */
-
-.tt-input, /* UPDATE: newer versions use tt-input instead of tt-query */
-.tt-hint {
-    width: 100%;
-    height: 34px;
-    padding: 0px 12px;
-    font-size: 14px;
-    line-height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline: none;
-}
-
-.tt-input { /* UPDATE: newer versions use tt-input instead of tt-query */
-    width: 100% !important;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    background-color: #fff !important;
-}
-
-.tt-hint {
-    color: #999;
-}
-
-.tt-dropdown-menu {
-    width: 422px;
-    margin-top: 12px;
-    padding: 8px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
-}
-
-.tt-suggestion {
-    padding: 3px 10px;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-    .tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
-        color: #fff;
-        background-color: rgba(174, 31, 31, 1);
-    }
-
-    .tt-suggestion p {
-        margin: 0;
-    }
-
-    .tt-suggestion::before {
-        padding: 0 5px 0 0;
-        font-weight: normal;
-        color: #999;
-        vertical-align:central;
-        font-family: 'Segoe MDL2 Assets';
-        font-size: 70%;
-        content: "\E26B";
-    }
-
-#scrollable-dropdown-menu .tt-dropdown-menu {
-    max-height: 150px;
-    overflow-y: auto;
-}
-
 
 /*#endregion */

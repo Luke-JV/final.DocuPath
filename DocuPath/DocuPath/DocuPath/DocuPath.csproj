@@ -178,17 +178,11 @@
     <Reference Include="Twilio, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Twilio.5.6.3\lib\net451\Twilio.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="Twilio.AspNet.Common, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Twilio.AspNet.Mvc.5.0.2\lib\net451\Twilio.AspNet.Common.dll</HintPath>
     </Reference>
     <Reference Include="Twilio.AspNet.Mvc, Version=5.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Twilio.AspNet.Mvc.5.0.2\lib\net451\Twilio.AspNet.Mvc.dll</HintPath>
-=======
-    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
-      <Private>True</Private>
->>>>>>> 10b69e0a3ebc70591610ea65929d0bc6dcbab377
     </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -220,7 +214,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\TypeaheadBundleConfig.cs" />
     <Compile Include="Controllers\AccessLevelController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuditTrailController.cs" />
@@ -228,7 +221,6 @@
     <Compile Include="Controllers\ExternalReviewCaseController.cs" />
     <Compile Include="Controllers\ForensicCaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\HtmlHelpers.cs" />
     <Compile Include="Controllers\LegacyCaseController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
@@ -486,7 +478,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AuditModel.cs" />
     <Compile Include="Models\AuthorizeByAccessArea.cs" />
-    <Compile Include="Models\Autocomplete.cs" />
     <Compile Include="Models\Custom Classes\METRIC.cs" />
     <Compile Include="Models\DPIdentity.cs" />
     <Compile Include="Models\DPViewModels\AccessLevelViewModel.cs" />
@@ -620,8 +611,6 @@
     </Content>
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\bloodhound.js" />
-    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -692,11 +681,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\typeahead.bundle.js" />
-    <Content Include="Scripts\typeahead.bundle.min.js" />
-    <Content Include="Scripts\typeahead.jquery.js" />
-    <Content Include="Scripts\typeahead.jquery.min.js" />
-    <Content Include="Scripts\typeahead.mvc.model.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -763,7 +747,6 @@
     <Content Include="Views\ServiceProvider\Edit.cshtml" />
     <Content Include="Views\ServiceRequest\Add.cshtml" />
     <Content Include="Views\ServiceRequest\Edit.cshtml" />
-    <Content Include="Views\ContentTag\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
