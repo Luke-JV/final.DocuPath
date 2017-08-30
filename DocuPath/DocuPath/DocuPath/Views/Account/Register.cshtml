@@ -1,39 +1,365 @@
 ﻿@model DocuPath.Models.RegisterViewModel
-@{
-    ViewBag.Title = "Register";
-}
+@{ ViewBag.Title = "Register"; }
 
-<h2>@ViewBag.Title.</h2>
-
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid nocrumb">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-user"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">REGISTER USER PROFILE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Home/Index" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" type="submit" data-toggle="tooltip" title="CANCEL & EXIT"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="~/Account/Register" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & SUBMIT"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF NEW USER: *@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+    <div class="form-horizontal border-generic apad5">
+        @*<div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default" style="margin-bottom: 5px">
+                        <div class="panel-heading" style="background-color: #468847">
+                            <span class="mdl2icon mdl2-success panel-mdl2icon" style="color: white; font-size: 15pt"></span>
+                            <span class="inline-success-notification">Registration Token Verified. <span>Welcome to <span style="font-family: 'U.S. 101'; font-size: 15pt">DOCUPATH</span>! Fill out your Personal Profile using the fields below.</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="col-md-6" style="padding-right: 2.5px">
+                @* NAME & SURNAME *@
+                <div class="panel panel-default" style="margin-bottom: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span>
+                        <span>Name &amp; Surname Details</span>
+                    </div>
+                    <div id="NamePanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5">
+                            <div class="form-group">
+                                @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @*@Html.DropDownList("TitleID", null, htmlAttributes: new { @class = "form-control" })*@
+                                    @*@Html.EditorFor(model => model.TITLE.TitleValue, new { htmlAttributes = new { @class = "form-control" } })*@
+                                    @Html.DropDownListFor(model => model.user.TitleID, new SelectList(Model.titles, "TitleID", "TitleValue"), "...", new { @class = "form-control", @style = "width: 75px" })
+                                    @Html.ValidationMessageFor(model => model.user.TitleID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.FirstName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.MiddleName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.MiddleName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.MiddleName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.LastName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.Label("System Display Initials", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.DisplayInitials, new { htmlAttributes = new { @id = "txtInitials", @class = "form-control table-large-identifier", @style = "width: 75px; text-align: center" } })
+                                    @Html.ValidationMessageFor(model => model.user.DisplayInitials, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 2.5px">
+                @* CONTACT DETAILS *@
+                <div class="panel panel-default" style="margin-bottom: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-contactdetails panel-mdl2icon"></span>
+                        <span>Contact Details</span>
+                    </div>
+                    <div id="ContactPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.CellNum, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.CellNum, new { htmlAttributes = new { @class = "form-control", @style = "width: 40%" } })
+                                    @Html.ValidationMessageFor(model => model.user.CellNum, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.TelNum, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.TelNum, new { htmlAttributes = new { @class = "form-control", @style = "width: 40%" } })
+                                    @Html.ValidationMessageFor(model => model.user.TelNum, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.WorkNum, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.WorkNum, new { htmlAttributes = new { @class = "form-control", @style = "width: 40%" } })
+                                    @Html.ValidationMessageFor(model => model.user.WorkNum, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.PersonalEmail, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.PersonalEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.PersonalEmail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.LabelFor(model => model.user.AcademicEmail, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.AcademicEmail, new { htmlAttributes = new { @id = "txtAcademicEmail", @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.AcademicEmail, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-right: 2.5px">
+                @* QUALIFICATION DETAILS *@
+                <div class="panel panel-default" style="margin-bottom: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-qualifications panel-mdl2icon"></span>
+                        <span>Qualification Details</span>
+                    </div>
+                    <div id="QualificationsPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5" style="min-height: 123px">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.QualificationDescription, htmlAttributes: new { @class = "control-label col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.user.QualificationDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.QualificationDescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.LabelFor(model => model.user.HPCSARegNumber, htmlAttributes: new { @class = "control-label col-md-5" })
+                                <div class="col-md-7">
+                                    @Html.EditorFor(model => model.user.HPCSARegNumber, new { htmlAttributes = new { @class = "form-control table-large-identifier", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.HPCSARegNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 2.5px">
+                @* ADDRESS DETAILS *@
+                <div class="panel panel-default" style="margin-bottom: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-addressdetails panel-mdl2icon"></span>
+                        <span>Address Details</span>
+                    </div>
+                    <div id="AddressPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.PhysicalAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.PhysicalAddress, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.PhysicalAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.LabelFor(model => model.user.PostalAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.PostalAddress, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.PostalAddress, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-right: 2.5px">
+                @* IDENTIFICATION DETAILS *@
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-identification panel-mdl2icon"></span>
+                        <span>Identification Details</span>
+                    </div>
+                    <div id="IDPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5" style="min-height: 122px">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.user.NationalID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.NationalID, new { htmlAttributes = new { @class = "form-control table-large-identifier", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.NationalID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.LabelFor(model => model.user.AcademicID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.AcademicID, new { htmlAttributes = new { @class = "form-control table-large-identifier", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.AcademicID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 2.5px">
+                @* LOGIN DETAILS *@
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
+                        <span>Login Details</span>
+                    </div>
+                    <div id="LoginPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5">
+                            <div class="form-group" style="margin-bottom: 5px">
+                                @Html.LabelFor(model => model.user.USER_LOGIN.Username, htmlAttributes: new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.USER_LOGIN.Username, new { htmlAttributes = new { @id = "txtUsername", @class = "form-control", @style = "width: 100%", @disabled = "disabled" } })
+                                    @Html.ValidationMessage("txtEmail", "", new { @class = "text-danger text-center" })
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 5px">
+                                @Html.LabelFor(model => model.user.USER_LOGIN.Password, htmlAttributes: new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(model => model.user.USER_LOGIN.Password, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.user.USER_LOGIN.Password, "", new { @class = "text-danger text-center" })
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px">
+                                @Html.Label("Confirm Password", htmlAttributes: new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger text-center" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 2.5px">
+                @* SYSTEM PREFERENCES *@
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
+                        <span>SYSTEM PREFERENCES</span>
+                    </div>
+                    <div id="LoginPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5">
+                            <div class="form-group" style="margin-bottom: 5px">
+                                @Html.LabelFor(model => model.user.DarkUIPref, htmlAttributes: new { @class = "col-md-4 control-label" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.user.DarkUIPref, new { @class = "form-control", @style = "width: 50px" } )
+                                    @Html.ValidationMessageFor(model => model.user.DarkUIPref, "", new { @class = "text-danger text-center" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        @*<hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+
+
+
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.user.UserLoginID, "UserLoginID", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownList("UserLoginID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.user.UserLoginID, "", new { @class = "text-danger" })
+
+                    <button class="btn btn-default btn-generic" type="submit" style="width:196px;margin-top:15px;">
+                        <i class="glyphicon glyphicon-ok"></i>
+                        Complete Registration
+                    </button>
+                </div>
+            </div>*@
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsDeactivated)
+                        @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+
+    @*<div class="col-md-offset-2 col-md-6 col-lg-offset-2 col-lg-6 col-xs-offset-2 col-xs-6 col-sm-offset-2 col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+            <div class="col-md-8">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-8">
+                <input type="submit" class="btn btn-default btn-generic fullwidth" value="Register" />
+            </div>
+        </div>
+    </div>*@
 }
 
 @section Scripts {

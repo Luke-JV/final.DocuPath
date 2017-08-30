@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DocuPath.DataLayer;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DocuPath.Models
@@ -79,6 +80,10 @@ namespace DocuPath.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public USER user{ get; set; }
+        
+        public List<TITLE> titles { get; set; }
     }
 
     public class ResetPasswordViewModel

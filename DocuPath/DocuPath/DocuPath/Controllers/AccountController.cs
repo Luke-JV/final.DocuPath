@@ -154,7 +154,6 @@ namespace DocuPath.Controllers
                         return View("Register");
                     }
                 }
-                   
 
             }
             return View("Login");
@@ -164,7 +163,13 @@ namespace DocuPath.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            using (DocuPathEntities db = new DocuPathEntities())
+            {
+                model.user = new USER();
+                model.titles = db.TITLE.ToList();
+            }
+            return View(model);
         }
 
         //
