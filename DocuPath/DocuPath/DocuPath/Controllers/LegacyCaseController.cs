@@ -12,6 +12,7 @@ using System.IO.Compression;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class LegacyCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

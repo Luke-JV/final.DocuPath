@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class AuditTrailController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -19,41 +20,9 @@ namespace DocuPath.Controllers
             #endregion
             return View();
         }
-        //----------------------------------------------------------------------------------------------//
-        #region CREATES:
-        // GET: AuditTrail/Create
-        public ActionResult Create()
-        {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
-        }
 
-        // POST: AuditTrail/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return View();
-            }
-        }
-        #endregion
-        //----------------------------------------------------------------------------------------------//
-        #region READS:
         // GET: AuditTrail/All
+        [AuthorizeByAccessArea(AccessArea = "Audit Trail - View")]
         public ActionResult All()
         {
             try
@@ -73,6 +42,7 @@ namespace DocuPath.Controllers
             }
         }
         // GET: AuditTrail/Details/5
+        [AuthorizeByAccessArea(AccessArea = "Full Access Master")]
         public ActionResult Details(int id)
         {
             #region AUDIT_WRITE
@@ -80,71 +50,7 @@ namespace DocuPath.Controllers
             #endregion
             return View();
         }
-        #endregion
-        //----------------------------------------------------------------------------------------------//
-        #region UPDATES:
-        // GET: AuditTrail/Edit/5
-        public ActionResult Edit(int id)
-        {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
-        }
-
-        // POST: AuditTrail/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return View();
-            }
-        }
-        #endregion
-        //----------------------------------------------------------------------------------------------//
-        #region DELETES:
-        // GET: AuditTrail/Delete/5
-        public ActionResult Delete(int id)
-        {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
-        }
-
-        // POST: AuditTrail/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return View();
-            }
-        }
-        #endregion
+        
         //----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
 

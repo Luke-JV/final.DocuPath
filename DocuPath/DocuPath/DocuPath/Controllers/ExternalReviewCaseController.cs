@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class ExternalReviewCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

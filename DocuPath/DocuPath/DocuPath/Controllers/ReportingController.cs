@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class ReportingController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

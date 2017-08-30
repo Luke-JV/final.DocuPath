@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
+    [Authorize]
     public class MediaController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
