@@ -1,4 +1,5 @@
 ﻿@model DocuPath.Models.DPViewModels.ForensicCaseViewModel
+@using DocuPath.Models
 @{ ViewBag.Title = "Details"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -49,7 +50,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#CorePanel" style="cursor: pointer">
                         <span class="mdl2icon mdl2-fc panel-mdl2icon"></span>
-                        <span>Core Data</span>
+                        <span>CORE DATA</span>
                     </div>
                     <div id="CorePanel" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -64,11 +65,11 @@
                                 </dd>
 
                                 <dt>
-                                    @Html.DisplayName("Brief Description")
+                                    @Html.DisplayNameFor(model => model.forensicCase.FCBriefDescription)
                                 </dt>
 
                                 <dd>
-                                    Fatal Thoracic GSW &amp; Cholera Infection
+                                    @Html.DisplayFor(model => model.forensicCase.FCBriefDescription)
                                 </dd>
                                 <hr class="details-hr" />
                                 <dt>
@@ -100,11 +101,12 @@
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.STATUS.StatusValue)
+                                    @Html.Raw(VERTEBRAE.StatusMarkup(Model.forensicCase.STATUS.StatusValue,"status-ok"))
+                                    @*@Html.DisplayFor(model => model.forensicCase.STATUS.StatusValue)*@
                                 </dd>
                                 <hr class="details-hr" />
                                 <dt>
-                                    Autopsy @Html.DisplayNameFor(model => model.forensicCase.AUTOPSY_AREA.AreaNote)
+                                    @Html.DisplayNameFor(model => model.forensicCase.AutopsyAreaID)
                                 </dt>
 
                                 <dd>
@@ -112,7 +114,7 @@
                                 </dd>
 
                                 <dt>
-                                    @Html.DisplayNameFor(model => model.forensicCase.SESSION.SessionID) Description
+                                    @Html.DisplayNameFor(model => model.forensicCase.SessionID)
                                 </dt>
 
                                 <dd>
@@ -121,20 +123,20 @@
                                         @Model.forensicCase.SESSION.DateID.ToString("ddd dd MMM yyyy")
                                     }
                                 </dd>
-
+                                <hr class="details-hr"/>
                                 <dt>
                                     @Html.DisplayNameFor(model => model.forensicCase.CauseOfDeathConclusion)
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.CauseOfDeathConclusion)
+                                    <strong>@Html.DisplayFor(model => model.forensicCase.CauseOfDeathConclusion)</strong>
                                 </dd>
                                 <hr class="details-hr" />
-                                <dt>
+                                <dt style="padding-top: 2.9px">
                                     @Html.DisplayNameFor(model => model.forensicCase.DHANoticeDeathID)
                                 </dt>
 
-                                <dd>
+                                <dd class="table-large-identifier">
                                     @Html.DisplayFor(model => model.forensicCase.DHANoticeDeathID)
                                 </dd>
 
@@ -151,7 +153,8 @@
                                 </dt>
 
                                 <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.ActingOfficerContactNum)
+                                    @Html.Raw(VERTEBRAE.PhoneNumberMarkup(Model.forensicCase.ActingOfficerContactNum))
+                                    @*@Html.DisplayFor(model => model.forensicCase.ActingOfficerContactNum)*@
                                 </dd>
                             </dl>
                         </div>
@@ -161,7 +164,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#ObsPanel" style="cursor: pointer">
                         <span class="mdl2icon mdl2-observations panel-mdl2icon"></span>
-                        <span>Observations</span>
+                        <span>OBSERVATIONS</span>
                     </div>
                     <div id="ObsPanel" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -169,7 +172,7 @@
                                 <div class="col-md-12">
                                     <div class="details-subheading">
                                         <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
-                                        <span>General Observations</span>
+                                        <span>GENERAL OBSERVATIONS</span>
                                     </div>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -234,7 +237,7 @@
                                 <div class="col-md-12">
                                     <div class="details-subheading">
                                         <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
-                                        <span>Head &amp; Neck Observations</span>
+                                        <span>HEAD &amp; NECK OBSERVATIONS</span>
                                     </div>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -285,7 +288,7 @@
                                 <div class="col-md-12">
                                     <div class="details-subheading">
                                         <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
-                                        <span>Chest Observations</span>
+                                        <span>CHEST OBSERVATIONS</span>
                                     </div>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -357,7 +360,7 @@
                                 <div class="col-md-12">
                                     <div class="details-subheading">
                                         <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
-                                        <span>Abdomen Observations</span>
+                                        <span>ABDOMEN OBSERVATIONS</span>
                                     </div>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -492,7 +495,7 @@
                                 <div class="col-md-12">
                                     <div class="details-subheading">
                                         <span class="mdl2icon mdl2-observations details-subheading-mdl2icon"></span>
-                                        <span>Spine Observations</span>
+                                        <span>SPINE OBSERVATIONS</span>
                                     </div>
                                     <dl class="dl-horizontal">
                                         <dt>
@@ -519,20 +522,21 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#SRPanel" style="cursor: pointer">
                         <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
-                        <span>Service Requests</span>
+                        <span>SERVICE REQUESTS</span>
                     </div>
                     <div id="SRPanel" class="panel-collapse collapse">
                         <div class="panel-body" style="padding: 25px">
-                            <table class="table table-striped">
+                            <table id="FCSR" class="table table-striped table-hover">
                                 <tr>
-                                    <th class="colour-dpred" style="min-width: 250px">Service Provider</th>
-                                    <th class="colour-dpred" style="min-width: 150px">Request Type</th>
-                                    <th class="colour-dpred">Request Note</th>
-                                    <th class="colour-dpred" style="min-width: 200px">Date Added</th>
-                                    <th class="colour-dpred">Actions</th>
+                                    @*<th data-id="identifier" data-column-id="SRID" data-visible="false" data-identifier="true">ID</th>*@
+                                    <th data-column-id="spname" class="colour-dpred">Service Provider</th>
+                                    <th data-column-id="reqtype" class="colour-dpred">Request Type</th>
+                                    <th data-column-id="reqnote" class="colour-dpred">Request Note</th>
+                                    <th data-column-id="dateAdded" data-converter="dpdate" class="colour-dpred">Date Added</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
                                     @*<th class="colour-dpred">Request Closed</th>*@
                                 </tr>
-                                @foreach (var item in Model.serviceRequests)
+                                @foreach (var item in Model.serviceRequests.OrderByDescending(x=>x.DateAdded))
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
@@ -558,18 +562,18 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#FCDetailsAccordion" href="#MediaPanel" style="cursor: pointer">
                         <span class="mdl2icon mdl2-media panel-mdl2icon"></span>
-                        <span>Media Items</span>
+                        <span>MEDIA ITEMS</span>
                     </div>
                     <div id="MediaPanel" class="panel-collapse collapse">
                         <div class="panel-body" style="padding: 25px">
-                            <table class="table table-striped">
+                            <table id="FC_Media" class="table table-striped">
                                 <tr>
                                     <th class="colour-dpred">Thumbnail</th>
                                     <th class="colour-dpred">Caption</th>
                                     <th class="colour-dpred">Description</th>
                                     <th class="colour-dpred">Actions</th>
                                 </tr>
-                                @foreach (var item in Model.media)
+                                @foreach (var item in Model.media.OrderBy(x => x.MediaCaption))
                                 {
                                     <tr>
                                         <td class="text-center"><img id="thumb_@item.MediaID" class="media-thumb mthumbsize-small media-thumb-@item.MediaID" /></td>
@@ -590,7 +594,7 @@
                     </div>
                     <div id="AEPanel" class="panel-collapse collapse">
                         <div class="panel-body" style="padding: 25px">
-                            <table class="table table-striped">
+                            <table id="FC_AE" class="table table-striped">
                                 <tr>
                                     <th class="colour-dpred">Serial Number</th>
                                     <th class="colour-dpred">Description</th>
@@ -598,7 +602,7 @@
                                     <th class="colour-dpred">Contact Number</th>
                                     <th class="colour-dpred">Actions</th>
                                 </tr>
-                                @foreach (var item in Model.additionalEvidence)
+                                @foreach (var item in Model.additionalEvidence.OrderBy(x => x.EvidenceDescription))
                                 {
                                     <tr>
                                         <td class="table-large-identifier">@Html.DisplayFor(modelItem => item.EvidenceSerialNumber)</td>
@@ -1002,43 +1006,47 @@
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/materialdatetime")
 
-    @*<script id="loadBootgrid" type="text/javascript">
-        var grid = $("#allFC").bootgrid({
-            caseSensitive: false,
-            converters: {
-                dpdate: {
-                    from: function (value) { return moment(value); },
-                    to: function (value) { return value.format("ddd D MMM YYYY"); }
-                }
-            },
-            formatters: {
-                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
-                "commands": function (column, row) {
-                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-                    }
-                 },
-                "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-                }
-            }
-        });
-    </script>*@
+    <script id="loadBootgrids" type="text/javascript">
+        //var FCSRgrid = $("#FCSR").bootgrid({
+        //    caseSensitive: false,
+        //    converters: {
+        //        dpdate: {
+        //            from: function (value) { return moment(value); },
+        //            to: function (value) { return value.format("ddd D MMM YYYY"); }
+        //        }
+        //    },
+        //    formatters: {
+        //        // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
+        //        "commands": function (column, row) {
+        //            return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
+        //        }
+        //    }
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
+            //        } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
+            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+            //        } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
+            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
+            //        } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
+            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+            //        }
+            //     },
+            //    "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+            //        return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
+            //    }
+            //}
+        //});
+
+        //var FCMediagrid = $("#FC_Media").bootgrid({});
+        //var FCAEgrid = $("#FC_AE").bootgrid({});
+    </script>
 
     <script>
         // Expand/Collapse All Panels:
