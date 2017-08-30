@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO.Compression;
 
 namespace DocuPath.Controllers
 {
@@ -103,14 +104,69 @@ namespace DocuPath.Controllers
             #endregion
             return View(model);
         }
+        private string GetVirtualPath(string physicalPath)
+        {
+            string rootpath = Server.MapPath("~/");
 
+            physicalPath = physicalPath.Replace(rootpath, "");
+            physicalPath = physicalPath.Replace("\\", "/");
+
+            return "~/" + physicalPath;
+        }
         public ActionResult ViewDoc(int id)
         {
-            string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyDocumentID == id).FirstOrDefault().LegacyDocumentLocation;
+            try
+            {
+                string location = GetVirtualPath(db.LEGACY_DOCUMENT.Where(x => x.LegacyDocumentID == id).FirstOrDefault().LegacyDocumentLocation);
+
+                var file = File(location, System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(location));
+                file.FileDownloadName = db.LEGACY_DOCUMENT.Where(x => x.LegacyDocumentID == id).FirstOrDefault().LegacyDocumentTitle;
+                return file;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }         
+            
+
+            //return null;
+        }
+        public ActionResult ZipAll(int id)
+        {
+            string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == id).FirstOrDefault().LegacyDocumentLocation;
+            location = location.Replace("\\", "/");
+            var split = location.Split('/');
+            string source="";
+            string destination = "";
+            for (int i = 0; i < split.Length-1; i++)
+            {
+                if (i < split.Length-2)
+                {
+                    destination += split[i] + '/';
+                }
+                source += split[i]+'/';
+                
+            }
+            System.IO.DirectoryInfo di = new DirectoryInfo(destination + "ZIP/");
+
+            foreach (FileInfo FI in di.GetFiles())
+            {
+                FI.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+            ZipFile.CreateFromDirectory(source, destination+"/ZIP/test.zip");
+
+            var file = File(destination + "/ZIP/test.zip", System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(destination + "/ZIP/test.zip"));
+            file.FileDownloadName = "x.zip"; //404 404
 
             
+
+            return file;
             
-            return null;
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
