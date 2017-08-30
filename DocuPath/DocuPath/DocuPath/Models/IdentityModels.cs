@@ -26,7 +26,7 @@ namespace DocuPath.Models
         }
 
         public static ApplicationDbContext Create()
-        {
+       {
             return new ApplicationDbContext();
         }
     }
