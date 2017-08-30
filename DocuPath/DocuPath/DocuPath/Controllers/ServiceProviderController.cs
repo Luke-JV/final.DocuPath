@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using DocuPath.Models.DPViewModels;
 
 namespace DocuPath.Controllers
 {
@@ -21,17 +22,21 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region CREATES:
         // GET: ServiceProvider/Create
-        public ActionResult Create()
+        public ActionResult Add()
         {
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+
+            ServiceProviderViewModel model = new ServiceProviderViewModel();
+            model.titles = db.TITLE.ToList();
+
+            return View(model);
         }
 
         // POST: ServiceProvider/Create
         [HttpPost]
-        public ActionResult Create(SERVICE_PROVIDER SP)
+        public ActionResult Add(SERVICE_PROVIDER SP)
         {
             try
             {

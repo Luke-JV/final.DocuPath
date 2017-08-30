@@ -201,6 +201,8 @@
 <script>
 
     $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        
         $("#LCDocs").fileinput({
             theme: "fa",
             uploadUrl: "/LegacyCase/UploadFiles",

@@ -6039,11 +6039,11 @@ button.close {
   overflow: hidden;
 }
 
-body.modal-open,
+/*body.modal-open,
 .modal-open .navbar-fixed-top,
 .modal-open .navbar-fixed-bottom {
   margin-right: 15px;
-}
+}*/
 
 .modal {
   position: fixed;
@@ -6081,6 +6081,11 @@ body.modal-open,
   margin-left: auto;
 }
 
+.modal-lg {
+    width: 1200px !important;
+    max-height: 800px !important;
+}
+
 .modal-content {
   position: relative;
   background-color: #ffffff;
@@ -6114,6 +6119,9 @@ body.modal-open,
 }
 
 .modal-title {
+  font-family: 'U.S. 101';
+  font-size: 20pt;
+  text-transform: uppercase;
   margin: 0;
   line-height: 1.428571429;
 }
@@ -6121,6 +6129,7 @@ body.modal-open,
 .modal-body {
   position: relative;
   padding: 20px;
+  transition: 1s all;
 }
 
 .modal-footer {
@@ -8130,6 +8139,22 @@ td.visible-print {
 .status-inactive {
   font-weight: bold;
   color: #999;
+}
+
+.mdl2-borderless:before {
+    content: '\E2B3';
+}
+
+.mdl2-toggleheader:before {
+    content: '\E18C';
+}
+
+.mdl2-asterisk:before {
+    content: '\EA38';
+}
+
+.mdl2-loading:before {
+    content: '\E9F3';
 }
 
 /* MODAL CSS: */
@@ -11479,7 +11504,12 @@ a.cal-event-week {
 
 .file-drop-zone-title {
     color: #aaa;
-    font-size: 1.6em;
+    font-family: 'U.S. 101';
+    text-transform: uppercase;
+    font-size: 30px;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+    font-weight: normal;
     padding: 85px 10px;
     cursor: default;
 }
@@ -11588,13 +11618,17 @@ a.cal-event-week {
 }
 
 .file-zoom-content {
-    height: 480px;
+    height: auto;
+    max-height: 800px !important;
+    /*max-height: 600px !important;*/
     text-align: center;
 }
 
 .file-zoom-content .file-preview-image,
 .file-zoom-content .file-preview-video {
-    max-height: 100%
+    max-height: inherit !important;
+    /*height: auto;
+    max-height: 100%;*/
 }
 
 .file-zoom-content > .file-object.type-image {

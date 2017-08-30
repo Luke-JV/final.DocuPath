@@ -17,13 +17,13 @@
         fileActionSettings: {            
             removeIcon: '<i class="mdl2icon mdl2-delete text-danger"></i>',
             uploadIcon: '<i class="mdl2icon mdl2-upload text-info"></i>',
-            uploadRetryIcon: '<i class="mdl2icon mdl2-sync text-info"></i>',
+            uploadRetryIcon: '<i class="mdl2icon mdl2-reset text-info"></i>',
             zoomIcon: '<i class="mdl2icon mdl2-view"></i>',
-            dragIcon: '<i class="fa fa-bars"></i>',
-            indicatorNew: '<i class="fa fa-hand-o-down text-warning"></i>',
-            indicatorSuccess: '<i class="fa fa-check-circle text-success"></i>',
-            indicatorError: '<i class="fa fa-exclamation-circle text-danger"></i>',
-            indicatorLoading: '<i class="fa fa-hand-o-up text-muted"></i>'
+            dragIcon: '<i class="mdl2icon mdl2-more"></i>',
+            indicatorNew: '<i class="mdl2icon mdl2-asterisk text-warning"></i>',
+            indicatorSuccess: '<i class="mdl2icon mdl2-success text-success"></i>',
+            indicatorError: '<i class="mdl2icon mdl2-error text-danger"></i>',
+            indicatorLoading: '<i class="mdl2icon mdl2-loading text-muted"></i>'
         },
         layoutTemplates: {
             fileIcon: '<i class="mdl2icon mdl2-file kv-caption-icon"></i> '
@@ -31,9 +31,9 @@
         previewZoomButtonIcons: {
             prev: '<i class="mdl2icon mdl2-left"></i>',
             next: '<i class="mdl2icon mdl2-right"></i>',
-            toggleheader: '<i class="mdl2icon mdl2-expand"></i>',
-            fullscreen: '<i class="fa fa-arrows-alt"></i>',
-            borderless: '<i class="fa fa-external-link"></i>',
+            toggleheader: '<i class="mdl2icon mdl2-toggleheader"></i>',
+            fullscreen: '<i class="mdl2icon mdl2-expand"></i>',
+            borderless: '<i class="mdl2icon mdl2-borderless"></i>',
             close: '<i class="mdl2icon mdl2-cancel"></i>'
         },
         previewFileIcon: '<i class="mdl2icon mdl2-view"></i>',
