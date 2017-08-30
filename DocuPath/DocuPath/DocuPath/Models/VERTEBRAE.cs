@@ -3,17 +3,23 @@ using DocuPath.Models.Custom_Classes;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-
-
-
+using Twilio;
+using Twilio.Clients;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.AspNet.Mvc;
+using Twilio.TwiML;
+using System.Configuration;
+using Twilio.Types;
 
 namespace DocuPath.Models
 {
@@ -42,6 +48,23 @@ namespace DocuPath.Models
         public static void sendSMS(string destination, string content)
         {
             //404 - SMS logic here
+            string accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
+
+            string authToken = ConfigurationManager.AppSettings["SMSAccountPassword"];
+
+            string fromNumber = ConfigurationManager.AppSettings["SMSAccountFrom"];
+
+            // Initialize the Twilio client
+
+            TwilioClient.Init(accountSid, authToken);
+
+            MessageResource result = MessageResource.Create(
+
+                    from: new PhoneNumber(fromNumber),
+
+                    to: new PhoneNumber(destination),
+
+                    body: content);
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -292,4 +315,5 @@ namespace DocuPath.Models
         #endregion
         //----------------------------------------------------------------------------------------------//
     }
+    
 }

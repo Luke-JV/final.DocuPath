@@ -82,5 +82,17 @@ namespace DocuPath.Controllers
             ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
             return View();
         }
+
+        public ActionResult SendMail()
+        {
+            
+
+            return View();
+        }
+        public ActionResult SendSms()
+        {
+            VERTEBRAE.sendSMS("++27825592322","CODE:xxxxxx");
+            return View("Index");
+        }
     }
 }
