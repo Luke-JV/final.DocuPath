@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-four">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -34,6 +34,11 @@
             <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div grid-area="btn4">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnThumbsizeToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-resize btn-mdl2icon" data-toggle="tooltip" title="TOGGLE THUMBNAIL SIZE"></button>
                 </form>
             </div>
             <div></div>
@@ -576,7 +581,7 @@
                                 @foreach (var item in Model.media.OrderBy(x => x.MediaCaption))
                                 {
                                     <tr>
-                                        <td class="text-center"><img id="thumb_@item.MediaID" class="media-thumb mthumbsize-small media-thumb-@item.MediaID" /></td>
+                                        <td class="text-center"><img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb" /></td>
                                         <td>@Html.DisplayFor(modelItem => item.MediaCaption)</td>
                                         <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
                                         <td>@Html.ActionLink(" ", "Details", "Media", new { id = item.MediaID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
@@ -1093,6 +1098,18 @@
             else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
             else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
             $("#btnDensityToggle").blur()
+        });
+
+        // Toggle Thumbnail Sizes:
+        $("#btnThumbsizeToggle").click(function () {
+            var $target = $(".media-thumb");
+            var $large = "thumbsize-expanded";
+            if ($target.hasClass($large)) {
+                $target.removeClass($large);
+            } else {
+                $target.addClass($large);
+            }
+            $("#btnThumbsizeToggle").blur()
         });
     </script>
 }

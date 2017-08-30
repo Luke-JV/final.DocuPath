@@ -3,6 +3,8 @@ using DocuPath.Models.Custom_Classes;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -168,6 +170,39 @@ namespace DocuPath.Models
             }
             url = url.Remove(url.Length - 1);
             return url;
+        }
+
+        public static string GetThumbUrl(string inPath)
+        {
+            string relPath = GetUrl(inPath);
+            return relPath.Insert(relPath.LastIndexOf('.'), "_thumb");
+            
+            //404!
+
+            //Image thumb;
+            ////if (inPath != null)
+            ////{
+            //    var fileName = relPath.Substring(relPath.LastIndexOf('/'));
+            //    Image img = Image.FromFile(relPath);
+            //    int imgHeight = 150;
+            //    int imgWidth = 150;
+            //    if (img.Width < img.Height)
+            //    {
+            //        //portrait image  
+            //        imgHeight = 150;
+            //        var imgRatio = (float)imgHeight / (float)img.Height;
+            //        imgWidth = Convert.ToInt32(img.Height * imgRatio);
+            //    }
+            //    else if(img.Height < img.Width)
+            //    {
+            //        //landscape image  
+            //        imgWidth = 150;
+            //        var imgRatio = (float)imgWidth / (float)img.Width;
+            //        imgHeight = Convert.ToInt32(img.Height * imgRatio);
+            //    }
+            //    thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
+            ////}
+            //return thumb;
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
