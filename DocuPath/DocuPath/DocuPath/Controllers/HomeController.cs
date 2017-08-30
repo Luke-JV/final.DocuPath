@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class HomeController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -50,12 +51,15 @@ namespace DocuPath.Controllers
                 _userManager = value;
             }
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+            
             return View();
         }
-        [Authorize]
+        
+        [AllowAnonymous]
         public ActionResult About()
         {
             
@@ -63,8 +67,8 @@ namespace DocuPath.Controllers
 
             return View();
         }
-
-        [AuthorizeByAccessArea(AccessArea ="Delete Forensic Case")]
+        
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

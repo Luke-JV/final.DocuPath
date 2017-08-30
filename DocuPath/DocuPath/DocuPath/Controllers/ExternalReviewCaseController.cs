@@ -12,15 +12,18 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class ExternalReviewCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
+
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
+
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Add()
@@ -43,7 +46,16 @@ namespace DocuPath.Controllers
             try
             {
                 //404 rebuild extcase
-                
+                ERC.extCase.DateAdded = DateTime.Now;
+                ERC.extCase.StatusID = db.STATUS.Where(x => x.StatusValue == "Active").FirstOrDefault().StatusID;
+                try
+                {
+                    ERC.extCase.ExternalReviewCaseID = db.EXTERNAL_REVIEW_CASE.Max(x => x.ExternalReviewCaseID) + 1;
+                }
+                catch (Exception)
+                {
+                    ERC.extCase.ExternalReviewCaseID = 0;
+                }
 
                 db.EXTERNAL_REVIEW_CASE.Add(ERC.extCase);
                 db.SaveChanges();
@@ -63,6 +75,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region READS:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
@@ -145,6 +158,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
@@ -179,6 +193,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]

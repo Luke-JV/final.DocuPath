@@ -8,9 +8,10 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class SchedulingController : Controller
     {
-        // GET: Scheduling
+        
         [AuthorizeByAccessArea(AccessArea="404")]
         public ActionResult Index()
         {

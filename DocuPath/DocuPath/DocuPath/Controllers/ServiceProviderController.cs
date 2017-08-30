@@ -11,18 +11,19 @@ using DocuPath.Models.DPViewModels;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class ServiceProviderController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: ServiceProvider
+        
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
+
         #region CREATES:
-        // GET: ServiceProvider/Create
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Add()
         {
@@ -35,8 +36,7 @@ namespace DocuPath.Controllers
 
             return View(model);
         }
-
-        // POST: ServiceProvider/Create
+       
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Add(SERVICE_PROVIDER SP)
@@ -61,8 +61,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-        #region READS:
-        // GET: ServiceProvider/All
+
+        #region READS:       
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
@@ -82,7 +82,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        // GET: ServiceProvider/Details/5
+
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
@@ -99,8 +99,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-        #region UPDATES:
-        // GET: ServiceProvider/Edit/5
+
+        #region UPDATES:        
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
@@ -110,7 +110,6 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ServiceProvider/Edit/5
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, SERVICE_PROVIDER updatedSP)
@@ -138,8 +137,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
-        // GET: ServiceProvider/Delete/5
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
@@ -149,7 +148,6 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: ServiceProvider/Delete/5
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
@@ -172,6 +170,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
 
         #endregion

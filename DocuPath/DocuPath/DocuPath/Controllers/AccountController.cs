@@ -14,6 +14,7 @@ using DocuPath.DataLayer;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

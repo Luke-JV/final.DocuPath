@@ -10,51 +10,19 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class UserController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        // GET: User
+       
         [AuthorizeByAccessArea(AccessArea ="404")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
-        #region CREATES:
-        // GET: User/Create
-        public ActionResult Create()
-        {
-            VERTEBRAE.sendMail("404","404");
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
-        }
 
-        // POST: User/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
-                return View();
-            }
-        }
-        #endregion
-        //----------------------------------------------------------------------------------------------//
         #region READS:
-        // GET: User/All
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
@@ -75,7 +43,6 @@ namespace DocuPath.Controllers
             }
         }
 
-        // GET: User/Details/5
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
@@ -92,8 +59,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region UPDATES:
-        // GET: User/Edit/5
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
         {
@@ -103,7 +70,6 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: User/Edit/5
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id, USER updatedUser)
@@ -131,8 +97,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
-        // GET: User/Delete/5
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
@@ -142,7 +108,6 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        // POST: User/Delete/5
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
@@ -165,6 +130,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
 
         #endregion

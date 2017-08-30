@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class ContentTagController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -19,6 +20,7 @@ namespace DocuPath.Controllers
             return RedirectToAction("All");
         }
         //----------------------------------------------------------------------------------------------//
+
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
@@ -74,7 +76,8 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        
+
+        [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION

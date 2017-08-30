@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [HandleError]
     public class MediaController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -22,8 +23,8 @@ namespace DocuPath.Controllers
         }
 
         //----------------------------------------------------------------------------------------------//
-        #region CREATES:
 
+        #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Create()
         {
@@ -56,8 +57,8 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-        #region READS:
 
+        #region READS:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult All()
         {
@@ -77,6 +78,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
+
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Details(int id)
         {
@@ -100,6 +102,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Edit(int id)
@@ -136,6 +139,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
@@ -172,6 +176,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+
         #region NON-CRUD ACTIONS:
 
         #endregion
