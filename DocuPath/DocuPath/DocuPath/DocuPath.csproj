@@ -121,6 +121,7 @@
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.2\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -476,6 +477,7 @@
     <Compile Include="Models\DPViewModels\AccessLevelViewModel.cs" />
     <Compile Include="Models\DPViewModels\ContentTagViewModel.cs" />
     <Compile Include="Models\DPViewModels\ExternalReviewCaseViewModel.cs" />
+    <Compile Include="Models\DPViewModels\FileViewModel.cs" />
     <Compile Include="Models\DPViewModels\ForensicCaseViewModel.cs" />
     <Compile Include="Models\DPViewModels\LegacyCaseViewModel.cs" />
     <Compile Include="Models\DPViewModels\MediaViewModel.cs" />
