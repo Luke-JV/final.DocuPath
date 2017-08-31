@@ -1,0 +1,39 @@
+﻿
+@model DocuPath.Models.DPViewModels.TagCloudViewModel
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <hr />
+
+
+    <form>
+        <input type="text" value="" data-role="tagsinput" />
+    </form>
+}
+
+    @section Scripts{
+    <script>
+        var tagNames = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            prefetch: {
+                url: '/Test/GetTags/',
+                filter: function (list) {
+                    return $.map(list, function (cityname) {
+                        return { name: cityname };
+                    });
+                }
+            }
+        });
+        tagNames.initialize();
+
+        $('input').tagsinput({
+            typeaheadjs: {
+                name: 'tagNames',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: tagNames.ttAdapter()
+            }
+        });
+    </script>
+    }   

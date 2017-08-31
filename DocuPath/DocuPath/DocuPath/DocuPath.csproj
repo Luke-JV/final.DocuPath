@@ -234,6 +234,7 @@
     <Compile Include="Controllers\SchedulingController.cs" />
     <Compile Include="Controllers\ServiceProviderController.cs" />
     <Compile Include="Controllers\ServiceRequestController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataLayer\ABDOMEN_OBSERVATION.cs">
       <DependentUpon>DocuPath.tt</DependentUpon>
@@ -498,6 +499,7 @@
     <Compile Include="Models\DPViewModels\SchedulingViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceProviderViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceRequestViewModel.cs" />
+    <Compile Include="Models\DPViewModels\TestViewModels.cs" />
     <Compile Include="Models\DPViewModels\TokenViewModel.cs" />
     <Compile Include="Models\DPViewModels\UserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -554,6 +556,7 @@
     <Content Include="Content\FCBuilderTimeline.css" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
+    <Content Include="Content\jquery.tag-editor.css" />
     <Content Include="Content\Resources\CB.png" />
     <Content Include="Content\Resources\CircuitryMotifLeft.png" />
     <Content Include="Content\Resources\CircuitryMotifRight.png" />
@@ -637,6 +640,8 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.bootgrid.js" />
+    <Content Include="Scripts\jquery.caret.min.js" />
+    <Content Include="Scripts\jquery.tag-editor.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -771,6 +776,7 @@
     <Content Include="Views\User\GenerateTokens.cshtml" />
     <Content Include="Views\AccessLevel\test.cshtml" />
     <Content Include="Views\Media\Upload.cshtml" />
+    <Content Include="Views\Test\TagCloud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

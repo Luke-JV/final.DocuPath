@@ -30,6 +30,10 @@ namespace DocuPath
 
                 bundles.Add(new ScriptBundle("~/bundles/toggle").Include(
                             "~/Scripts/bootstrap-toggle.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/tageditor").Include(
+                           "~/Scripts/jquery.caret.min.js",
+                           "~/Scripts/jquery.tag-editor.js"));
             #endregion
 
             #region Stylesheet & Visual Script Bundles:
