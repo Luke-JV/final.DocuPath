@@ -22,12 +22,12 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/ContentTag/All" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/ContentTag/All" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/ContentTag/Add" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     @* TODO: Link form action to SAVE LC *@
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
@@ -52,6 +52,7 @@
         @Html.HiddenFor(model => model.catID)
         @Html.HiddenFor(model => model.subcatID)
         @Html.HiddenFor(model => model.conditionID)
+        <input id="btnPOST" class="hidden" type="submit" />
         <div class="row" style="margin-left: 0px">
             <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
                 <div class="panel panel-default" style="margin-bottom: 0px">
@@ -65,7 +66,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.tag.ContentTagCode, htmlAttributes: new { @class = "control-label col-md-12", @style = "padding-left: 0px; text-align: left" })
                                     <div class="col-md-12" style="padding-left: 0px">
-                                        @Html.EditorFor(model => model.tag.ContentTagCode, new { htmlAttributes = new { @class = "form-control large-identifier", @disabled = "disabled" , @style = "text-align: center; width: 100%" } })
+                                        @Html.EditorFor(model => model.tag.ContentTagCode, new { htmlAttributes = new { @class = "form-control large-identifier", @readonly = true , @style = "text-align: center; width: 100%",@value =Model.tag.ContentTagCode } })
                                         @Html.ValidationMessageFor(model => model.tag.ContentTagCode, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -184,3 +185,13 @@
         </div>
     </div>*@
 }
+@section Scripts
+    {
+    <script>
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
+    
+    </script>
+    }

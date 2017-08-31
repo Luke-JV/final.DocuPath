@@ -34,7 +34,23 @@ namespace DocuPath.Controllers
             ContentTagViewModel model = new ContentTagViewModel();
             // TODO: Max of CUS.### + 1 -->
             model.tag = new CONTENT_TAG();
-            model.tag.ContentTagCode = "CC.0001";
+            var ccTags = db.CONTENT_TAG.Where(x => x.ContentTagCode.Substring(0, 3) == "CC.").ToList();
+            List<double> numeric = new List<double>();
+            foreach (var cctag in ccTags)
+            {
+                numeric.Add(Convert.ToDouble(cctag.ContentTagCode.Substring(3)));
+            }
+            double max = numeric.Max();
+            string newCode = "0000";
+            newCode += Convert.ToString(max + 1);
+            newCode = new string(newCode.ToCharArray().Reverse().ToArray());
+            newCode = newCode.Substring(0,4);
+            newCode = new string(newCode.ToCharArray().Reverse().ToArray());
+            //string newCode = "0000"+(max+1).ToString()).Reverse();
+            //newCode = (string)newCode.Reverse();
+            //newCode = newCode.ToString().Substring(0, 4);
+
+            model.tag.ContentTagCode = "CC."+newCode;
             //model.categories = db.TAG_CATEGORY.ToList();
             //model.subcategories = db.TAG_SUBCATEGORY.ToList();
             //model.conditions = db.TAG_CONDITION.ToList();
@@ -44,10 +60,27 @@ namespace DocuPath.Controllers
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
-        public ActionResult Add(CONTENT_TAG tag)
+        public ActionResult Add(ContentTagViewModel model)
         {
             try
             {
+                CONTENT_TAG tag = new CONTENT_TAG();
+                tag.ContentTagCode = model.tag.ContentTagCode;
+                tag.ContentTagText = model.tag.ContentTagText;
+                tag.TagCategoryID = model.catID;
+                tag.TagSubCategoryID = model.subcatID;
+                tag.TagConditionID = model.conditionID;
+
+                try
+                {
+                    tag.ContentTagID = db.CONTENT_TAG.Max(x => x.ContentTagID) + 1;
+                }
+                catch (Exception)
+                {
+
+                    tag.ContentTagID = 0;
+                }
+
                 db.CONTENT_TAG.Add(tag);
                 db.SaveChanges();
                 // TODO: Add insert logic here
@@ -61,7 +94,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return View();
+                return RedirectToAction("Add");
             }
         }
         #endregion
