@@ -1,5 +1,6 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
+using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -28,7 +29,9 @@ namespace DocuPath.Controllers
         {
             try
             {
+               
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
@@ -132,7 +135,54 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region NON-CRUD ACTIONS:
+        public ActionResult GenerateTokens()
+        {
+            TokenViewModel model = new TokenViewModel();
 
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult GenerateTokens(FormCollection collection)
+        {
+            
+            return null; 
+        }
+
+        [HttpPost] 
+        public ActionResult GenerateTokens(TokenViewModel model)
+        {
+            try
+            {
+                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
+                
+                model.tokenList = new List<TOKEN_LOG>();
+                for (int i = 0; i < model.tokenCount; i++)
+                {
+                    //gen token
+                    //model.tokenList.Add(tk);
+                    TOKEN_LOG x = new TOKEN_LOG();
+                    
+                    x.IssueTimestamp = DateTime.Now;
+                    x.TokenValue = "xxxxx";
+                    model.tokenList.Add(x);
+                }
+                model.ualList = db.ACCESS_LEVEL.ToList();
+                model.tokenCount = model.tokenCount;
+
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("Error", "Home", x.Message);
+            }
+        }
         #endregion
     }
 }

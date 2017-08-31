@@ -22,7 +22,7 @@
             <div></div>
             <div grid-area="btn1">
                 <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
-                    @Html.DropDownList("ddlNumTokens", new List<SelectListItem> {
+                    @*@Html.DropDownList("ddlNumTokens", new List<SelectListItem> {
                                         new SelectListItem { Value = "0", Text = "1", Selected = true },
                                         new SelectListItem { Value = "1", Text = "2" },
                                         new SelectListItem { Value = "2", Text = "3" },
@@ -38,13 +38,13 @@
                                         new SelectListItem { Value = "12", Text = "13" },
                                         new SelectListItem { Value = "13", Text = "14" },
                                         new SelectListItem { Value = "14", Text = "15" },
-                                    }, new { @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })
+                                    }, new {@id="ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })*@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     @* TODO: Link form action to GENERATE RATS *@
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-rat btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE REGISTRATION TOKEN(S)"></button>
+                    <button id="btnGenTokens" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-rat btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE REGISTRATION TOKEN(S)"></button>
                 </form>
             </div>
             <div grid-area="btn3">
@@ -175,5 +175,7 @@
             else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
             $("#btnDensityToggle").blur()
         });
+
+       
     </script>
 }
