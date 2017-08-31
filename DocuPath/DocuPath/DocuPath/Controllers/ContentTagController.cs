@@ -32,8 +32,9 @@ namespace DocuPath.Controllers
             #endregion
 
             ContentTagViewModel model = new ContentTagViewModel();
-            // TODO: Max of CUS.### + 1 -->
+            
             model.tag = new CONTENT_TAG();
+
             var ccTags = db.CONTENT_TAG.Where(x => x.ContentTagCode.Substring(0, 3) == "CC.").ToList();
             List<double> numeric = new List<double>();
             foreach (var cctag in ccTags)
@@ -46,11 +47,11 @@ namespace DocuPath.Controllers
             newCode = new string(newCode.ToCharArray().Reverse().ToArray());
             newCode = newCode.Substring(0,4);
             newCode = new string(newCode.ToCharArray().Reverse().ToArray());
-            //string newCode = "0000"+(max+1).ToString()).Reverse();
-            //newCode = (string)newCode.Reverse();
-            //newCode = newCode.ToString().Substring(0, 4);
-
+            
             model.tag.ContentTagCode = "CC."+newCode;
+
+
+
             //model.categories = db.TAG_CATEGORY.ToList();
             //model.subcategories = db.TAG_SUBCATEGORY.ToList();
             //model.conditions = db.TAG_CONDITION.ToList();

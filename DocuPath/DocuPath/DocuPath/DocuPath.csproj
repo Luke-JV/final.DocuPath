@@ -581,6 +581,7 @@
     <Content Include="Content\Resources\MH.png" />
     <Content Include="Content\Resources\NoERCCaseReport.png" />
     <Content Include="Content\Resources\NoERCCoverLetter.png" />
+    <Content Include="Content\Resources\NoPreviewMiscMedia.png" />
     <Content Include="Content\Resources\PageHeaderBackgroundBar.png" />
     <Content Include="Content\Resources\PulseBGBar.png" />
     <Content Include="Content\Resources\PulseLogo.png" />
@@ -769,6 +770,7 @@
     <Content Include="Views\ContentTag\Add.cshtml" />
     <Content Include="Views\User\GenerateTokens.cshtml" />
     <Content Include="Views\AccessLevel\test.cshtml" />
+    <Content Include="Views\Media\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

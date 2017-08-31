@@ -41,7 +41,7 @@ namespace DocuPath.Models
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
-            smtp.Credentials = new NetworkCredential("u13098536@tuks.co.za","Ktm200xcw");
+            smtp.Credentials = new NetworkCredential("u13098536@tuks.co.za", "Ktm200xcw");
             smtp.Send(outMail);
 
         }
@@ -75,6 +75,25 @@ namespace DocuPath.Models
         public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
         public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
         public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+
+        public static List<string> Thumbnail_AcceptedFileTypes()
+        {
+            List<string> outList = new List<string>();
+
+            outList.Add(".JPG");
+            outList.Add(".JPEG");
+            outList.Add(".JPE");
+            outList.Add(".JIF");
+            outList.Add(".JFIF");
+            outList.Add(".JFI");
+            outList.Add(".BMP");
+            outList.Add(".PNG");
+            outList.Add(".GIF");
+            outList.Add(".TIF");
+            outList.Add(".TIFF");
+
+            return outList;
+        }
 
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -207,30 +226,39 @@ namespace DocuPath.Models
             
             //404!
 
-            //Image thumb;
-            ////if (inPath != null)
-            ////{
-            //    var fileName = relPath.Substring(relPath.LastIndexOf('/'));
-            //    Image img = Image.FromFile(relPath);
-            //    int imgHeight = 150;
-            //    int imgWidth = 150;
-            //    if (img.Width < img.Height)
-            //    {
-            //        //portrait image  
-            //        imgHeight = 150;
-            //        var imgRatio = (float)imgHeight / (float)img.Height;
-            //        imgWidth = Convert.ToInt32(img.Height * imgRatio);
-            //    }
-            //    else if(img.Height < img.Width)
-            //    {
-            //        //landscape image  
-            //        imgWidth = 150;
-            //        var imgRatio = (float)imgWidth / (float)img.Width;
-            //        imgHeight = Convert.ToInt32(img.Height * imgRatio);
-            //    }
-            //    thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
-            ////}
-            //return thumb;
+        }
+
+        public static void GenerateAndSaveThumb(string fetchFromPath)
+        {
+            if (fetchFromPath != null && Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(fetchFromPath).ToUpper()) && File.Exists(fetchFromPath))
+            {
+                Image thumb;
+                //var fileName = fetchFromPath.Substring(fetchFromPath.LastIndexOf('/'));
+
+                Image img = Image.FromFile(fetchFromPath);
+
+                string destinationPath = fetchFromPath.Insert(fetchFromPath.LastIndexOf('.'), "_thumb"); ;
+
+                int imgHeight = 150;
+                int imgWidth = 150;
+                if (img.Width < img.Height)
+                {
+                    //portrait image  
+                    imgHeight = 150;
+                    var imgRatio = (float)imgHeight / (float)img.Height;
+                    imgWidth = Convert.ToInt32(img.Height * imgRatio);
+                }
+                else if (img.Height < img.Width)
+                {
+                    //landscape image  
+                    imgWidth = 150;
+                    var imgRatio = (float)imgWidth / (float)img.Width;
+                    imgHeight = Convert.ToInt32(img.Height * imgRatio);
+                }
+
+                thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
+                thumb.Save(destinationPath);
+            }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//

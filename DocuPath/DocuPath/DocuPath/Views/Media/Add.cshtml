@@ -1,16 +1,238 @@
-﻿@model DocuPath.DataLayer.MEDIA
+﻿@model DocuPath.Models.DPViewModels.AddMediaViewModel
+@using DocuPath.Models;
+@{ ViewBag.Title = "Add"; }
 
-@{
-    ViewBag.Title = "Add";
-}
-
-<h2>Add</h2>
-
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Media Repository", "All", "Media") </li>
+    <li class="active">@Html.ActionLink("Add Media Items", "Add") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-media"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD MEDIA ITEMS</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Media/All" style="margin-top: 2px">
+                    @* TODO: Code to clear out folder if cancelled after modal confirmation  *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="CANCEL ADD MEDIA OPERATION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* PROVIDE METADATA FOR EACH MEDIA ITEM: *@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+    <input id="btnPOST" class="hidden" type="submit" />
+    for (int i = 0; i < Model.mediaList.Count; i++)
+    {
+        <div class="form-horizontal border-generic apad5" @*style="display: none"*@>
+            <div class="row" style="margin-left: 0px">
+                <div class="col-md-3" style="padding: 0px">
+                    <div class="panel panel-default" style="margin-bottom: 0px">
+                        <div class="panel-heading">
+                            <span class="mdl2icon mdl2-upload panel-mdl2icon"></span>
+                            <span>PREVIEW</span>
+                        </div>
+                        <div class="panel-body" style="padding: 5px; height: 221.2px">
+                            <div class="row text-center">
+                                <div class="col-md-12">
+                                    <div class="imgPreview" style="height: 170px" @*max-width:157.19px"*@>
+                                        @if (VERTEBRAE.Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(Model.mediaList[i].MediaLocation)))
+	                                    {
+                                            <img class="img-thumbnail" src="~/@VERTEBRAE.GetThumbUrl(Model.mediaList[i].MediaLocation)" style="max-height: 170px; max-width: 273.75px">
+                                        }
+                                        else
+                                        {
+                                            // TODO: Brain ReturnForeignThumb() and provide relevant assets:
+                                            //VERTEBRAE.ReturnForeignThumb(Path.GetExtension(Model.mediaList[i].MediaLocation));
+                                            <img class="img-thumbnail" src="~/Content/Resources/NoPreviewMiscMedia.png" style="max-height: 170px; max-width: 273.75px">
+                                        }
+                                    </div>
+                                </div>
+                                @*<div class="col-md-12">
+                                    <form>
+                                        <button class="btn btn-default btn-modal-generic" type="submit" style="width: 100px; margin-top: 5px"><i class="mdl2icon mdl2-change"></i> Change</button>
+                                        <button class="btn btn-default btn-modal-generic" type="submit" style="width: 100px; margin-top: 5px"><i class="mdl2icon mdl2-cancel"></i> Clear</button>
+                                    </form>
+                                </div>*@
+                            </div>
+                            @*<div class="row">
+                                    <div class="col-md-12">
+                                        <!-- image-preview-filename input [CUT FROM HERE]-->
+                                        <div class="input-group image-preview">
+                                            <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                                            <div class="input-group-btn">
+                                                <!-- image-preview-clear button -->
+                                                <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                                    <span class="mdl2icon mdl2-cancel"></span> Clear
+                                                </button>
+                                                <!-- image-preview-input -->
+                                                <div class="btn btn-default btn-generic btn-sm image-preview-input">
+                                                    <span class="mdl2icon mdl2-browse"></span>
+                                                    <span class="image-preview-input-title">Browse</span>
+                                                    <input style="height: 25px" type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview" /> <!-- rename it -->
+                                                </div>
+                                            </div>
+                                        </div><!-- /input-group image-preview [TO HERE]-->
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9" style="padding-left: 5px; padding-right: 15px">
+                    <div class="panel panel-default" style="margin-bottom: 0px">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                    <span>MEDIA ITEM DETAILS</span>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="col-md-11 text-right" style="padding-right: 0px"><p class="media-filename">@Path.GetFileName(Model.mediaList[i].MediaLocation)</p></div>
+                                    <div class="col-md-1 text-center" style="padding: 0px"><span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>
+                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MediaID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.MediaID, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.mediaList[i].MediaCaption, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
+                                        <div class="col-md-9 col-nopad">
+                                            @Html.EditorFor(model => model.mediaList[i].MediaCaption, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaCaption, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    @* TODO: Find a way around this! *@
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.mediaList[i].IsPubliclyAccessible, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
+                                        <div class="col-md-9 col-nopad">
+                                            <div class="checkbox" style="padding-left: 0px; padding-bottom: 5px">
+                                                <input id="tglWarning1" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private" data-onstyle="danger" data-offstyle="success" data-size="mini" data-style="ios" data-width="70" onchange="toggleWarning()">
+                                                <label id="lblWarning1" class="media-warning-label">warning - visible to public!</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="frmPurpose_@i" class="form-group">
+                                        @Html.LabelFor(model => model.mediaList[i].MediaPurposeID, "Purpose", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
+                                        <div class="col-md-9 col-nopad">
+                                            @* FETCH 404 *@
+                                            @Html.DropDownListFor(model => model.mediaList[i].MediaPurposeID, new SelectList(Model.purposeList, "MediaPurposeID", "MediaPurposeValue", Model.purposeList.Where(x => x.MediaPurposeID == Model.mediaList[i].MediaPurposeID)), htmlAttributes: new { @id = "ddlPurpose_"+i, @class = "form-control", @style = "width: 100%", onchange = "toggleFCLink()" })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaPurposeID, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div id="frmCaseLink_@i" class="form-group" style="margin-top: 7px">
+                                        @Html.Label("Linked To", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
+                                        <div class="col-md-9 col-nopad">
+                                            @* FETCH 404, make list of FC from last 7 days (look at VISION metrics in VERTEBRAE) *@
+                                            @Html.DropDownListFor(model => model.mediaList[i].ForensicCaseID, new SelectList(Model.fcList, "ForensicCaseID", "ForensicDRNumber", Model.fcList.Where(x => x.ForensicCaseID == Model.mediaList[i].ForensicCaseID)), htmlAttributes: new { @id = "ddlFC_"+i, @class = "form-control", @style = "width: 100%" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group" style="margin-bottom: 0px">
+                                        @Html.LabelFor(model => model.mediaList[i].MediaDescription, htmlAttributes: new { @class = "control-label col-md-2 label-nopad" })
+                                        <div class="col-md-10 col-nopad">
+                                            @Html.EditorFor(model => model.mediaList[i].MediaDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; height: 159.2px" } })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-left: 0px;">
+                                <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                                    <div class="form-group">
+                                        @Html.Label("Media Item Tags", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; padding-top: 0px" })
+                                        <div class="col-md-12">
+                                            @*<input id="tagsinput_@i" type="text" data-role="tagsinput" style="width: 100%" />*@
+                                            <div class="autocomplete-wrapper">
+                                                @Html.AutocompleteFor(model => model.tagName, model => model.tagID, "GetTags", "Media", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                @*@Html.ValidationMessageFor(model => model.tag.TagConditionID, "", new { @class = "text-danger" })*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.MediaLocation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.MediaLocation, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            @*<div class="form-group">
+                                    @Html.LabelFor(model => model.StatusID, "StatusID", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <hr class="dp-separator-hr" @*style="display: none"*@ />
+    }
+
+    @*<div class="form-horizontal">
         <h4>MEDIA</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -101,9 +323,73 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
-    </div>
+    </div>*@
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+    <script>
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
+
+    </script>
+    <script>
+                $(document).ready(function toggleFCLink() {
+                    $("#frmCaseLink1").hide();
+                    $("#frmCaseLink2").hide();
+                    $("#frmCaseLink3").hide();
+                    $("#frmCaseLink4").hide();
+                    $("#lblWarning1").hide();
+                    $("#lblWarning2").hide();
+                    $("#lblWarning3").hide();
+                    $("#lblWarning4").hide();
+                })
+
+    </script>
+    <script type="text/javascript">
+                $(function toggleWarning() {
+                    $('input[type=checkbox]').change(function () {
+                        if ($('#tglWarning1').prop("checked") == true) { $('#lblWarning1').show('slow') } else { $('#lblWarning1').hide() };
+                        if ($('#tglWarning2').prop("checked") == true) { $('#lblWarning2').show('slow') } else { $('#lblWarning2').hide() };
+                        if ($('#tglWarning3').prop("checked") == true) { $('#lblWarning3').show('slow') } else { $('#lblWarning3').hide() };
+                        if ($('#tglWarning4').prop("checked") == true) { $('#lblWarning4').show('slow') } else { $('#lblWarning4').hide() };
+                    });
+                })
+    </script>
+    <script type="text/javascript">
+                $(document).ready(function toggleFCLink() {
+                    $("#MediaPurpose1").change(function () {
+                        if ($("#MediaPurpose1").val() == "1") {
+                            $("#frmCaseLink1").show("slow")
+                        } else {
+                            $("#frmCaseLink1").hide("slow")
+                        }
+                    })
+                    $("#MediaPurpose2").change(function () {
+                        if ($("#MediaPurpose2").val() == "1") {
+                            $("#frmCaseLink2").show("slow")
+                        } else {
+                            $("#frmCaseLink2").hide("slow")
+                        }
+                    });
+                    $("#MediaPurpose3").change(function () {
+                        if ($("#MediaPurpose3").val() == "1") {
+                            $("#frmCaseLink3").show("slow")
+                        } else {
+                            $("#frmCaseLink3").hide("slow")
+                        }
+                    });
+                    $("#MediaPurpose4").change(function () {
+                        if ($("#MediaPurpose4").val() == "1") {
+                            $("#frmCaseLink4").show("slow")
+                        } else {
+                            $("#frmCaseLink4").hide("slow")
+                        }
+                    });
+                })
+    </script>
+
+}

@@ -257,8 +257,6 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult UploadFiles()
         {
-            
-            
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
@@ -304,11 +302,11 @@ namespace DocuPath.Controllers
                         {//404!?
                             string[] testfiles = file.FileName.Split(new char[] { '\\' });
                             doc.LegacyDocumentTitle = testfiles[testfiles.Length - 1];
-                            fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
                         }
                         else
                         {
-                            fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
                             doc.LegacyDocumentTitle = file.FileName;
                             
                         }
