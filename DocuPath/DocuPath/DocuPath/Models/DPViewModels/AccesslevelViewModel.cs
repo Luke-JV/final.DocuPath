@@ -11,5 +11,6 @@ namespace DocuPath.Models.DPViewModels
         public ACCESS_LEVEL accessLevel { get; set; }
         public List<ACCESS_AREA> areas { get; set; }
         public List<ACCESS_AREA> allAreas { get; set; }
+        public List<FUNCTION_GROUP> fxGroups { get; set; }
     }
 }

@@ -21,8 +21,40 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
-                    @*@Html.DropDownList("ddlNumTokens", new List<SelectListItem> {
+                <form class="minimalform" action="javascript:void(0)" name="tokenCount" id="tokenCount" style="margin-top: 2px">
+                    @*<a class="btn btn-default dropdown-toggle" style="text-align: left; padding: 3px; width: 40px; height: 40px" data-toggle="dropdown"><span class="dropdown-text" style="color: #000">#</span><span class="mdl2icon mdl2-down inline-mdl2icon" style="padding: 0 0 0 2px"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/1" class="dropdown-item dropdown-item-button">1</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/2" class="dropdown-item dropdown-item-button">2</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/3" class="dropdown-item dropdown-item-button">3</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/4" class="dropdown-item dropdown-item-button">4</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/5" class="dropdown-item dropdown-item-button">5</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/6" class="dropdown-item dropdown-item-button">6</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/7" class="dropdown-item dropdown-item-button">7</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/8" class="dropdown-item dropdown-item-button">8</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/9" class="dropdown-item dropdown-item-button">9</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/10" class="dropdown-item dropdown-item-button">10</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/11" class="dropdown-item dropdown-item-button">11</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/12" class="dropdown-item dropdown-item-button">12</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/13" class="dropdown-item dropdown-item-button">13</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/14" class="dropdown-item dropdown-item-button">14</a></li>
+                        <li aria-selected="false"><a href="~/Users/GenerateTokens/15" class="dropdown-item dropdown-item-button">15</a></li>
+                    </ul>*@
+                    @*<ul>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Media Management</li>
+                                <li>@Html.ActionLink("Media Repository", "All", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Reporting</li>
+                                <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                            </ul>
+                        </li>
+                    </ul>*@
+                    @Html.DropDownList("ddlNumTokens", new List<SelectListItem> {
                                         new SelectListItem { Value = "0", Text = "1", Selected = true },
                                         new SelectListItem { Value = "1", Text = "2" },
                                         new SelectListItem { Value = "2", Text = "3" },
@@ -38,7 +70,7 @@
                                         new SelectListItem { Value = "12", Text = "13" },
                                         new SelectListItem { Value = "13", Text = "14" },
                                         new SelectListItem { Value = "14", Text = "15" },
-                                    }, new {@id="ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })*@
+                                    }, new {@id="ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })
                 </form>
             </div>
             <div grid-area="btn2">
@@ -174,6 +206,17 @@
             else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
             else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
             $("#btnDensityToggle").blur()
+        });
+
+        $("#btnGenTokens").click(function () {
+            var ddl = document.getElementById("ddlNumTokens");
+            var numTokens = ddl.options[ddl.selectedIndex].value;
+
+            function chgAction(numTokens) {
+                document.tokenCount.action = "~/User/GenerateTokens/" + numTokens;
+            }
+            $("#btnGenTokens").blur()
+            document.getElementById("tokenCount").submit();
         });
 
        
