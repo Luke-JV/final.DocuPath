@@ -17,7 +17,7 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View External Review Case")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
@@ -25,7 +25,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region CREATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult Add()
         {
 
@@ -40,12 +40,12 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult Add(ExternalReviewCaseViewModel ERC)
         {
             try
             {
-                //404 rebuild extcase
+                //405 test
                 ERC.extCase.DateAdded = DateTime.Now;
                 ERC.extCase.StatusID = db.STATUS.Where(x => x.StatusValue == "Active").FirstOrDefault().StatusID;
                 try
@@ -77,7 +77,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search External Review Case")]
         public ActionResult All()
         {
             try
@@ -96,7 +96,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View External Review Case")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -118,7 +118,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit External Review Case")]
         public ActionResult Edit(int id)
         {
             #region VALIDATE_ACCESS
@@ -132,7 +132,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit External Review Case")]
         public ActionResult Edit(int id, EXTERNAL_REVIEW_CASE updatedERC)
         {
             try
@@ -160,7 +160,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region DELETES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete External Review Case")]
         public ActionResult Delete(int id)
         {
            
@@ -171,7 +171,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete External Review Case")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
@@ -196,7 +196,7 @@ namespace DocuPath.Controllers
 
         #region NON-CRUD ACTIONS:
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult UploadFiles()
         {
             // Checking no of files injected in Request object  

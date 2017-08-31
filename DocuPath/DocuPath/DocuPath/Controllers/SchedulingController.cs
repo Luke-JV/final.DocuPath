@@ -12,20 +12,20 @@ namespace DocuPath.Controllers
     public class SchedulingController : Controller
     {
         
-        [AuthorizeByAccessArea(AccessArea="404")]
+        [AuthorizeByAccessArea(AccessArea= "Access Google Calendar")]
         public ActionResult Index()
         {
-            //404 - redirect
-            return View();
+ 
+            return RedirectToAction("Calendar");
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
         public ActionResult Calendar()
         {
             return null;//404
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Compile Monthly Duty Roster")]
         public ActionResult MonthlyDutyRoster()
         {
             return null;//404

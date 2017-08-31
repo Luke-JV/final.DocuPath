@@ -14,13 +14,13 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
         
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
         public ActionResult Index()
         {
             return View();
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Vision Dashboard - System Health Overview")]
         public ActionResult VISION()
         {
             ViewBag.VISIONMetrics = VERTEBRAE.GetVisionMetrics();
@@ -59,7 +59,7 @@ namespace DocuPath.Controllers
             return View();
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
         public ActionResult INSIGHT()
         {
             return null;//404
