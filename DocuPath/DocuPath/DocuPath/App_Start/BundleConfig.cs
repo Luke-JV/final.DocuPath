@@ -27,6 +27,9 @@ namespace DocuPath
 
                 bundles.Add(new ScriptBundle("~/bundles/materialdatetime").Include(
                             "~/Scripts/bootstrap-material-datetimepicker.js"));
+
+                bundles.Add(new ScriptBundle("~/bundles/toggle").Include(
+                            "~/Scripts/bootstrap-toggle.js"));
             #endregion
 
             #region Stylesheet & Visual Script Bundles:

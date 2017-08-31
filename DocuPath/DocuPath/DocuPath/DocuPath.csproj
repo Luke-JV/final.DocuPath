@@ -528,6 +528,7 @@
     <Content Include="Content\bootstrap-fileinput\themes\gly\theme.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-toggle.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia_thumb.JPG" />
@@ -550,6 +551,7 @@
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\9.Great_Arteries_thumb.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\9.Great_Arteries.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\10.Arterial_Thrombosis_Spinal_Cord.JPG" />
+    <Content Include="Content\FCBuilderTimeline.css" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\Resources\CB.png" />
@@ -623,6 +625,7 @@
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\fileinput.js" />
@@ -765,6 +768,7 @@
     <Content Include="Views\ServiceRequest\Edit.cshtml" />
     <Content Include="Views\ContentTag\Add.cshtml" />
     <Content Include="Views\User\GenerateTokens.cshtml" />
+    <Content Include="Views\AccessLevel\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

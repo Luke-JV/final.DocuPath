@@ -1,59 +1,41 @@
-﻿@model DocuPath.Models.DPViewModels.AccessLevelViewModel
-@{ ViewBag.Title = "Add"; }
+﻿<link rel="stylesheet" href="~/Content/FCBuilderTimeline.css" type="text/css" />
+<link rel="stylesheet" href="~/Content/bootstrap-toggle.css" type="text/css" />
+@model DocuPath.DataLayer.ACCESS_LEVEL
 
-@* BREADCRUMB NAVIGATION: *@
+@{
+    ViewBag.Title = "Add";
+    //ViewBag.Title = "Edit";
+}
+
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
-    <li>@Html.ActionLink("Access Levels", "All", "Access Level") </li>
+    <li>@Html.ActionLink("Access Levels", "All") </li>
     <li class="active">@Html.ActionLink("Add Access Level", "Add") </li>
+    @*<li class="active">@Html.ActionLink("Edit Access Level", "Edit") </li>*@
 </ol>
-@* PAGE HEADER & ACTION BUTTONS: *@
-<div class="grid hdr-grid">
-    <div class="page-hdr">
-        <div class="page-header-subgrid">
-            <div class="icon-circle mdl2icon mdl2-login"></div>
-            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">ADD ACCESS LEVEL</div>
-        </div>
-    </div>
-    <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-two">
-            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
-            <div></div>
-            <div grid-area="btn1">
-                <form class="minimalform" action="~/AccessLevel/All" method="post" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
-                </form>
-            </div>
-            <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    @* TODO: Link form action to SAVE UAL *@
-                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
-                </form>
-            </div>
-            @*<div grid-area="btn2">
-                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
-                    </form>
-                </div>*@
-            <div></div>
-            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
-        </div>
+
+<div class="row border-page-header text-center">
+    <img src="~/Content/Resources/AddAccessLevelBanner.png" class="banner-image" />
+    @*<img src="~/Content/Resources/EditAccessLevelBanner.png" class="banner-image" />*@
+    <div class="col-md-5 col-md-offset-6" style="margin-top: -93.6px; padding-left: 0px; padding-right: 35px">
+        <form action="~/AccessLevel/All">
+            <button class="btn btn-default btn-generic" type="submit" style="width: 135px; margin-top:25px;"><i class="mdl2icon mdl2-backprevious"></i> Back to List </button>
+            <button class="btn btn-default btn-generic" type="submit" style="width: 135px; margin-top:25px;"><i class="mdl2icon mdl2-save"></i> Save &amp; Exit </button>
+        </form>
     </div>
 </div>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal border-generic form-generic">
+    <div class="form-horizontal border-generic apad5" style="margin-bottom: 55px">
         <div class="row" style="margin-left: 0px">
             <div class="col-md-2" style="padding: 0px">
                 <div class="panel panel-default" style="margin-bottom: 0px">
                     <div class="panel-heading">
                         <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
-                        <span>LEVEL DETAILS</span>
+                        <span>Level Details</span>
                     </div>
                     <div class="panel-body">
                         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -76,10 +58,10 @@
                             </div>*@
 
                         <div class="form-group">
-                            @Html.LabelFor(model => model.accessLevel.LevelName, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.accessLevel.LevelName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
-                                @Html.ValidationMessageFor(model => model.accessLevel.LevelName, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -92,7 +74,7 @@
                 <div class="panel panel-default" style="margin-bottom: 0px; height: 100%">
                     <div class="panel-heading">
                         <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
-                        <span>FUNCTION GROUP SETUP</span>
+                        <span>Function Group Setup</span>
                     </div>
                     <div class="panel-body" style="height: 71.4px">
                         <div class="form-group">
@@ -119,7 +101,7 @@
                                             <input id="tglINSIGHT" type="checkbox" data-toggle="toggle" data-on="INSIGHT Reporting" data-off="INSIGHT Reporting" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
                                         </label>
                                         <label class="checkbox-inline">
-                                            <input id="tglVISION" type="checkbox" data-toggle="toggle" data-on="VISION Dashboard" data-off="VISION Dashboard" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="115" onchange="toggleFunctionGroups()">
+                                            <input id="tglVISION" type="checkbox" data-toggle="toggle" data-on="VISION Reporting" data-off="VISION Reporting" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="115" onchange="toggleFunctionGroups()">
                                         </label>
                                     </div>
                                 </div>
@@ -160,12 +142,13 @@
                 <div class="panel panel-default" style="margin-bottom: 0px; height: 100%">
                     <div class="panel-heading">
                         <span class="mdl2icon mdl2-accessarea panel-mdl2icon"></span>
-                        <span>ACCESS AREA SETUP</span>
+                        <span>Access Area Setup</span>
                     </div>
                     <div class="panel-body">
                         <div id="nofxgroups" class="border-generic text-center" style="height: 140px; padding: 5px; margin-top: 40px; margin-bottom: 50px; margin-left: auto; margin-right: auto; width: 50%; background-color: #ededed; margin-top: 50px; margin-bottom: 50px">
                             <div class="row" style="height: 50%; padding-left: 15px; padding-right: 15px">
-                                <img src="~/Content/Resources/NoFunctionGroupsActive.png" style="max-width: 500px" />
+                                <p style="color: #000">NO FUNCTION GROUPS ACTIVE</p>
+                                @*<img src="~/Content/Resources/NoFunctionGroupsActive.png" style="max-width: 500px" />*@
                             </div>
                         </div>
                         <div class="container" id="timelinecontainer">
@@ -194,9 +177,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Forensic Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+                                                                        @foreach (var item in ViewBag.FC)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -238,9 +221,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to External Review Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
+                                                                        @foreach (var item in ViewBag.ERC)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -275,9 +258,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Legacy Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
+                                                                        @foreach (var item in ViewBag.LC)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -312,9 +295,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Media Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
+                                                                        @foreach (var item in ViewBag.Media)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -349,9 +332,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to INSIGHT Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
+                                                                        @foreach (var item in ViewBag.INSIGHT)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -386,9 +369,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to VISION Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Reporting"))
+                                                                        @foreach (var item in ViewBag.VISION)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -423,9 +406,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Service Provider Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
+                                                                        @foreach (var item in ViewBag.SP)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -460,9 +443,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Service Request Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
+                                                                        @foreach (var item in ViewBag.SR)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -497,9 +480,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Scheduling Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
+                                                                        @foreach (var item in ViewBag.Scheduling)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -534,9 +517,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to User Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
+                                                                        @foreach (var item in ViewBag.User)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -571,9 +554,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Audit Trail Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
+                                                                        @foreach (var item in ViewBag.AuditTrail)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -608,9 +591,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to User Access Level Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
+                                                                        @foreach (var item in ViewBag.UAL)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -645,9 +628,9 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Content Tag Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
+                                                                        @foreach (var item in ViewBag.CT)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.Text</label></div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -667,44 +650,6 @@
             </div>
         </div>
     </div>
-
-
-    @*<div class="form-horizontal">
-        <h4>ACCESS_LEVEL</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccessLevelID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccessLevelID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeactivated)
-                    @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>*@
 }
 
 @section Scripts{
@@ -754,4 +699,5 @@
             });
         })
     </script>
+
 }
