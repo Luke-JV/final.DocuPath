@@ -151,10 +151,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Delete Service Provider")]
         public ActionResult Delete(int id)
         {
+            //404 CONFIRM
+            db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault().IsDeactivated = true;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         [HttpPost]

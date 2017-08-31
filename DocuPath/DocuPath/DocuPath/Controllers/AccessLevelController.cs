@@ -146,10 +146,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Deactivate User Access Level")]
         public ActionResult Delete(int id)
         {
+            //404 CONFIRM
+            db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault().IsDeactivated = true;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         

@@ -138,10 +138,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Cancel Service Request")]
         public ActionResult Delete(int id)
         {
+            //404 CONFIRM
+            db.SERVICE_REQUEST.Where(x => x.ServiceRequestID == id).FirstOrDefault().IsCancelled = true;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         [HttpPost]

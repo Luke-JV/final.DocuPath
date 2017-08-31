@@ -173,8 +173,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Delete Forensic Case")]
         public ActionResult Delete(int id)
         {
-           
-            return View();
+            //404 CONFIRM
+            db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+            db.SaveChanges();
+            #region AUDIT_WRITE
+            //AuditModel.WriteTransaction(0, "404");
+            #endregion
+            return RedirectToAction("All");
         }
 
         [HttpPost]

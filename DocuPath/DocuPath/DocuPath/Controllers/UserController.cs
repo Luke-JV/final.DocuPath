@@ -105,10 +105,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Deactivate User - Any Profile")]
         public ActionResult Delete(int id)
         {
+            //404 CONFIRM
+            db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         [HttpPost]

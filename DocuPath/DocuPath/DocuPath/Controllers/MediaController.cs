@@ -148,10 +148,13 @@ namespace DocuPath.Controllers
             bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
             #endregion
 
+            //404 CONFIRM
+            db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault().StatusID = db.STATUS.Where(x=>x.StatusValue=="Archived").FirstOrDefault().StatusID;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         [HttpPost]

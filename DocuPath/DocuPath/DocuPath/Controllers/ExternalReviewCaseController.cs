@@ -163,11 +163,13 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Delete External Review Case")]
         public ActionResult Delete(int id)
         {
-           
+            //404 confirm!!
+            db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+            db.SaveChanges();
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
             #endregion
-            return View();
+            return RedirectToAction("All");
         }
 
         [HttpPost]

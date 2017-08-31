@@ -167,15 +167,13 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
-            //TODO: Confirm Deletion of CT possible?
+        //TODO: Confirm Deletion of CT possible?
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
             return View();
         }
+            
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
