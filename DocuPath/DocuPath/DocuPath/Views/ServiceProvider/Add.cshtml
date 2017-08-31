@@ -21,12 +21,12 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/ServiceProvider/All" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/ServiceProvider/All" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/ServiceProvider/Add" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
@@ -46,7 +46,7 @@
 
     <div class="form-horizontal border-generic form-generic">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        <input id="btnPOST" class="hidden" type="submit" />
         <div class="row" style="margin-left: 0px">
                 <div class="col-md-6" style="padding: 0px">
                     <div class="panel panel-default" style="margin-bottom: 0px">
@@ -180,6 +180,10 @@
     <script>
         $(document).ready(function () { 
             $('[data-toggle="tooltip"]').tooltip();
+        });
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
         });
     </script>
 }

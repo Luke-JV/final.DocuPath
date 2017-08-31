@@ -32,6 +32,7 @@ namespace DocuPath.Controllers
             #endregion
 
             ServiceProviderViewModel model = new ServiceProviderViewModel();
+            model.serviceProvider = new SERVICE_PROVIDER();
             model.titles = db.TITLE.ToList();
 
             return View(model);
@@ -39,11 +40,19 @@ namespace DocuPath.Controllers
        
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Service Provider")]
-        public ActionResult Add(SERVICE_PROVIDER SP)
+        public ActionResult Add(ServiceProviderViewModel model)
         {
             try
             {
-                db.SERVICE_PROVIDER.Add(SP);
+                db.SERVICE_PROVIDER.Add(model.serviceProvider);
+                try
+                {
+                    model.serviceProvider.ServiceProviderID = db.SERVICE_PROVIDER.Max(x => x.ServiceProviderID) + 1;
+                }
+                catch (Exception)
+                {
+                    model.serviceProvider.ServiceProviderID = 0;
+                }
                 db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
