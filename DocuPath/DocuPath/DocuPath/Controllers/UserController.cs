@@ -15,7 +15,7 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
        
-        [AuthorizeByAccessArea(AccessArea ="404")]
+        [AuthorizeByAccessArea(AccessArea = "Search User - All Profiles")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
@@ -23,7 +23,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search User - All Profiles")]
         public ActionResult All()
         {
             try
@@ -43,7 +43,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View User - All Profiles")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -61,7 +61,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region UPDATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
         public ActionResult Edit(int id)
         {
             #region AUDIT_WRITE
@@ -71,7 +71,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
         public ActionResult Edit(int id, USER updatedUser)
         {
             try
@@ -99,7 +99,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region DELETES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Deactivate User - Any Profile")]
         public ActionResult Delete(int id)
         {
             #region AUDIT_WRITE
@@ -109,7 +109,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Deactivate User - Any Profile")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

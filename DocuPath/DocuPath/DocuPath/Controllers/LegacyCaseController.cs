@@ -18,7 +18,7 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Legacy Case")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
@@ -26,7 +26,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region CREATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult Add()
         {
             var model = new LEGACY_CASE();
@@ -37,7 +37,7 @@ namespace DocuPath.Controllers
         }
         
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult Add(LEGACY_CASE LC)
         {
             try
@@ -69,7 +69,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Legacy Case")]
         public ActionResult All()
         {
             try
@@ -89,7 +89,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult Details(int id)
         {
             LegacyCaseViewModel model = new LegacyCaseViewModel();
@@ -109,7 +109,7 @@ namespace DocuPath.Controllers
             return View(model);
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult ViewDoc(int id)
         {
             try
@@ -130,7 +130,7 @@ namespace DocuPath.Controllers
             
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult ZipAll(int id)
         {
             string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == id).FirstOrDefault().LegacyDocumentLocation;
@@ -171,7 +171,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region UPDATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Legacy Case")]
         public ActionResult Edit(int id)
         {
             #region VALIDATE_ACCESS
@@ -185,7 +185,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Legacy Case")]
         public ActionResult Edit(int id, LEGACY_CASE updatedLC)
         {
             try
@@ -214,7 +214,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region DELETES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Archive Legacy Case")]
         public ActionResult Delete(int id)
         {
             #region VALIDATE_ACCESS
@@ -228,7 +228,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Archive Legacy Case")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
@@ -252,7 +252,7 @@ namespace DocuPath.Controllers
 
         #region NON-CRUD ACTIONS:
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult UploadFiles()
         {
             

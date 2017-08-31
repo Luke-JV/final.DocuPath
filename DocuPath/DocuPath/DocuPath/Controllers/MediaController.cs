@@ -16,7 +16,7 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Media Item(s)")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
@@ -25,8 +25,8 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region CREATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
-        public ActionResult Create()
+        [AuthorizeByAccessArea(AccessArea = "Add Media Item(s)")]
+        public ActionResult Add()
         {
             #region AUDIT_WRITE
             //AuditModel.WriteTransaction(0, "404");
@@ -36,8 +36,8 @@ namespace DocuPath.Controllers
 
         
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
-        public ActionResult Create(FormCollection collection)
+        [AuthorizeByAccessArea(AccessArea = "Add Media Item(s)")]
+        public ActionResult Add(FormCollection collection)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Media Item(s)")]
         public ActionResult All()
         {
             try
@@ -79,7 +79,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Media Item(s)")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -104,7 +104,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region UPDATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Maintain Media Item Tags")]
         public ActionResult Edit(int id)
         {
             #region VALIDATE_ACCESS
@@ -118,7 +118,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Maintain Media Item Tags")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -141,7 +141,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region DELETES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete Media Item(s)")]
         public ActionResult Delete(int id)
         {
             #region VALIDATE_ACCESS
@@ -155,7 +155,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete Media Item(s)")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

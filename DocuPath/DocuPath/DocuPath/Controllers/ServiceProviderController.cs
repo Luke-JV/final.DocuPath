@@ -16,7 +16,7 @@ namespace DocuPath.Controllers
     {
         DocuPathEntities db = new DocuPathEntities();
         
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Service Provider")]
         public ActionResult Index()
         {
             return RedirectToAction("All");
@@ -24,7 +24,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region CREATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Service Provider")]
         public ActionResult Add()
         {
             #region AUDIT_WRITE
@@ -38,7 +38,7 @@ namespace DocuPath.Controllers
         }
        
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Service Provider")]
         public ActionResult Add(SERVICE_PROVIDER SP)
         {
             try
@@ -63,7 +63,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:       
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Search Service Provider")]
         public ActionResult All()
         {
             try
@@ -83,7 +83,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Service Provider")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -101,7 +101,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region UPDATES:        
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Service Provider")]
         public ActionResult Edit(int id)
         {
             #region AUDIT_WRITE
@@ -111,7 +111,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Service Provider")]
         public ActionResult Edit(int id, SERVICE_PROVIDER updatedSP)
         {
             try
@@ -139,7 +139,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region DELETES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete Service Provider")]
         public ActionResult Delete(int id)
         {
             #region AUDIT_WRITE
@@ -149,7 +149,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Delete Service Provider")]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

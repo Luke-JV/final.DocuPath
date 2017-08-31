@@ -24,7 +24,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region CREATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add()
         {
             #region AUDIT_WRITE
@@ -43,7 +43,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add(CONTENT_TAG tag)
         {
             try
@@ -88,7 +88,7 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "View Content Tag")]
         public ActionResult Details(int id)
         {
             #region MODEL POPULATION
@@ -102,7 +102,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id)
         {
             #region AUDIT_WRITE
@@ -112,7 +112,7 @@ namespace DocuPath.Controllers
         }
 
         [HttpPost]
-        [AuthorizeByAccessArea(AccessArea = "404")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
@@ -134,6 +134,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region DELETES:
+            //TODO: Confirm Deletion of CT possible?
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
