@@ -1,0 +1,110 @@
+﻿@model DocuPath.Models.DPViewModels.TokenViewModel
+@{ ViewBag.Title = "Generate Tokens"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Users", "All", "User") </li>
+    <li class="active">@Html.ActionLink("Generate Registration Tokens", "GenerateTokens") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-rat"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">GENERATE REGISTRATION TOKENS</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/LegacyCase/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    @Html.DropDownList("ddlTokenCOunt", new List<SelectListItem> {
+                                                                                                new SelectListItem { Value = "0", Text = "1", Selected = true },
+                                                                                                new SelectListItem { Value = "1", Text = "2" },
+                                                                                                new SelectListItem { Value = "2", Text = "3" },
+                                                                                                new SelectListItem { Value = "3", Text = "4" },
+                                                                                                new SelectListItem { Value = "4", Text = "5" },
+                                                                                                new SelectListItem { Value = "5", Text = "6" },
+                                                                                                new SelectListItem { Value = "6", Text = "7" },
+                                                                                                new SelectListItem { Value = "7", Text = "8" },
+                                                                                                new SelectListItem { Value = "8", Text = "9" },
+                                                                                                new SelectListItem { Value = "9", Text = "10" },
+                                                                                                new SelectListItem { Value = "10", Text = "11" },
+                                                                                                new SelectListItem { Value = "11", Text = "12" },
+                                                                                                new SelectListItem { Value = "12", Text = "13" },
+                                                                                                new SelectListItem { Value = "13", Text = "14" },
+                                                                                                new SelectListItem { Value = "14", Text = "15" },
+                                                                                                }, new { @id = "ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="~/User/GenerateTokens" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE TOKENS"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic USheading text-center"><p>SELECT THE DESIRED NUMBER OF TOKENS</p></div>
+
+@* ASPTABLE FOR PROVIDING TOKEN DESTINATIONS: *@
+@if (Model.tokenCount != 0)
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal border-generic form-generic">
+            <table class="table table-striped table-hover">
+                <tr>
+                    <th class="colour-dpred text-center" style="width: 5%">Token</th>
+                    <th class="colour-dpred" style="width: 47.5%">Assigned Access Level</th>
+                    <th class="colour-dpred" style="width: 47.5%">Destination Email</th>
+
+                </tr>
+                @for (int i = 0; i < Model.tokenList.Count; i++)
+                {
+                    <tr>
+                        <td class="table-large-identifier text-center">@(i + 1)</td>
+                        <td>@Html.DropDownListFor(model => model.tokenList[i].AccessLevelID, new SelectList(Model.ualList, "AccessLevelID", "LevelName", "Select a Desired Access Level..."), new { @class = "form-control", @style = "width: 100%" })</td>
+                        <td>@Html.EditorFor(model => model.tokenList[i].DestinationEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @Value = "Type a Valid Destination Email Address..." } })</td>
+                    </tr>
+                }
+                @*@{int i = 1;}
+                @foreach (var token in Model.tokenList)            
+                {
+                    <tr>
+                        <td class="table-large-identifier text-center">@i</td>
+                        <td>@Html.DropDownListFor(model => model.tokenList[i].AccessLevelID, new SelectList(Model.ualList, "AccessLevelID", "LevelName", "Select a Desired Access Level..."), new { @class = "form-control", @style = "width: 100%" })</td>
+                        <td>@Html.EditorFor(model => model.tokenList[i].DestinationEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @Value = "Type a Valid Destination Email Address..." } })</td>
+                    </tr>
+                }*@
+            </table>
+        </div>
+    }
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    }

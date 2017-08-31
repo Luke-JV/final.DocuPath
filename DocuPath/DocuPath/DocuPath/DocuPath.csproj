@@ -498,6 +498,8 @@
     <Compile Include="Models\DPViewModels\SchedulingViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceProviderViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceRequestViewModel.cs" />
+    <Compile Include="Models\DPViewModels\TokenViewModel.cs" />
+    <Compile Include="Models\DPViewModels\UserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\VECTOR.cs" />
@@ -762,6 +764,7 @@
     <Content Include="Views\ServiceRequest\Add.cshtml" />
     <Content Include="Views\ServiceRequest\Edit.cshtml" />
     <Content Include="Views\ContentTag\Add.cshtml" />
+    <Content Include="Views\User\GenerateTokens.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
