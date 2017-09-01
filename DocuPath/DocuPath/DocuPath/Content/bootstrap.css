@@ -9958,7 +9958,7 @@ a.cal-event-week {
     }
     
     .login-decor {
-        /*border: 1px solid black;*/
+        z-index: -10;
     }
 
     .login-form-grid {
@@ -9968,6 +9968,17 @@ a.cal-event-week {
         grid-template-rows: 1fr auto 1fr;
         grid-template-areas:    "spacer1"
                                 "fieldset"
+                                "spacer2";
+
+    }
+
+    .menu-form-grid {
+        height: 100%;
+        grid-gap: 0px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto 1fr;
+        grid-template-areas:    "spacer1"
+                                "dpmenu"
                                 "spacer2";
 
     }
@@ -10031,17 +10042,25 @@ a.cal-event-week {
     }
 
     .homepage-grid {
-        max-height: 100%;
+       margin-top: -25px;
+       height: calc(100vh - 50px);
+       grid-gap: 0px;
+       grid-template-columns: 370px auto;
+       grid-template-rows: 1fr;
+       grid-template-areas:    "decor form";
+        /*max-height: 100%;
         grid-gap: 50px;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: "decoration menu";
+        grid-template-areas: "decoration menu";*/
     }
 
     .homepage-menu-container {
-        grid-area: "menu";
+        grid-area: "dpmenu";
         margin: auto;
         transition: all 1s;
-        width: 325px;
+        width: auto;
+        background-color: #fff;
+        z-index: 999;
     }
 
     .page-hdr {
