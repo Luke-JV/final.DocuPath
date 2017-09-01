@@ -28,7 +28,7 @@ namespace DocuPath.Controllers
             model.tog2 = false;
             model.areas = new List<areaKVP>();
 
-            foreach (var item in db.ACCESS_AREA.Where(x=>x.FUNCTION_GROUP.FunctionGroupDescription== "CORTEX > Forensic Case"))
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
             {
                 areaKVP area = new areaKVP();
                 area.areaName = item.AccessAreaDescription;
@@ -40,7 +40,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         public ActionResult TagTest(ToggleViewModel model)
         {
-           // var x = model;
+            // var x = model;
 
             return View();
         }
@@ -89,6 +89,16 @@ namespace DocuPath.Controllers
                 RedirectToAction("Error", "Home", x.Message);
             }
             return categories;
+        }
+
+        public ActionResult tagEditor()
+        {
+            return View();
+        }
+        
+        public ActionResult fetch()
+        {
+            return View();
         }
     }
 }
