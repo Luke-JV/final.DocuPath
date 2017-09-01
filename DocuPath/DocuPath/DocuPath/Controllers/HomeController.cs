@@ -55,44 +55,86 @@ namespace DocuPath.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            
-            return View();
+            try
+            {
+
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
-        
+
         [AllowAnonymous]
         public ActionResult About()
         {
-            
-            ViewBag.Message = "User ID: "+ User.Identity.GetUserId<int>();
+            try
+            {
 
-            return View();
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
-        
+
         [AllowAnonymous]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
 
-            return View();
+                ViewBag.Message = "Your contact page.";
+
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         public ViewResult Error(string errorMessage)
         {
-            ModelState.AddModelError("", "error/failure"); // Add the ModelState error
-            ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
-            return View();
+            try
+            {
+                ModelState.AddModelError("", "error/failure"); // Add the ModelState error
+                ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
+                return View();
+            }
+            catch (Exception)
+            {
+                //TODO: errors on the error page? So you can error while you error? Lel...
+                return View();
+            }
         }
 
         public ActionResult SendMail()
         {
-            
+            try
+            {
 
-            return View();
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         public ActionResult SendSms()
         {
-            VERTEBRAE.sendSMS("++27825592322","CODE:xxxxxx");
-            return View("Index");
+            try
+            {
+
+                VERTEBRAE.sendSMS("++27825592322", "CODE:xxxxxx");
+                return View("Index");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }

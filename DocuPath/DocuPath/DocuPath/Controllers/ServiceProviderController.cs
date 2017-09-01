@@ -19,7 +19,16 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Search Service Provider")]
         public ActionResult Index()
         {
-            return RedirectToAction("All");
+            try
+            {
+
+                return RedirectToAction("All");
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         //----------------------------------------------------------------------------------------------//
 
@@ -27,21 +36,34 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Service Provider")]
         public ActionResult Add()
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
+            try
+            {
 
-            ServiceProviderViewModel model = new ServiceProviderViewModel();
-            model.serviceProvider = new SERVICE_PROVIDER();
-            model.titles = db.TITLE.ToList();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
 
-            return View(model);
+                ServiceProviderViewModel model = new ServiceProviderViewModel();
+                model.serviceProvider = new SERVICE_PROVIDER();
+                model.titles = db.TITLE.ToList();
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
        
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Service Provider")]
         public ActionResult Add(ServiceProviderViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
                 db.SERVICE_PROVIDER.Add(model.serviceProvider);
@@ -95,16 +117,24 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "View Service Provider")]
         public ActionResult Details(int id)
         {
-            #region MODEL POPULATION
-            SERVICE_PROVIDER model = new SERVICE_PROVIDER();
-            model = db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault();
-            model.TITLE = db.TITLE.Where(x=>x.TitleID == model.TitleID).FirstOrDefault();
-            #endregion
+            try
+            {
 
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View(model);
+                #region MODEL POPULATION
+                SERVICE_PROVIDER model = new SERVICE_PROVIDER();
+                model = db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault();
+                model.TITLE = db.TITLE.Where(x => x.TitleID == model.TitleID).FirstOrDefault();
+                #endregion
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -113,16 +143,29 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Service Provider")]
         public ActionResult Edit(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+            try
+            {
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Service Provider")]
         public ActionResult Edit(int id, SERVICE_PROVIDER updatedSP)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedSP);
+            }
+
             try
             {
                 #region DB UPDATE
@@ -151,19 +194,32 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Delete Service Provider")]
         public ActionResult Delete(int id)
         {
-            //404 CONFIRM
-            db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault().IsDeactivated = true;
-            db.SaveChanges();
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return RedirectToAction("All");
+            try
+            {
+
+                //404 CONFIRM
+                db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault().IsDeactivated = true;
+                db.SaveChanges();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Delete Service Provider")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
             try
             {
                 // TODO: Add delete logic here

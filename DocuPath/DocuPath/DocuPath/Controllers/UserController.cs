@@ -15,11 +15,18 @@ namespace DocuPath.Controllers
     public class UserController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-       
+
         [AuthorizeByAccessArea(AccessArea = "Search User - All Profiles")]
         public ActionResult Index()
         {
-            return RedirectToAction("All");
+            try
+            {
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         //----------------------------------------------------------------------------------------------//
 
@@ -29,9 +36,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-               
+
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-                
+
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
@@ -49,16 +56,24 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "View User - All Profiles")]
         public ActionResult Details(int id)
         {
-            #region MODEL POPULATION
-            USER model = new USER();
-            model = db.USER.Where(x => x.UserID == id).FirstOrDefault();
-            
-            #endregion
+            try
+            {
+                #region MODEL POPULATION
+                USER model = new USER();
+                model = db.USER.Where(x => x.UserID == id).FirstOrDefault();
 
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View(model);
+                #endregion
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -67,16 +82,32 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
         public ActionResult Edit(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+            try
+            {
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+
+
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home"); ;
+            };
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
         public ActionResult Edit(int id, USER updatedUser)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedUser);
+            }
+
             try
             {
                 #region DB UPDATE
@@ -105,19 +136,32 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Deactivate User - Any Profile")]
         public ActionResult Delete(int id)
         {
-            //404 CONFIRM
-            db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
-            db.SaveChanges();
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return RedirectToAction("All");
+            try
+            {
+                //404 CONFIRM
+                db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
+                db.SaveChanges();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Deactivate User - Any Profile")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
             try
             {
                 // TODO: Add delete logic here
@@ -140,20 +184,47 @@ namespace DocuPath.Controllers
         #region NON-CRUD ACTIONS:
         public ActionResult GenerateTokens()
         {
-            TokenViewModel model = new TokenViewModel();
+            try
+            {
 
-            return View(model);
+                TokenViewModel model = new TokenViewModel();
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
         [HttpPost]
         public ActionResult GenerateTokens(FormCollection collection)
         {
-            
-            return null; 
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(collection);
+                }
+
+
+                return null;
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
 
-        [HttpPost] 
+        [HttpPost]
         public ActionResult GenerateTokens(TokenViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
@@ -161,14 +232,14 @@ namespace DocuPath.Controllers
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
 
-                
+
                 model.tokenList = new List<TOKEN_LOG>();
                 for (int i = 0; i < model.tokenCount; i++)
                 {
                     //gen token
                     //model.tokenList.Add(tk);
                     TOKEN_LOG x = new TOKEN_LOG();
-                    
+
                     x.IssueTimestamp = DateTime.Now;
                     x.TokenValue = "xxxxx";
                     model.tokenList.Add(x);

@@ -21,7 +21,15 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Search Legacy Case")]
         public ActionResult Index()
         {
-            return RedirectToAction("All");
+            try
+            {
+
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         //----------------------------------------------------------------------------------------------//
 
@@ -29,17 +37,30 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult Add()
         {
-            var model = new LEGACY_CASE();
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View(model);
+            try
+            {
+
+                var model = new LEGACY_CASE();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult Add(LEGACY_CASE LC)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(LC);
+            }
+
             try
             {
                 LEGACY_CASE update = new LEGACY_CASE();
@@ -57,7 +78,7 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("All");
             }
-            catch(Exception x)
+            catch(Exception)
             {
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
@@ -92,21 +113,29 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult Details(int id)
         {
-            LegacyCaseViewModel model = new LegacyCaseViewModel();
-            model.legacyCase = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
-            model.legacyCase.USER = db.USER.Where(x=>x.UserID == model.legacyCase.UserID).FirstOrDefault();
-            
+            try
+            {
 
-            model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
+                LegacyCaseViewModel model = new LegacyCaseViewModel();
+                model.legacyCase = db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault();
+                model.legacyCase.USER = db.USER.Where(x => x.UserID == model.legacyCase.UserID).FirstOrDefault();
 
-            #region VALIDATE_ACCESS
+
+                model.legacyDocs = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == model.legacyCase.LegacyCaseID).ToList();
+
+                #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(model.legacyCase.UserID);
-            #endregion
+                #endregion
 
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View(model);
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
@@ -124,48 +153,53 @@ namespace DocuPath.Controllers
             {
 
                 return null;
-            }         
-            
-
-            
+            }                    
         }
 
         [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult ZipAll(int id)
         {
-            string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == id).FirstOrDefault().LegacyDocumentLocation;
-            location = location.Replace("\\", "/");
-            var split = location.Split('/');
-            string source="";
-            string destination = "";
-            for (int i = 0; i < split.Length-1; i++)
+            try
             {
-                if (i < split.Length-2)
+
+                string location = db.LEGACY_DOCUMENT.Where(x => x.LegacyCaseID == id).FirstOrDefault().LegacyDocumentLocation;
+                location = location.Replace("\\", "/");
+                var split = location.Split('/');
+                string source = "";
+                string destination = "";
+                for (int i = 0; i < split.Length - 1; i++)
                 {
-                    destination += split[i] + '/';
+                    if (i < split.Length - 2)
+                    {
+                        destination += split[i] + '/';
+                    }
+                    source += split[i] + '/';
+
                 }
-                source += split[i]+'/';
-                
-            }
-            System.IO.DirectoryInfo di = new DirectoryInfo(destination + "ZIP/");
+                System.IO.DirectoryInfo di = new DirectoryInfo(destination + "ZIP/");
 
-            foreach (FileInfo FI in di.GetFiles())
+                foreach (FileInfo FI in di.GetFiles())
+                {
+                    FI.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+                ZipFile.CreateFromDirectory(source, destination + "/ZIP/test.zip");
+
+                var file = File(destination + "/ZIP/test.zip", System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(destination + "/ZIP/test.zip"));
+                file.FileDownloadName = "x.zip"; //404 404
+
+
+
+                return file;
+
+            }
+            catch (Exception)
             {
-                FI.Delete();
+                return RedirectToAction("Error", "Home");
             }
-            foreach (DirectoryInfo dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-            ZipFile.CreateFromDirectory(source, destination+"/ZIP/test.zip");
-
-            var file = File(destination + "/ZIP/test.zip", System.Net.Mime.MediaTypeNames.Application.Octet, Path.GetFileName(destination + "/ZIP/test.zip"));
-            file.FileDownloadName = "x.zip"; //404 404
-
-            
-
-            return file;
-            
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -174,20 +208,33 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Legacy Case")]
         public ActionResult Edit(int id)
         {
-            #region VALIDATE_ACCESS
-            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
-            #endregion
+            try
+            {
 
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+                #region VALIDATE_ACCESS
+                bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+                #endregion
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Legacy Case")]
         public ActionResult Edit(int id, LEGACY_CASE updatedLC)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(updatedLC);
+            }
+
             try
             {
                 #region DB UPDATE
@@ -217,22 +264,35 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Archive Legacy Case")]
         public ActionResult Delete(int id)
         {
-            #region VALIDATE_ACCESS
-            bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
-            #endregion
-            //404 CONFIRM!
-            db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
-            db.SaveChanges();
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return RedirectToAction("All");
+            try
+            {
+
+                #region VALIDATE_ACCESS
+                bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+                #endregion
+                //404 CONFIRM!
+                db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                db.SaveChanges();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Archive Legacy Case")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
             try
             {
                 // TODO: Add delete logic here
@@ -347,12 +407,20 @@ namespace DocuPath.Controllers
 
         private string GetVirtualPath(string physicalPath)
         {
-            string rootpath = Server.MapPath("~/");
+            try
+            {
 
-            physicalPath = physicalPath.Replace(rootpath, "");
-            physicalPath = physicalPath.Replace("\\", "/");
+                string rootpath = Server.MapPath("~/");
 
-            return "~/" + physicalPath;
+                physicalPath = physicalPath.Replace(rootpath, "");
+                physicalPath = physicalPath.Replace("\\", "/");
+
+                return "~/" + physicalPath;
+            }
+            catch (Exception)
+            {
+                return physicalPath;
+            }
         }
         #endregion
     }

@@ -13,13 +13,21 @@ namespace DocuPath.Controllers
     public class AuditTrailController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        
+
         public ActionResult Index()
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return RedirectToAction("All");
+            try
+            {
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Audit Trail - View")]
@@ -45,12 +53,20 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Full Access Master")]
         public ActionResult Details(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+            try
+            {
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
-        
+
         //----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
 

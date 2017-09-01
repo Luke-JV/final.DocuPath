@@ -15,11 +15,19 @@ namespace DocuPath.Controllers
     public class ContentTagController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
-        
+
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult Index()
         {
-            return RedirectToAction("All");
+            try
+            {
+
+                return RedirectToAction("All");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         //----------------------------------------------------------------------------------------------//
 
@@ -27,42 +35,56 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add()
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-
-            ContentTagViewModel model = new ContentTagViewModel();
-            
-            model.tag = new CONTENT_TAG();
-
-            var ccTags = db.CONTENT_TAG.Where(x => x.ContentTagCode.Substring(0, 3) == "CC.").ToList();
-            List<double> numeric = new List<double>();
-            foreach (var cctag in ccTags)
+            try
             {
-                numeric.Add(Convert.ToDouble(cctag.ContentTagCode.Substring(3)));
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
+                ContentTagViewModel model = new ContentTagViewModel();
+
+                model.tag = new CONTENT_TAG();
+
+                var ccTags = db.CONTENT_TAG.Where(x => x.ContentTagCode.Substring(0, 3) == "CC.").ToList();
+                List<double> numeric = new List<double>();
+                foreach (var cctag in ccTags)
+                {
+                    numeric.Add(Convert.ToDouble(cctag.ContentTagCode.Substring(3)));
+                }
+                double max = numeric.Max();
+                string newCode = "0000";
+                newCode += Convert.ToString(max + 1);
+                newCode = new string(newCode.ToCharArray().Reverse().ToArray());
+                newCode = newCode.Substring(0, 4);
+                newCode = new string(newCode.ToCharArray().Reverse().ToArray());
+
+                model.tag.ContentTagCode = "CC." + newCode;
+
+
+
+                //model.categories = db.TAG_CATEGORY.ToList();
+                //model.subcategories = db.TAG_SUBCATEGORY.ToList();
+                //model.conditions = db.TAG_CONDITION.ToList();
+
+                return View(model);
+
             }
-            double max = numeric.Max();
-            string newCode = "0000";
-            newCode += Convert.ToString(max + 1);
-            newCode = new string(newCode.ToCharArray().Reverse().ToArray());
-            newCode = newCode.Substring(0,4);
-            newCode = new string(newCode.ToCharArray().Reverse().ToArray());
-            
-            model.tag.ContentTagCode = "CC."+newCode;
-
-
-
-            //model.categories = db.TAG_CATEGORY.ToList();
-            //model.subcategories = db.TAG_SUBCATEGORY.ToList();
-            //model.conditions = db.TAG_CONDITION.ToList();
-            
-            return View(model);
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add(ContentTagViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
                 CONTENT_TAG tag = new CONTENT_TAG();
@@ -101,7 +123,7 @@ namespace DocuPath.Controllers
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-        
+
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult All()
         {
@@ -125,13 +147,21 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "View Content Tag")]
         public ActionResult Details(int id)
         {
-            #region MODEL POPULATION
-            CONTENT_TAG model =  db.CONTENT_TAG.Where(x => x.ContentTagID == id).FirstOrDefault();
-            #endregion
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View(model);
+            try
+            {
+
+                #region MODEL POPULATION
+                CONTENT_TAG model = db.CONTENT_TAG.Where(x => x.ContentTagID == id).FirstOrDefault();
+                #endregion
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -139,16 +169,29 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id)
         {
-            #region AUDIT_WRITE
-            //AuditModel.WriteTransaction(0, "404");
-            #endregion
-            return View();
+            try
+            {
+
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
             try
             {
                 // TODO: Add update logic here
@@ -172,14 +215,27 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
-            return View();
+            try
+            {
+
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
-            
+
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
             try
             {
                 // TODO: Add delete logic here
@@ -201,7 +257,15 @@ namespace DocuPath.Controllers
         #region NON-CRUD ACTIONS:
         public ActionResult GetCategories(string query)
         {
-            return Json(_GetCategories(query), JsonRequestBehavior.AllowGet);
+            try
+            {
+
+                return Json(_GetCategories(query), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private List<Autocomplete> _GetCategories(string query)
@@ -241,7 +305,15 @@ namespace DocuPath.Controllers
 
         public ActionResult GetSubcategories(string query)
         {
-            return Json(_GetSubcategories(query), JsonRequestBehavior.AllowGet);
+            try
+            {
+
+                return Json(_GetSubcategories(query), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private List<Autocomplete> _GetSubcategories(string query)
@@ -250,9 +322,9 @@ namespace DocuPath.Controllers
             try
             {
                 var subcategoryResults = (from subcat in db.TAG_SUBCATEGORY
-                                       where subcat.TagSubCategoryName.Contains(query)
-                                       orderby subcat.TagSubCategoryName
-                                       select subcat).ToList();
+                                          where subcat.TagSubCategoryName.Contains(query)
+                                          orderby subcat.TagSubCategoryName
+                                          select subcat).ToList();
 
                 foreach (var result in subcategoryResults)
                 {
@@ -281,7 +353,15 @@ namespace DocuPath.Controllers
 
         public ActionResult GetConditions(string query)
         {
-            return Json(_GetConditions(query), JsonRequestBehavior.AllowGet);
+            try
+            {
+
+                return Json(_GetConditions(query), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         private List<Autocomplete> _GetConditions(string query)
@@ -290,9 +370,9 @@ namespace DocuPath.Controllers
             try
             {
                 var conditionResults = (from condition in db.TAG_CONDITION
-                                          where condition.TagConditionName.Contains(query)
-                                          orderby condition.TagConditionName
-                                          select condition).ToList();
+                                        where condition.TagConditionName.Contains(query)
+                                        orderby condition.TagConditionName
+                                        select condition).ToList();
 
                 foreach (var result in conditionResults)
                 {

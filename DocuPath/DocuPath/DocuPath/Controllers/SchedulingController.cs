@@ -15,20 +15,44 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea= "Access Google Calendar")]
         public ActionResult Index()
         {
- 
-            return RedirectToAction("Calendar");
+            try
+            {
+
+                return RedirectToAction("Calendar");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
         public ActionResult Calendar()
         {
-            return null;//404
+            try
+            {
+
+                return null;//404
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Compile Monthly Duty Roster")]
         public ActionResult MonthlyDutyRoster()
         {
-            return null;//404
+            try
+            {
+
+                return null;//404
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
 
