@@ -43,10 +43,10 @@
 </div>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    <input id="btnPOST" class="hidden" type="submit" />
     <div class="form-horizontal border-generic form-generic">
         <div class="row" style="margin-left: 0px">
             <div class="col-md-2" style="padding: 0px">
@@ -194,9 +194,19 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Forensic Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.FCAreas.Count; i++)
                                                                         {
-                                                                            <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            @Html.HiddenFor(m => m.FCAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.FCAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.FCAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -238,9 +248,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to External Review Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.ECAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.ECAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.ECAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.ECAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -275,9 +294,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Legacy Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.LCAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.LCAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.LCAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.LCAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -312,9 +340,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Media Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.MediaAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.MediaAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.MediaAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.MediaAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -349,9 +386,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to INSIGHT Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.InsightAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.InsightAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.InsightAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.InsightAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -386,9 +432,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to VISION Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Reporting"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Reporting"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.VisionAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.VisionAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.VisionAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.VisionAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -423,9 +478,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Service Provider Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.SPAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SPAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SPAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SPAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -460,9 +524,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Service Request Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.SRAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SRAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SRAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SRAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -497,9 +570,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Scheduling Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.SchedulingAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SchedulingAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SchedulingAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SchedulingAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -534,9 +616,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to User Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.UserAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.UserAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.UserAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.UserAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -571,9 +662,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Audit Trail Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.AuditAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.AuditAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.AuditAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.AuditAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -608,9 +708,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to User Access Level Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.AccessLevelAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.AccessLevelAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.AccessLevelAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.AccessLevelAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -645,9 +754,18 @@
                                                                 <div class="form-group">
                                                                     @Html.Label("Toggle Access to Content Tag Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                                     <div class="col-md-12">
-                                                                        @foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
                                                                         {
                                                                             <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                        }*@
+                                                                        @for (int i = 0; i < Model.ContentTagAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.ContentTagAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.ContentTagAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.ContentTagAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
                                                                         }
                                                                     </div>
                                                                 </div>
@@ -670,41 +788,41 @@
 
 
     @*<div class="form-horizontal">
-        <h4>ACCESS_LEVEL</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccessLevelID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccessLevelID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeactivated)
-                    @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+            <h4>ACCESS_LEVEL</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AccessLevelID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AccessLevelID, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-    </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsDeactivated)
+                        @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
 }
 
 @section Scripts{
@@ -714,20 +832,20 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#nofxgroups").show(),
-            $("#timelinecontainer").hide(),
-            $("#timelineFC").hide(),
-            $("#timelineERC").hide(),
-            $("#timelineLC").hide(),
-            $("#timelineMedia").hide(),
-            $("#timelineINSIGHT").hide(),
-            $("#timelineVISION").hide(),
-            $("#timelineSP").hide(),
-            $("#timelineSR").hide(),
-            $("#timelineScheduling").hide(),
-            $("#timelineUser").hide(),
-            $("#timelineAuditTrail").hide(),
-            $("#timelineUAL").hide(),
-            $("#timelineCT").hide()
+                $("#timelinecontainer").hide(),
+                $("#timelineFC").hide(),
+                $("#timelineERC").hide(),
+                $("#timelineLC").hide(),
+                $("#timelineMedia").hide(),
+                $("#timelineINSIGHT").hide(),
+                $("#timelineVISION").hide(),
+                $("#timelineSP").hide(),
+                $("#timelineSR").hide(),
+                $("#timelineScheduling").hide(),
+                $("#timelineUser").hide(),
+                $("#timelineAuditTrail").hide(),
+                $("#timelineUAL").hide(),
+                $("#timelineCT").hide()
         });
     </script>
     <script type="text/javascript">
@@ -750,8 +868,14 @@
                 if ($('#tglCT').prop("checked") == true) { $('#timelineCT').show('slow') } else { $('#timelineCT').hide('slow') };
 
                 if ($('#tglFC').prop("checked") == true || $('#tglERC').prop("checked") == true || $('#tglLC').prop("checked") == true || $('#tglMedia').prop("checked") == true || $('#tglINSIGHT').prop("checked") == true || $('#tglVISION').prop("checked") == true || $('#tglSP').prop("checked") == true || $('#tglSR').prop("checked") == true || $('#tglScheduling').prop("checked") == true || $('#tglUser').prop("checked") == true || $('#tglAuditTrail').prop("checked") == true || $('#tglUAL').prop("checked") == true || $('#tglCT').prop("checked") == true)
-                    { $("#timelinecontainer").show("slow"); $("#nofxgroups").hide("slow") } else { $("#timelinecontainer").hide("slow"); $("#nofxgroups").show("slow") }
+                { $("#timelinecontainer").show("slow"); $("#nofxgroups").hide("slow") } else { $("#timelinecontainer").hide("slow"); $("#nofxgroups").show("slow") }
             });
         })
+    </script>
+    <script>
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
     </script>
 }

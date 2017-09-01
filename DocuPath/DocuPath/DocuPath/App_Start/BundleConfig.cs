@@ -33,7 +33,8 @@ namespace DocuPath
 
             bundles.Add(new ScriptBundle("~/bundles/tageditor").Include(
                            "~/Scripts/jquery.caret.min.js",
-                           "~/Scripts/jquery.tag-editor.js"));
+                           "~/Scripts/jquery.tag-editor.js",
+                          "~/Scripts/jquery-ui.js"));
             #endregion
 
             #region Stylesheet & Visual Script Bundles:
@@ -43,7 +44,10 @@ namespace DocuPath
 
                 bundles.Add(new StyleBundle("~/Content/css").Include(
                           "~/Content/bootstrap.css",
-                          "~/Content/site.css"));
+                          "~/Content/site.css",
+                          "~/Content/jquery.tag-editor.css",
+                          "~/Content/jquery-ui.css",
+                          "~/Content/jquery-ui.structure.css"));
             #endregion
 
             #region Default MVC Bundles:

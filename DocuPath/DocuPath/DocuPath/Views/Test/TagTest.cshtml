@@ -1,0 +1,106 @@
+﻿@model DocuPath.Models.DPViewModels.ToggleViewModel
+@{
+    ViewBag.Title = "TagTest";
+}
+
+<div class="col-md-10" style="padding-left: 5px; padding-right: 15px">
+    <div class="panel panel-default" style="margin-bottom: 0px; height: 100%">
+        <div class="panel-heading">
+            <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
+            <span>FUNCTION GROUP SETUP</span>
+        </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+        <div class="panel-body" style="height: 71.4px">
+            <div class="form-group">
+                <div class="col-md-12">
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Label("PULSE:", htmlAttributes: new { @class = "control-label col-md-1", @style = "text-align: left; margin-right: 5px; margin-top: 2.5px" })
+                            <label class="checkbox-inline">
+                                <input id="tglSP" type="checkbox" data-toggle="toggle" data-on="Service Providers" data-off="Service Providers" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">                                                                
+                            </label>
+                            @for (int i = 0; i < Model.areas.Count; i++)
+                            {
+                                @Html.HiddenFor(m=>m.areas[i].areaName);
+                                @Html.CheckBoxFor(m => m.areas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = Model.areas[i].areaName, data_off = Model.areas[i].areaName, data_onstyle = "success", data_offstyle = "default", data_width = "120" })
+                            }
+                            @*@Html.CheckBoxFor(m => m.tog2, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "test", data_off = "testoff", data_onstyle = "success", data_offstyle = "default", data_width = "120" })*@
+                            <input type="submit" />
+                            @*<label class="checkbox-inline">
+                                <input id="tglSR" type="checkbox" data-toggle="toggle" data-on="Service Requests" data-off="Service Requests" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                            </label>
+                            <label class="checkbox-inline">
+                                <input id="tglScheduling" type="checkbox" data-toggle="toggle" data-on="Scheduling" data-off="Scheduling" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                            </label>
+                            <label class="checkbox-inline">
+                                <input id="tglUser" type="checkbox" data-toggle="toggle" data-on="Users" data-off="Users" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                            </label>
+                            <label class="checkbox-inline">
+                                <input id="tglAuditTrail" type="checkbox" data-toggle="toggle" data-on="Audit Trail" data-off="Audit Trail" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                            </label>
+                            <label class="checkbox-inline">
+                                <input id="tglUAL" type="checkbox" data-toggle="toggle" data-on="Access Levels" data-off="Access Levels" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                            </label>
+                            <label class="checkbox-inline">
+                                <input id="tglCT" type="checkbox" data-toggle="toggle" data-on="Content Tags" data-off="Content Tags" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                            </label>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+    </div>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#nofxgroups").show(),
+                $("#timelinecontainer").hide(),
+                $("#timelineFC").hide(),
+                $("#timelineERC").hide(),
+                $("#timelineLC").hide(),
+                $("#timelineMedia").hide(),
+                $("#timelineINSIGHT").hide(),
+                $("#timelineVISION").hide(),
+                $("#timelineSP").hide(),
+                $("#timelineSR").hide(),
+                $("#timelineScheduling").hide(),
+                $("#timelineUser").hide(),
+                $("#timelineAuditTrail").hide(),
+                $("#timelineUAL").hide(),
+                $("#timelineCT").hide()
+        });
+    </script>
+    <script type="text/javascript">
+        $(function toggleFunctionGroups() {
+            $activecount = 0;
+
+            $('input[type=checkbox]').change(function () {
+                if ($('#tglFC').prop("checked") == true) { $('#timelineFC').show('slow') } else { $('#timelineFC').hide('slow') };
+                if ($('#tglERC').prop("checked") == true) { $('#timelineERC').show('slow') } else { $('#timelineERC').hide('slow') };
+                if ($('#tglLC').prop("checked") == true) { $('#timelineLC').show('slow') } else { $('#timelineLC').hide('slow') };
+                if ($('#tglMedia').prop("checked") == true) { $('#timelineMedia').show('slow') } else { $('#timelineMedia').hide('slow') };
+                if ($('#tglINSIGHT').prop("checked") == true) { $('#timelineINSIGHT').show('slow') } else { $('#timelineINSIGHT').hide('slow') };
+                if ($('#tglVISION').prop("checked") == true) { $('#timelineVISION').show('slow') } else { $('#timelineVISION').hide('slow') };
+                if ($('#tglSP').prop("checked") == true) { $('#timelineSP').show('slow') } else { $('#timelineSP').hide('slow') };
+                if ($('#tglSR').prop("checked") == true) { $('#timelineSR').show('slow') } else { $('#timelineSR').hide('slow') };
+                if ($('#tglScheduling').prop("checked") == true) { $('#timelineScheduling').show('slow') } else { $('#timelineScheduling').hide('slow') };
+                if ($('#tglUser').prop("checked") == true) { $('#timelineUser').show('slow') } else { $('#timelineUser').hide('slow') };
+                if ($('#tglAuditTrail').prop("checked") == true) { $('#timelineAuditTrail').show('slow') } else { $('#timelineAuditTrail').hide('slow') };
+                if ($('#tglUAL').prop("checked") == true) { $('#timelineUAL').show('slow') } else { $('#timelineUAL').hide('slow') };
+                if ($('#tglCT').prop("checked") == true) { $('#timelineCT').show('slow') } else { $('#timelineCT').hide('slow') };
+
+                if ($('#tglFC').prop("checked") == true || $('#tglERC').prop("checked") == true || $('#tglLC').prop("checked") == true || $('#tglMedia').prop("checked") == true || $('#tglINSIGHT').prop("checked") == true || $('#tglVISION').prop("checked") == true || $('#tglSP').prop("checked") == true || $('#tglSR').prop("checked") == true || $('#tglScheduling').prop("checked") == true || $('#tglUser').prop("checked") == true || $('#tglAuditTrail').prop("checked") == true || $('#tglUAL').prop("checked") == true || $('#tglCT').prop("checked") == true)
+                { $("#timelinecontainer").show("slow"); $("#nofxgroups").hide("slow") } else { $("#timelinecontainer").hide("slow"); $("#nofxgroups").show("slow") }
+            });
+        })
+    </script>
+}

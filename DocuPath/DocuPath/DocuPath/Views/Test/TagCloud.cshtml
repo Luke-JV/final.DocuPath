@@ -1,39 +1,21 @@
 ﻿
-@model DocuPath.Models.DPViewModels.TagCloudViewModel
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <hr />
+<div>
+    <input type="text" id="test" style="margin-top:30px" />
+</div>
 
+@section Scripts
+    {
+    @Scripts.Render("~/bundles/tageditor")
 
-    <form>
-        <input type="text" value="" data-role="tagsinput" />
-    </form>
-}
-
-    @section Scripts{
     <script>
-        var tagNames = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: '/Test/GetTags/',
-                filter: function (list) {
-                    return $.map(list, function (cityname) {
-                        return { name: cityname };
-                    });
-                }
-            }
-        });
-        tagNames.initialize();
-
-        $('input').tagsinput({
-            typeaheadjs: {
-                name: 'tagNames',
-                displayKey: 'name',
-                valueKey: 'name',
-                source: tagNames.ttAdapter()
-            }
+        $('#test').tagEditor({
+            autocomplete: {
+                delay: 0, // show suggestions immediately
+                position: { collision: 'flip' }, // automatic menu position up/down
+                source:"@Url.Action("GetTags")"
+            },
+            forceLowercase: false,
+            placeholder: 'Programming languages ...'
         });
     </script>
-    }   
+    }

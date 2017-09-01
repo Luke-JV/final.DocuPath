@@ -37,18 +37,312 @@ namespace DocuPath.Controllers
             model.allAreas = db.ACCESS_AREA.ToList();
             model.fxGroups = db.FUNCTION_GROUP.ToList();
 
+            model.FCAreas = new List<selectAreaKVP>();
+            model.ECAreas = new List<selectAreaKVP>();
+            model.LCAreas = new List<selectAreaKVP>();
+            model.MediaAreas = new List<selectAreaKVP>();
+            model.InsightAreas = new List<selectAreaKVP>();
+            model.VisionAreas = new List<selectAreaKVP>();
+            model.SPAreas = new List<selectAreaKVP>();
+            model.SRAreas = new List<selectAreaKVP>();
+            model.SchedulingAreas = new List<selectAreaKVP>();
+            model.UserAreas = new List<selectAreaKVP>();
+            model.AuditAreas = new List<selectAreaKVP>();
+            model.AccessLevelAreas = new List<selectAreaKVP>();
+            model.ContentTagAreas = new List<selectAreaKVP>();
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.FCAreas.Add(area);
+            }
+
+           
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.ECAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.LCAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.MediaAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.InsightAreas .Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Dashboard"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.VisionAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.SPAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.SRAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.SchedulingAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.UserAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.AuditAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.AccessLevelAreas.Add(area);
+            }
+
+            foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
+            {
+                selectAreaKVP area = new selectAreaKVP();
+                area.areaName = item.AccessAreaDescription;
+                area.hasAccess = false;
+                model.ContentTagAreas.Add(area);
+            }
+
+            
+
             return View(model);
         }
 
         
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add User Access Level")]
-        public ActionResult Add(ACCESS_LEVEL AL)
+        public ActionResult Add(AccessLevelViewModel model)
         {
             try
             {
-                db.ACCESS_LEVEL.Add(AL);
+                ACCESS_LEVEL level = new ACCESS_LEVEL();
+                level.LevelName = model.accessLevel.LevelName;
+                try
+                {
+                    level.AccessLevelID = db.ACCESS_LEVEL.Max(x => x.AccessLevelID) + 1;
+                }
+                catch (Exception)
+                {
+                    level.AccessLevelID = 1;
+                }
+
+                List<LEVEL_AREA> areas = new List<LEVEL_AREA>();
+                
+                //FC
+                foreach (var item in model.FCAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //EC
+                foreach (var item in model.ECAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //LC
+                foreach (var item in model.LCAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //Media
+                foreach (var item in model.MediaAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //Insight
+                foreach (var item in model.InsightAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+                
+                //Vision
+                foreach (var item in model.VisionAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //SP
+                foreach (var item in model.SPAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //SR
+                foreach (var item in model.SRAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //Scheduling
+                foreach (var item in model.SchedulingAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //User
+                foreach (var item in model.UserAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //Audit
+                foreach (var item in model.AuditAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //AL
+                foreach (var item in model.AccessLevelAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                //CT
+                foreach (var item in model.ContentTagAreas)
+                {
+                    if (item.hasAccess)
+                    {
+                        LEVEL_AREA area = new LEVEL_AREA();
+                        area.AccessLevelID = level.AccessLevelID;
+                        area.AccessAreaID = db.ACCESS_AREA.Where(x => x.AccessAreaDescription == item.areaName).FirstOrDefault().AccessAreaID;
+                        areas.Add(area);
+                    }
+                }
+
+                level.LEVEL_AREA = areas;
+
+                db.ACCESS_LEVEL.Add(level);
                 db.SaveChanges();
+                //db.ACCESS_LEVEL.Add(AL);
+                //db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");

@@ -554,6 +554,8 @@
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\9.Great_Arteries.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\10.Arterial_Thrombosis_Spinal_Cord.JPG" />
     <Content Include="Content\FCBuilderTimeline.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\jquery.tag-editor.css" />
@@ -639,6 +641,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.bootgrid.js" />
     <Content Include="Scripts\jquery.caret.min.js" />
     <Content Include="Scripts\jquery.tag-editor.js" />
@@ -777,6 +780,7 @@
     <Content Include="Views\AccessLevel\test.cshtml" />
     <Content Include="Views\Media\Upload.cshtml" />
     <Content Include="Views\Test\TagCloud.cshtml" />
+    <Content Include="Views\Test\TagTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
