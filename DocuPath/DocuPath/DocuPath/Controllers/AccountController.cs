@@ -86,17 +86,17 @@ namespace DocuPath.Controllers
                         int id = UserManager.FindByName(model.Email).Id ;
                         AuditModel.WriteTransaction(id,"Login Operation");
 
-                        ACTIVE_LOGIN login = new ACTIVE_LOGIN();
-                        login.DeviceIPAddress = Request.UserHostAddress;
-                        login.LoginTimestamp = DateTime.Now;
-                        login.LastActionTimestamp = DateTime.Now;
-                        login.UserID = id;
+                        //ACTIVE_LOGIN login = new ACTIVE_LOGIN();
+                        //login.DeviceIPAddress = Request.UserHostAddress;
+                        //login.LoginTimestamp = DateTime.Now;
+                        //login.LastActionTimestamp = DateTime.Now;
+                        //login.UserID = id;
 
-                        using (DocuPathEntities db = new DocuPathEntities())
-                        {
-                            db.ACTIVE_LOGIN.Add(login);
-                            db.SaveChanges();
-                        }
+                        //using (DocuPathEntities db = new DocuPathEntities())
+                        //{
+                        //    db.ACTIVE_LOGIN.Add(login);
+                        //    db.SaveChanges();
+                        //}
 
                         return RedirectToLocal(returnUrl);
                     }

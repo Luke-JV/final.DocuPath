@@ -97,15 +97,16 @@ namespace DocuPath.Controllers
             }
         }
 
-        public ViewResult Error(string errorMessage)
+        public ViewResult Error(HandleErrorInfo model)
         {
-            HandleErrorInfo model = new HandleErrorInfo(new Exception(errorMessage) ,"Home","Index");
+            //HandleErrorInfo model = new HandleErrorInfo(new Exception(errorMessage) ,"Home","Index");
             try
             {
                 
-                ModelState.AddModelError("", "error/failure"); // Add the ModelState error
-                ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
-                return View(model);
+                ModelState.AddModelError(DateTime.Now.ToString("dd MMM yyyy HH:mm:ss"), model.Exception); // Add the ModelState error
+                //ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
+                
+                return View(model );
             }
             catch (Exception)
             {
@@ -114,17 +115,19 @@ namespace DocuPath.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Error(System.Web.Mvc.HandleErrorInfo err)
+        
+        public ActionResult DumpError(string dumpedFileLocation)
         {
-            // 404
-            string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() + "_" + DateTime.Now.Date.ToString("dd.MM.YYYY") + "_" + DateTime.Now.TimeOfDay.ToString("HH.mm") + ".txt";
-            using (StreamWriter sw = new StreamWriter(Server.MapPath(VERTEBRAE.ErrorDumpRootPath + fname)))
+                      
+            try
             {
-
+                VERTEBRAE.sendMail("ruco@cldrm.co.za","Please note an error has been logged, view the error here:"+dumpedFileLocation);
+                return RedirectToAction("Index","Home");
             }
-
-            return null;
+            catch (Exception x)
+            {
+                return null;
+            }
         }
 
         public ActionResult SendMail()
@@ -139,6 +142,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
         public ActionResult SendSms()
         {
             try
@@ -151,17 +155,6 @@ namespace DocuPath.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-        }
-
-        public ActionResult DumpError(System.Web.Mvc.HandleErrorInfo err)
-        {
-            string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() + "_" + DateTime.Now.Date.ToString("dd.MM.YYYY") + "_" + DateTime.Now.TimeOfDay.ToString("HH.mm") + ".txt";
-            using (StreamWriter sw = new StreamWriter(Server.MapPath(VERTEBRAE.ErrorDumpRootPath + fname)))
-            {
-                
-            }
-
-            return null;
         }
     }
 }

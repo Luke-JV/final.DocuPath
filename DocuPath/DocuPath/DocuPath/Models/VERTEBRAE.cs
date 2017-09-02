@@ -20,13 +20,13 @@ using Twilio.AspNet.Mvc;
 using Twilio.TwiML;
 using System.Configuration;
 using Twilio.Types;
+using context = System.Web.HttpContext;
 
 namespace DocuPath.Models
 {
     public static class VERTEBRAE
     {
         #region OUTGOING COMMUNICATION:
-
         public static void sendMail(string destination, string content)
         {
             //404 - mail logic here
@@ -34,6 +34,7 @@ namespace DocuPath.Models
             outMail.To.Add("luke@cldrm.co.za");
             outMail.From = new MailAddress("u13098536@tuks.co.za");
             outMail.Subject = "DocuPath Registration Link";
+            // TODO: 404 proper mail body html markup here
             outMail.Body = "Bruh, \n\n Hit up localhost:5069/Account/Register?token=Aafv=H#qafewwAdfdawFw/ in order to register your User Profile. \n\nThis limited offer ends like tomorrow though... \n\nLit Regards,\nLuke";
 
             SmtpClient smtp = new SmtpClient();
@@ -68,38 +69,65 @@ namespace DocuPath.Models
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region CONSTANTS:
-        public const string ErrorDumpRootPath = "~/Content/DocuPathRepositories/ERRORDUMPS/";
+            #region ROOT PATHS:
+            // Functions:
+            public const string ErrorDumpRootPath = "~/Content/DocuPathRepositories/ERRORDUMPS/";
+            // Repositories:
+            public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
+            public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
+            public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
+            public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
+            public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+            #endregion
+            #region FILE / MEDIA HANDLING:
+            public static List<string> Thumbnail_AcceptedFileTypes()
+            {
+                List<string> outList = new List<string>();
 
-        public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
-        public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
-        public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
-        public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
-        public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+                outList.Add(".JPG");
+                outList.Add(".JPEG");
+                outList.Add(".JPE");
+                outList.Add(".JIF");
+                outList.Add(".JFIF");
+                outList.Add(".JFI");
+                outList.Add(".BMP");
+                outList.Add(".PNG");
+                outList.Add(".GIF");
+                outList.Add(".TIF");
+                outList.Add(".TIFF");
 
-        public static List<string> Thumbnail_AcceptedFileTypes()
-        {
-            List<string> outList = new List<string>();
+                return outList;
+            }
+        #endregion
+        #region AUDIT TRAIL DESCRIPTIONS:
+        const string Uncategorized = "Performed an uncategorised operation. "; // 0
+        const string InitiateAdd = "Initiated an Add operation using _."; // 1
+        const string SuccessfulAdd = "Successfuly completed an Add operation using _."; // 2
+        const string FailedAdd = "Failed to complete an Add operation using _. Failure occurred with the following error message: *"; // 3
+        const string InitiateSearch = "Initiated a Search operation using _."; // 4
+        const string SuccessfulSearch = "Successfuly completed a Search operation using _."; // 5
+        const string FailedSearch = "Failed to complete a Search operation using _. Failure occurred with the following error message: *"; // 6
+        const string InitiateView = "Initiated a View operation using _. The ID of the record viewed is *."; // 7
+        const string SuccessfulView = "Successfuly completed a View operation using _. The ID of the record viewed is *."; // 8
+        const string FailedView = "Failed to complete a View operation using _. Failure occurred with the following error message: *"; // 9
+        const string InitiateUpdateEdit = "Initiated a View operation using _. The ID of the record viewed is *."; // 10
+        const string SuccessfulUpdateEdit = "Successfuly completed a View operation using _. The ID of the record viewed is *."; // 11
+        const string FailedUpdateEdit = "Failed to complete a View operation using _. Failure occurred with the following error message: *"; // 12
 
-            outList.Add(".JPG");
-            outList.Add(".JPEG");
-            outList.Add(".JPE");
-            outList.Add(".JIF");
-            outList.Add(".JFIF");
-            outList.Add(".JFI");
-            outList.Add(".BMP");
-            outList.Add(".PNG");
-            outList.Add(".GIF");
-            outList.Add(".TIF");
-            outList.Add(".TIFF");
-
-            return outList;
-        }
 
         #endregion
+        #region NEURON DETAILS:
+        // TODO
+        #endregion
+        #region EMAIL NOTIFICATION CONTENTS & MARKUP:
+        // TODO
+        #endregion
+        #region SMS NOTIFICATION CONTENTS & MARKUP:
+        // TODO
+        #endregion
+        #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region FETCHES, GETS & QUERIES:
         public static List<NOTIFICATION> GetUnhandledNeurons()
         {
@@ -264,7 +292,6 @@ namespace DocuPath.Models
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region FORMATTING & MARKUP:
         public static string ExtractMediaFileName(string inLocation)
         {
@@ -341,9 +368,58 @@ namespace DocuPath.Models
             return inRaw;
         }
 
-       
+
+        #endregion
+        //----------------------------------------------------------------------------------------------//
+        #region ERROR HANDLING:
+        public static string DumpErrorToTxt(Exception ex)
+        {
+            var line = Environment.NewLine + Environment.NewLine;
+            string lineNum, errorMsg, exceptionType, exceptionURL, hostIp, errorLocation;
+
+            lineNum = ex.StackTrace.Substring(ex.StackTrace.Length - 7, 7);
+            errorMsg = ex.GetType().Name.ToString();
+            exceptionType = ex.GetType().ToString();
+            exceptionURL = context.Current.Request.Url.ToString();
+            errorLocation = ex.Message.ToString();
+            hostIp = context.Current.Request.UserHostAddress.ToString() + " " + context.Current.Request.UserHostName.ToString();
+
+            try
+            {
+                string filepath = ErrorDumpRootPath;  //Text File Path
+                string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() + "_Date." + DateTime.Now.Date.ToString("ddMMMYYYY") + "_Time." + DateTime.Now.TimeOfDay.ToString("HHhmmss") + ".txt";
+
+                if (!Directory.Exists(filepath))
+                {
+                    Directory.CreateDirectory(filepath);
+                }
+                filepath = filepath + fname;   //Text File Name
+
+                if (!File.Exists(filepath))
+                {
+                    File.Create(filepath).Dispose();
+                }
+                using (StreamWriter sw = File.AppendText(filepath))
+                {
+                    string error = "Error Dump DateTimeStamp:" + " " + DateTime.Now.ToString("dd MMM yyyy HH:mm:ss") + line + "Error Line Number:" + " " + lineNum + line + "Error Message:" + " " + errorMsg + line + "Exception Type:" + " " + exceptionType + line + "Error Location:" + " " + errorLocation + line + " Error Origin URL:" + " " + exceptionURL + line + "User Host IP:" + " " + hostIp + line;
+                    sw.WriteLine("[[------- ERROR LOG FILE FOR " + DateTime.Now.ToString("dd MMM yyyy at HH:mm:ss") + " --------------]]");
+                    sw.WriteLine(">---------------------------<<< START >>>---------------------------<");
+                    sw.WriteLine(line);
+                    sw.WriteLine(error);
+                    sw.WriteLine(">----------------------------<<< END >>>----------------------------<");
+                    sw.WriteLine(line);
+                    sw.Flush();
+                    sw.Close();
+                }
+                return filepath;
+            }
+            catch (Exception e)
+            {
+                return e.ToString();
+            }
+        }
         #endregion
         //----------------------------------------------------------------------------------------------//
     }
-    
+
 }

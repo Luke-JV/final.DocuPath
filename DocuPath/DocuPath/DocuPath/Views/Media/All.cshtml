@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<DocuPath.DataLayer.MEDIA>
-@using DocuPath.Models;
+@using DocuPath.Models; 
 @{ ViewBag.Title = "All"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -86,7 +86,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            imgHTML = "<img src='~/" + Url.Content(VERTEBRAE.GetThumbUrl(item.MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
+            imgHTML = "<img src='~/" + @Url.Content(VERTEBRAE.GetThumbUrl(item.MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
             // 404 TODO: Propagate correct IDs from VM
             if (item.STATUS.StatusValue != "Archived" && item.STATUS.StatusValue != "Inbound" )
             {

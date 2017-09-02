@@ -109,7 +109,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-
+        
         [AuthorizeByAccessArea(AccessArea = "View Legacy Case")]
         public ActionResult Details(int id)
         {
