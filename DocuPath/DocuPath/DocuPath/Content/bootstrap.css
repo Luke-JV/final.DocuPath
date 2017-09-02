@@ -8586,7 +8586,7 @@ td.visible-print {
 
 .sidenav-heading {
   padding: 5px 0 5px 10px;
-  height: 53px;
+  height: 51px;
   background-color: rgba(174, 23, 23, 1);
   /*background: linear-gradient(90deg, rgba(174, 23, 23, 1),rgba(255, 255, 255, 0.15));*/
   border-bottom: 1px solid white;

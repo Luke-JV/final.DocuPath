@@ -70,6 +70,8 @@ namespace DocuPath.Models
         //----------------------------------------------------------------------------------------------//
 
         #region CONSTANTS:
+        public const string ErrorDumpRootPath = "~/Content/DocuPathRepositories/ERRORDUMPS/";
+
         public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
         public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
         public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";

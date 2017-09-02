@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -99,17 +100,32 @@ namespace DocuPath.Controllers
 
         public ViewResult Error(string errorMessage)
         {
+            HandleErrorInfo model = new HandleErrorInfo(new Exception(errorMessage) ,"Home","Index");
             try
             {
+                
                 ModelState.AddModelError("", "error/failure"); // Add the ModelState error
                 ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
-                return View();
+                return View(model);
             }
             catch (Exception)
             {
                 //TODO: errors on the error page? So you can error while you error? Lel...
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult Error(System.Web.Mvc.HandleErrorInfo err)
+        {
+            // 404
+            string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() + "_" + DateTime.Now.Date.ToString("dd.MM.YYYY") + "_" + DateTime.Now.TimeOfDay.ToString("HH.mm") + ".txt";
+            using (StreamWriter sw = new StreamWriter(Server.MapPath(VERTEBRAE.ErrorDumpRootPath + fname)))
+            {
+
+            }
+
+            return null;
         }
 
         public ActionResult SendMail()
@@ -136,6 +152,17 @@ namespace DocuPath.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+        }
+
+        public ActionResult DumpError(System.Web.Mvc.HandleErrorInfo err)
+        {
+            string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() + "_" + DateTime.Now.Date.ToString("dd.MM.YYYY") + "_" + DateTime.Now.TimeOfDay.ToString("HH.mm") + ".txt";
+            using (StreamWriter sw = new StreamWriter(Server.MapPath(VERTEBRAE.ErrorDumpRootPath + fname)))
+            {
+                
+            }
+
+            return null;
         }
     }
 }

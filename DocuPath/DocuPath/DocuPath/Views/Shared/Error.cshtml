@@ -4,79 +4,113 @@
     ViewBag.Title = "Error";
 }
 
-@Model.Exception.Message
+@using (Html.BeginForm())
+{
+    <input id="btnPOST" class="hidden" type="submit" />
+    @Html.HiddenFor(model => model.Exception)
+}
 
-<div class="row" style="display: flex; align-items: center; margin-top: 0px">
-    <div class="col-md-5 col-md-offset-1">
-        <div id="divDNA">
-            <div class="dna-decor">
-                <div class="ele-decor-broken-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-                <div class="ele-decor-broken"></div>
-            </div>
+<div class="grid login-grid">
+    <div class="login-form" grid-area="form">
+        <div class="grid login-form-grid">
+            <div></div>
+            <form grid-area="fieldset" action="~/Home/DumpError">
+                <div grid-area="title" class="login-title text-danger" style="font-family: 'U.S. 101'; font-size: 75px;text-align:center">ERROR.</div>
+                <div grid-area="username">
+                    <h2 class="text-danger" style="font-family: 'Segoe UI'; text-align: justify; font-weight: normal; font-style: italic; padding: 0 15px 0 15px; margin: 60px auto 60px auto">An error occurred while processing your request.</h2>
+                </div>
+                <div grid-area="password">
+                    <div class="modal-help-panel" style="margin: 0 20px 0 20px">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#ErrorDetails">
+                            VIEW ERROR DETAILS
+                            <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                        </div>
+                        <div id="ErrorDetails" class="panel-collapse collapse sidenav-notification-detail">
+                            <p style="margin: 0 5px 0 5px; padding: 25px 5px 25px 5px; font-family: Consolas; font-weight: bold; text-align: center">@Model.Exception.Message</p>
+                            <div class="panel-footer" data-parent="#ErrorDetails">
+                                <div class="sidenav-button-bar">
+                                    <input type="submit" id="btnErrorDump" value="Dump Error" class="btn btn-neuron btn-neuron-red btn-xs pull-right" style="width: 110px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div grid-area="button"></div>
+                <div grid-area="links"></div>
+            </form>
         </div>
     </div>
-    <div class="col-md-5 col-md-offset-1">
-        <h1 class="text-danger" style="font-family: 'U.S. 101'; font-size: 75px;text-align:center">Error.</h1>
+    <div class="login-decor" grid-area="decor">
+        <div class="dna-decor" style="width: 325px; padding: 0 12px 0 12px">
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+            <div class="ele-decor-broken"></div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h2 class="text-danger" style="font-family: 'Segoe UI'; text-align: justify; font-weight: normal; font-style: italic">An error occurred while processing your request.</h2>
-    </div>
+</div>
 
+@section Scripts{
+    <script>
+        $('#btnErrorDump').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
+    </script>
+    }
