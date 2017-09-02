@@ -14,6 +14,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class MediaController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

@@ -9,6 +9,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class SchedulingController : Controller
     {
         

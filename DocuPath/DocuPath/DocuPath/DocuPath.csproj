@@ -503,6 +503,7 @@
     <Compile Include="Models\DPViewModels\TokenViewModel.cs" />
     <Compile Include="Models\DPViewModels\UserViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LogAction.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\VECTOR.cs" />
     <Compile Include="Models\VERTEBRAE.cs" />
@@ -628,6 +629,7 @@
       <DependentUpon>DocuPath.edmx</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />

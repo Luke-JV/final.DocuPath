@@ -10,6 +10,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class AuditTrailController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

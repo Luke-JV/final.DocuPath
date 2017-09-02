@@ -14,6 +14,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class LegacyCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -90,6 +91,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region READS:
+        
         [AuthorizeByAccessArea(AccessArea = "Search Legacy Case")]
         public ActionResult All()
         {

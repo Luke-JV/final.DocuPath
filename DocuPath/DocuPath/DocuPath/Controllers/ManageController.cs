@@ -11,6 +11,7 @@ using DocuPath.Models;
 namespace DocuPath.Controllers
 {
     [Authorize]
+    [LogAction]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

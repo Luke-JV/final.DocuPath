@@ -86,7 +86,16 @@
     <tbody>
         @foreach (var item in Model)
         {
-            imgHTML = "<img src='~/" + Url.Content(VERTEBRAE.GetThumbUrl(item.MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
+
+            try
+            {
+                imgHTML = "<img src='~/" + Url.Content(VERTEBRAE.GetThumbUrl(item.MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
+            }
+            catch (Exception)
+            {
+
+               
+            }
             // 404 TODO: Propagate correct IDs from VM
             if (item.STATUS.StatusValue != "Archived" && item.STATUS.StatusValue != "Inbound" )
             {

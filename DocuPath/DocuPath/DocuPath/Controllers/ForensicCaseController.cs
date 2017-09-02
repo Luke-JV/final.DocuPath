@@ -12,6 +12,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class ForensicCaseController : Controller
     {
         
