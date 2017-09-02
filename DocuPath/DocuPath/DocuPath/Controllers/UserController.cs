@@ -198,6 +198,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
         [HttpPost]
         public ActionResult GenerateTokens(FormCollection collection)
         {
@@ -256,6 +257,48 @@ namespace DocuPath.Controllers
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
+            }
+        }
+        
+        public ActionResult ViewProfile()
+        {
+            try
+            {
+                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                var userID = VERTEBRAE.getCurrentUser().UserID;
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
+                return RedirectToAction("Details", "User", new { id = userID });
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("Error", "Home", x); // TODO 404: send the Error page the ENTIRE exception, not just the message! Already modified the action to accept an Exception
+            }
+        }
+
+        public ActionResult UpdateProfile()
+        {
+            try
+            {
+                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                var userID = VERTEBRAE.getCurrentUser().UserID;
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+
+                return RedirectToAction("Edit", "User", new { id = userID });
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("Error", "Home", x);
             }
         }
         #endregion

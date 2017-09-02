@@ -4,6 +4,7 @@ using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,7 +40,7 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
@@ -90,6 +91,7 @@ namespace DocuPath.Controllers
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
 
+                //throw new Exception();
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
@@ -101,10 +103,12 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return RedirectToAction("Error", "Home", x.Message);
+                // TODO 404 - Propagate error handling logic
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error",new HandleErrorInfo(x, "ForensicCase", "All"));
             }
         }
-
+        
         [AuthorizeByAccessArea(AccessArea = "View Forensic Case - All Sections")]
         public ActionResult Details(int id)
         {
@@ -149,9 +153,10 @@ namespace DocuPath.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, "ForensicCase", "Details"));
             }
         }
         #endregion

@@ -1,20 +1,16 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿<link rel="stylesheet" href="~/Content/bootstrap.css" />
+@model System.Web.Mvc.HandleErrorInfo
 
 @{
     ViewBag.Title = "Error";
-}
 
-@using (Html.BeginForm())
-{
-    <input id="btnPOST" class="hidden" type="submit" />
-    @Html.HiddenFor(model => model.Exception)
 }
 
 <div class="grid login-grid">
     <div class="login-form" grid-area="form">
         <div class="grid login-form-grid">
             <div></div>
-            <form grid-area="fieldset" action="~/Home/DumpError">
+            <form grid-area="fieldset" action="~/Home/DumpError" >
                 <div grid-area="title" class="login-title text-danger" style="font-family: 'U.S. 101'; font-size: 75px;text-align:center">ERROR.</div>
                 <div grid-area="username">
                     <h2 class="text-danger" style="font-family: 'Segoe UI'; text-align: justify; font-weight: normal; font-style: italic; padding: 0 15px 0 15px; margin: 60px auto 60px auto">An error occurred while processing your request.</h2>
@@ -29,7 +25,7 @@
                             <p style="margin: 0 5px 0 5px; padding: 25px 5px 25px 5px; font-family: Consolas; font-weight: bold; text-align: center">@Model.Exception.Message</p>
                             <div class="panel-footer" data-parent="#ErrorDetails">
                                 <div class="sidenav-button-bar">
-                                    <input type="submit" id="btnErrorDump" value="Dump Error" class="btn btn-neuron btn-neuron-red btn-xs pull-right" style="width: 110px" />
+                                    <input type="submit" id="btnErrorDump" value="Report Error" class="btn btn-neuron btn-neuron-red btn-xs pull-right" style="width: 110px" />
                                 </div>
                             </div>
                         </div>
@@ -106,11 +102,3 @@
     </div>
 </div>
 
-@section Scripts{
-    <script>
-        $('#btnErrorDump').click(function () {
-            var btn = document.getElementById('btnPOST');
-            btn.click();
-        });
-    </script>
-    }
