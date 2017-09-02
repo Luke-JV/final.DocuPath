@@ -202,30 +202,48 @@ namespace DocuPath.Models
         }
         public static string GetUrl(string path)
         {
-            var arr = path.Split('\\');
-            string url = "";
-            bool begin = false;
-            foreach (var item in arr)
+            try
             {
-                if (item == "Content")
-                {
-                    begin = true;
-                }
-                if (begin)
-                {
-                    url += item + "/";
-                }
-            }
-            url = url.Remove(url.Length - 1);
 
-            return url;
+                var arr = path.Split('\\');
+                string url = "";
+                bool begin = false;
+                foreach (var item in arr)
+                {
+                    if (item == "Content")
+                    {
+                        begin = true;
+                    }
+                    if (begin)
+                    {
+                        url += item + "/";
+                    }
+                }
+                url = url.Remove(url.Length - 1);
+
+                return url;
+            }
+            catch (Exception)
+            {
+
+                return path;
+            }
         }
 
         public static string GetThumbUrl(string inPath)
         {
-            string relPath = GetUrl(inPath);
-            return relPath.Insert(relPath.LastIndexOf('.'), "_thumb");
-            
+            try
+            {
+
+                string relPath = GetUrl(inPath);
+                return relPath.Insert(relPath.LastIndexOf('.'), "_thumb");
+
+            }
+            catch (Exception)
+            {
+
+                return inPath;
+            }
             //404!
 
         }

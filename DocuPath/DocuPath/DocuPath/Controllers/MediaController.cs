@@ -421,6 +421,60 @@ namespace DocuPath.Controllers
                 return null;
             }
         }
+
+
+        [HttpPost]
+        public JsonResult AutoTag(string prefix)
+        {
+            DocuPathEntities entities = new DocuPathEntities();
+            var tags = (from tag in entities.CONTENT_TAG
+                        where tag.ContentTagText.Contains(prefix)
+                        select new
+                        {
+                            label = tag.ContentTagText,
+                            val = tag.ContentTagID
+                        }).Take(15).ToList();
+
+            return Json(tags);
+        }
+        [HttpPost]
+        public ActionResult catchTags(string tags)
+        {
+            List<tagCatcher> myTags = new List<tagCatcher>();
+
+            var split = tags.Split('|');
+            foreach (var text in split)
+            {
+                if (text != "" && text != null)
+                {
+                    tagCatcher temp = new tagCatcher();
+                    temp.item = text.Substring(0, text.IndexOf(':'));
+                    string tagline = text.Substring(text.IndexOf(':') + 1);
+                    tagline = tagline.Replace('`', '\'');
+                    var all = tagline.Split('~');
+                    temp.tags = all.ToList();
+                    myTags.Add(temp);
+                }
+            }
+            foreach (var media in myTags)
+            {
+                foreach (var tag in media.tags)
+                {                    
+                    MEDIA_TAG mTag = new MEDIA_TAG();
+                    mTag.MediaID = Convert.ToInt32(media.item);
+                    mTag.ContentTagID = db.CONTENT_TAG.Where(x => x.ContentTagText == tag).FirstOrDefault().ContentTagID;
+                    db.MEDIA.Where(x => x.MediaID == mTag.MediaID).FirstOrDefault().MEDIA_TAG.Add(mTag);
+                }
+            }
+            db.SaveChanges();
+            return null;
+        }
+        struct tagCatcher
+        {
+            public string item;
+            public List<string> tags;
+
+        }
         #endregion
     }
 }
