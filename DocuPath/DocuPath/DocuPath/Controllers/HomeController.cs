@@ -13,6 +13,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
+    [LogAction]
     public class HomeController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
