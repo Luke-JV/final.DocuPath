@@ -236,6 +236,15 @@
             </div>
         </div>
         <div id="sidenavbody" class="sidenav-body" grid-area="neuron_body">
+            @* RSS BROADCAST BAR: *@
+            <form class="navbar-form" action="~/Home/SendRSSBroadcast" method="post" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0px; padding: 15px">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Type Your RSS Broadcast Message Here..." name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="mdl2icon mdl2-send"></i></button>
+                    </div>
+                </div>
+            </form>
             <div id="noNotifications" class="sidenav-notification border-generic sidenav-nonotifications">
                 <p style="margin: auto">NO NEURON<br />NOTIFICATIONS</p>
             </div>
@@ -299,6 +308,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/typeahead")
+    @Scripts.Render("~/bundles/materialdatetime")
    
     <script src="~/Scripts/typeahead.mvc.model.js" ></script>
     @RenderSection("scripts", required: false)

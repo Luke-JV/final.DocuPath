@@ -1,0 +1,391 @@
+﻿<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" type="text/css" />
+@{ ViewBag.Title = "Reporting"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("INSIGHT Reporting", "Insight") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-reporting"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">INSIGHT REPORTING</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>        
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT"></button>
+                </form>
+            </div>
+    @*<div grid-area="btn2">
+        <form class="minimalform" action="~/ForensicCase/Add" method="post" style="margin-top: 2px">
+            <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+        </form>
+    </div>
+    <div grid-area="btn2">
+            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+            </form>
+        </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-horizontal border-generic form-generic" style="padding-left: 22.5px">
+    <div class="row">
+        <div id="selector-params-actions-col" class="col-md-3">
+            @* ACCORDION START *@
+            <div class="row">
+                <div class="panel-group" id="INSIGHTaccordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse" data-target="#reportselect" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                            <span>Report Selector</span>
+                        </div>
+                        <div id="reportselect" class="panel-collapse collapse in">
+                            <div class="panel-body" style="padding: 5px">
+                                @* REPORT SELECTOR CODE HERE *@
+                                @Html.Label("Select an INSIGHT Report:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.DropDownList("ddlReportSelector", new List<SelectListItem>
+                               {
+                                    new SelectListItem{ Text="Select an INSIGHT Report...", Value = "0"},
+                                    new SelectListItem{ Text="Cause Of Death Report", Value = "1" },
+                                    new SelectListItem{ Text="Manner Of Death Report", Value = "2" },
+                                    new SelectListItem{ Text="Scene Of Injury Report", Value = "3" },
+                                    new SelectListItem{ Text="New Media Report", Value = "4" },
+                                    new SelectListItem{ Text="Outstanding Service Request Report", Value = "5" },
+                                    new SelectListItem{ Text="Superuser Override Report", Value = "6",},
+                                    new SelectListItem{ Text="Case Duration Report", Value = "7" },
+                                    new SelectListItem{ Text="User Activity Report", Value = "8" },
+                               },
+                               htmlAttributes: new { @class = "form-control", @style = "Width: 275px" })
+                                    @Html.ValidationMessage("Please select an INSIGHT Report.", new { onchange = "check()", @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" id="pnlTimeframeParams">
+                        <div class="panel-heading" data-toggle="collapse" data-target="#timeframe" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
+                            <span>Report Timeframe</span>
+                        </div>
+                        <div id="timeframe" class="panel-collapse collapse">
+                            <div class="panel-body" style="padding: 5px">
+                                @* TIMEFRAME OPTIONS *@
+                                @Html.Label("Select a Report Timeframe:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.DropDownList("ddlTimeframe", new List<SelectListItem>
+                               {
+                                    new SelectListItem{ Text="Select a Timeframe...", Value = "0"},
+                                    new SelectListItem{ Text="Today", Value = "1" },
+                                    new SelectListItem{ Text="Yesterday", Value = "2" },
+                                    new SelectListItem{ Text="This Week", Value = "3" },
+                                    new SelectListItem{ Text="Last Week", Value = "4" },
+                                    new SelectListItem{ Text="Custom Timeframe", Value = "5"},
+                               },
+                               htmlAttributes: new { @class = "form-control", @style = "Width: 275px" })
+                                    @Html.ValidationMessage("Please select a Timeframe.", new { onchange = "check()", @class = "text-danger" })
+                                </div>
+
+                                <div class="form-group" id="frmStartDate" style="margin-left: 0px; margin-right: 0px">
+                                    @* START DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
+                                    @Html.Label("Select a Start Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                    <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        <div class='input-group date'>
+                                            @Html.EditorFor(model => model.dateFrom, new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
+                                            @*<input type='text' class="form-control" id="StartDate" />*@
+                                            <span class="input-group-addon" onclick="startDTP()">
+                                                <span class="mdl2icon mdl2-date">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @*<div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        @Html.Editor("StartDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
+                                        @Html.ValidationMessage("", new { @class = "text-danger" })
+                                        </div>*@
+                                </div>
+
+                                <div class="form-group" id="frmEndDate" style="margin-left: 0px; margin-right: 0px">
+                                    @* END DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
+                                    @Html.Label("Select an End Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                    <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        <div class="input-group date">
+                                            <input type='text' class="form-control" id="EndDate" />
+                                            <span class="input-group-addon" onclick="endDTP()">
+                                                <span class="mdl2icon mdl2-date">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @*<div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        @Html.Editor("EndDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
+                                        @Html.ValidationMessage("", new { @class = "text-danger" })
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" id="pnlReportParams">
+                        <div class="panel-heading" data-toggle="collapse" data-target="#parameters" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-params panel-mdl2icon"></span>
+                            <span>Report Parameters</span>
+                        </div>
+                        <div id="parameters" class="panel-collapse collapse">
+                            <div class="panel-body" style="padding: 5px">
+                                @* SUPERUSER SELECTOR PARAMETER: *@
+                                <div class="form-group" id="frmSuperuserSelect" style="margin-left: 0px; margin-right: 0px">
+                                    @Html.Label("Select a Superuser:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                    <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        @Html.DropDownList("ddlSuperuser", (IEnumerable<SelectListItem>)ViewBag.Superusers, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "Width: 275px" })
+                                        @Html.ValidationMessage("", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @* USER SELECTOR PARAMETER: *@
+                                <div class="form-group" id="frmUserSelect" style="margin-left: 0px; margin-right: 0px">
+                                    @Html.Label("Select a User:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                    <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        @Html.DropDownList("ddlUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "Width: 275px" })
+                                        @Html.ValidationMessage("", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                @* ACTIVITY SELECTOR PARAMETER: *@
+                                <div class="form-group" id="frmActivityTypeSelect" style="margin-left: 0px; margin-right: 0px">
+                                    @Html.Label("Select an Activity Type:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                    <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                        @Html.DropDownList("ddlActivityType", (IEnumerable<SelectListItem>)ViewBag.ActivityTypes, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "Width: 275px" })
+                                        @Html.ValidationMessage("", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse" data-target="#reportactions" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
+                            <span>Report Actions</span>
+                        </div>
+                        <div id="reportactions" class="panel-collapse collapse">
+                            <div class="panel-body apad5">
+                                @* REPORT ACTIONS CODE HERE *@
+                                <div class="form-group" style="padding-left: 15px; padding-right: 15px; text-align: center">
+                                    @*<button class="btn btn-default btn-generic" type="submit" style="width: 175px; margin-top: 5px;">
+                                        <i class="mdl2icon mdl2-done"></i>
+                                        Generate Report
+                                    </button>*@
+                                    <form class="minimalform" action="~/Insight/GenerateReport" method="post" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-go btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="GENERATE REPORT"></button>
+                                    </form>
+                                    <form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT"></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* ACCORDION END *@
+        </div>
+        <div id="generator-col" class="col-md-9" style="padding-right: 20px">
+            <div class="panel panel-default" style="margin-bottom: 5px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-view panel-mdl2icon"></span>
+                    <span>Report Output</span>
+                </div>
+                <div class="panel-body apad5 text-center">
+                    @* REPORT DISPLAY CODE HERE *@
+                    <img id="noPreview" src="~/Content/Resources/NoReportPreview.png" style="max-height: 650px; max-width: 824px; border-radius: 4px" />
+                    <img id="reportPreview" src="~/Content/Resources/ReportPreview.png" style="max-height: 650px; max-width: 824px; border-radius: 4px" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    @* DATETIMEPICKERS: *@
+    <script name="DTPCallers" type="text/javascript">
+        $(function startDTP() {
+            $('#StartDate').bootstrapMaterialDatePicker({
+                format: 'D MMMM YYYY',
+                year: true,
+                date: true,
+                time: false,
+                clearButton: true,
+                nowButton: true,
+                nowText: "Now",
+                switchOnClick: true,
+                okText: "OK"
+            });
+        });
+        $(function endDTP() {
+            $('#EndDate').bootstrapMaterialDatePicker({
+                format: 'D MMMM YYYY',
+                year: true,
+                date: true,
+                time: false,
+                clearButton: true,
+                nowButton: true,
+                nowText: "Now",
+                switchOnClick: true,
+                okText: "OK"
+            });
+        });
+    </script>
+
+    @* FORM-GROUP VISIBILITY TOGGLING: *@
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#frmStartDate").hide(),
+        $("#frmEndDate").hide(),
+        $("#frmSuperuserSelect").hide(),
+        $("#frmUserSelect").hide(),
+        $("#frmActivityTypeSelect").hide(),
+        $("#pnlReportParams").hide(),
+        $("#reportPreview").hide()
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function check() {
+        $("#ddlReportSelector").change(function () {
+            if ($("#ddlReportSelector").val() == "6") { /* SU OVERRIDE */
+                $("#pnlReportParams").show("slow"),
+                $("#frmSuperuserSelect").show("slow"),
+                $("#frmUserSelect").hide("slow"),
+                $("#frmActivityTypeSelect").hide("slow"),
+                $("#pnlTimeframeParams").show("slow"),
+                $("#noPreview").show(),
+                $("#reportPreview").hide()
+            } else if ($("#ddlReportSelector").val() == "8") { /* USER ACTIVITY*/
+                $("#pnlReportParams").show("slow"),
+                $("#frmSuperuserSelect").hide("slow"),
+                $("#frmUserSelect").show("slow"),
+                $("#frmActivityTypeSelect").show("slow"),
+                $("#pnlTimeframeParams").show("slow"),
+                $("#noPreview").hide(),
+                $("#reportPreview").show()
+            } else if ($("#ddlReportSelector").val() == "5") { /* OUTSTANDING SR */
+                $("#pnlReportParams").hide("slow"),
+                $("#frmSuperuserSelect").hide("slow"),
+                $("#frmUserSelect").hide("slow"),
+                $("#frmActivityTypeSelect").hide("slow"),
+                $("#pnlTimeframeParams").hide("slow"),
+                $("#noPreview").show(),
+                $("#reportPreview").hide()
+            }
+            else {
+                $("#pnlReportParams").hide("slow"),
+                $("#frmSuperuserSelect").hide("slow"),
+                $("#frmUserSelect").hide("slow"),
+                $("#frmActivityTypeSelect").hide("slow"),
+                $("#pnlTimeframeParams").show("slow"),
+                $("#noPreview").show(),
+                $("#reportPreview").hide()
+            }
+        });
+
+        $("#ddlTimeframe").change(function () {
+            if ($("#ddlTimeframe").val() == "5") {
+                $("#frmStartDate").show("slow")
+                $("#frmEndDate").show("slow")
+            } else {
+                $("#frmStartDate").hide("slow")
+                $("#frmEndDate").hide("slow")
+            }
+        });
+
+        $("#ddlUser").change(function () {
+            if ($("#ddlTimeframe").val() == "5") {
+                $("#frmStartDate").show("slow")
+                $("#frmEndDate").show("slow")
+            } else {
+                $("#frmStartDate").hide("slow")
+                $("#frmEndDate").hide("slow")
+            }
+        });
+
+        $("#ddlActivityType").change(function () {
+            if ($("#ddlTimeframe").val() == "5") {
+                $("#frmStartDate").show("slow")
+                $("#frmEndDate").show("slow")
+            } else {
+                $("#frmStartDate").hide("slow")
+                $("#frmEndDate").hide("slow")
+            }
+        });
+    })
+    </script>
+
+    <script type="text/javascript">
+        //$(function () {
+        //    $('#StartDate').datetimepicker({
+        //        viewMode: 'years',
+        //        format: 'D MMM YYYY HH:mm',
+        //        icons: {
+        //            time: "mdl2icon mdl2-time",
+        //            date: "mdl2icon mdl2-date",
+        //            up: "mdl2icon mdl2-up",
+        //            down: "mdl2icon mdl2-down"
+        //        }
+        //    });
+        //});
+        //$(function () {
+        //    $('#EndDate').datetimepicker({
+        //        viewMode: 'years',
+        //        format: 'D MMM YYYY HH:mm',
+        //        icons: {
+        //            time: "mdl2icon mdl2-time",
+        //            date: "mdl2icon mdl2-date",
+        //            up: "mdl2icon mdl2-up",
+        //            down: "mdl2icon mdl2-down"
+        //        }
+        //    });
+        //});
+
+  @*$(function () {
+    $('#StartDate').datetimepicker({
+      defaultDate: '@System.DateTime.Today',
+      format: 'D MMM YYYY',
+      showClose: true,
+      showClear: true,
+      toolbarPlacement: 'top',
+      //locale: 'en-gb'
+    });
+    $('#EndDate').datetimepicker({
+      defaultDate: '@System.DateTime.Today',
+      format: 'D MMM YYYY',
+      showClose: true,
+      showClear: true,
+      toolbarPlacement: 'top',
+      //locale: 'en-gb'
+    });
+    $('#AnnualMeetingStartTime').datetimepicker({
+      defaultDate: '@System.DateTime.Now',
+      format: 'LT',
+      showClose: true,
+      showClear: true,
+      toolbarPlacement: 'top',
+      stepping: 15
+    });
+  });*@
+    </script>
+}

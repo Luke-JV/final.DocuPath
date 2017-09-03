@@ -386,7 +386,10 @@ namespace DocuPath.Models
             return inRaw;
         }
 
-
+        public static double CalcRoundedPercentage(int inNumerator, int inDenominator)
+        {
+            return Math.Round(Convert.ToDouble(inNumerator) / Convert.ToDouble(inDenominator), 0);
+        }
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region ERROR HANDLING:

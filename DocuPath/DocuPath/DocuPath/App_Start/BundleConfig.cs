@@ -10,7 +10,8 @@ namespace DocuPath
         {
             #region jQuery Bundles:
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/autogrow.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootgrid").Include(
                         "~/Scripts/jquery.bootgrid.js"));

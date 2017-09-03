@@ -1,47 +1,881 @@
-﻿@model DocuPath.DataLayer.ACCESS_LEVEL
+﻿@model DocuPath.Models.DPViewModels.AccessLevelViewModel
+@{ ViewBag.Title = "Edit"; }
 
-@{
-    ViewBag.Title = "Edit";
-}
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Access Levels", "All", "AccessLevel") </li>
+    <li class="active">@Html.ActionLink("Edit Access Level", "Edit") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-login"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">EDIT ACCESS LEVEL</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/AccessLevel/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
 
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>ACCESS_LEVEL</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.AccessLevelID)
+    <input id="btnPOST" class="hidden" type="submit" />
+    <div class="form-horizontal border-generic form-generic">
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-2" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
+                        <span>LEVEL DETAILS</span>
+                    </div>
+                    <div class="panel-body">
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.AccessLevelID, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.AccessLevelID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: center" })
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.IsDeactivated)
+                                        @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.accessLevel.LevelName, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.accessLevel.LevelName, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessageFor(model => model.accessLevel.LevelName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeactivated)
-                    @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+            <div class="col-md-10" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px; height: 100%">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
+                        <span>FUNCTION GROUP SETUP</span>
+                    </div>
+                    <div class="panel-body" style="height: 71.4px">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @Html.Label("CORTEX:", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align: left; margin-right: 5px; margin-top: 2.5px" })
+                                        <label class="checkbox-inline">
+                                            <input id="tglFC" type="checkbox" data-toggle="toggle" data-on="Forensic Case" data-off="Forensic Case" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglERC" type="checkbox" data-toggle="toggle" data-on="External Review Case" data-off="External Review Case" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="135" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglLC" type="checkbox" data-toggle="toggle" data-on="Legacy Case" data-off="Legacy Case" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                                        </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.Label("CORNEA:", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align: left; margin-right: 5px; margin-top: 2.5px" })
+                                        <label class="checkbox-inline">
+                                            <input id="tglMedia" type="checkbox" data-toggle="toggle" data-on="Media Repository" data-off="Media Repository" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="115" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglINSIGHT" type="checkbox" data-toggle="toggle" data-on="INSIGHT Reporting" data-off="INSIGHT Reporting" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglVISION" type="checkbox" data-toggle="toggle" data-on="VISION Dashboard" data-off="VISION Dashboard" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="115" onchange="toggleFunctionGroups()">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @Html.Label("PULSE:", htmlAttributes: new { @class = "control-label col-md-1", @style = "text-align: left; margin-right: 5px; margin-top: 2.5px" })
+                                        <label class="checkbox-inline">
+                                            <input id="tglSP" type="checkbox" data-toggle="toggle" data-on="Service Providers" data-off="Service Providers" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglSR" type="checkbox" data-toggle="toggle" data-on="Service Requests" data-off="Service Requests" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglScheduling" type="checkbox" data-toggle="toggle" data-on="Scheduling" data-off="Scheduling" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglUser" type="checkbox" data-toggle="toggle" data-on="Users" data-off="Users" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglAuditTrail" type="checkbox" data-toggle="toggle" data-on="Audit Trail" data-off="Audit Trail" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="100" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglUAL" type="checkbox" data-toggle="toggle" data-on="Access Levels" data-off="Access Levels" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input id="tglCT" type="checkbox" data-toggle="toggle" data-on="Content Tags" data-off="Content Tags" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="120" onchange="toggleFunctionGroups()">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row" style="margin-left: -5px; margin-top: 5px">
+            <div class="col-md-12" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px; height: 100%">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-accessarea panel-mdl2icon"></span>
+                        <span>ACCESS AREA SETUP</span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="nofxgroups" class="border-generic text-center" style="height: 140px; padding: 5px; margin-top: 40px; margin-bottom: 50px; margin-left: auto; margin-right: auto; width: 50%; background-color: #ededed; margin-top: 50px; margin-bottom: 50px">
+                            <div class="row" style="height: 50%; padding-left: 15px; padding-right: 15px">
+                                <img src="~/Content/Resources/NoFunctionGroupsActive.png" style="max-width: 500px" />
+                            </div>
+                        </div>
+                        <div class="container" id="timelinecontainer">
+                            <article id="timeline">
+                                <ul class="timeline" id="bSTime">
+                                    @* FORENSIC CASE *@
+                                    <li id="timelineFC" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-fc timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-fc timeline-mdl2icon"></span> Forensic Case</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#FCPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="FCPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Forensic Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.FCAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.FCAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.FCAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.FCAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="primaryfooter" class="panel-footer text-center">
+                                                                    <input id="showSecondaryCOD" class="btn btn-default btn-generic" type="button" style="width: auto; margin-top: 0px" value="Add Secondary Estimation"/>
+
+                                                                    <button id="showSecondaryCOD" type="button" data-toggle="collapse" data-target="#PRIMARYPANEL" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                                        <i class="mdl2icon mdl2-add"></i>
+                                                                        Add Secondary
+                                                                    </button>
+                                                                </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* EXTERNAL REVIEW CASE *@
+                                    <li id="timelineERC" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-erc timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-erc timeline-mdl2icon"></span> External Review Case</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#ERCPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="ERCPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to External Review Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.ECAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.ECAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.ECAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.ECAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* LEGACY CASE *@
+                                    <li id="timelineLC" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-lc timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-lc timeline-mdl2icon"></span> Legacy Case</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#LCPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="LCPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Legacy Case Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.LCAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.LCAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.LCAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.LCAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* MEDIA *@
+                                    <li id="timelineMedia" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-media timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-media timeline-mdl2icon"></span> Media</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#MEDIAPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="MEDIAPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Media Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.MediaAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.MediaAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.MediaAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.MediaAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* INSIGHT *@
+                                    <li id="timelineINSIGHT" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-reporting timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-reporting timeline-mdl2icon"></span> Insight Reporting</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#INSIGHTPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="INSIGHTPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to INSIGHT Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.InsightAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.InsightAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.InsightAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.InsightAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* VISION *@
+                                    <li id="timelineVISION" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-sysoverview timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-sysoverview timeline-mdl2icon"></span> VISION Reporting</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#VISIONPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="VISIONPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to VISION Reporting Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Reporting"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.VisionAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.VisionAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.VisionAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.VisionAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* SERVICE PROVIDERS *@
+                                    <li id="timelineSP" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-serviceprovider timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-serviceprovider timeline-mdl2icon"></span> Service Providers</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#SPPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="SPPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Service Provider Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.SPAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SPAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SPAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SPAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* SERVICE REQUESTS *@
+                                    <li id="timelineSR" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-servicerequest timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-servicerequest timeline-mdl2icon"></span> Service Requests</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#SRPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="SRPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Service Request Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.SRAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SRAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SRAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SRAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* SCHEDULING *@
+                                    <li id="timelineScheduling" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-datetime timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-datetime timeline-mdl2icon"></span> Scheduling</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#SchedulingPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="SchedulingPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Scheduling Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.SchedulingAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.SchedulingAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.SchedulingAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.SchedulingAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* USERS *@
+                                    <li id="timelineUser" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-user timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-user timeline-mdl2icon"></span> Users</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#UserPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="UserPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to User Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.UserAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.UserAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.UserAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.UserAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* AUDIT TRAIL *@
+                                    <li id="timelineAuditTrail" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-auditlog timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-auditlog timeline-mdl2icon"></span> Audit Trail</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#AuditTrailPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="AuditTrailPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Audit Trail Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.AuditAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.AuditAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.AuditAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.AuditAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* USER ACCESS LEVEL *@
+                                    <li id="timelineUAL" class="timeline-inverted" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-login timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-login timeline-mdl2icon"></span> User Access Levels</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#UALPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="UALPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to User Access Level Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.AccessLevelAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.AccessLevelAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.AccessLevelAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.AccessLevelAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    @* CONTENT TAGS *@
+                                    <li id="timelineCT" style="margin-bottom: 0px">
+                                        <div class="timeline-badge"><i class="mdl2icon mdl2-tag timeline-badge-mdl2icon"></i></div>
+                                        <div class="timeline-panel">
+                                            <div class="timeline-heading">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <h4 class="timeline-title"><span class="mdl2icon mdl2-tag timeline-mdl2icon"></span> Content Tags</h4>
+                                                    </div>
+                                                </div>
+                                                @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                            </div>
+                                            <div class="timeline-body">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#CTPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                                        </div>
+                                                        <div id="CTPANEL" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    @Html.Label("Toggle Access to Content Tag Functions", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                                    <div class="col-md-12">
+                                                                        @*@foreach (var item in Model.allAreas.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
+                                                                            {
+                                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios"> @item.AccessAreaDescription</label></div>
+                                                                            }*@
+                                                                        @for (int i = 0; i < Model.ContentTagAreas.Count; i++)
+                                                                        {
+                                                                            @Html.HiddenFor(m => m.ContentTagAreas[i].areaName);
+                                                                            <div class="checkbox">
+                                                                                <label>
+                                                                                    @Html.CheckBoxFor(m => m.ContentTagAreas[i].hasAccess, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.ContentTagAreas[i].areaName
+                                                                                </label>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<div id="secondaryfooter" class="panel-footer text-center"></div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </article>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+    @*<div class="form-horizontal">
+            <h4>ACCESS_LEVEL</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.AccessLevelID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.AccessLevelID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LevelName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LevelName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LevelName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsDeactivated, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsDeactivated)
+                        @Html.ValidationMessageFor(model => model.IsDeactivated, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#nofxgroups").show(),
+                $("#timelinecontainer").hide(),
+                $("#timelineFC").hide(),
+                $("#timelineERC").hide(),
+                $("#timelineLC").hide(),
+                $("#timelineMedia").hide(),
+                $("#timelineINSIGHT").hide(),
+                $("#timelineVISION").hide(),
+                $("#timelineSP").hide(),
+                $("#timelineSR").hide(),
+                $("#timelineScheduling").hide(),
+                $("#timelineUser").hide(),
+                $("#timelineAuditTrail").hide(),
+                $("#timelineUAL").hide(),
+                $("#timelineCT").hide()
+        });
+    </script>
+    <script type="text/javascript">
+        $(function toggleFunctionGroups() {
+            $activecount = 0;
+
+            $('input[type=checkbox]').change(function () {
+                if ($('#tglFC').prop("checked") == true) { $('#timelineFC').show('slow') } else { $('#timelineFC').hide('slow') };
+                if ($('#tglERC').prop("checked") == true) { $('#timelineERC').show('slow') } else { $('#timelineERC').hide('slow') };
+                if ($('#tglLC').prop("checked") == true) { $('#timelineLC').show('slow') } else { $('#timelineLC').hide('slow') };
+                if ($('#tglMedia').prop("checked") == true) { $('#timelineMedia').show('slow') } else { $('#timelineMedia').hide('slow') };
+                if ($('#tglINSIGHT').prop("checked") == true) { $('#timelineINSIGHT').show('slow') } else { $('#timelineINSIGHT').hide('slow') };
+                if ($('#tglVISION').prop("checked") == true) { $('#timelineVISION').show('slow') } else { $('#timelineVISION').hide('slow') };
+                if ($('#tglSP').prop("checked") == true) { $('#timelineSP').show('slow') } else { $('#timelineSP').hide('slow') };
+                if ($('#tglSR').prop("checked") == true) { $('#timelineSR').show('slow') } else { $('#timelineSR').hide('slow') };
+                if ($('#tglScheduling').prop("checked") == true) { $('#timelineScheduling').show('slow') } else { $('#timelineScheduling').hide('slow') };
+                if ($('#tglUser').prop("checked") == true) { $('#timelineUser').show('slow') } else { $('#timelineUser').hide('slow') };
+                if ($('#tglAuditTrail').prop("checked") == true) { $('#timelineAuditTrail').show('slow') } else { $('#timelineAuditTrail').hide('slow') };
+                if ($('#tglUAL').prop("checked") == true) { $('#timelineUAL').show('slow') } else { $('#timelineUAL').hide('slow') };
+                if ($('#tglCT').prop("checked") == true) { $('#timelineCT').show('slow') } else { $('#timelineCT').hide('slow') };
+
+                if ($('#tglFC').prop("checked") == true || $('#tglERC').prop("checked") == true || $('#tglLC').prop("checked") == true || $('#tglMedia').prop("checked") == true || $('#tglINSIGHT').prop("checked") == true || $('#tglVISION').prop("checked") == true || $('#tglSP').prop("checked") == true || $('#tglSR').prop("checked") == true || $('#tglScheduling').prop("checked") == true || $('#tglUser').prop("checked") == true || $('#tglAuditTrail').prop("checked") == true || $('#tglUAL').prop("checked") == true || $('#tglCT').prop("checked") == true)
+                { $("#timelinecontainer").show("slow"); $("#nofxgroups").hide("slow") } else { $("#timelinecontainer").hide("slow"); $("#nofxgroups").show("slow") }
+            });
+        })
+    </script>
+    <script>
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+            $('#btnSave').blur();
+        });
+    </script>
+}
