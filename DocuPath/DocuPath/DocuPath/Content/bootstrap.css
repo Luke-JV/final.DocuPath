@@ -6045,6 +6045,19 @@ button.close {
   margin-right: 15px;
 }*/
 
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle at center, #ffffff, #cccccc);
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -6056,6 +6069,8 @@ button.close {
   overflow: auto;
   overflow-y: scroll;
 }
+
+
 
 .modal.fade .modal-dialog {
   -webkit-transform: translate(0, -25%);
@@ -9929,16 +9944,9 @@ a.cal-event-week {
         grid-template-rows: 1fr;
         grid-template-areas:    "form decor";
     }
-
-    /*.login-grid div {
-        border: 1px solid black;
-    }*/
-
     .login-form {
-        /*border: 1px solid black;*/
         background-color: #e6e6e6;
     }
-
     .login-title {
         font-family: 'U.S. 101';
         font-weight: normal;
@@ -9947,7 +9955,6 @@ a.cal-event-week {
         margin-bottom: 15px;
         padding-left: 15px;
     }
-
     .fullheight {
         height: 34px;
         margin-bottom: 0;
@@ -9956,11 +9963,9 @@ a.cal-event-week {
         display: grid;
         align-items: center;
     }
-    
     .login-decor {
         z-index: -10;
     }
-
     .login-form-grid {
         height: 100%;
         grid-gap: 0px;
@@ -9971,7 +9976,6 @@ a.cal-event-week {
                                 "spacer2";
 
     }
-
     .menu-form-grid {
         height: 100%;
         grid-gap: 0px;
@@ -9982,7 +9986,6 @@ a.cal-event-week {
                                 "spacer2";
 
     }
-
     .fieldset {
         grid-gap: 5px;
         grid-template-columns: 1fr;
@@ -9995,10 +9998,6 @@ a.cal-event-week {
         align-items: center;                 
     }
 
-    /*.fieldset div {
-        border: 1px solid black;
-    }*/
-
     .sidenav-grid {
         grid-gap: 0px;
         grid-template-columns: 1fr;
@@ -10007,13 +10006,11 @@ a.cal-event-week {
         grid-template-areas: "neuron_hdr"
                              "neuron_body";
     }
-
     .sidenav-hdr-subgrid {
         grid-gap: 10px;
         grid-template-columns: 25px 1fr 45px;
         grid-template-areas: "icon hdrtxt closebtn";
     }
-
     .sidenav-notification-grid {
         grid-gap: 2.5px;
         grid-template-columns: 1fr;
@@ -10022,14 +10019,12 @@ a.cal-event-week {
                                 "summary"
                                 "detail";
     }
-
     .sidenav-notification-title-subgrid {
         grid-gap: 2.5px;
         grid-template-columns: 24px 1fr minmax(80px, auto);
         grid-template-rows: 24px;
         grid-template-areas:    "icon title timestamp";
     }
-
     .content-subgrid {
         width: auto;
         grid-gap: 0px;
@@ -10040,7 +10035,6 @@ a.cal-event-week {
                              "ftr";
         transition: all 0.5s;
     }
-
     .homepage-grid {
        margin-top: -25px;
        height: calc(100vh - 50px);
@@ -10053,7 +10047,6 @@ a.cal-event-week {
         grid-template-columns: 1fr 1fr;
         grid-template-areas: "decoration menu";*/
     }
-
     .homepage-menu-container {
         grid-area: "dpmenu";
         margin: auto;
@@ -10079,8 +10072,6 @@ a.cal-event-week {
         background-size: contain;
         background-repeat: repeat-x;
     }
-
-    
     .hdr-grid {
 		grid-gap: 0px;
 		grid-template-columns: minmax(auto, auto) minmax(auto, 1fr);
@@ -10094,7 +10085,6 @@ a.cal-event-week {
 		text-align: center;
 		padding-top: 3px;
 	}
-
     .page-btns {
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
@@ -10110,7 +10100,6 @@ a.cal-event-week {
         height: 50px;
         margin-top: -2px;
 	}
-
     .circuitry-right-motif {
         height: 50px;
         margin-top: -1px;
@@ -10125,51 +10114,38 @@ a.cal-event-week {
 		padding-top: 3px;
 		justify-content: center;
 	}
-
     .buttons-none {
 		grid-template-columns: 54.01px 1fr 84.38px;
         grid-template-areas: "left blank right";
 	}
-
 	.buttons-one {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, 45px) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 blank right";
 	}
-
 	.buttons-two {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(2, 45px) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 blank right";
 	}
-
 	.buttons-three {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(3, 45px) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 blank right";
 	}
-
 	.buttons-four {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(4, 45px) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 blank right";
 	}
-
 	.buttons-five {
 		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(5, 45px) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 blank right";
 	}
 
-	.page-buttons-subgrid div {
-		/*border: 1px solid black;*/
-	}
-
 	.page-header {
 		border-bottom-left-radius: 10px;
 		border-top-left-radius: 10px;
-		/*border-right: 1px solid black;*/
 		background-color: lightgrey;
 		padding-left: 5px;
 	}
-
 	.page-buttons {
-		/*border: 1px solid black;*/
 		border-bottom-right-radius: 10px;
 		border-top-right-radius: 10px;
 		background-color: lightgrey;
@@ -10186,13 +10162,11 @@ a.cal-event-week {
                                 "btns_view_password"
                                 "btnLogout";
     }
-
     .account-initials-name-subgrid {
         grid-gap: 5px;
 		grid-template-columns: 45px 1fr;
         grid-template-areas:    "initials name_email";
     }
-
     .account-name-email-subgrid {
         grid-gap: 11px;
 		grid-template-columns: 1fr;
@@ -10200,7 +10174,6 @@ a.cal-event-week {
         grid-template-areas:   "name"
                                "email";
     }
-        
     .account-btns-subgrid {
         grid-gap: 10px;
 		grid-template-columns: repeat(2, 1fr);
@@ -10214,11 +10187,9 @@ a.cal-event-week {
 		background-color: rgba(90,90,90,1);
         z-index: 3000;
 	}
-
     .ftr-pad-left {
         padding-left: 120px;
     }
-
     .ftr-pad-right {
         padding-right: 120px;
     }

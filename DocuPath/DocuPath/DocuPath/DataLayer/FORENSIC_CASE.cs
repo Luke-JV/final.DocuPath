@@ -54,6 +54,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Contact Details")]
         public string ActingOfficerContactNum { get; set; }
         [DisplayName("Cause Of Death Conclusion")]
+        [DataType(DataType.MultilineText)]
         public string CauseOfDeathConclusion { get; set; }
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }

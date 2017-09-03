@@ -4,6 +4,7 @@ using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -43,9 +44,6 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case");
                 #endregion
-
-                
-
                 #region PREPARE MODEL
                 var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
 
@@ -61,7 +59,6 @@ namespace DocuPath.Controllers
                 model.stats = new CASE_STATISTICS();
                 model.provinces = db.PROVINCE.ToList();
                 model.events = db.EVENT.ToList();
-                model.caseCODEstimations = new List<CASE_COD_ESTIMATION>();
                 model.sampleInvestigations = db.SAMPLE_INVESTIGATION.ToList();
                 model.medTreatments = db.MEDICAL_TREATMENTS.ToList();
                 model.injuryScenes = db.SCENE_OF_INJURY.ToList();
@@ -135,14 +132,23 @@ namespace DocuPath.Controllers
                     model.selectedSpecialCategories.Add(newKVP);
                 }
 
-                model.provinceEvents = new List<SPE_KVP>();
-                foreach (var item in model.events)
-                {
-                    SPE_KVP newSPE = new SPE_KVP();
-                    newSPE.eventID = item.EventID;                   
-                    model.provinceEvents.Add(newSPE);
-                }
-                model.stationRoles = new List<stationRolesKVP>();
+                //model.provinceEvents = new List<SPE_KVP>();
+                //foreach (var item in model.events)
+                //{
+                //    SPE_KVP newSPE = new SPE_KVP();
+                //    newSPE.eventID = item.EventID;                   
+                //    model.provinceEvents.Add(newSPE);
+                //}
+                //model.stationRoles = new List<stationRolesKVP>();
+
+                model.primaryCODEst = new CASE_COD_ESTIMATION();
+                model.primaryCODEst.ProminenceID = 1;
+                model.secondaryCODEst = new CASE_COD_ESTIMATION();
+                model.secondaryCODEst.ProminenceID = 2;
+                model.tertiaryCODEst = new CASE_COD_ESTIMATION();
+                model.tertiaryCODEst.ProminenceID = 3;
+                model.quaternaryCODEst = new CASE_COD_ESTIMATION();
+                model.quaternaryCODEst.ProminenceID = 4;
 
                 model.otherSamplesInvestigationsDescription = "";
                 model.otherRaceDescription = "";
@@ -154,27 +160,34 @@ namespace DocuPath.Controllers
                 model.otherExternalCauseDescription = "";
                 model.otherSpecialCategoryDescription = "";
 
-                model.DeathProvinceId = 10;
-                model.ProcessingProvinceId = 10;
-                model.OccurrenceProvinceId = 10;
-                model.TreatmentProvinceId = 10;
-                model.ReportProvinceId = 10;
+                model.DeathProvinceId = 1;
+                model.otherDeathProvinceDesc = "";
+                model.ProcessingProvinceId = 1;
+                model.otherProcessingProvinceDesc = "";
+                model.OccurrenceProvinceId = 1;
+                model.otherOccurrenceProvinceDesc = "";
+                model.TreatmentProvinceId = 1;
+                model.otherTreatmentProvinceDesc = "";
+                model.ReportProvinceId = 1;
+                model.otherReportProvinceDesc = "";
 
                 model.JurisdictionStationID = 0;
+                model.JurisdictionStationName = "";
                 model.ProcessingStationID = 0;
+                model.ProcessingStationName = "";
                 model.InvestigationStationID = 0;
+                model.InvestigationStationName = "";
 
                 #endregion
                 return View(model);
-
-                
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, "ForensicCase", "Add"));
             }
         }
 
@@ -200,12 +213,13 @@ namespace DocuPath.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, "ForensicCase", "Add"));
             }
         }
         #endregion
@@ -413,7 +427,53 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region NON-CRUD ACTIONS:
+        public ActionResult GetSP(string query)
+        {
+            try
+            {
 
+                return Json(_GetSP(query), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        private List<Autocomplete> _GetSP(string query)
+        {
+            List<Autocomplete> serviceProviders = new List<Autocomplete>();
+            try
+            {
+                var spResults = (from sp in db.SERVICE_PROVIDER
+                                  where sp.CompanyName.Contains(query)
+                                  orderby sp.CompanyName
+                                  select sp).ToList();
+
+                foreach (var result in spResults)
+                {
+                    Autocomplete provider = new Autocomplete();
+                    provider.Name = result.CompanyName;
+                    provider.Id = result.ServiceProviderID;
+                    serviceProviders.Add(provider);
+                }
+            }
+            catch (EntityCommandExecutionException eceex)
+            {
+                if (eceex.InnerException != null)
+                {
+                    RedirectToAction("Error", "Home", eceex.Message);
+                }
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                RedirectToAction("Error", "Home", x.Message);
+            }
+            return serviceProviders;
+        }
         #endregion
     }
 }
