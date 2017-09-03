@@ -191,13 +191,14 @@
 
         // Toggle Thumbnail Size:
         $("#btnThumbnailSizeToggle").click(function () {
-            var $target = $("#allFC");
-            var $condensed = "table-condensed";
-            var $minimal = "table-minimal"
-            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
-            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
-            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
-            $("#btnDensityToggle").blur()
+            var $target = $(".media-thumb");
+            var $large = "thumbsize-expanded";
+            if ($target.hasClass($large)) {
+                $target.removeClass($large);
+            } else {
+                $target.addClass($large);
+            }
+            $("#btnThumbnailSizeToggle").blur()
         });
 
         // Toggle Table Density:

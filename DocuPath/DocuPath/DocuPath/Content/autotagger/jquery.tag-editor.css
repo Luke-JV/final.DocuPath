@@ -21,15 +21,15 @@
 
 /* tag style */
 .tag-editor .tag-editor-tag {
-    padding-left: 5px; color: #46799b; background: #e0eaf1; white-space: nowrap;
+    padding-left: 5px; color: #AE1F1F !important; background: #d7d7d7; white-space: nowrap; font-family: 'Segoe UI'; font-weight: bold; font-size: 75%; text-transform: uppercase; letter-spacing: 0.2px;
     overflow: hidden; cursor: pointer; border-radius: 2px 0 0 2px;
 }
 
 /* delete icon */
-.tag-editor .tag-editor-delete { background: #e0eaf1; cursor: pointer; border-radius: 0 2px 2px 0; padding-left: 3px; padding-right: 4px; }
-.tag-editor .tag-editor-delete i { line-height: 18px; display: inline-block; }
-.tag-editor .tag-editor-delete i:before { font-size: 16px; color: #8ba7ba; content: "×"; font-style: normal; }
-.tag-editor .tag-editor-delete:hover i:before { color: #d65454; }
+.tag-editor .tag-editor-delete { background: #d7d7d7; cursor: pointer; border-radius: 0 2px 2px 0; padding-left: 0px; padding-right: 4px; }
+.tag-editor .tag-editor-delete i { line-height: 18px; display: inline-block }
+.tag-editor .tag-editor-delete i:before { font-size: 14px; color: #999; content: "×"; font-style: normal; }
+.tag-editor .tag-editor-delete:hover i:before { color: #fff; }
 .tag-editor .tag-editor-tag.active+.tag-editor-delete, .tag-editor .tag-editor-tag.active+.tag-editor-delete i { visibility: hidden; cursor: text; }
 
 .tag-editor .tag-editor-tag.active { background: none !important; }

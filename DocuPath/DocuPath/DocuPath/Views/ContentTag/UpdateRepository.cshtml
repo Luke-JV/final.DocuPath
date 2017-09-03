@@ -1,0 +1,115 @@
+﻿@{ ViewBag.Title = "Update Repository"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Content Tags", "All", "ContentTag") </li>
+    <li class="active">@Html.ActionLink("Update Repository", "UpdateRepository") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-sync"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">UPDATE REPOSITORY</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ContentTag/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnProceed" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD & PROCEED"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic">
+    <form action="~/ContentTag/ParseXML"><input id="btnPOST" class="hidden" type="submit" /></form>
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-12" style="padding-left: 5px; padding-right: 15px">
+            <div class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                    <span>SELECT ICD10 XML FILE TO UPLOAD</span>
+                </div>
+                <div class="panel-body apad5">
+                    <div class="row">
+                        <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                            <input id="ICD10XML" name="ICD10XML" type="file" @*class="file-loading"*@ />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#ICD10XML").fileinput({
+                theme: "fa",
+                uploadUrl: "/ContentTag/ParseXML",
+                fileActionSettings: {
+                    showUpload: false
+                },
+            });
+
+        $('#btnProceed').click(function () {
+            // Checking whether FormData is available in browser
+            if (window.FormData !== undefined) {
+                var files = $("#ICD10XML").fileinput('getFileStack');
+
+                // Create FormData object
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                gdata = fileData;
+
+                // Adding one more key to FormData object
+                // none needed here
+                //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                $.ajax({
+                    url: '/ContentTag/ParseXML',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        alert(result); //Throw Success Modal 404
+                        document.getElementById("btnPOST").click();
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+        $('#btnProceed').blur();
+    });
+    </script>
+
+}
