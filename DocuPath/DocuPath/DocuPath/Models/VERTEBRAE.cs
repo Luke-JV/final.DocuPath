@@ -144,15 +144,15 @@ namespace DocuPath.Models
         }
         public static USER getCurrentUser()
         {
-            using (DocuPathEntities db = new DocuPathEntities())
-            {
-                int id = HttpContext.Current.User.Identity.GetUserId<int>();
-                USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
-                currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
-                currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
+            DocuPathEntities db = new DocuPathEntities();
 
-                return currentUser;
-            }
+            int id = HttpContext.Current.User.Identity.GetUserId<int>();
+            USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
+            currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
+            currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
+
+            return currentUser;
+
         }
         public static List<METRIC> GetVisionMetrics()
         {

@@ -16,12 +16,8 @@ namespace DocuPath.Models.DPViewModels
     {
         
         public List<MEDIA> mediaList { get; set; }
-        //public List<MEDIA_PURPOSE> purposeList = new List<MEDIA_PURPOSE>();
-        //public List<FORENSIC_CASE> fcList = new List<FORENSIC_CASE>();
+        public List<MEDIA_PURPOSE> purposeList { get; set; }
+        public List<FORENSIC_CASE> fcList { get; set; }
     }
-    public class MediaPOSTViewModel
-    {
 
-        public List<MEDIA> mediaList = new List<MEDIA>();
-    }
 }
