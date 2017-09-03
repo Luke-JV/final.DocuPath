@@ -34,7 +34,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "VISION");
+                #endregion
                 ViewBag.VISIONMetrics = VERTEBRAE.GetVisionMetrics();
 
                 //List<SelectListItem> selectSuperusers = new List<SelectListItem>();
@@ -72,6 +74,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "VISION");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -81,11 +86,20 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "Media");
+                #endregion
 
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
+                #endregion
                 return null;//404
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

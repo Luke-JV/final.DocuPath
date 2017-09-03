@@ -57,12 +57,15 @@ namespace DocuPath.Controllers
                 model.fcList = cases.ToList();
                 model.purposeList = db.MEDIA_PURPOSE.ToList();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Media");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -74,6 +77,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Media");
+                #endregion
                 return View(model);
             }
 
@@ -81,14 +87,14 @@ namespace DocuPath.Controllers
             {
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Media");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Media");
                 #endregion
                 return View();
             }
@@ -102,16 +108,18 @@ namespace DocuPath.Controllers
         {
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Media");
+                #endregion
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Media");
                 #endregion
                 return View(db.MEDIA.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Media");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -122,7 +130,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Media");
+                #endregion
                 #region MODEL POPULATION
                 MediaViewModel model = new MediaViewModel();
                 model.media = db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault();
@@ -137,12 +147,15 @@ namespace DocuPath.Controllers
                 }
                 #endregion
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "Media");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -155,18 +168,21 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Media");
+                #endregion
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
 
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
+                
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -177,6 +193,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Media");
+                #endregion
                 return View(collection);
             }
 
@@ -184,14 +203,14 @@ namespace DocuPath.Controllers
             {
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Media");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Media");
                 #endregion
                 return View();
             }
@@ -205,7 +224,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Media");
+                #endregion
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
@@ -214,12 +235,15 @@ namespace DocuPath.Controllers
                 db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Media");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -271,7 +295,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Media");
+                #endregion
                 // Checking no of files injected in Request object  
                 if (Request.Files.Count > 0)
                 {
@@ -346,12 +372,17 @@ namespace DocuPath.Controllers
                         }
 
                         db.SaveChanges();
-
+                        #region AUDIT_WRITE
+                        AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Media");
+                        #endregion
                         // Returns message that successfully uploaded  
                         return Json("File Uploaded Successfully!");
                     }
                     catch (Exception ex)
                     {
+                        #region AUDIT_WRITE
+                        AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Media");
+                        #endregion
                         return Json("Error occurred. Error details: " + ex.Message);
                     }
                 }

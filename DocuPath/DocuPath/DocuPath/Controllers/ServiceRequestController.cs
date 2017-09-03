@@ -41,12 +41,15 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Service Request");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Service Request");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -58,6 +61,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Service Request");
+                #endregion
                 return View(SR);
             }
 
@@ -67,14 +73,14 @@ namespace DocuPath.Controllers
                 db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Service Request");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Service Request");
                 #endregion
                 return View();
             }
@@ -88,16 +94,19 @@ namespace DocuPath.Controllers
         {
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Service Request");
+                #endregion
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Service Request");
                 #endregion
                 return View(db.SERVICE_REQUEST.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Service Request");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -108,7 +117,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Service Request");
+                #endregion
                 #region MODEL POPULATION
                 SERVICE_REQUEST model = new SERVICE_REQUEST();
                 model = db.SERVICE_REQUEST.Where(x => x.ServiceRequestID == id).FirstOrDefault();
@@ -116,12 +127,15 @@ namespace DocuPath.Controllers
                 model.FORENSIC_CASE = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == model.ForensicCaseID).FirstOrDefault();
                 #endregion
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "Service Request");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Service Request");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -136,12 +150,15 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Service Request");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Service Request");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -152,6 +169,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Service Request");
+                #endregion
                 return View(updatedSR);
             }
 
@@ -164,14 +184,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Service Request");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Service Request");
                 #endregion
                 return View();
             }
@@ -185,16 +205,22 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Service Request");
+                #endregion
                 //404 CONFIRM
                 db.SERVICE_REQUEST.Where(x => x.ServiceRequestID == id).FirstOrDefault().IsCancelled = true;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Service Request");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Service Request");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

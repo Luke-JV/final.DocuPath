@@ -32,12 +32,19 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullInit, "Media");
+                #endregion
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullSuccess, "Media");
+                #endregion
                 return null;//404
             }
             catch (Exception)
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -47,11 +54,19 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushInit, "Media");
+                #endregion
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushSuccess, "Media");
+                #endregion
                 return null;//404
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushFail, "Media");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

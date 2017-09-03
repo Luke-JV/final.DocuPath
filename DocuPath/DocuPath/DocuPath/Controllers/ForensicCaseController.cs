@@ -43,10 +43,9 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case");
                 #endregion
-<<<<<<< HEAD
+
                 
-                return View();
-=======
+
                 #region PREPARE MODEL
                 var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
 
@@ -167,7 +166,8 @@ namespace DocuPath.Controllers
 
                 #endregion
                 return View(model);
->>>>>>> 2da6eb40ebbc2e906893957e06f2b25599651d97
+
+                
             }
             catch (Exception)
             {

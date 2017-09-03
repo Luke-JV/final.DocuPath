@@ -37,18 +37,21 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "User Management");
+                #endregion
 
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "User Management");
                 #endregion
                 return View(db.USER.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "User Management");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -59,6 +62,9 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "User Management");
+                #endregion
                 #region MODEL POPULATION
                 USER model = new USER();
                 model = db.USER.Where(x => x.UserID == id).FirstOrDefault();
@@ -66,13 +72,15 @@ namespace DocuPath.Controllers
                 #endregion
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "User Management");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "User Management");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -87,7 +95,7 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "User Management");
                 #endregion
                 return View();
 
@@ -95,7 +103,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
+                #endregion
                 return RedirectToAction("Error", "Home"); ;
             };
         }
@@ -106,6 +116,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
+                #endregion
                 return View(updatedUser);
             }
 
@@ -118,14 +131,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "User Management");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
                 #endregion
                 return View();
             }
@@ -139,17 +152,22 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "User Management");
+                #endregion
                 //404 CONFIRM
                 db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "User Management");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "User Management");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -187,52 +205,38 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensInit, "User Management");
+                #endregion
                 TokenViewModel model = new TokenViewModel();
 
                 return View(model);
             }
             catch (Exception)
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensFail, "User Management");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
-
-        [HttpPost]
-        public ActionResult GenerateTokens(FormCollection collection)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View(collection);
-                }
-
-
-                return null;
-            }
-            catch (Exception)
-            {
-
-                return RedirectToAction("Error", "Home");
-            }
-        }
+        
 
         [HttpPost]
         public ActionResult GenerateTokens(TokenViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensFail, "User Management");
+                #endregion
                 return View(model);
             }
 
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-                #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
-                #endregion
+               
 
 
                 model.tokenList = new List<TOKEN_LOG>();
@@ -248,13 +252,15 @@ namespace DocuPath.Controllers
                 }
                 model.ualList = db.ACCESS_LEVEL.ToList();
                 model.tokenCount = model.tokenCount;
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensSuccess, "User Management");
+                #endregion
                 return View(model);
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensFail, "User Management");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -267,7 +273,7 @@ namespace DocuPath.Controllers
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 var userID = VERTEBRAE.getCurrentUser().UserID;
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "User Management");
                 #endregion
 
                 return RedirectToAction("Details", "User", new { id = userID });
@@ -275,7 +281,7 @@ namespace DocuPath.Controllers
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "User Management");
                 #endregion
                 return RedirectToAction("Error", "Home", x); // TODO 404: send the Error page the ENTIRE exception, not just the message! Already modified the action to accept an Exception
             }
@@ -288,7 +294,7 @@ namespace DocuPath.Controllers
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 var userID = VERTEBRAE.getCurrentUser().UserID;
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "User Management");
                 #endregion
 
                 return RedirectToAction("Edit", "User", new { id = userID });
@@ -296,7 +302,7 @@ namespace DocuPath.Controllers
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
                 #endregion
                 return RedirectToAction("Error", "Home", x);
             }
