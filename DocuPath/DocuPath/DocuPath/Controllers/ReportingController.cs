@@ -93,28 +93,28 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "Media");
                 #endregion
 
-                model = new ReportingViewModel();
-                model.query = new InsightQuery();
-                model.query.allUsers = new List<InsightUser>();
-                model.query.allActivityTypes = new List<ActivityType>();
+                //model = new ReportingViewModel();
+                //model.query = new InsightQuery();
+                //model.query.allUsers = new List<InsightUser>();
+                //model.query.allActivityTypes = new List<ActivityType>();
 
-                foreach (var item in db.USER)
-                {
-                    //if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
-                    //{
-                    InsightUser userToAdd = new InsightUser();
-                    InsightUser.
-                    model.query.allUsers.Add(new User { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
-                    //}
-                }
+                //foreach (var item in db.USER)
+                //{
+                //    //if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
+                //    //{
+                //    InsightUser userToAdd = new InsightUser();
+                //    InsightUser.
+                //    model.query.allUsers.Add(new User { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
+                //    //}
+                //}
 
-                model.query.reportToGenerate = 0;
-                model.query.timeframeToTarget = 0;
-                model.query.dateFrom = DateTime.Today;
-                model.query.dateTo = DateTime.Today;
-                model.query.suID = 0;
-                model.query.uID = 0;
-                model.query.activityTypeID = 0;
+                //model.query.reportToGenerate = 0;
+                //model.query.timeframeToTarget = 0;
+                //model.query.dateFrom = DateTime.Today;
+                //model.query.dateTo = DateTime.Today;
+                //model.query.suID = 0;
+                //model.query.uID = 0;
+                //model.query.activityTypeID = 0;
 
                 List<SelectListItem> selectSuperusers = new List<SelectListItem>();
                 List<SelectListItem> selectUsers = new List<SelectListItem>();

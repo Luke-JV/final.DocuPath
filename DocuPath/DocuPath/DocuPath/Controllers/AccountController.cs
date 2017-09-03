@@ -71,6 +71,10 @@ namespace DocuPath.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (!ModelState.IsValid)
             {
                 return View(model);//404 propagate            
@@ -157,17 +161,20 @@ namespace DocuPath.Controllers
             }
         }
         [AllowAnonymous]
-        public ActionResult RedeemToken(string token,string email)
+        public ActionResult RedeemToken(string id)
         {
+            TOKEN_LOG redemptionToken = new TOKEN_LOG();
             using (DocuPathEntities db = new DocuPathEntities())
             {
-                PasswordHasher x = new PasswordHasher();
-                string hash = x.HashPassword(token);
+                
+                PasswordHasher crypto = new PasswordHasher();
+                //string hash = crypto.HashPassword(id);
                 foreach (var tk in db.TOKEN_LOG)
                 {
-                    if (x.VerifyHashedPassword(hash,tk.TokenValue) == PasswordVerificationResult.Failed)
+                    if (crypto.VerifyHashedPassword(tk.TokenValue,id) != PasswordVerificationResult.Failed)
                     {
-                        return View("Register");
+                        db.TOKEN_LOG.Where(m => m.TokenID == tk.TokenID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
+                        return View("Register",new { id=tk.DestinationEmail});
                     }
                 }
 

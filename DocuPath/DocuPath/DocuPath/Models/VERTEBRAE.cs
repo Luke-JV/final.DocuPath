@@ -27,22 +27,22 @@ namespace DocuPath.Models
     public static class VERTEBRAE
     {
         #region OUTGOING COMMUNICATION:
-        public static void sendMail(string destination, string content)
+        public static void sendMail(string destination, string content,string subject)
         {
             //404 - mail logic here
             MailMessage outMail = new MailMessage();
-            outMail.To.Add("luke@cldrm.co.za");
+            outMail.To.Add(destination);
             outMail.From = new MailAddress("u13098536@tuks.co.za");
-            outMail.Subject = "DocuPath Registration Link";
+            outMail.Subject = subject;
             // TODO: 404 proper mail body html markup here
-            outMail.Body = "Bruh, \n\n Hit up localhost:5069/Account/Register?token=Aafv=H#qafewwAdfdawFw/ in order to register your User Profile. \n\nThis limited offer ends like tomorrow though... \n\nLit Regards,\nLuke";
+            outMail.Body = content;
 
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "smtp.gmail.com";
             smtp.Port = 587;
             smtp.UseDefaultCredentials = false;
             smtp.EnableSsl = true;
-            smtp.Credentials = new NetworkCredential("u13098536@tuks.co.za", "Ktm200xcw");
+            smtp.Credentials = new NetworkCredential("u13098536@tuks.co.za", xTx);
             smtp.Send(outMail);
 
         }
@@ -439,8 +439,15 @@ namespace DocuPath.Models
                 return e.ToString();
             }
         }
+
         #endregion
         //----------------------------------------------------------------------------------------------//
+
+        #region x
+        #region y
+        public static string xTx = "Ktm200xcw";  
+        #endregion
+        #endregion
     }
 
 }

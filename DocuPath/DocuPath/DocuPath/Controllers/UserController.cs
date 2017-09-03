@@ -1,6 +1,7 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
 using DocuPath.Models.DPViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,7 +13,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-   // [LogAction]
+    // [LogAction]
     public class UserController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -60,7 +61,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         public ActionResult All(UserViewModel model)
         {
-            return RedirectToAction("GenerateTokens",new { id = model.tkCount+1 });
+            return RedirectToAction("GenerateTokens", new { id = model.tkCount + 1 });
         }
         [AuthorizeByAccessArea(AccessArea = "View User - All Profiles")]
         public ActionResult Details(int id)
@@ -216,7 +217,12 @@ namespace DocuPath.Controllers
                 TokenViewModel model = new TokenViewModel();
                 model.tokenCount = id;
                 model.tokenList = new List<TOKEN_LOG>();
-                
+                model.ualList = db.ACCESS_LEVEL.ToList();
+                for (int i = 0; i < id; i++)
+                {
+                    model.tokenList.Add(new TOKEN_LOG());
+
+                }
                 return View(model);
             }
             catch (Exception)
@@ -227,7 +233,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        
+
 
         [HttpPost]
         public ActionResult GenerateTokens(TokenViewModel model)
@@ -239,30 +245,50 @@ namespace DocuPath.Controllers
                 #endregion
                 return View(model);
             }
-
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
-               
-
-
-                model.tokenList = new List<TOKEN_LOG>();
-                for (int i = 0; i < model.tokenCount; i++)
+                List<TOKEN_LOG> finalTokens = new List<TOKEN_LOG>();
+                foreach (var item in model.tokenList)
                 {
-                    //gen token
-                    //model.tokenList.Add(tk);
-                    TOKEN_LOG x = new TOKEN_LOG();
-
-                    x.IssueTimestamp = DateTime.Now;
-                    x.TokenValue = "xxxxx";
-                    model.tokenList.Add(x);
+                    TOKEN_LOG tk = new TOKEN_LOG();
+                    tk = VECTOR.GenerateToken(item.DestinationEmail);
+                    tk.IssueTimestamp = DateTime.Now;
+                    tk.AccessLevelID = item.AccessLevelID;
+                    finalTokens.Add(tk);
                 }
-                model.ualList = db.ACCESS_LEVEL.ToList();
-                model.tokenCount = model.tokenCount;
+                int count = 0;
+                foreach (var final in finalTokens)
+                {
+                    string mailbody = "";
+                    try
+                    {
+                        final.TokenID = db.TOKEN_LOG.Max(x => x.TokenID) + 1;
+                    }
+                    catch (Exception)
+                    {
+                        final.TokenID = 1;
+                    }
+
+                    mailbody = "Good Day,\n\n" +
+
+                               "Please follow the link below in order to register your User profile on the DocuPath system.\n" +
+                               "http://docupath.co.za/account/redeemtoken/"+final.TokenValue+"\n\n" +
+
+                               "Regards,\n" +
+                               "The DocuPath team";
+
+
+                    VERTEBRAE.sendMail(final.DestinationEmail,mailbody,"DocuPath Registration Token");
+                    PasswordHasher hasher = new PasswordHasher();
+                    final.TokenValue = hasher.HashPassword(final.TokenValue);
+                    db.TOKEN_LOG.Add(final);
+                    db.SaveChanges();
+                }
+                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensSuccess, "User Management");
                 #endregion
-                return View(model);
+                return RedirectToAction("All");
             }
             catch (Exception x)
             {
@@ -272,7 +298,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-        
+
         public ActionResult ViewProfile()
         {
             try

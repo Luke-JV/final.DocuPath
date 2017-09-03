@@ -122,7 +122,7 @@ namespace DocuPath.Controllers
                       
             try
             {
-                VERTEBRAE.sendMail("ruco@cldrm.co.za","Please note an error has been logged, view the error here:"+dumpedFileLocation);
+                VERTEBRAE.sendMail("ruco@cldrm.co.za","Please note an error has been logged, view the error here:"+dumpedFileLocation,"Error");
                 return RedirectToAction("Index","Home");
             }
             catch (Exception x)
