@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DocuPath.Models.DPViewModels;
+using System.IO;
 
 namespace DocuPath.Controllers
 {
@@ -181,7 +182,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
-        public ActionResult Edit(int id)
+        public ActionResult UpdateRepository()
         {
             try
             {
@@ -469,6 +470,84 @@ namespace DocuPath.Controllers
                 RedirectToAction("Error", "Home", x.Message);
             }
             return tags;
+        }
+        
+        public ActionResult ParseXML()
+        {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            #endregion
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    ////  Get all files from Request object  
+                    //HttpFileCollectionBase files = Request.Files;
+                    
+                    //string foldername = Request.Form.Get("LCDR");
+                    //string rootpath = VERTEBRAE.LC_REPORootPath;
+                    //for (int i = 0; i < files.Count; i++)
+                    //{
+                    //    LEGACY_DOCUMENT doc = new LEGACY_DOCUMENT();
+                    //    //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                    //    //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                    //    HttpPostedFileBase file = files[i];
+                    //    string fname;
+
+                    //    // Checking for Internet Explorer  
+                    //    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                    //    {//404!?
+                    //        string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                    //        doc.LegacyDocumentTitle = testfiles[testfiles.Length - 1];
+                    //        fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                    //    }
+                    //    else
+                    //    {
+                    //        fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                    //        doc.LegacyDocumentTitle = file.FileName;
+
+                    //    }
+
+                    //    // Get the complete folder path and store the file inside it.  
+                    //    fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                    //    bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                    //    if (!exists)
+                    //        System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+                    //    doc.LegacyDocumentLocation = fname;
+                    //    docs.Add(doc);
+                    //    file.SaveAs(fname);
+                    //}
+                    //int docId = db.LEGACY_DOCUMENT.Max(x => x.LegacyDocumentID);
+
+                    //foreach (var item in docs)
+                    //{
+                    //    docId++;
+                    //    item.LegacyDocumentID = docId;
+                    //    item.LegacyCaseID = LC.LegacyCaseID;
+                    //    db.LEGACY_DOCUMENT.Add(item);
+                    //}
+                    //db.SaveChanges();
+                    //// Returns message that successfully uploaded  
+                    //#region AUDIT_WRITE
+                    //AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Legacy Case");
+                    //#endregion
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Legacy Case");
+                    #endregion
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
         }
         #endregion
     }

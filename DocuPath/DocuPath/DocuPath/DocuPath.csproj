@@ -801,6 +801,7 @@
     <Content Include="Views\Test\tagEditor.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Reporting\Insight.cshtml" />
+    <Content Include="Views\ContentTag\UpdateRepository.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
