@@ -21,7 +21,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/Media/Upload" style="margin-top: 2px">
                     @* TODO: Link form action to ADD NEW MEDIA *@
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD NEW MEDIA"></button>
                 </form>
@@ -89,9 +89,9 @@
 
             try
             {
-                imgHTML = "<img src='~/" + Url.Content(VERTEBRAE.GetThumbUrl(item.MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
+                imgHTML = "<img src='/" + VERTEBRAE.GetThumbUrl(item.MediaLocation) + "' class='media-thumb thumbsize-normal' />";
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
                
@@ -107,6 +107,8 @@
                       @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
                         @*<img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb thumbsize-normal"/>*@
                         @imgHTML
+                        
+                        
                         @*@Html.Raw(imgHTML)*@
                     </td>
                     <td>

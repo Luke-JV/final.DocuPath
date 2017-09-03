@@ -511,6 +511,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\autotagger\jquery-ui.min.css" />
+    <Content Include="Content\autotagger\jquery-ui.structure.min.css" />
+    <Content Include="Content\autotagger\jquery-ui.theme.min.css" />
+    <Content Include="Content\autotagger\jquery.tag-editor.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.min.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
@@ -632,6 +636,9 @@
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\autotagger\jquery-ui.min.js" />
+    <Content Include="Scripts\autotagger\jquery.caret.min.js" />
+    <Content Include="Scripts\autotagger\jquery.tag-editor.min.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap-material-datetimepicker.js" />

@@ -63,7 +63,19 @@ namespace DocuPath
                         "~/Scripts/modernizr-*"));
             #endregion
 
-
+            #region AUTOTAGGER ISOLATED
+            bundles.Add(new StyleBundle("~/tags/css").Include(
+                     "~/Content/autotagger/jquery-ui.min.css",
+                     "~/Content/autotagger/jquery-ui.structure.min.css",
+                     "~/Content/autotagger/jquery-ui.theme.min.css",
+                     "~/Content/autotagger/jquery.tag-editor.css"
+                     ));
+            bundles.Add(new ScriptBundle("~/bundles/tags").Include(
+                      "~/Scripts/autotagger/jquery-ui.min.js",
+                      "~/Scripts/autotagger/jquery.caret.min.js",
+                      "~/Scripts/autotagger/jquery.tag-editor.min.js"
+                      ));
+            #endregion
         }
     }
 }
