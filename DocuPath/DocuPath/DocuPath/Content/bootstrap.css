@@ -5340,6 +5340,11 @@ a.badge:focus {
   cursor: pointer;
 }
 
+a.button {
+    color: #666;
+    cursor: pointer;
+}
+
 .btn .badge {
   position: relative;
   top: -1px;
@@ -5833,6 +5838,7 @@ a.list-group-item:focus {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .panel-title > a {
@@ -6046,16 +6052,8 @@ button.close {
 }*/
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    height: 100vh;
-    width: 100%;
-    background: radial-gradient(circle at center, #ffffff, #cccccc);
-    background-size: cover;
-    justify-content: center;
-    align-items: center;
+    grid-column: 1/-1;
+    grid-row: 1/-1;
 }
 
 .modal {
@@ -8177,6 +8175,10 @@ td.visible-print {
     content: '\E744';
 }
 
+.mdl2-download:before {
+    content: '\E896';
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -8832,6 +8834,10 @@ td > img {
     background-image: url(http://www.placehold.it/);
 }
 
+td > a {
+    color: #666;
+}
+
 .media-none {
     background-image: url(Resources/NoMedia.png);
 }
@@ -8957,10 +8963,10 @@ td > img {
 }
 
 .tt-menu {
-    position: absolute;
+    position: relative;
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 10000 !important;
     display: none;
     float: left;
     min-width: 160px;
@@ -8977,6 +8983,7 @@ td > img {
     background-clip: padding-box;
     cursor: pointer;
 }
+
 
 .tt-suggestion {
     display: block;
@@ -10906,6 +10913,7 @@ a.cal-event-week {
     background-size: cover;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .dna {
@@ -11757,7 +11765,7 @@ a.cal-event-week {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     background-color: #fff !important;
 }
-
+  
 .tt-hint {
     color: #999;
 }
@@ -11995,7 +12003,7 @@ a.cal-event-week {
   left: 50%;
   margin-left: -25px;
   background-color: #999999;
-  z-index: 100;
+  z-index: 50;
   border-top-right-radius: 50%;
   border-top-left-radius: 50%;
   border-bottom-right-radius: 50%;

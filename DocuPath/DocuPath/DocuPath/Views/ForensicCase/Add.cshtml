@@ -27,8 +27,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    @* TODO: Link form action to SAVE UAL *@
+                <form class="minimalform" action="~/ForensicCase/Add" method="post" style="margin-top: 2px">
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
@@ -75,7 +74,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="progress" style="margin-bottom: 5px; height: 20px; margin-top: 3.2px">
-                                                    <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" style="width:70%; height: 20px">70%</div>
+                                                    <div id="pbrCaseTracking" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" style="width:70%; height: 20px">70%</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,7 +115,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.forensicCase.DateAdded, htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.EditorFor(model => model.forensicCase.DateAdded, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @Value = DateTime.Now.ToString("dd MMM YYYY - HH:mm"), @readonly = true } })
+                                                                @Html.EditorFor(model => model.forensicCase.DateAdded, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm"), @readonly = true } })
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.DateAdded, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -260,7 +259,7 @@
                                                         <div class="form-group" style="margin-bottom: 5px">
                                                             @Html.LabelFor(model => model.forensicCase.CauseOfDeathConclusion, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.forensicCase.CauseOfDeathConclusion, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.forensicCase.CauseOfDeathConclusion)
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.CauseOfDeathConclusion, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -331,7 +330,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.GeneralDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.GeneralDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.GeneralDescription)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.GeneralDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -339,7 +338,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.Physique, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.Physique, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.Physique)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.Physique, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -347,7 +346,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.Nutrition, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.Nutrition, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.Nutrition)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.Nutrition, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -355,7 +354,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.SpecialIdentifyingFeatures, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.SpecialIdentifyingFeatures, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.SpecialIdentifyingFeatures)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.SpecialIdentifyingFeatures, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -363,7 +362,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.SecondaryPostMortemChanges, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.SecondaryPostMortemChanges, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.SecondaryPostMortemChanges)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.SecondaryPostMortemChanges, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -371,7 +370,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.genObservation.ExtAppearanceLimbCondition, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.genObservation.ExtAppearanceLimbCondition, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.genObservation.ExtAppearanceLimbCondition)
                                                                 @Html.ValidationMessageFor(model => model.genObservation.ExtAppearanceLimbCondition, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -429,7 +428,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.headNeckObservation.ScalpSkull, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.headNeckObservation.ScalpSkull, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.ScalpSkull)
                                                                 @Html.ValidationMessageFor(model => model.headNeckObservation.ScalpSkull, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -437,7 +436,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.headNeckObservation.IntracranialContents, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.headNeckObservation.IntracranialContents, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.IntracranialContents)
                                                                 @Html.ValidationMessageFor(model => model.headNeckObservation.IntracranialContents, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -445,7 +444,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.OrbitalNasalAuralCavities)
                                                                 @Html.ValidationMessageFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -453,7 +452,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.headNeckObservation.MouthTonguePharynx, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.headNeckObservation.MouthTonguePharynx, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.MouthTonguePharynx)
                                                                 @Html.ValidationMessageFor(model => model.headNeckObservation.MouthTonguePharynx, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -461,7 +460,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.headNeckObservation.NeckStructures, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.headNeckObservation.NeckStructures, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.NeckStructures)
                                                                 @Html.ValidationMessageFor(model => model.headNeckObservation.NeckStructures, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -510,7 +509,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.ThoracicCageDiaphragm, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.ThoracicCageDiaphragm, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.ThoracicCageDiaphragm)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.ThoracicCageDiaphragm, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -518,7 +517,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.MediastinumOesophagus, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.MediastinumOesophagus, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.MediastinumOesophagus)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.MediastinumOesophagus, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -526,7 +525,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.TracheaBronchi, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.TracheaBronchi, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.TracheaBronchi)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.TracheaBronchi, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -534,7 +533,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.PleuraLungs, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.PleuraLungs, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.PleuraLungs)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.PleuraLungs, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -542,7 +541,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.HeartPericardium, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.HeartPericardium, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.HeartPericardium)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.HeartPericardium, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -550,7 +549,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.chestObservation.LargeBloodVessels, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.chestObservation.LargeBloodVessels, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.chestObservation.LargeBloodVessels)
                                                                 @Html.ValidationMessageFor(model => model.chestObservation.LargeBloodVessels, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -615,7 +614,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.PeritonealCavity, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.PeritonealCavity, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.PeritonealCavity)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.PeritonealCavity, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -623,7 +622,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.StomachContents, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.StomachContents, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.StomachContents)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.StomachContents, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -631,7 +630,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.IntestinesMesentery, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.IntestinesMesentery, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.IntestinesMesentery)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.IntestinesMesentery, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -639,7 +638,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.LiverGallbladderBilliaryPassages)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -647,7 +646,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.Pancreas, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.Pancreas, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.Pancreas)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.Pancreas, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -655,7 +654,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.Spleen, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.Spleen, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.Spleen)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.Spleen, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -663,7 +662,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.Adrenals, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.Adrenals, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.Adrenals)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.Adrenals, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -671,7 +670,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.KidneysUreters, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.KidneysUreters, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.KidneysUreters)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.KidneysUreters, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -679,7 +678,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.UrinaryBladderUrethra, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.UrinaryBladderUrethra, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.UrinaryBladderUrethra)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.UrinaryBladderUrethra, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -687,7 +686,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.PelvicWalls, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.PelvicWalls, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.PelvicWalls)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.PelvicWalls, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -695,7 +694,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.abdObservation.GenitalOrgans, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.abdObservation.GenitalOrgans, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.abdObservation.GenitalOrgans)
                                                                 @Html.ValidationMessageFor(model => model.abdObservation.GenitalOrgans, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -776,7 +775,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.spineObservation.SpinalColumn, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.spineObservation.SpinalColumn, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.spineObservation.SpinalColumn)
                                                                 @Html.ValidationMessageFor(model => model.spineObservation.SpinalColumn, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -784,7 +783,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.spineObservation.SpinalCord, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.spineObservation.SpinalCord, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.spineObservation.SpinalCord)
                                                                 @Html.ValidationMessageFor(model => model.spineObservation.SpinalCord, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1220,7 +1219,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Primary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.primaryCODEst.CODMotivation, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.primaryCODEst.CODMotivation)
                                                                 @Html.ValidationMessageFor(model => model.primaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1284,7 +1283,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Secondary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.secondaryCODEst.CODMotivation, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.secondaryCODEst.CODMotivation)
                                                                 @Html.ValidationMessageFor(model => model.secondaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1357,7 +1356,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Tertiary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.tertiaryCODEst.CODMotivation, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.tertiaryCODEst.CODMotivation)
                                                                 @Html.ValidationMessageFor(model => model.tertiaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1430,7 +1429,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Quaternary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.quaternaryCODEst.CODMotivation, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.TextAreaFor(model => model.quaternaryCODEst.CODMotivation)
                                                                 @Html.ValidationMessageFor(model => model.quaternaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1624,7 +1623,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Select a Discovery Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.stats.DiscoveryDate, new { htmlAttributes = new { @id = "DiscoveryDate", @onclick = "discoveryDTP()", @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.EditorFor(model => model.stats.DiscoveryDate, new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.stats.DiscoveryDate, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group date">    
                                                                     <input type="text" class="form-control" id="DiscoveryDate" />
@@ -1636,7 +1635,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Select an Injury Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.stats.EstimatedInjuryDate, new { htmlAttributes = new { @id = "InjuryDate", @onclick = "injuryDTP()", @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.EditorFor(model => model.stats.EstimatedInjuryDate, new { htmlAttributes = new { @*@id = "InjuryDate", @onclick = "injuryDTP()",*@ @type = "date", @class = "form-control", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.stats.EstimatedInjuryDate, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group date">
                                                                     <input type="text" class="form-control" id="InjuryDate" />
@@ -1648,7 +1647,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Select a Death Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.stats.EstimatedDeathDate, new { htmlAttributes = new { @id = "DeathDate", @onclick = "deathDTP()", @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.EditorFor(model => model.stats.EstimatedDeathDate, new { htmlAttributes = new { @*@id = "DeathDate", @onclick = "deathDTP()",*@ @type = "date", @class = "form-control", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.stats.EstimatedDeathDate, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group date">
                                                                     <input type="text" class="form-control" id="DeathDate" />
@@ -1843,7 +1842,7 @@
                                                     <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#GEOLOCATIONPANEL"><i class="mdl2icon mdl2-more"></i></h4>
                                                 </div>
                                                 <div id="GEOLOCATIONPANEL" class="panel-collapse collapse">
-                                                    <div class="panel-body">
+                                                    <div class="panel-body" style="height: auto !important; overflow: visible !important;">
                                                         <p class="timeline-title"><span class="mdl2icon mdl2-pin timeline-mdl2icon"></span> Events &amp; Provinces</p>
                                                         <div class="form-group">
                                                             @Html.Label("Province of Death Occurrence", htmlAttributes: new { @class = "control-label col-md-6" })
@@ -1939,7 +1938,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Jurisdiction Police Station", htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Lyttelton Police Station" />
@@ -1952,7 +1951,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Processing Police Station", htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Brooklyn Police Station" />
@@ -1965,7 +1964,7 @@
                                                         <div class="form-group">
                                                             @Html.Label("Investigating Police Station", htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                                @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                                 @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Clubview Police Station" />
@@ -2207,7 +2206,7 @@
                             //                      }
                             //}
                         }
-@section Scripts {
+@section Scripts {   
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/toggle")
     @Scripts.Render("~/bundles/moment")
@@ -2237,56 +2236,60 @@
     </script>
 
     <script name="CODToggles" type="text/javascript">
+        $('textarea').autogrow();
+        $('textarea').addClass("form-control");
+        $('.typeahead').addClass("fullwidth");
         $(document).ready(function () {
             $("#primarytoggle").checked = true
             $("#2ndCOD").hide()
             $("#3rdCOD").hide()
             $("#4thCOD").hide()
-            /*$(document).ready(function () { $("#OfficerPhone").mask("(999) 999 9999")*/
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">
-        $(function discoveryDTP() {
-            $('#DiscoveryDate').bootstrapMaterialDatePicker({
-                format: 'D MMMM YYYY',
-                year: true,
-                date: true,
-                time: false,
-                clearButton: true,
-                nowButton: true,
-                nowText: "Now",
-                switchOnClick: true,
-                okText: "OK"
-            });
-        });
-        $(function injuryDTP() {
-            $('#InjuryDate').bootstrapMaterialDatePicker({
-                format: 'D MMMM YYYY',
-                year: true,
-                date: true,
-                time: false,
-                clearButton: true,
-                nowButton: true,
-                nowText: "Now",
-                switchOnClick: true,
-                okText: "OK"
-            });
-        });
-        $(function deathDTP() {
-            $('#DeathDate').bootstrapMaterialDatePicker({
-                format: 'D MMMM YYYY',
-                year: true,
-                date: true,
-                time: false,
-                clearButton: true,
-                nowButton: true,
-                nowText: "Now",
-                switchOnClick: true,
-                okText: "OK"
-            });
-        });
+        //$(function discoveryDTP() {
+        //    $('#DiscoveryDate').bootstrapMaterialDatePicker({
+        //        format: 'D MMMM YYYY',
+        //        year: true,
+        //        date: true,
+        //        time: false,
+        //        clearButton: true,
+        //        nowButton: true,
+        //        nowText: "Now",
+        //        switchOnClick: true,
+        //        okText: "OK"
+        //    });
+        //    $(".dtp").addClass("overlay");
+        //});
+        //$(function injuryDTP() {
+        //    $('#InjuryDate').bootstrapMaterialDatePicker({
+        //        format: 'D MMMM YYYY',
+        //        year: true,
+        //        date: true,
+        //        time: false,
+        //        clearButton: true,
+        //        nowButton: true,
+        //        nowText: "Now",
+        //        switchOnClick: true,
+        //        okText: "OK"
+        //    });
+        //});
+        //$(function deathDTP() {
+        //    $('#DeathDate').bootstrapMaterialDatePicker({
+        //        format: 'D MMMM YYYY',
+        //        year: true,
+        //        date: true,
+        //        time: false,
+        //        clearButton: true,
+        //        nowButton: true,
+        //        nowText: "Now",
+        //        switchOnClick: true,
+        //        okText: "OK"
+        //    });
+        //});
     </script>
 
     @* DROPDOWNLIST & TOGGLES "OTHER" FIELDS SHOW/HIDE: *@

@@ -594,6 +594,7 @@
     <Content Include="Content\Resources\MH.png" />
     <Content Include="Content\Resources\NoERCCaseReport.png" />
     <Content Include="Content\Resources\NoERCCoverLetter.png" />
+    <Content Include="Content\Resources\NoFunctionGroupsActive.png" />
     <Content Include="Content\Resources\NoPreviewMiscMedia.png" />
     <Content Include="Content\Resources\PageHeaderBackgroundBar.png" />
     <Content Include="Content\Resources\PulseBGBar.png" />
@@ -638,6 +639,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\autogrow.min.js" />
     <Content Include="Scripts\autotagger\jquery-ui.min.js" />
     <Content Include="Scripts\autotagger\jquery.caret.min.js" />
     <Content Include="Scripts\autotagger\jquery.tag-editor.min.js" />
@@ -798,11 +800,11 @@
     <Content Include="Views\Test\TagTest.cshtml" />
     <Content Include="Views\Test\tagEditor.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
+    <Content Include="Views\Reporting\Insight.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\DocuPathRepositories\LC_REPO\" />
-    <Folder Include="Views\Reporting\" />
     <Folder Include="Views\Scheduling\" />
   </ItemGroup>
   <ItemGroup>
