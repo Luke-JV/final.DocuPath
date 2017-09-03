@@ -13,7 +13,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+    //[LogAction]
     public class ExternalReviewCaseController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

@@ -635,6 +635,7 @@
       <DependentUpon>DocuPath.edmx</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\autotagger\jquery-ui.min.js" />

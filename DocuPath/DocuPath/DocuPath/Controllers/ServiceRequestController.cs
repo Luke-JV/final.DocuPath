@@ -11,7 +11,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+    //[LogAction]
     public class ServiceRequestController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

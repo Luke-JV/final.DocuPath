@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-two">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -25,28 +25,8 @@
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
+            
             <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    @Html.DropDownList("ddlTokenCOunt", new List<SelectListItem> {
-                                                                                                new SelectListItem { Value = "0", Text = "1", Selected = true },
-                                                                                                new SelectListItem { Value = "1", Text = "2" },
-                                                                                                new SelectListItem { Value = "2", Text = "3" },
-                                                                                                new SelectListItem { Value = "3", Text = "4" },
-                                                                                                new SelectListItem { Value = "4", Text = "5" },
-                                                                                                new SelectListItem { Value = "5", Text = "6" },
-                                                                                                new SelectListItem { Value = "6", Text = "7" },
-                                                                                                new SelectListItem { Value = "7", Text = "8" },
-                                                                                                new SelectListItem { Value = "8", Text = "9" },
-                                                                                                new SelectListItem { Value = "9", Text = "10" },
-                                                                                                new SelectListItem { Value = "10", Text = "11" },
-                                                                                                new SelectListItem { Value = "11", Text = "12" },
-                                                                                                new SelectListItem { Value = "12", Text = "13" },
-                                                                                                new SelectListItem { Value = "13", Text = "14" },
-                                                                                                new SelectListItem { Value = "14", Text = "15" },
-                                                                                                }, new { @id = "ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" })
-                </form>
-            </div>
-            <div grid-area="btn3">
                 <form class="minimalform" action="~/User/GenerateTokens" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE TOKENS"></button>
                 </form>
@@ -79,7 +59,7 @@
                     <th class="colour-dpred" style="width: 47.5%">Destination Email</th>
 
                 </tr>
-                @for (int i = 0; i < Model.tokenList.Count; i++)
+                @for (int i = 0; i < Model.tokenCount; i++)
                 {
                     <tr>
                         <td class="table-large-identifier text-center">@(i + 1)</td>

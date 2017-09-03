@@ -61,8 +61,8 @@
     <input type="hidden" id="btnSubmit" />
     //AUTOTAGGER INDEXER& SUBMITTER
 
-for (int i = 0; i < Model.mediaList.Count; i++)
-{
+    for (int i = 0; i < Model.mediaList.Count; i++)
+    {
         @Html.HiddenFor(m=>m.mediaList[i].MediaID);
         //@Html.HiddenFor(m => m.mediaList[i].MediaPurposeID);
         @Html.HiddenFor(m => m.mediaList[i].StatusID);

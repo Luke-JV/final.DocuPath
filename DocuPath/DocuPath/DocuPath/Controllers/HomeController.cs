@@ -13,7 +13,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+    //[LogAction]
     public class HomeController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -104,10 +104,10 @@ namespace DocuPath.Controllers
             try
             {
                 
-                ModelState.AddModelError(DateTime.Now.ToString("dd MMM yyyy HH:mm:ss"), model.Exception); // Add the ModelState error
+                //ModelState.AddModelError(DateTime.Now.ToString("dd MMM yyyy HH:mm:ss"), model.Exception); // Add the ModelState error
                 //ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
                 
-                return View(model );
+                return View(model);
             }
             catch (Exception)
             {

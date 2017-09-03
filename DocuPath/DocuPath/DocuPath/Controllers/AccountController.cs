@@ -13,8 +13,8 @@ using DocuPath.DataLayer;
 
 namespace DocuPath.Controllers
 {
-    [Authorize]
-    [HandleError]
+   
+    
    
     public class AccountController : Controller
     {
@@ -57,7 +57,7 @@ namespace DocuPath.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;

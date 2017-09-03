@@ -10,7 +10,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+    //[LogAction]
     public class ReportingController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();

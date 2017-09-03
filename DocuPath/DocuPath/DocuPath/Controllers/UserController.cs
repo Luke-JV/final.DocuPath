@@ -12,7 +12,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+   // [LogAction]
     public class UserController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
@@ -40,13 +40,14 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "User Management");
                 #endregion
-
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                UserViewModel model = new UserViewModel();
+                model.users = db.USER.ToList();
+                //ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
 
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "User Management");
                 #endregion
-                return View(db.USER.ToList());
+                return View(model);
             }
             catch (Exception x)
             {
@@ -56,7 +57,11 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", x.Message);
             }
         }
-
+        [HttpPost]
+        public ActionResult All(UserViewModel model)
+        {
+            return RedirectToAction("GenerateTokens",new { id = model.tkCount+1 });
+        }
         [AuthorizeByAccessArea(AccessArea = "View User - All Profiles")]
         public ActionResult Details(int id)
         {
@@ -201,7 +206,7 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region NON-CRUD ACTIONS:
-        public ActionResult GenerateTokens()
+        public ActionResult GenerateTokens(int id)
         {
             try
             {
@@ -209,7 +214,9 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.GenerateTokensInit, "User Management");
                 #endregion
                 TokenViewModel model = new TokenViewModel();
-
+                model.tokenCount = id;
+                model.tokenList = new List<TOKEN_LOG>();
+                
                 return View(model);
             }
             catch (Exception)

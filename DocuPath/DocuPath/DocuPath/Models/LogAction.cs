@@ -11,7 +11,8 @@ namespace DocuPath.Models
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            updateLastAction();
+            //return null;
+            //updateLastAction();
             
         }
         public void updateLastAction()

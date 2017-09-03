@@ -12,7 +12,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-    [LogAction]
+    //[LogAction]
     public class AccessLevelController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
