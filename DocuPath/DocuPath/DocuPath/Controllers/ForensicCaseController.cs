@@ -36,15 +36,138 @@ namespace DocuPath.Controllers
 
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
-        public ActionResult Add()
+        public ActionResult Add(AddForensicCaseViewModel model)
         {
             try
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case");
                 #endregion
+<<<<<<< HEAD
                 
                 return View();
+=======
+                #region PREPARE MODEL
+                var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
+
+                model.forensicCase = new FORENSIC_CASE();
+                model.genObservation = new GENERAL_OBSERVATION();
+                model.abdObservation = new ABDOMEN_OBSERVATION();
+                model.chestObservation = new CHEST_OBSERVATION();
+                model.headNeckObservation = new HEAD_NECK_OBSERVATION();
+                model.spineObservation = new SPINE_OBSERVATION();
+                model.additionalEvidence = new List<ADDITIONAL_EVIDENCE>();
+                model.serviceRequests = new List<SERVICE_REQUEST>();
+                model.media = new List<MEDIA>();
+                model.stats = new CASE_STATISTICS();
+                model.provinces = db.PROVINCE.ToList();
+                model.events = db.EVENT.ToList();
+                model.caseCODEstimations = new List<CASE_COD_ESTIMATION>();
+                model.sampleInvestigations = db.SAMPLE_INVESTIGATION.ToList();
+                model.medTreatments = db.MEDICAL_TREATMENTS.ToList();
+                model.injuryScenes = db.SCENE_OF_INJURY.ToList();
+                model.externalCause = db.EXTERNAL_CAUSE.ToList();
+                model.specialCategory = db.SPECIAL_CATEGORY.ToList();
+                model.serviceProvider = db.SERVICE_PROVIDER.ToList();
+                model.autopsyAreas = db.AUTOPSY_AREA.ToList();
+                model.autopsyTypes = db.AUTOPSY_TYPE.ToList();
+                model.races = db.INDIVIDUAL_RACE.ToList();
+                model.genders = db.INDIVIDUAL_GENDER.ToList();
+                model.hospitalsClinics = db.HOSPITAL_CLINIC.ToList();
+                model.primaryCauses = db.PRIMARY_CAUSE_DEATH.ToList();
+                model.apparentManners = db.APPARENT_MANNER_DEATH.ToList();
+
+                model.sessionSelector = new List<sessionKVP>();
+                foreach (var item in db.SESSION.Where(x => x.DateID > sevenDaysAgo))
+                {
+                    sessionKVP newSesh = new sessionKVP();
+                    newSesh.sessionID = item.SessionID;
+                    newSesh.sessionDesc = item.SLOT.Description + " on " + item.DateID.ToString("dd MMM yyyy");
+                    model.sessionSelector.Add(newSesh);
+                }
+
+                model.selectedSamplesInvestigations = new List<multiselectKVP>();
+                foreach (var item in model.sampleInvestigations)
+                {
+                    multiselectKVP newKVP = new multiselectKVP();
+                    newKVP.valueName = item.SampleInvestigationDescription;
+                    newKVP.valueID = item.SampleInvestigationID;
+                    newKVP.isSelected = false;
+                    model.selectedSamplesInvestigations.Add(newKVP);
+                }
+                
+                model.selectedMedicalTreatments = new List<multiselectKVP>();
+                foreach (var item in model.medTreatments)
+                {
+                    multiselectKVP newKVP = new multiselectKVP();
+                    newKVP.valueName = item.MedicalTreatmentDescription;
+                    newKVP.valueID = item.MedicalTreatmentID;
+                    newKVP.isSelected = false;
+                    model.selectedMedicalTreatments.Add(newKVP);
+                }
+
+                model.selectedInjuryScenes = new List<multiselectKVP>();
+                foreach (var item in model.injuryScenes)
+                {
+                    multiselectKVP newKVP = new multiselectKVP();
+                    newKVP.valueName = item.InjurySceneDescription;
+                    newKVP.valueID = item.InjurySceneID;
+                    newKVP.isSelected = false;
+                    model.selectedInjuryScenes.Add(newKVP);
+                }
+
+                model.selectedExternalCauses = new List<multiselectKVP>();
+                foreach (var item in model.externalCause)
+                {
+                    multiselectKVP newKVP = new multiselectKVP();
+                    newKVP.valueName = item.ExternalCauseDescription;
+                    newKVP.valueID = item.ExternalCauseID;
+                    newKVP.isSelected = false;
+                    model.selectedExternalCauses.Add(newKVP);
+                }
+
+                model.selectedSpecialCategories = new List<multiselectKVP>();
+                foreach (var item in model.specialCategory)
+                {
+                    multiselectKVP newKVP = new multiselectKVP();
+                    newKVP.valueName = item.SpecialCategoryDescription;
+                    newKVP.valueID = item.SpecialCategoryID;
+                    newKVP.isSelected = false;
+                    model.selectedSpecialCategories.Add(newKVP);
+                }
+
+                model.provinceEvents = new List<SPE_KVP>();
+                foreach (var item in model.events)
+                {
+                    SPE_KVP newSPE = new SPE_KVP();
+                    newSPE.eventID = item.EventID;                   
+                    model.provinceEvents.Add(newSPE);
+                }
+                model.stationRoles = new List<stationRolesKVP>();
+
+                model.otherSamplesInvestigationsDescription = "";
+                model.otherRaceDescription = "";
+                model.otherTreatmentFacilityDescription = "";
+                model.otherMedicalTreatmentsDescription = "";
+                model.otherPrimaryCauseDeathDescription = "";
+                model.otherApparentMannerDeathDescription = "";
+                model.otherInjurySceneDescription = "";
+                model.otherExternalCauseDescription = "";
+                model.otherSpecialCategoryDescription = "";
+
+                model.DeathProvinceId = 10;
+                model.ProcessingProvinceId = 10;
+                model.OccurrenceProvinceId = 10;
+                model.TreatmentProvinceId = 10;
+                model.ReportProvinceId = 10;
+
+                model.JurisdictionStationID = 0;
+                model.ProcessingStationID = 0;
+                model.InvestigationStationID = 0;
+
+                #endregion
+                return View(model);
+>>>>>>> 2da6eb40ebbc2e906893957e06f2b25599651d97
             }
             catch (Exception)
             {
