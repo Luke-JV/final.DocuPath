@@ -34,8 +34,10 @@ namespace DocuPath.DataLayer
         public int UserID { get; set; }
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [Required]
         [DisplayName("Caption")]
         public string MediaCaption { get; set; }
+        [Required]
         [DisplayName("Description")]
         public string MediaDescription { get; set; }
         [DisplayName("Accessibility")]

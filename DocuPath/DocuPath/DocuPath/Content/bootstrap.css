@@ -12069,5 +12069,13 @@ a.cal-event-week {
 .observation-panel-heading{
     content: "open";
 }
+.hint-label{
+    font-family:'Segoe UI';
+    font-size:8pt;
+    text-transform:uppercase;
+    /*text-align:justify;*/
+    color:rgba(111, 111, 111, 1);
+    font-weight:bold;
+}
 
 /*#endregion */

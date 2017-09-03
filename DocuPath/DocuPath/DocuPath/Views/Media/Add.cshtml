@@ -58,20 +58,20 @@
     @Html.AntiForgeryToken()
     //AUTOTAGGER INDEXER & SUBMITTER
     <input type="hidden" id="count" value="@Html.Raw(Model.mediaList.Count)" />
-    <input type="submit" id="btnSubmit" />
+    <input type="hidden" id="btnSubmit" />
     //AUTOTAGGER INDEXER& SUBMITTER
 
 for (int i = 0; i < Model.mediaList.Count; i++)
 {
-       // @Html.HiddenFor(m=>m.mediaList[i].MediaID);
-        @*@Html.HiddenFor(m => m.mediaList[i].MediaPurposeID);
+        @Html.HiddenFor(m=>m.mediaList[i].MediaID);
+        //@Html.HiddenFor(m => m.mediaList[i].MediaPurposeID);
         @Html.HiddenFor(m => m.mediaList[i].StatusID);
         @Html.HiddenFor(m => m.mediaList[i].UserID);
         @Html.HiddenFor(m => m.mediaList[i].MediaLocation);
-        @Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
-        @Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
-        @Html.HiddenFor(m => m.mediaList[i].DateAdded);
-        @Html.HiddenFor(m => m.mediaList[i].MediaID);*@
+        //@Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
+        //@Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
+        //@Html.HiddenFor(m => m.mediaList[i].DateAdded);
+        
         <div class="form-horizontal border-generic apad5" @*style="display: none"*@>
             <div class="row" style="margin-left: 0px">
                 <div class="col-md-3" style="padding: 0px">
@@ -134,6 +134,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                     <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
                                     <span>MEDIA ITEM DETAILS</span>
                                 </div>
+                                
                                 <div class="col-md-8">
                                     <div class="col-md-11 text-right" style="padding-right: 0px"><p class="media-filename">@Path.GetFileName(Model.mediaList[i].MediaLocation)</p></div>
                                     <div class="col-md-1 text-center" style="padding: 0px"><span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span></div>
@@ -141,12 +142,12 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                             </div>
                         </div>
                         <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>
-                            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @*@Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.MediaID, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.MediaID, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>*@
 
@@ -154,7 +155,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                     @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>*@
 
@@ -162,7 +163,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                     @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>*@
 
@@ -172,35 +173,45 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                         @Html.LabelFor(model => model.mediaList[i].MediaCaption, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
                                         <div class="col-md-9 col-nopad">
                                             @Html.EditorFor(model => model.mediaList[i].MediaCaption, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
-                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaCaption, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaCaption, "", new { @class = "validation-text text-danger" })
                                         </div>
                                     </div>
 
-                                    @* TODO: Find a way around this! *@
+                                   
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.mediaList[i].IsPubliclyAccessible, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
                                         <div class="col-md-9 col-nopad">
                                             <div class="checkbox" style="padding-left: 0px; padding-bottom: 5px">
-                                                <input id="tglWarning1" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private" data-onstyle="danger" data-offstyle="success" data-size="mini" data-style="ios" data-width="70" onchange="toggleWarning()">
-                                                <label id="lblWarning1" class="media-warning-label">warning - visible to public!</label>
+                                                @Html.CheckBoxFor(model => model.mediaList[i].IsPubliclyAccessible, new { id = "tglWarning" + i, type = "checkbox", data_toggle = "toggle", data_on = "Public", data_off = "Private", data_onstyle = "danger", data_offstyle = "success", data_size = "mini", data_style = "ios", data_width = "70", onchange = "toggleWarning()" })
+
+                                                @*<input id="tglWarning1" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private" data-onstyle="danger" data-offstyle="success" data-size="mini" data-style="ios" data-width="70" onchange="toggleWarning()">*@
+                                                <label id="lblWarning-@i" class="media-warning-label">warning - visible to public!</label>
                                             </div>
                                         </div>
+                                        
                                     </div>
-
+                                        
                                     <div id="frmPurpose_@i" class="form-group">
                                         @Html.LabelFor(model => model.mediaList[i].MediaPurposeID, "Purpose", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
-                                        <div class="col-md-9 col-nopad">
-                                            @* FETCH 404 *@
-                                            @*@Html.DropDownListFor(model => model.mediaList[i].MediaPurposeID, new SelectList(Model.purposeList, "MediaPurposeID", "MediaPurposeValue", Model.purposeList.Where(x => x.MediaPurposeID == Model.mediaList[i].MediaPurposeID)), htmlAttributes: new { @id = "ddlPurpose_"+i, @class = "form-control", @style = "width: 100%", onchange = "toggleFCLink()" })*@
-                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaPurposeID, "", new { @class = "text-danger" })
+                                        <div class="col-md-9 col-nopad">                                           
+                                            @Html.DropDownListFor(model => model.mediaList[i].MediaPurposeID, new SelectList(Model.purposeList, "MediaPurposeID", "MediaPurposeValue", Model.purposeList.Where(x => x.MediaPurposeID == Model.mediaList[i].MediaPurposeID)), htmlAttributes: new { @id = "ddlPurpose_"+i, @class = "form-control", @style = "width: 100%" })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaPurposeID, "", new { @class = "validation-text text-danger" })
+                                            @if (Model.fcList.Count < 1)
+                                            {
+                                                @Html.Label("Error","NO RECENT FORENSIC CASES FOUND.", new { @class = "hint-label",@style="margin-top:5px;"})                                                
+                                            }
                                         </div>
+                                       
                                     </div>
 
                                     <div id="frmCaseLink_@i" class="form-group" style="margin-top: 7px">
                                         @Html.Label("Linked To", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
                                         <div class="col-md-9 col-nopad">
                                             @* FETCH 404, make list of FC from last 7 days (look at VISION metrics in VERTEBRAE) *@
-                                            @*@Html.DropDownListFor(model => model.mediaList[i].ForensicCaseID, new SelectList(Model.fcList, "ForensicCaseID", "ForensicDRNumber", Model.fcList.Where(x => x.ForensicCaseID == Model.mediaList[i].ForensicCaseID)), htmlAttributes: new { @id = "ddlFC_"+i, @class = "form-control", @style = "width: 100%" })*@
+                                            @if (Model.fcList.Count > 0)
+                                            {
+                                                @Html.DropDownListFor(model => model.mediaList[i].ForensicCaseID, new SelectList(Model.fcList, "ForensicCaseID", "ForensicDRNumber", Model.fcList.Where(x => x.ForensicCaseID == Model.mediaList[i].ForensicCaseID)), htmlAttributes: new { @id = "ddlFC_" + i, @class = "form-control", @style = "width: 100%" })
+                                            }                                            
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +221,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                         @Html.LabelFor(model => model.mediaList[i].MediaDescription, htmlAttributes: new { @class = "control-label col-md-2 label-nopad" })
                                         <div class="col-md-10 col-nopad">
                                             @Html.EditorFor(model => model.mediaList[i].MediaDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; height: 159.2px" } })
-                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "text-danger" })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "validation-text text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -236,7 +247,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                     @Html.LabelFor(model => model.MediaLocation, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.EditorFor(model => model.MediaLocation, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>*@
 
@@ -244,7 +255,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                                     @Html.LabelFor(model => model.StatusID, "StatusID", htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
                                         @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>*@
                         </div>
@@ -258,12 +269,12 @@ for (int i = 0; i < Model.mediaList.Count; i++)
     @*<div class="form-horizontal">
         <h4>MEDIA</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.MediaID, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -271,7 +282,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.StatusID, "StatusID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -279,7 +290,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -287,7 +298,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.MediaPurposeID, "MediaPurposeID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("MediaPurposeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MediaPurposeID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.MediaPurposeID, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -295,7 +306,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -303,7 +314,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -311,7 +322,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.MediaCaption, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaCaption, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaCaption, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.MediaCaption, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -319,7 +330,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.MediaDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaDescription, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.MediaDescription, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -328,7 +339,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.IsPubliclyAccessible)
-                    @Html.ValidationMessageFor(model => model.IsPubliclyAccessible, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.IsPubliclyAccessible, "", new { @class = "validation-text text-danger" })
                 </div>
             </div>
         </div>
@@ -337,7 +348,7 @@ for (int i = 0; i < Model.mediaList.Count; i++)
             @Html.LabelFor(model => model.MediaLocation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MediaLocation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "validation-text text-danger" })
             </div>
         </div>
 
@@ -354,65 +365,74 @@ for (int i = 0; i < Model.mediaList.Count; i++)
     @Scripts.Render("~/bundles/toggle")
     <script>
         $('#btnSave').click(function () {
-            var btn = document.getElementById('btnPOST');
-            btn.click();
+            var btnPost = document.getElementById('btnPOST');
+            var btnSubmit = document.getElementById('btnSubmit');
+            btnPost.click();
+            btnSubmit.click();
         });
 
     </script>
     <script>
+        var count = document.getElementById("count").value;
+
                 $(document).ready(function toggleFCLink() {
-                    $("#frmCaseLink1").hide();
-                    $("#frmCaseLink2").hide();
-                    $("#frmCaseLink3").hide();
-                    $("#frmCaseLink4").hide();
-                    $("#lblWarning1").hide();
-                    $("#lblWarning2").hide();
-                    $("#lblWarning3").hide();
-                    $("#lblWarning4").hide();
+                    for (var i = 0; i < count; i++) {
+                        $("#frmCaseLink_" + i).hide();                        
+                        $("#ddlPurpose_" + i + " option:selected").attr("selected", null);
+                        $("#ddlPurpose_" + i + " option[value=2]").attr("selected", "selected");
+                        $("#lblWarning-" + i).hide();                        
+                    }
                 })
 
     </script>
     <script type="text/javascript">
                 $(function toggleWarning() {
                     $('input[type=checkbox]').change(function () {
-                        if ($('#tglWarning1').prop("checked") == true) { $('#lblWarning1').show('slow') } else { $('#lblWarning1').hide() };
-                        if ($('#tglWarning2').prop("checked") == true) { $('#lblWarning2').show('slow') } else { $('#lblWarning2').hide() };
-                        if ($('#tglWarning3').prop("checked") == true) { $('#lblWarning3').show('slow') } else { $('#lblWarning3').hide() };
-                        if ($('#tglWarning4').prop("checked") == true) { $('#lblWarning4').show('slow') } else { $('#lblWarning4').hide() };
+                        for (var i = 0; i < count; i++) {
+                            if ($('#tglWarning'+i).prop("checked") == true) { $('#lblWarning-'+i).show('slow') } else { $('#lblWarning-'+i).hide() };
+                        }                        
                     });
                 })
     </script>
     <script type="text/javascript">
-                $(document).ready(function toggleFCLink() {
-                    $("#MediaPurpose1").change(function () {
-                        if ($("#MediaPurpose1").val() == "1") {
-                            $("#frmCaseLink1").show("slow")
-                        } else {
-                            $("#frmCaseLink1").hide("slow")
+
+                //var i = 0;
+                //for (var i = 0; i < count; i++) {
+                //    $("#ddlPurpose_"+i).on("change",{id:i}, function (e) {
+                //        if (e.data.id == 0) {
+                //            alert("foo")
+                //        }
+                //    })
+                //}
+                //for (var i = 1; i <= count; i++) {
+                //    var selector = "#ddlPurpose_" + i;
+                //    $(selector).on("change", { id: i }, (function (e) {
+
+                //        alert(e.data.id)
+                //    }))
+                //}
+                for (var i = 0; i <= count; i++) {
+                    var selector = "#ddlPurpose_" + i;
+                    $(selector).on('change', { option: "#ddlPurpose_" + i + " option:selected", target: "#frmCaseLink_" + i  }, function (e) {
+                        //alert(e.data.id);
+                        if ($(e.data.option).text() == "Case Related")
+                        {
+                            //alert($(e.data.option).op)
+                            $(e.data.target).show();
                         }
-                    })
-                    $("#MediaPurpose2").change(function () {
-                        if ($("#MediaPurpose2").val() == "1") {
-                            $("#frmCaseLink2").show("slow")
-                        } else {
-                            $("#frmCaseLink2").hide("slow")
-                        }
+                        else $(e.data.target).hide();
                     });
-                    $("#MediaPurpose3").change(function () {
-                        if ($("#MediaPurpose3").val() == "1") {
-                            $("#frmCaseLink3").show("slow")
-                        } else {
-                            $("#frmCaseLink3").hide("slow")
-                        }
-                    });
-                    $("#MediaPurpose4").change(function () {
-                        if ($("#MediaPurpose4").val() == "1") {
-                            $("#frmCaseLink4").show("slow")
-                        } else {
-                            $("#frmCaseLink4").hide("slow")
-                        }
-                    });
-                })
+                }
+                
+
+                //    $("#ddlPurpose_" + i).change(function () {
+                //        if ($("#ddlPurpose_" + i).find(":selected").val() == "1") {
+                //            $("#frmCaseLink_" + i).show("slow")
+                //        } else {
+                //            $("#frmCaseLink_" + i).hide("slow")
+                //        }
+                //    })
+
     </script>
 
     @* LUKE AUTOTAGSINPUT JS HERE *@
@@ -491,10 +511,10 @@ for (int i = 0; i < Model.mediaList.Count; i++)
                             }))
                         },
                         error: function (response) {
-                            alert(response.responseText);
+                            //alert(response.responseText);
                         },
                         failure: function (response) {
-                            alert(response.responseText);
+                            //alert(response.responseText);
                         }
                     });
                 })
