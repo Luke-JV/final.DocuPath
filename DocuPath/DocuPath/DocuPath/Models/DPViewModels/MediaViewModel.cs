@@ -13,12 +13,15 @@ namespace DocuPath.Models.DPViewModels
     }
 
     public class AddMediaViewModel
-    {        
-        public List<CONTENT_TAG> tags = new List<CONTENT_TAG>();
+    {
+        
+        public List<MEDIA> mediaList { get; set; }
+        //public List<MEDIA_PURPOSE> purposeList = new List<MEDIA_PURPOSE>();
+        //public List<FORENSIC_CASE> fcList = new List<FORENSIC_CASE>();
+    }
+    public class MediaPOSTViewModel
+    {
+
         public List<MEDIA> mediaList = new List<MEDIA>();
-        public List<MEDIA_PURPOSE> purposeList = new List<MEDIA_PURPOSE>();
-        public List<FORENSIC_CASE> fcList = new List<FORENSIC_CASE>();
-        public string tagName { get; set; }
-        public int tagID { get; set; }
     }
 }

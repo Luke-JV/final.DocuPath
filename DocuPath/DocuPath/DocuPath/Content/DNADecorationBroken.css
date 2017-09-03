@@ -1,0 +1,297 @@
+﻿/* DNA LOGIN DECORATION                             */
+/* Sourced from:    codepen.io                      */
+/* Author:          Ghost                           */
+/* Available At:    codepen.io/ghost028/pen/KgrZAN  */
+/* Customized By:   Ruco Pretorius                  */
+
+.dna-decor-body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 100vh;
+    width: 100%;
+    background: radial-gradient(circle at center, #ffffff, #cccccc);
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
+.dna-decor {
+    margin-top: -15px;
+    z-index: 2000;
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+    height: 100%;
+    perspective: 500px;
+    /*transform-style: preserve-3d;*/
+}
+
+.ele-decor {
+  width: 250px;
+  height: 3px;
+  float: left;
+  /*margin: 0 8px;*/
+  margin-top: 7px;
+  margin-bottom: 7px;
+  border-top: 1.5px #B0B0B0 dashed;
+  position: relative;
+  transform: rotateY(-360deg);
+  animation: run 25s linear infinite;
+}
+.ele-decor:before, .ele-decor:after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: #ae1f1f;
+  border-radius: 50%;
+  position: absolute;
+  /*left: 50%;*/
+  transform: translateY(-50%);
+}
+.ele-decor:before {
+  left: -2px;
+  background: #6f6f6f;
+}
+.ele-decor:after {
+  right: -2px;
+}
+
+.ele-decor:nth-of-type(1) {
+  animation-delay: -0.5s;
+}
+.ele-decor:nth-of-type(2) {
+  animation-delay: -1s;
+}
+.ele-decor:nth-of-type(3) {
+  animation-delay: -1.5s;
+}
+.ele-decor:nth-of-type(4) {
+  animation-delay: -2s;
+}
+.ele-decor:nth-of-type(5) {
+  animation-delay: -2.5s;
+}
+.ele-decor:nth-of-type(6) {
+  animation-delay: -3s;
+}
+.ele-decor:nth-of-type(7) {
+  animation-delay: -3.5s;
+  border-style:none;
+}
+.ele-decor:nth-of-type(8) {
+  animation-delay: -4s;
+  border-style:none;
+}
+.ele-decor:nth-of-type(8)::before { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(9) {
+  animation-delay: -4.5s;
+}
+.ele-decor:nth-of-type(9)::before { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(10) {
+  animation-delay: -5s;
+}
+.ele-decor:nth-of-type(11) {
+  animation-delay: -5.5s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(12) {
+  animation-delay: -6s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(13) {
+  animation-delay: -6.5s;
+}
+.ele-decor:nth-of-type(13)::before { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(14) {
+  animation-delay: -7s;
+}
+.ele-decor:nth-of-type(15) {
+  animation-delay: -7.5s;
+}
+.ele-decor:nth-of-type(16) {
+  animation-delay: -8s;
+  border-style:none;
+}
+.ele-decor:nth-of-type(17) {
+  animation-delay: -8.5s;
+  border-style:none;
+}
+.ele-decor:nth-of-type(18) {
+  animation-delay: -9s;
+}
+.ele-decor:nth-of-type(19) {
+  animation-delay: -9.5s;
+
+}
+.ele-decor:nth-of-type(19)::before { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(20) {
+  animation-delay: -10s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(21) {
+  animation-delay: -10.5s;
+}
+.ele-decor:nth-of-type(21)::before { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(22) {
+  animation-delay: -11s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(23) {
+  animation-delay: -11.5s;
+
+}
+.ele-decor:nth-of-type(24) {
+  animation-delay: -16s;
+}
+.ele-decor:nth-of-type(25) {
+  animation-delay: -12.5s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(26) {
+  animation-delay: -7s;
+}
+.ele-decor:nth-of-type(27) {
+  animation-delay: -13.5s;
+}
+.ele-decor:nth-of-type(28) {
+  animation-delay: -14s;
+}
+.ele-decor:nth-of-type(29) {
+  animation-delay: -4.5s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(30) {
+  animation-delay: -12s;
+   opacity:0;
+}
+
+.ele-decor:nth-of-type(31) {
+  animation-delay: -1.5s;
+}
+.ele-decor:nth-of-type(31)::after { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(32) {
+  animation-delay: -16s;
+}
+.ele-decor:nth-of-type(32)::after { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(33) {
+  animation-delay: -1.5s;
+}
+.ele-decor:nth-of-type(33)::after { 
+   opacity:0;
+}
+.ele-decor:nth-of-type(34) {
+  animation-delay: -17s;
+}
+.ele-decor:nth-of-type(35) {
+  animation-delay: -17.5s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(36) {
+  animation-delay: -18s;
+}
+.ele-decor:nth-of-type(37) {
+  animation-delay: -18.5s;
+}
+.ele-decor:nth-of-type(38) {
+  animation-delay: -19s;
+}
+.ele-decor:nth-of-type(39) {
+  animation-delay: -19.5s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(40) {
+  animation-delay: -20s;
+}
+.ele-decor:nth-of-type(41) {
+  animation-delay: -20.5s;
+}
+.ele-decor:nth-of-type(42) {
+  animation-delay: -21s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(43) {
+  animation-delay: -21.5s;
+   opacity:0;
+}
+.ele-decor:nth-of-type(44) {
+  animation-delay: -22s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(45) {
+  animation-delay: -22.5s;
+}
+.ele-decor:nth-of-type(46) {
+  animation-delay: -23s;
+}
+.ele-decor:nth-of-type(47) {
+  animation-delay: -23.5s;
+}
+.ele-decor:nth-of-type(48) {
+  animation-delay: -24s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(49) {
+  animation-delay: -24.5s;
+}
+.ele-decor:nth-of-type(50) {
+  animation-delay: -25s;
+}
+.ele-decor:nth-of-type(51) {
+  animation-delay: -25.5s;
+}
+.ele-decor:nth-of-type(52) {
+  animation-delay: -26s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(53) {
+  animation-delay: -26.5s;
+  opacity:0;
+}
+.ele-decor:nth-of-type(54) {
+  animation-delay: -27s;
+}
+.ele-decor:nth-of-type(55) {
+  animation-delay: -27.5s;
+}
+.ele-decor:nth-of-type(56) {
+  animation-delay: -28s;
+}
+.ele-decor:nth-of-type(57) {
+  animation-delay: -28.5s;
+}
+.ele-decor:nth-of-type(58) {
+  animation-delay: -29s;
+}
+.ele-decor:nth-of-type(59) {
+  animation-delay: -29.5s;
+}
+.ele-decor:nth-of-type(60) {
+  animation-delay: -30s;
+}
+.ele-decor:nth-of-type(61) {
+  animation-delay: -30.5s;
+}
+
+
+@keyframes run {
+  to {
+    transform: none;
+  }
+}

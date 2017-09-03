@@ -29,7 +29,7 @@
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
             @*<div grid-area="btn2">
@@ -46,14 +46,32 @@
 @using (Html.BeginForm())
 {
 
+    @*for (int i = 0; i < Model.fcList.Count; i++)
+    {
+        @Html.HiddenFor(m=>m.fcList[i].ForensicCaseID);
+    }
+    for (int i = 0; i < Model.purposeList.Count; i++)
+    {
+        @Html.HiddenFor(m => m.purposeList[i].MediaPurposeID);
+    }*@
+    <input id="btnPOST" class="hidden" type="submit" />
     @Html.AntiForgeryToken()
     //AUTOTAGGER INDEXER & SUBMITTER
     <input type="hidden" id="count" value="@Html.Raw(Model.mediaList.Count)" />
     <input type="submit" id="btnSubmit" />
     //AUTOTAGGER INDEXER& SUBMITTER
-    <input id="btnPOST" class="hidden" type="submit" />
-    for (int i = 0; i < Model.mediaList.Count; i++)
-    {
+
+for (int i = 0; i < Model.mediaList.Count; i++)
+{
+       // @Html.HiddenFor(m=>m.mediaList[i].MediaID);
+        @*@Html.HiddenFor(m => m.mediaList[i].MediaPurposeID);
+        @Html.HiddenFor(m => m.mediaList[i].StatusID);
+        @Html.HiddenFor(m => m.mediaList[i].UserID);
+        @Html.HiddenFor(m => m.mediaList[i].MediaLocation);
+        @Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
+        @Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
+        @Html.HiddenFor(m => m.mediaList[i].DateAdded);
+        @Html.HiddenFor(m => m.mediaList[i].MediaID);*@
         <div class="form-horizontal border-generic apad5" @*style="display: none"*@>
             <div class="row" style="margin-left: 0px">
                 <div class="col-md-3" style="padding: 0px">
@@ -173,7 +191,7 @@
                                         @Html.LabelFor(model => model.mediaList[i].MediaPurposeID, "Purpose", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
                                         <div class="col-md-9 col-nopad">
                                             @* FETCH 404 *@
-                                            @Html.DropDownListFor(model => model.mediaList[i].MediaPurposeID, new SelectList(Model.purposeList, "MediaPurposeID", "MediaPurposeValue", Model.purposeList.Where(x => x.MediaPurposeID == Model.mediaList[i].MediaPurposeID)), htmlAttributes: new { @id = "ddlPurpose_"+i, @class = "form-control", @style = "width: 100%", onchange = "toggleFCLink()" })
+                                            @*@Html.DropDownListFor(model => model.mediaList[i].MediaPurposeID, new SelectList(Model.purposeList, "MediaPurposeID", "MediaPurposeValue", Model.purposeList.Where(x => x.MediaPurposeID == Model.mediaList[i].MediaPurposeID)), htmlAttributes: new { @id = "ddlPurpose_"+i, @class = "form-control", @style = "width: 100%", onchange = "toggleFCLink()" })*@
                                             @Html.ValidationMessageFor(model => model.mediaList[i].MediaPurposeID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -182,7 +200,7 @@
                                         @Html.Label("Linked To", htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
                                         <div class="col-md-9 col-nopad">
                                             @* FETCH 404, make list of FC from last 7 days (look at VISION metrics in VERTEBRAE) *@
-                                            @Html.DropDownListFor(model => model.mediaList[i].ForensicCaseID, new SelectList(Model.fcList, "ForensicCaseID", "ForensicDRNumber", Model.fcList.Where(x => x.ForensicCaseID == Model.mediaList[i].ForensicCaseID)), htmlAttributes: new { @id = "ddlFC_"+i, @class = "form-control", @style = "width: 100%" })
+                                            @*@Html.DropDownListFor(model => model.mediaList[i].ForensicCaseID, new SelectList(Model.fcList, "ForensicCaseID", "ForensicDRNumber", Model.fcList.Where(x => x.ForensicCaseID == Model.mediaList[i].ForensicCaseID)), htmlAttributes: new { @id = "ddlFC_"+i, @class = "form-control", @style = "width: 100%" })*@
                                         </div>
                                     </div>
                                 </div>
@@ -420,7 +438,7 @@
                                     success: function (data) {
                                         response($.map(data, function (item) {
                                             return item;
-                                        }))
+                                        }))                                        
                                     },
                                     error: function (response) {
                                         alert(response.responseText);
@@ -448,6 +466,10 @@
 
                     });
                 }
+                //$('#btnSave').click(function () {
+                //    document.getElementById("btnPOST").click();
+
+                //});
                 $("#btnSubmit").click(function (request) {
 
                     var all = "";

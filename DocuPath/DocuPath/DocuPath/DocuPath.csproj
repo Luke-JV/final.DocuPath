@@ -540,6 +540,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BrokenDNA.css" />
+    <Content Include="Content\DNADecorationBroken.css" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia_thumb.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\10.Arterial_Thrombosis_Spinal_Cord_thumb.JPG" />
@@ -795,6 +796,7 @@
     <Content Include="Views\Test\TagCloud.cshtml" />
     <Content Include="Views\Test\TagTest.cshtml" />
     <Content Include="Views\Test\tagEditor.cshtml" />
+    <Content Include="Views\Shared\Unauthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

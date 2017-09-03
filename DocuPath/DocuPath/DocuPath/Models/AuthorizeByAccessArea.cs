@@ -42,7 +42,12 @@ namespace DocuPath.Models
             }
             return true;
         }
-       
+        protected override void HandleUnauthorizedRequest(AuthorizationContext ctx)
+        {
+            ctx.Result = new ViewResult { ViewName = "Unauthorized" };
+            // base.HandleUnauthorizedRequest(ctx);
+        }
+
     }
     //public class RestrictAccessToAssignedManagers : AuthorizationAttribute
     //{

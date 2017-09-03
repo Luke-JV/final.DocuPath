@@ -49,16 +49,18 @@ namespace DocuPath.Controllers
                 {
                     item.MediaCaption = "";
                     item.MediaDescription = "";
+                    item.ForensicCaseID = 0;
                 }
                 var week = DateTime.Today.Date.AddDays(-7);
                 var cases = from fc in db.FORENSIC_CASE.Where(x => x.UserID == id)
                             where fc.DateAdded >= week
                             select fc;
-                model.fcList = cases.ToList();
-                model.purposeList = db.MEDIA_PURPOSE.ToList();
+               // model.fcList = cases.ToList();
+               // model.purposeList = db.MEDIA_PURPOSE.ToList();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Media");
                 #endregion
+                
                 return View(model);
             }
             catch (Exception)
@@ -77,6 +79,7 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Media");
                 #endregion
@@ -85,6 +88,12 @@ namespace DocuPath.Controllers
 
             try
             {
+                foreach (var item in model.mediaList)
+                {
+                    MEDIA inMedia = new MEDIA();
+                    inMedia = item;
+
+                }
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Media");
