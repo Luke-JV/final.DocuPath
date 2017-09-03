@@ -36,16 +36,16 @@ namespace DocuPath.Controllers
         {
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Audit Log");
                 #endregion
                 return View(db.AUDIT_LOG.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Audit Log");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -58,12 +58,15 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Audit Log");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Audit Log");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

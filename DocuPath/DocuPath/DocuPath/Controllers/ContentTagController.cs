@@ -40,7 +40,7 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Content Tag");
                 #endregion
 
                 ContentTagViewModel model = new ContentTagViewModel();
@@ -73,6 +73,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tag");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -83,6 +86,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tag");
+                #endregion
                 return View(model);
             }
 
@@ -109,14 +115,14 @@ namespace DocuPath.Controllers
                 db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Content Tag");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tag");
                 #endregion
                 return RedirectToAction("Add");
             }
@@ -132,14 +138,14 @@ namespace DocuPath.Controllers
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Content Tag");
                 #endregion
                 return View(db.CONTENT_TAG.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Content Tag");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -150,17 +156,24 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Content Tag");
+                #endregion
 
                 #region MODEL POPULATION
                 CONTENT_TAG model = db.CONTENT_TAG.Where(x => x.ContentTagID == id).FirstOrDefault();
                 #endregion
+
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "Content Tag");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Content Tag");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -172,14 +185,16 @@ namespace DocuPath.Controllers
         {
             try
             {
-
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Content Tag");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tag");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -190,6 +205,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Content Tag");
+                #endregion
                 return View(collection);
             }
 
@@ -197,14 +215,14 @@ namespace DocuPath.Controllers
             {
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Content Tag");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tag");
                 #endregion
                 return View();
             }
@@ -218,11 +236,16 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Content Tag");
+                #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Content Tag");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

@@ -85,8 +85,10 @@ namespace DocuPath.Controllers
                     {
                         
                         int id = UserManager.FindByName(model.Email).Id ;
-                        AuditModel.WriteTransaction(id,"Login Operation");
-
+                        #region AUDIT_WRITE
+                        AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Account");
+                        #endregion
+                        //404!!!
                         //ACTIVE_LOGIN login = new ACTIVE_LOGIN();
                         //login.DeviceIPAddress = Request.UserHostAddress;
                         //login.LoginTimestamp = DateTime.Now;

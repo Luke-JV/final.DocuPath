@@ -41,7 +41,7 @@ namespace DocuPath.Controllers
             {
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit,"Access Level");
                 #endregion
 
                 AccessLevelViewModel model = new AccessLevelViewModel();
@@ -174,6 +174,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Access Level");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -185,6 +188,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Access Level");
+                #endregion
                 return View(model);
             }
 
@@ -363,18 +369,16 @@ namespace DocuPath.Controllers
 
                 db.ACCESS_LEVEL.Add(level);
                 db.SaveChanges();
-                //db.ACCESS_LEVEL.Add(AL);
-                //db.SaveChanges();
-                // TODO: Add insert logic here
+                
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Access Level");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Access Level");
                 #endregion
                 return RedirectToAction("Error", "Home");
             }
@@ -388,16 +392,15 @@ namespace DocuPath.Controllers
         {
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Access Level");
                 #endregion
                 return View(db.ACCESS_LEVEL.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Access Level");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -409,18 +412,24 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Access Level");
+                #endregion
 
                 #region MODEL POPULATION
                 ACCESS_LEVEL model = db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault();
-
                 #endregion
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "Access Level");
                 #endregion
+
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Access Level");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -433,14 +442,17 @@ namespace DocuPath.Controllers
         {
             try
             {
-
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");,
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Access Level");
                 #endregion
+                //logic 404
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Access Level");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -452,6 +464,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Access Level");
+                #endregion
                 return View(updatedLevel);
             }
 
@@ -464,14 +479,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Access Level");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Access Level");
                 #endregion
                 return View();
             }
@@ -485,17 +500,22 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Access Level");
+                #endregion
                 //404 CONFIRM
                 db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault().IsDeactivated = true;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Access Level");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Access Level");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

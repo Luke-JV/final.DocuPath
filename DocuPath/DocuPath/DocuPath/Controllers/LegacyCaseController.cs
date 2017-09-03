@@ -43,12 +43,15 @@ namespace DocuPath.Controllers
 
                 var model = new LEGACY_CASE();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Legacy Case");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Legacy Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -59,6 +62,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Legacy Case");
+                #endregion
                 return View(LC);
             }
 
@@ -75,14 +81,14 @@ namespace DocuPath.Controllers
                 db.SaveChanges();
                 // TODO: Add insert logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Legacy Case");
                 #endregion
                 return RedirectToAction("All");
             }
             catch(Exception)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Legacy Case");
                 #endregion
                 return View();
             }
@@ -99,14 +105,14 @@ namespace DocuPath.Controllers
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Legacy Case");
                 #endregion
                 return View(db.LEGACY_CASE.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Legacy Case");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -117,6 +123,9 @@ namespace DocuPath.Controllers
         {
             try
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Legacy Case");
+                #endregion
 
                 LegacyCaseViewModel model = new LegacyCaseViewModel();
                 model.legacyCase = db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault();
@@ -128,14 +137,16 @@ namespace DocuPath.Controllers
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(model.legacyCase.UserID);
                 #endregion
-
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "Legacy Case");
                 #endregion
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Legacy Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -218,12 +229,15 @@ namespace DocuPath.Controllers
                 #endregion
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Legacy Case");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Legacy Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -234,6 +248,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Legacy Case");
+                #endregion
                 return View(updatedLC);
             }
 
@@ -247,14 +264,14 @@ namespace DocuPath.Controllers
 
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Legacy Case");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Legacy Case");
                 #endregion
                 return View();
             }
@@ -268,7 +285,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Legacy Case");
+                #endregion
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
@@ -276,12 +295,15 @@ namespace DocuPath.Controllers
                 db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Legacy Case");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Legacy Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -319,6 +341,9 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Legacy Case")]
         public ActionResult UploadFiles()
         {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            #endregion
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)
             {
@@ -394,10 +419,16 @@ namespace DocuPath.Controllers
                     }
                     db.SaveChanges();
                     // Returns message that successfully uploaded  
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Legacy Case");
+                    #endregion
                     return Json("File Uploaded Successfully!");
                 }
                 catch (Exception ex)
                 {
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Legacy Case");
+                    #endregion
                     return Json("Error occurred. Error details: " + ex.Message);
                 }
             }

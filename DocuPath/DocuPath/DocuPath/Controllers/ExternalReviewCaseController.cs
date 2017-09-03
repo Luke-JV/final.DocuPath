@@ -39,10 +39,8 @@ namespace DocuPath.Controllers
         {
             try
             {
-
-
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "External Review Case");
                 #endregion
 
                 ExternalReviewCaseViewModel model = new ExternalReviewCaseViewModel();
@@ -52,6 +50,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "External Review Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -62,6 +63,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "External Review Case");
+                #endregion
                 return View(ERC);
             }
 
@@ -81,16 +85,16 @@ namespace DocuPath.Controllers
 
                 db.EXTERNAL_REVIEW_CASE.Add(ERC.extCase);
                 db.SaveChanges();
-                // TODO: Add insert logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "External Review Case");
                 #endregion
+               
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "External Review Case");
                 #endregion
                 return View();
             }
@@ -106,14 +110,14 @@ namespace DocuPath.Controllers
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "External Review Case");
                 #endregion
                 return View(db.EXTERNAL_REVIEW_CASE.ToList());
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "External Review Case");
                 #endregion
                 return RedirectToAction("Error", "Home", x.Message);
             }
@@ -123,7 +127,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "External Review Case");
+                #endregion
                 #region MODEL POPULATION
                 EXTERNAL_REVIEW_CASE model = new EXTERNAL_REVIEW_CASE();
                 model = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault();
@@ -134,13 +140,16 @@ namespace DocuPath.Controllers
                 #endregion
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewSuccess, "External Review Case");
                 #endregion
 
                 return View(model);
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "External Review Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -159,12 +168,15 @@ namespace DocuPath.Controllers
                 #endregion
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "External Review Case");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -175,6 +187,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
+                #endregion
                 return View(updatedERC);
             }
 
@@ -187,14 +202,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "External Review Case");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
                 #endregion
                 return View();
             }
@@ -208,17 +223,22 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "External Review Case");
+                #endregion
                 //404 confirm!!
                 db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "External Review Case");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "External Review Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -259,7 +279,9 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "External Review Case");
+                #endregion
                 // Checking no of files injected in Request object  
                 if (Request.Files.Count > 0)
                 {
@@ -314,6 +336,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "External Review Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }

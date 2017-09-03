@@ -40,14 +40,17 @@ namespace DocuPath.Controllers
         {
             try
             {
-                
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case");
                 #endregion
+                
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -58,6 +61,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
+                #endregion
                 return View(collection);
             }
 
@@ -66,7 +72,7 @@ namespace DocuPath.Controllers
                 // TODO: Add insert logic here
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case");
                 #endregion
 
                 return RedirectToAction("Index");
@@ -74,7 +80,7 @@ namespace DocuPath.Controllers
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
                 return View();
             }
@@ -89,19 +95,22 @@ namespace DocuPath.Controllers
         {
             try
             {
-                ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
+                
 
                 //throw new Exception();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Forensic Case");
                 #endregion
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Forensic Case");
+                #endregion
                 return View(db.FORENSIC_CASE.ToList());
+
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Forensic Case");
                 #endregion
                 // TODO 404 - Propagate error handling logic
                 VERTEBRAE.DumpErrorToTxt(x);
@@ -120,7 +129,7 @@ namespace DocuPath.Controllers
                 #endregion
 
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "Forensic Case");
                 #endregion
 
                 #region PREPARE VIEWMODEL
@@ -155,6 +164,9 @@ namespace DocuPath.Controllers
             }
             catch (Exception x)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Forensic Case");
+                #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
                 return View("Error", new HandleErrorInfo(x, "ForensicCase", "Details"));
             }
@@ -174,12 +186,15 @@ namespace DocuPath.Controllers
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Forensic Case");
                 #endregion
                 return View();
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -190,6 +205,9 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
+                #endregion
                 return View(updatedFC);
             }
 
@@ -202,14 +220,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Forensic Case");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
                 #endregion
                 return View();
             }
@@ -223,17 +241,22 @@ namespace DocuPath.Controllers
         {
             try
             {
-
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Forensic Case");
+                #endregion
                 //404 CONFIRM
                 db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
                 db.SaveChanges();
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Forensic Case");
                 #endregion
                 return RedirectToAction("All");
             }
             catch (Exception)
             {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Forensic Case");
+                #endregion
                 return RedirectToAction("Error", "Home");
             }
         }
