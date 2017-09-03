@@ -43,10 +43,10 @@
     </div>
 </div>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
 
     <div class="form-horizontal border-generic apad5" style="margin-bottom: 50px; min-height: 705px">
         @*<hr />
@@ -185,7 +185,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.forensicCase.SessionID, "Autopsy Session", htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessions, "SessionID", "Description", Model.sessions.Where(x => x.SessionID == Model.forensicCase.SessionID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
+                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessionSelector, "sessionID", "sessionDesc", Model.sessionSelector.Where(x => x.sessionID == Model.forensicCase.SessionID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.SessionID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -880,17 +880,17 @@
                                 }
 
                                 @*@if (db.SPECIMEN.Where(x => x.ServiceRequestID == item.ServiceRequestID && x.EXTERNAL_REPORT.DateCaptured != null).Count() == 0)
-                            {
-                                <td>
-                                    Closed
-                                </td>
-                            }
-                            else
-                            {
-                            <td>
-                                Active
-                            </td>
-                        }*@
+                                        {
+                                            <td>
+                                                Closed
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                        <td>
+                                            Active
+                                        </td>
+                                    }*@
                                 <td>
                                     @Html.DisplayFor(model => model.serviceRequests[i].REQUEST_TYPE.RequestTypeValue)
                                 </td>
@@ -996,69 +996,77 @@
                                 @Html.DisplayName("Added By")
                             </th>
                             @*<th data-column-id="status" class="colour-dpred">
-                        @Html.DisplayNameFor(model => model.StatusID)
-                    </th>*@
+                                    @Html.DisplayNameFor(model => model.StatusID)
+                                </th>*@
                             @*<th data-column-id="FCDR" data-cssClass="table-large-identifier" data-formatter="drnumbers" class="colour-dpred">
-                        @Html.DisplayNameFor(model => model.ForensicDRNumber)
-                    </th>*@
+                                    @Html.DisplayNameFor(model => model.ForensicDRNumber)
+                                </th>*@
                             @*<th data-column-id="dateClosed" data-converter="dpdate" class="colour-dpred">
-                        @Html.DisplayNameFor(model => model.DateClosed)
-                    </th>*@
+                                    @Html.DisplayNameFor(model => model.DateClosed)
+                                </th>*@
                             <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
                         </tr>
                     </thead>
                     @{ string imgHTML = ""; }
                     <tbody>
-                        @for (int m = 0; m < Model.media.Count; m++)
+
+                        @for (int i = 0; i < Model.media.Count; i++)
                         {
-                            imgHTML = "<img src='~/" + Url.Content(@VERTEBRAE.GetThumbUrl(Model.media[m].MediaLocation)) + "' class='media-thumb thumbsize-normal' />";
-                            // 404 TODO: Propagate correct IDs from VM
-                            if (Model.media[m].STATUS.StatusValue != "Archived" && Model.media[m].STATUS.StatusValue != "Inbound")
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(model => model.media[m].MediaID)
-                                    </td>
-                                    <td>
-                                        @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
-                                        @*<img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb thumbsize-normal"/>*@
-                                        @imgHTML
-                                        @*@Html.Raw(imgHTML)*@
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => model.media[m].MediaCaption)
-                                    </td>
-                                    @if (Model.media[m].MEDIA_PURPOSE.MediaPurposeValue == "Case Related" && Model.media[m].ForensicCaseID != null)
-                                    {
+                            imgHTML = "<img src='/" + @VERTEBRAE.GetThumbUrl(Model.media[i].MediaLocation) + "' class='media-thumb thumbsize-normal' />";
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => model.media[i].MediaID)
+                                </td>
+
+                                <td>
+                                    @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
+                                    @*<img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb thumbsize-normal"/>*@
+                                    @imgHTML
+
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.media[i].MediaCaption)
+                                </td>
+                                @if (Model.media[i].MEDIA_PURPOSE.MediaPurposeValue == "Case Related" && Model.media[i].ForensicCaseID != null)
+                                {
                                         <td>
-                                            @Html.DisplayFor(model => model.media[m].MEDIA_PURPOSE.MediaPurposeValue) (Model.media[m].FORENSIC_CASE.ForensicDRNumber)
+                                            @Html.DisplayFor(model => model.media[i].MEDIA_PURPOSE.MediaPurposeValue) (@Model.media[i].FORENSIC_CASE.ForensicDRNumber)
                                         </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            @Html.DisplayFor(model => model.media[m].MEDIA_PURPOSE.MediaPurposeValue)
+                                }
+                                else
+                                {
+                                <td>
+                                    @Html.DisplayFor(model => model.media[i].MEDIA_PURPOSE.MediaPurposeValue)
+                                </td>
+                                }
+                                <td>
+                                    @Html.DisplayFor(model => model.media[i].DateAdded)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.media[i].USER.FirstName) @Html.DisplayFor(model => model.media[i].USER.LastName)
+                                </td>
+                                @*< td >
+                                            @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
+                                        </ td >
+                                    < td class="table-large-identifier">
+                                            @Html.DisplayFor(modelItem => item.ForensicDRNumber)
                                         </td>
-                                    }
                                     <td>
-                                        @Html.DisplayFor(model => model.media[m].DateAdded)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => model.media[m].USER.FirstName) @Html.DisplayFor(model => model.media[m].USER.LastName)
-                                    </td>
-                                    @*<td>
-                                @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
-                            </td>*@
-                                    @*<td class="table-large-identifier">
-                                @Html.DisplayFor(modelItem => item.ForensicDRNumber)
-                            </td>*@
-                                    @*<td>
-                                @Html.DisplayFor(modelItem => item.DateClosed)
-                            </td>*@
-                                </tr>
-                            }
+                                            @Html.DisplayFor(modelItem => item.DateClosed)
+                                        </td>*@
+                            </tr>
                             imgHTML = "";
                         }
+                        @{ 
+                            //if (Model.media[i].STATUS.StatusValue != "Archived" && Model.media[i].STATUS.StatusValue != "Inbound")
+                            //{
+
+                            //}
+                        }
+
+
+
                     </tbody>
                 </table>
 
@@ -1504,26 +1512,26 @@
                                                 <div id="CORESTATSPANEL" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            @Html.Label("Surname Of Body Collector", htmlAttributes: new { @class = "control-label col-md-6" })
+                                                            @Html.LabelFor(model => model.stats.BodyCollectorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.Editor("txtBodyCollectorSurname", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px", @Value = (string)ViewBag.BodyCollectorSurnameDefault } })
-                                                                @Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.BodyCollectorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.BodyCollectorSurname, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Surname Of Eviscerator", htmlAttributes: new { @class = "control-label col-md-6" })
+                                                            @Html.LabelFor(model => model.stats.EvisceratorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.Editor("txtEvisceratorSurname", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px", @Value = (string)ViewBag.EvisceratorSurnameDefault } })
-                                                                @Html.ValidationMessage("txtEvisceratorSurname", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.EvisceratorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.EvisceratorSurname, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Surname Of Organ Dissector", htmlAttributes: new { @class = "control-label col-md-6" })
+                                                            @Html.LabelFor(model => model.stats.OrganDissectorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
-                                                                @Html.Editor("txtOrganDissectorSurname", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px", @Value = (string)ViewBag.OrganDissectorSurnameDefault } })
-                                                                @Html.ValidationMessage("txtOrganDissectorSurname", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.OrganDissectorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.OrganDissectorSurname, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1560,36 +1568,45 @@
                                                 <div id="AUTOPSYDETAILSPANEL" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            @Html.Label("Autopsy Type", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.AutopsyTypeID, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.DropDownList("ddlAutopsyType", (IEnumerable<SelectListItem>)ViewBag.AutopsyTypes, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
-                                                                @Html.ValidationMessage("ddlAutopsyType", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.AutopsyTypeID, new SelectList(Model.autopsyTypes, "AutopsyTypeID", "AutopsyTypeValue", Model.autopsyTypes.Where(x => x.AutopsyTypeID == Model.stats.AutopsyTypeID)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.AutopsyTypeID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmAutopsyOther">
-                                                            @Html.Label("Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.AutopsyTypeOtherDescription, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtAutopsyTypeOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtAutopsyTypeOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.AutopsyTypeOtherDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.AutopsyTypeOtherDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.Label("Select All Applicable Samples Taken & Investigations Requested", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @foreach (var item in ViewBag.SamplesInvestigations)
+                                                                @for (int i = 0; i < Model.sampleInvestigations.Count; i++)
                                                                 {
-                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" onchange="toggleShowSIOther()" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" id="toggleSI_@item.Text"> @item.Text</label></div>
+                                                                    @Html.HiddenFor(model => model.selectedSamplesInvestigations[i].valueID);
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.selectedSamplesInvestigations[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSamplesInvestigations[i].valueName
+                                                                        </label>
+                                                                    </div>
                                                                 }
+                                                                @*@foreach (var item in ViewBag.SamplesInvestigations)
+                                                                    {
+                                                                        <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" onchange="toggleShowSIOther()" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" id="toggleSI_@item.Text"> @item.Text</label></div>
+                                                                    }*@
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmSIOther">
-                                                            @Html.Label("Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
+                                                            @Html.LabelFor(model => model.otherSamplesInvestigationsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtOtherSamplesInvestigations", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtOtherSamplesInvestigations", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherSamplesInvestigationsDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherSamplesInvestigationsDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1688,34 +1705,34 @@
                                                 <div id="DECEASEDINDIVIDUALPANEL" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            @Html.Label("Individual Race", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.IndividualRaceID, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.DropDownList("ddlRace", (IEnumerable<SelectListItem>)ViewBag.IndividualRace, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
-                                                                @Html.ValidationMessage("ddlRace", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.IndividualRaceID, new SelectList(Model.races, "IndividualRaceID", "IndividualRaceValue", Model.races.Where(x => x.IndividualRaceID == Model.stats.IndividualRaceID)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.IndividualRaceID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmRaceOther">
-                                                            @Html.Label("Race Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.otherRaceDescription, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtRaceOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtRaceOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherRaceDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherRaceDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Individual Gender", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.IndividualGenderID, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.DropDownList("ddlGender", (IEnumerable<SelectListItem>)ViewBag.IndividualGender, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
-                                                                @Html.ValidationMessage("ddlGender", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.IndividualGenderID, new SelectList(Model.genders, "IndividualGenderID", "IndividualGenderValue", Model.genders.Where(x => x.IndividualGenderID == Model.stats.IndividualGenderID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.IndividualGenderID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Individual Age", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.IndividualEstimatedAge, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtAge", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtAge", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.IndividualEstimatedAge, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.IndividualEstimatedAge, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1752,52 +1769,61 @@
                                                 <div id="MEDICALHISTORYPANEL" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            @Html.Label("Medical History Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.stats.MedicalHistory, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.TextArea("txtMedicalHistory", (string)ViewBag.MedicalHistoryDescriptionDefault, 4, 63, new { htmlAttributes = new { @class = "form-control timeline-textarea", @style = "margin-left: auto; margin-right: auto" } })
-                                                                @Html.ValidationMessage("txtMedicalHistory", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.MedicalHistory, new { htmlAttributes = new { @class = "form-control timeline-textarea", @style = "margin-left: auto; margin-right: auto" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.MedicalHistory, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Treatment Facility", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.HospitalClinicID, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.DropDownList("ddlHospitalClinic", (IEnumerable<SelectListItem>)ViewBag.HospitalsClinics, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
-                                                                @Html.ValidationMessage("ddlHospitalClinic", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.HospitalClinicID, new SelectList(Model.hospitalsClinics, "HospitalClinicID", "HospitalClinicName", Model.hospitalsClinics.Where(x => x.HospitalClinicID == Model.stats.HospitalClinicID)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 322.38px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.HospitalClinicID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmTreatmentFacilityOther">
-                                                            @Html.Label("Facility Name (If 'Other')", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.otherTreatmentFacilityDescription, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtTreatmentFacilityOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtTreatmentFacilityOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherTreatmentFacilityDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherTreatmentFacilityDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Treatment Duration", htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            @Html.LabelFor(model => model.stats.TreatmentDuration, htmlAttributes: new { @class = "control-label col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtTreatmentDuration", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtTreatmentDuration", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.stats.TreatmentDuration, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.stats.TreatmentDuration, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.Label("Select All Applicable Medical Treatments", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @foreach (var item in ViewBag.MedicalTreatments)
+                                                                @for (int i = 0; i < Model.medTreatments.Count; i++)
                                                                 {
-                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
+                                                                    @Html.HiddenFor(model => model.selectedMedicalTreatments[i].valueID);
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.selectedMedicalTreatments[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedMedicalTreatments[i].valueName
+                                                                        </label>
+                                                                    </div>
                                                                 }
+                                                                @*@foreach (var item in ViewBag.MedicalTreatments)
+                                                                    {
+                                                                        <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
+                                                                    }*@
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmMedTreatOther">
-                                                            @Html.Label("Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
+                                                            @Html.LabelFor(model => model.otherMedicalTreatmentsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
                                                             <div class="col-md-7">
-                                                                @Html.Editor("txtOtherMedicalTreatment", new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
-                                                                @Html.ValidationMessage("txtOtherMedicalTreatment", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherMedicalTreatmentsDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherMedicalTreatmentsDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1838,7 +1864,7 @@
                                                             @Html.Label("Province of Death Occurrence", htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-6">
                                                                 <div class="input-group">
-                                                                    @Html.DropDownList("ddlDeathProvince", (IEnumerable<SelectListItem>)ViewBag.Provinces, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 222.4px" })
+                                                                    @Html.DropDownListFor(model => model.DeathProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName", Model.provinces.Where(x => x.ProvinceID==0)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 222.4px" })
                                                                     @Html.ValidationMessage("ddlDeathProvince", "", new { @class = "validation-text text-danger" })
                                                                 </div>
                                                             </div>
@@ -1991,52 +2017,61 @@
                                                 <div id="INCIDENTPANEL" class="panel-collapse collapse">
                                                     <div class="panel-body">
                                                         <div class="form-group">
-                                                            @Html.Label("Primary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.stats.PrimaryCauseID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.DropDownList("ddlCOD", (IEnumerable<SelectListItem>)ViewBag.PrimaryCOD, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
-                                                                @Html.ValidationMessage("ddlCOD", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.PrimaryCauseID, new SelectList(Model.primaryCauses, "PrimaryCauseID", "PrimaryCauseDescription", Model.primaryCauses.Where(x => x.PrimaryCauseID == Model.stats.PrimaryCauseID)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.PrimaryCauseID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmCODOther">
-                                                            @Html.Label("Primary Cause Of Death Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.otherPrimaryCauseDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.Editor("txtPrimaryCODOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
-                                                                @Html.ValidationMessage("txtPrimaryCODOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherPrimaryCauseDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherPrimaryCauseDeathDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
-                                                            @Html.Label("Apparent Manner Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.stats.ApparentMannerID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.DropDownList("ddlApparentMOD", (IEnumerable<SelectListItem>)ViewBag.ApparentMOD, htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
-                                                                @Html.ValidationMessage("ddlApparentMOD", "", new { @class = "validation-text text-danger" })
+                                                                @Html.DropDownListFor(model => model.stats.ApparentMannerID, new SelectList(Model.apparentManners, "ApparentMannerID", "ApparentMannerDescription", Model.apparentManners.Where(x => x.ApparentMannerID == Model.stats.ApparentMannerID)), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
+                                                                @Html.ValidationMessageFor(model => model.stats.ApparentMannerID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmMOIOther">
-                                                            @Html.Label("Apparent Manner Of Death Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.otherApparentMannerDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.Editor("txtApparentMODOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
-                                                                @Html.ValidationMessage("txtApparentMODOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherApparentMannerDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherApparentMannerDeathDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.Label("Select All Applicable Scenes Of Injury", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @foreach (var item in ViewBag.SceneOfInjury)
+                                                                @for (int i = 0; i < Model.injuryScenes.Count; i++)
                                                                 {
-                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSOI_@item.Text"> @item.Text</label></div>
+                                                                    @Html.HiddenFor(model => model.selectedInjuryScenes[i].valueID);
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.selectedInjuryScenes[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedInjuryScenes[i].valueName
+                                                                        </label>
+                                                                    </div>
                                                                 }
+                                                                @*@foreach (var item in ViewBag.SceneOfInjury)
+                                                                    {
+                                                                        <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSOI_@item.Text"> @item.Text</label></div>
+                                                                    }*@
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmSOIOther">
-                                                            @Html.Label("Scene Of Injury Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.otherInjurySceneDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.Editor("txtSOIOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
-                                                                @Html.ValidationMessage("txtSOIOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherInjurySceneDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2075,18 +2110,27 @@
                                                         <div class="form-group">
                                                             @Html.Label("Select All Applicable External Causes Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @foreach (var item in ViewBag.ExternalCause)
+                                                                @for (int i = 0; i < Model.externalCause.Count; i++)
                                                                 {
-                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleExtCause_@item.Text"> @item.Text</label></div>
+                                                                    @Html.HiddenFor(model => model.selectedExternalCauses[i].valueID);
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.selectedExternalCauses[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedExternalCauses[i].valueName
+                                                                        </label>
+                                                                    </div>
                                                                 }
+                                                                @*@foreach (var item in ViewBag.ExternalCause)
+                                                                    {
+                                                                        <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleExtCause_@item.Text"> @item.Text</label></div>
+                                                                    }*@
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmExtCauseOther">
-                                                            @Html.Label("External Cause Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.otherExternalCauseDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.Editor("txtExternalCauseOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
-                                                                @Html.ValidationMessage("txtExternalCauseOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherExternalCauseDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2125,18 +2169,27 @@
                                                         <div class="form-group">
                                                             @Html.Label("Select All Applicable Special Categories", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @foreach (var item in ViewBag.SpecialCategories)
+                                                                @for (int i = 0; i < Model.specialCategory.Count; i++)
                                                                 {
-                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSpecCat_@item.Text"> @item.Text</label></div>
+                                                                    @Html.HiddenFor(model => model.selectedSpecialCategories[i].valueID);
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            @Html.CheckBoxFor(model => model.selectedSpecialCategories[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSpecialCategories[i].valueName
+                                                                        </label>
+                                                                    </div>
                                                                 }
+                                                                @*@foreach (var item in ViewBag.SpecialCategories)
+                                                                    {
+                                                                        <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSpecCat_@item.Text"> @item.Text</label></div>
+                                                                    }*@
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group" id="frmSpecCatOther">
-                                                            @Html.Label("Special Category Description (If 'Other')", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                            @Html.LabelFor(model => model.otherSpecialCategoryDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.Editor("txtSpecialCategoryOtherDesc", new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
-                                                                @Html.ValidationMessage("txtSpecialCategoryOtherDesc", "", new { @class = "validation-text text-danger" })
+                                                                @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.ValidationMessageFor(model => model.otherSpecialCategoryDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2160,123 +2213,9 @@
         </div>
 
     </div>
-
-
-    @*<div class="form-horizontal">
-        <h4>FORENSIC_CASE</h4>
-        <hr />
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForensicCaseID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ForensicCaseID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StatusID, "StatusID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SessionID, "SessionID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("SessionID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.SessionID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AutopsyAreaID, "AutopsyAreaID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AutopsyAreaID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AutopsyAreaID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForensicDRNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ForensicDRNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ForensicDRNumber, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FCBriefDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FCBriefDescription, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DHANoticeDeathID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DHANoticeDeathID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DHANoticeDeathID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ActingOfficerNameSurname, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ActingOfficerNameSurname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ActingOfficerNameSurname, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ActingOfficerContactNum, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ActingOfficerContactNum, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ActingOfficerContactNum, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CauseOfDeathConclusion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CauseOfDeathConclusion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CauseOfDeathConclusion, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateClosed, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>*@
-}
-
+                            //                      }
+                            //}
+                        }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/toggle")
@@ -2286,24 +2225,24 @@
 
     @* BACK TO TOP: *@
     <script>
-            jQuery(document).ready(function() {
-                $('.bottom-banner').css({"display": "none"});
-                var offset = 250;
-                var duration = 300;
-                jQuery(window).scroll(function() {
-                    if (jQuery(this).scrollTop() > offset) {
-                        jQuery('.bottom-banner').fadeIn(duration);
-                    } else {
-                        jQuery('.bottom-banner').fadeOut(duration);
-                    }
-                });
-
-                jQuery('.bottom-banner').click(function (event) {
-                    event.preventDefault();
-                    jQuery('html, body').animate({scrollTop: 0}, duration);
-                    return false;
-                })
+        jQuery(document).ready(function () {
+            $('.bottom-banner').css({ "display": "none" });
+            var offset = 250;
+            var duration = 300;
+            jQuery(window).scroll(function () {
+                if (jQuery(this).scrollTop() > offset) {
+                    jQuery('.bottom-banner').fadeIn(duration);
+                } else {
+                    jQuery('.bottom-banner').fadeOut(duration);
+                }
             });
+
+            jQuery('.bottom-banner').click(function (event) {
+                event.preventDefault();
+                jQuery('html, body').animate({ scrollTop: 0 }, duration);
+                return false;
+            })
+        });
     </script>
 
     <script name="CODToggles" type="text/javascript">
@@ -2312,7 +2251,8 @@
             $("#2ndCOD").hide()
             $("#3rdCOD").hide()
             $("#4thCOD").hide()
-        /*$(document).ready(function () { $("#OfficerPhone").mask("(999) 999 9999")*/ });
+            /*$(document).ready(function () { $("#OfficerPhone").mask("(999) 999 9999")*/
+        });
     </script>
 
     @* DATETIMEPICKERS: *@
@@ -2480,85 +2420,85 @@
     </script>
 
     <script id="loadBootgrid" type="text/javascript">
-            var gridSR = $("#tblFCSR").bootgrid({
-                caseSensitive: false,
-                converters: {
-                    dpdate: {
-                        from: function (value) { return moment(value); },
-                        to: function (value) { return value.format("ddd D MMM YYYY"); }
-                    }
-                },
-                formatters: {
-                    // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
-                    "commands": function (column, row) {
-                        //if (row.status.trim() === "Closed") { /* CHECK IF THE REQUEST IS CLOSED, IF TRUE, THEN SHOW 'VIEW': */
-                        //    return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
-                        //} else if (row.status.trim() === "Active") { /* CHECK IF THE REQUEST IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'CANCEL' AND 'LINK': */
-                            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                                "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Cancel\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
-                                "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link\" href=\"/ServiceRequest/Link/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
-                        //}
-                     },
-                    "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                        return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-                    }
+        var gridSR = $("#tblFCSR").bootgrid({
+            caseSensitive: false,
+            converters: {
+                dpdate: {
+                    from: function (value) { return moment(value); },
+                    to: function (value) { return value.format("ddd D MMM YYYY"); }
                 }
-            });
+            },
+            formatters: {
+                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
+                "commands": function (column, row) {
+                    //if (row.status.trim() === "Closed") { /* CHECK IF THE REQUEST IS CLOSED, IF TRUE, THEN SHOW 'VIEW': */
+                    //    return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
+                    //} else if (row.status.trim() === "Active") { /* CHECK IF THE REQUEST IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'CANCEL' AND 'LINK': */
+                    return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Cancel\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
+                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link\" href=\"/ServiceRequest/Link/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
+                    //}
+                },
+                "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+                    return "<span class=\"table-large-identifier\">" + row.FCDR + "</span>";
+                }
+            }
+        });
     </script>
 
     <script id="loadBootgrid" type="text/javascript">
-            var gridMedia = $("#tblFCMedia").bootgrid({
-                caseSensitive: false,
-                converters: {
-                    dpdate: {
-                        from: function (value) { return moment(value); },
-                        to: function (value) { return value.format("ddd D MMM YYYY"); }
-                    }
-                },
-                formatters: {
-                    // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
-                    "commands": function (column, row) {
-                        if (row.purpose.trim() === "Case Related") { /* CHECK IF THE ITEM IS CASE RELATED, IF TRUE, THEN SHOW 'VIEW', 'MAINTAIN TAGS' and 'DELETE': */
-                            return "<a class=\"mdl2icon colour-dpblack\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>" +
-                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
-                        } else { /* IN ALL OTHER CASES, SHOW 'VIEW', 'MAINTAIN TAGS', 'LINK TO FORENSIC CASE' and 'DELETE': (FALLBACK): */
-                            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link To Forensic Case\" href=\"/Media/Link/" + row.MediaID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>" +
-                        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
-                        }
-                     }/*,*/
-                    //"drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                    //    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-                    //}
+        var gridMedia = $("#tblFCMedia").bootgrid({
+            caseSensitive: false,
+            converters: {
+                dpdate: {
+                    from: function (value) { return moment(value); },
+                    to: function (value) { return value.format("ddd D MMM YYYY"); }
                 }
-            });
+            },
+            formatters: {
+                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
+                "commands": function (column, row) {
+                    if (row.purpose.trim() === "Case Related") { /* CHECK IF THE ITEM IS CASE RELATED, IF TRUE, THEN SHOW 'VIEW', 'MAINTAIN TAGS' and 'DELETE': */
+                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
+                    } else { /* IN ALL OTHER CASES, SHOW 'VIEW', 'MAINTAIN TAGS', 'LINK TO FORENSIC CASE' and 'DELETE': (FALLBACK): */
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link To Forensic Case\" href=\"/Media/Link/" + row.MediaID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
+                    }
+                }/*,*/
+                //"drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+                //    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
+                //}
+            }
+        });
     </script>
 
-<script id="loadBootgrid" type="text/javascript">
-            var gridAE = $("#tblFCAE").bootgrid({
-                caseSensitive: false,
-                converters: {
-                    dpdate: {
-                        from: function (value) { return moment(value); },
-                        to: function (value) { return value.format("ddd D MMM YYYY"); }
-                    }
-                },
-                formatters: {
-                    // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
-                    "commands": function (column, row) {
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/AdditionalEvidence/View/" + row.AEID.trim() + "\" target=\"_blank\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
-                    },
-                    "serialNumber": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL ACADEMIC ID NUMBERS: */
-                        return "<span class=\"table-large-identifier\">" + row.serialNumber + "</span>";
-                    },
-                    "contactNumber": function (column, row) {
-                        var tel = row.contactNumber.trim();
-                        return "<span style=\"font-weight: bold\"><span style=\"color: #666\">(" + tel.substring(0, 3) + ")</span> " + tel.substring(3, 6) + " " + tel.substring(6, 11) + "</span>";
-                    }
+    <script id="loadBootgrid" type="text/javascript">
+        var gridAE = $("#tblFCAE").bootgrid({
+            caseSensitive: false,
+            converters: {
+                dpdate: {
+                    from: function (value) { return moment(value); },
+                    to: function (value) { return value.format("ddd D MMM YYYY"); }
                 }
-            });
-</script>
+            },
+            formatters: {
+                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
+                "commands": function (column, row) {
+                    return "<a class=\"mdl2icon colour-dpblack\" href=\"/AdditionalEvidence/View/" + row.AEID.trim() + "\" target=\"_blank\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
+                },
+                "serialNumber": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL ACADEMIC ID NUMBERS: */
+                    return "<span class=\"table-large-identifier\">" + row.serialNumber + "</span>";
+                },
+                "contactNumber": function (column, row) {
+                    var tel = row.contactNumber.trim();
+                    return "<span style=\"font-weight: bold\"><span style=\"color: #666\">(" + tel.substring(0, 3) + ")</span> " + tel.substring(3, 6) + " " + tel.substring(6, 11) + "</span>";
+                }
+            }
+        });
+    </script>
 
 }

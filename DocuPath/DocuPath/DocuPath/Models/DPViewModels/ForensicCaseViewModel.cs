@@ -40,16 +40,84 @@ namespace DocuPath.Models.DPViewModels
         public List<SERVICE_REQUEST> serviceRequests { get; set; }
         public List<MEDIA> media { get; set; }
         public CASE_STATISTICS stats { get; set; }
-        public List<STATS_PROVINCE_EVENT> provinces { get; set; }
+        public List<PROVINCE> provinces { get; set; }
+        public List<EVENT> events { get; set; }
         public List<CASE_COD_ESTIMATION> caseCODEstimations { get; set; }
-        public List<STATS_SAMPLES_INVESTIGATION> sampleInvestigations { get; set; }
-        public List<STATS_TREATMENTS> medTreatments { get; set; }
-        public List<STATS_INJURY_SCENE> injuryScenes { get; set; }
-        public List<STATS_EXTERNAL_CAUSE> externalCause { get; set; }
-        public List<STATS_SPECIAL_CATEGORY> specialCategory { get; set; }
-        public List<STATS_POLICE_STATION> stations { get; set; }
-
-        public List<SESSION> sessions { get; set; }
+        public List<SAMPLE_INVESTIGATION> sampleInvestigations { get; set; }
+        public List<MEDICAL_TREATMENTS> medTreatments { get; set; }
+        public List<SCENE_OF_INJURY> injuryScenes { get; set; }
+        public List<EXTERNAL_CAUSE> externalCause { get; set; }
+        public List<SPECIAL_CATEGORY> specialCategory { get; set; }
+        public List<SERVICE_PROVIDER> serviceProvider { get; set; }
+        public List<HOSPITAL_CLINIC> hospitalsClinics { get; set; }
+        //public List<SESSION> sessions { get; set; }
         public List<AUTOPSY_AREA> autopsyAreas { get; set; }
+        public List<AUTOPSY_TYPE> autopsyTypes { get; set; }
+        public List<INDIVIDUAL_RACE> races { get; set; }
+        public List<INDIVIDUAL_GENDER> genders { get; set; }
+        public List<PRIMARY_CAUSE_DEATH> primaryCauses { get; set; }
+        public List<APPARENT_MANNER_DEATH> apparentManners { get; set; }
+
+        public List<sessionKVP> sessionSelector { get; set; }
+        public List<multiselectKVP> selectedSamplesInvestigations { get; set; }
+        public List<multiselectKVP> selectedMedicalTreatments { get; set; }
+        public List<multiselectKVP> selectedInjuryScenes { get; set; }
+        public List<multiselectKVP> selectedExternalCauses { get; set; }
+        public List<multiselectKVP> selectedSpecialCategories { get; set; }
+
+        public List<SPE_KVP> provinceEvents { get; set; }
+        public List<stationRolesKVP> stationRoles { get; set; }
+
+
+        public string otherSamplesInvestigationsDescription { get; set; }
+        public string otherRaceDescription { get; set; }
+        public string otherTreatmentFacilityDescription { get; set; }
+        public string otherMedicalTreatmentsDescription { get; set; }
+        public string otherPrimaryCauseDeathDescription { get; set; }
+        public string otherApparentMannerDeathDescription { get; set; }
+        public string otherInjurySceneDescription { get; set; }
+        public string otherExternalCauseDescription { get; set; }
+        public string otherSpecialCategoryDescription { get; set; }
+        public int DeathProvinceId { get; set; }
+        public int OccurrenceProvinceId { get; set; }
+        public int ReportProvinceId { get; set; }
+        public int ProcessingProvinceId { get; set; }
+        public int TreatmentProvinceId { get; set; }
+
+        public int JurisdictionStationID { get; set; }
+        public int ProcessingStationID { get; set; }
+        public int InvestigationStationID { get; set; }
+
+
     }
+
+    public class sessionKVP
+    {
+        public int sessionID { get; set; }
+        public string sessionDesc { get; set; }
+    }
+
+    public class multiselectKVP
+    {
+        public string valueName { get; set; }
+        public int valueID { get; set; }
+        public bool isSelected { get; set; }
+    }
+
+    public class SPE_KVP
+    {
+        public int provinceID { get; set; }
+        public int eventID { get; set; }
+    }
+
+    public class stationRolesKVP
+    {
+        public int providerID { get; set; }
+        public int roleID { get; set; }
+    }
+    public class geolocationKeys
+    {
+        
+    }
+
 }

@@ -1,4 +1,4 @@
-﻿<link rel="stylesheet" href="~/Content/bootstrap.css" />
+﻿<link rel="stylesheet" href="~/Content/BrokenDNA.css" />
 @model System.Web.Mvc.HandleErrorInfo
 
 @{
@@ -22,7 +22,7 @@
                             <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
                         </div>
                         <div id="ErrorDetails" class="panel-collapse collapse sidenav-notification-detail">
-                            <p style="margin: 0 5px 0 5px; padding: 25px 5px 25px 5px; font-family: Consolas; font-weight: bold; text-align: center">@Model.Exception.Message</p>
+                            <p style="margin: 0 5px 0 5px; word-break: break-word; padding: 25px 5px 25px 5px; font-family: Consolas; font-weight: bold; text-align: center">@Model.Exception.Message</p>
                             <div class="panel-footer" data-parent="#ErrorDetails">
                                 <div class="sidenav-button-bar">
                                     <input type="submit" id="btnErrorDump" value="Report Error" class="btn btn-neuron btn-neuron-red btn-xs pull-right" style="width: 110px" />
