@@ -171,7 +171,7 @@
                         '<div><a href="javascript:void(0);" class="btn btn-default dtp-select-year-range after" style="margin: 0;"><i class="mdl2icon mdl2-down"></i></a></div>' +
                         '</div>';
 
-                    this.template = '<div class="dtp hidden" id="' + this.name + '">' +
+                    this.template = '<div class="dtp hidden overlay" id="' + this.name + '">' +
                             '<div class="dtp-content">' +
                             '<div class="dtp-date-view">' +
                             '<header class="dtp-header">' +

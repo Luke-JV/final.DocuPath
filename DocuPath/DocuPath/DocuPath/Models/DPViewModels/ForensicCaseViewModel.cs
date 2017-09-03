@@ -42,7 +42,6 @@ namespace DocuPath.Models.DPViewModels
         public CASE_STATISTICS stats { get; set; }
         public List<PROVINCE> provinces { get; set; }
         public List<EVENT> events { get; set; }
-        public List<CASE_COD_ESTIMATION> caseCODEstimations { get; set; }
         public List<SAMPLE_INVESTIGATION> sampleInvestigations { get; set; }
         public List<MEDICAL_TREATMENTS> medTreatments { get; set; }
         public List<SCENE_OF_INJURY> injuryScenes { get; set; }
@@ -65,8 +64,13 @@ namespace DocuPath.Models.DPViewModels
         public List<multiselectKVP> selectedExternalCauses { get; set; }
         public List<multiselectKVP> selectedSpecialCategories { get; set; }
 
-        public List<SPE_KVP> provinceEvents { get; set; }
-        public List<stationRolesKVP> stationRoles { get; set; }
+        //public List<SPE_KVP> provinceEvents { get; set; }
+        //public List<stationRolesKVP> stationRoles { get; set; }
+
+        public CASE_COD_ESTIMATION primaryCODEst { get; set; }
+        public CASE_COD_ESTIMATION secondaryCODEst { get; set; }
+        public CASE_COD_ESTIMATION tertiaryCODEst { get; set; }
+        public CASE_COD_ESTIMATION quaternaryCODEst { get; set; }
 
 
         public string otherSamplesInvestigationsDescription { get; set; }
@@ -78,15 +82,24 @@ namespace DocuPath.Models.DPViewModels
         public string otherInjurySceneDescription { get; set; }
         public string otherExternalCauseDescription { get; set; }
         public string otherSpecialCategoryDescription { get; set; }
+
         public int DeathProvinceId { get; set; }
+        public string otherDeathProvinceDesc { get; set; }
         public int OccurrenceProvinceId { get; set; }
+        public string otherOccurrenceProvinceDesc { get; set; }
         public int ReportProvinceId { get; set; }
+        public string otherReportProvinceDesc { get; set; }
         public int ProcessingProvinceId { get; set; }
+        public string otherProcessingProvinceDesc { get; set; }
         public int TreatmentProvinceId { get; set; }
+        public string otherTreatmentProvinceDesc { get; set; }
 
         public int JurisdictionStationID { get; set; }
+        public string JurisdictionStationName { get; set; }
         public int ProcessingStationID { get; set; }
+        public string ProcessingStationName { get; set; }
         public int InvestigationStationID { get; set; }
+        public string InvestigationStationName { get; set; }
 
 
     }
@@ -104,20 +117,15 @@ namespace DocuPath.Models.DPViewModels
         public bool isSelected { get; set; }
     }
 
-    public class SPE_KVP
-    {
-        public int provinceID { get; set; }
-        public int eventID { get; set; }
-    }
+    //public class SPE_KVP
+    //{
+    //    public int provinceID { get; set; }
+    //    public int eventID { get; set; }
+    //}
 
-    public class stationRolesKVP
-    {
-        public int providerID { get; set; }
-        public int roleID { get; set; }
-    }
-    public class geolocationKeys
-    {
-        
-    }
-
+    //public class stationRolesKVP
+    //{
+    //    public int providerID { get; set; }
+    //    public int roleID { get; set; }
+    //}
 }

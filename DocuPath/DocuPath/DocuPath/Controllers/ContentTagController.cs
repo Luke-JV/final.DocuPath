@@ -423,6 +423,53 @@ namespace DocuPath.Controllers
             return conditions;
         }
 
+        public ActionResult GetTags(string query)
+        {
+            try
+            {
+
+                return Json(_GetTags(query), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        private List<Autocomplete> _GetTags(string query)
+        {
+            List<Autocomplete> tags = new List<Autocomplete>();
+            try
+            {
+                var tagResults = (from tag in db.CONTENT_TAG
+                                        where (tag.ContentTagText.Contains(query) || tag.ContentTagCode.Contains(query))
+                                        orderby tag.ContentTagText
+                                        select tag).ToList();
+
+                foreach (var result in tagResults)
+                {
+                    Autocomplete tag = new Autocomplete();
+                    tag.Name = "(" + result.ContentTagCode + ") " + result.ContentTagText;
+                    tag.Id = result.ContentTagID;
+                    tags.Add(tag);
+                }
+            }
+            catch (EntityCommandExecutionException eceex)
+            {
+                if (eceex.InnerException != null)
+                {
+                    RedirectToAction("Error", "Home", eceex.Message);
+                }
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                RedirectToAction("Error", "Home", x.Message);
+            }
+            return tags;
+        }
         #endregion
     }
 }
