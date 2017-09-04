@@ -11,8 +11,8 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
-    [Authorize]
-    [HandleError]
+   // [Authorize]
+    //[HandleError]
     //[LogAction]
     public class HomeController : Controller
     {
