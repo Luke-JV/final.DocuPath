@@ -1,90 +1,202 @@
 ﻿@model DocuPath.Models.DPViewModels.MediaViewModel
+@using DocuPath.Models
+@{ ViewBag.Title = "Details"; }
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
-<div>
-    <h4>MEDIA</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DateAdded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateAdded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaCaption)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaCaption)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsPubliclyAccessible)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsPubliclyAccessible)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FORENSIC_CASE.ForensicDRNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FORENSIC_CASE.ForensicDRNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MEDIA_PURPOSE.MediaPurposeValue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MEDIA_PURPOSE.MediaPurposeValue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.USER.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.USER.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.STATUS.StatusValue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.STATUS.StatusValue)
-        </dd>
-
-    </dl>
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Media Repository", "All", "Media") </li>
+    <li class="active">@Html.ActionLink("View Media Item", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-media"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW MEDIA ITEM</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Media/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnExpandCollapse" accordion-id="#FCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div grid-area="btn4">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnThumbsizeToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-resize btn-mdl2icon" data-toggle="tooltip" title="TOGGLE THUMBNAIL SIZE"></button>
+                </form>
+            </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MediaID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-5" style="padding-left: 0px; padding-right: 2.5px">
+            <div class="panel panel-default" style="margin-bottom: 5px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-media panel-mdl2icon"></span>
+                    <span>MEDIA ITEM THUMBNAIL</span>
+                </div>
+                <div id="ThumbnailPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5 text-center" style="height: 309.4px; max-height: 309.4px; width: auto">
+                        @*<div class="row text-center">
+                            <div class="col-md-12">*@
+                                <div class="imgPreview" style="height: 300px; width: 410px; padding: 0px; display: grid; justify-content: center; margin: auto">
+                                    <img class="img-thumbnail" src="~/@VERTEBRAE.GetUrl(Model.media.MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain"/>
+                                @*</div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7" style="padding-left: 2.5px; padding-right: 15px">
+            <div class="panel panel-default" style="margin-bottom: 5px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                    <span>MEDIA ITEM DETAILS</span>
+                </div>
+                <div id="DetailsPanel" class="panel-collapse collapse in">
+                    <div class="panel-body" style="min-height: 309.4px">
+                        <dl class="dl-horizontal-tiny">
+                            @*<dt>
+                                    @Html.DisplayNameFor(model => model.MediaThumbnail)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.MediaThumbnail)
+                                </dd>*@
+
+                            <dt style="padding-top: 2.8px">
+                                @Html.DisplayNameFor(model => model.media.MediaCaption)
+                            </dt>
+
+                            <dd class="table-large-identifier" style="font-weight: bold; text-transform: uppercase">
+                                @Html.DisplayFor(model => model.media.MediaCaption)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.MediaDescription)
+                            </dt>
+
+                            <dd style="text-align: justify; padding-right: 10px">
+                                @Html.DisplayFor(model => model.media.MediaDescription)
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.IsPubliclyAccessible)
+                            </dt>
+
+                            @if (Model.media.IsPubliclyAccessible == true)
+                            {
+                                <dd>
+                                    @Html.Raw(VERTEBRAE.StatusMarkup("Public","status-danger"))
+                                </dd>
+                            }
+                            else
+                            {
+                                <dd>
+                                    @Html.Raw(VERTEBRAE.StatusMarkup("Private", "status-ok"))
+                                </dd>
+                            }
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.MediaPurposeID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.media.MEDIA_PURPOSE.MediaPurposeValue)
+                            </dd>
+
+                            @if (Model.media.MEDIA_PURPOSE.MediaPurposeValue == "Case Related")
+                            {
+                                <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.media.FORENSIC_CASE.ForensicDRNumber)</dt>
+                                <dd class="large-identifier">@Html.DisplayFor(model => model.media.FORENSIC_CASE.ForensicDRNumber)</dd>
+                            }
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.UserID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.media.USER.FirstName) @Html.DisplayFor(model => model.media.USER.LastName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.DateAdded)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.media.DateAdded)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.media.STATUS.StatusValue)
+                            </dt>
+                            @if (Model.media.STATUS.StatusValue == "Active")
+	                        {
+		                        <dd>@Html.Raw(VERTEBRAE.StatusMarkup(Model.media.STATUS.StatusValue,"status-ok"))</dd>
+                            }
+                            else if (Model.media.STATUS.StatusValue == "Pending")
+                            {
+                                <dd>@Html.Raw(VERTEBRAE.StatusMarkup(Model.media.STATUS.StatusValue, "status-warning"))</dd>
+                            }
+                            else
+                            {
+                                <dd>@Html.Raw(VERTEBRAE.StatusMarkup(Model.media.STATUS.StatusValue, "status-inactive"))</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 0px; padding-top: 0px">
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-tag panel-mdl2icon"></span>
+                    <span>Media Item Tags</span>
+                </div>
+                <div id="TagPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @foreach (var tag in Model.tags)
+                                {
+                                    @Html.Label(tag.ContentTagText, new { @class = "details-tag", @data_toggle = "tooltip", @title = tag.ContentTagCode })
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    }
