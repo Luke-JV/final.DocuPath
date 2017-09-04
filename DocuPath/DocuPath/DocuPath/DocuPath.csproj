@@ -804,7 +804,7 @@
     <Content Include="Views\ContentTag\UpdateRepository.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Start\App_Data\" />
     <Folder Include="Content\DocuPathRepositories\LC_REPO\" />
     <Folder Include="Views\Scheduling\" />
   </ItemGroup>
