@@ -6201,7 +6201,7 @@ button.close {
 
 .tooltip {
     position: absolute;
-    z-index: 1030;
+    z-index: 50 !important;
     display: block;
     font-size: 12px;
     line-height: 1.4;
@@ -8218,59 +8218,23 @@ td.visible-print {
     background-color: #333333;
 }
 
-.modalbox-mdl2icon-warning {
+.modalbox-title-mdl2icon {
     margin-right: 7.5px;
     margin-left: 2.5px;
     margin-bottom: 2.5px;
-    margin-top: -7.5px;
-    padding-top: 5px;
-    padding-left: 7px;
-    height: 35px;
-    width: 35px;
-    font-size: 16pt;
-    color: #000;
+    margin-top: 2.5px;
+    height: 33px !important;
+    width: 33px !important;
+    max-height: 33px !important;
+    max-width: 33px !important;
     border: 1px solid transparent;
     border-radius: 100%;
-    text-shadow: 1px 1px 1px black;
-    background-color: #eea236;
-}
-
-.modalbox-mdl2icon-error {
-    margin-right: 7.5px;
-    margin-left: 2.5px;
-    margin-bottom: 2.5px;
-    margin-top: -6.5px;
-    padding-top: 6px;
-    padding-left: 6.5px;
-    height: 35px;
-    width: 35px;
-    font-size: 16pt;
-    color: #000;
-    border: 1px solid transparent;
-    border-radius: 100%;
-    text-shadow: 1px 1px 1px black;
-    background-color: #d9534f;
-}
-
-.modalbox-mdl2icon-success {
-    margin-right: 7.5px;
-    margin-left: 2.5px;
-    margin-bottom: 2.5px;
-    margin-top: -6.5px;
-    padding-top: 6px;
-    padding-left: 6.5px;
-    height: 35px;
-    width: 35px;
-    font-size: 16pt;
-    color: #000;
-    border: 1px solid transparent;
-    border-radius: 100%;
-    text-shadow: 1px 1px 1px black;
-    background-color: #468847;
 }
 
 .modalbox-title-warning {
-    height: 40px;
+    height: 40px !important;
+    max-height: 40px !important;
+    min-height: 40px !important;
     width: 500px;
     display: table-cell;
     vertical-align: middle;
@@ -9920,7 +9884,7 @@ a.cal-event-week {
 .validation-text {
     font-family: 'U.S. 101';
     font-size: 14pt;
-    word-spacing: 2px;
+    word-spacing: 1px;
     letter-spacing: 0.5px;
     font-weight: normal;
     text-transform: uppercase;

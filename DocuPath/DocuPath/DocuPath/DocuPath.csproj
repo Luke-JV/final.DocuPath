@@ -591,6 +591,11 @@
     <Content Include="Content\Resources\DP_INSIGHT_FINALLOGO_TRANSPARENTBG.png" />
     <Content Include="Content\Resources\DR.png" />
     <Content Include="Content\Resources\ERCCoverLetterPreview.png" />
+    <Content Include="Content\Resources\icoError.png" />
+    <Content Include="Content\Resources\icoFail.png" />
+    <Content Include="Content\Resources\icoInfo.png" />
+    <Content Include="Content\Resources\icoSuccess.png" />
+    <Content Include="Content\Resources\icoWarn.png" />
     <Content Include="Content\Resources\LV.png" />
     <Content Include="Content\Resources\MH.png" />
     <Content Include="Content\Resources\NoERCCaseReport.png" />
@@ -812,6 +817,7 @@
     <Content Include="Views\Scheduling\DailyAutopsySchedule.cshtml" />
     <Content Include="Views\ForensicCase\Migrate.cshtml" />
     <Content Include="Views\ServiceRequest\LinkExternalReport.cshtml" />
+    <Content Include="Views\Home\ModalNotificationTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

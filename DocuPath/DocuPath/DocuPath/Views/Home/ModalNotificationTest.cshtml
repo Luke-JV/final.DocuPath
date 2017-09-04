@@ -1,0 +1,454 @@
+﻿@*<link rel="stylesheet" href="~/Content/LoadingHelix.css" type="text/css" />*@
+@{
+    ViewBag.Title = "Demo";
+}
+
+<hr />
+
+<div class="panel-group" id="mainaccordion">
+    @* LOADING ANIMATION/S: *@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-heading" href="#loadingbody" data-parent="#mainaccordion" data-toggle="collapse" style="cursor: pointer">
+                <span class="mdl2icon mdl2-sync panel-mdl2icon"></span>
+                <span>Loading Animation</span>
+            </div>
+        </div>
+        <div id="loadingbody" class="panel-collapse collapse">
+            <div class="panel-body">
+                @using (Html.BeginForm("DemoProcess", "LoadingDemo", FormMethod.Post,
+                                                    new { encType = "multipart/form-data", id = "myform", name = "myform" }))
+                {
+                    <input type="submit" name="operation" id="process" value="Demonstrate" />
+                }
+
+                <div id="divProcessing" class="dna-body">
+                    <div class="dna">
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                        <div class="ele"></div>
+                    </div>
+                    @*<hr />*@
+                    <p id="close" class="loading-text" style="margin-top: 30px"></p>
+                </div>
+
+                <div id="divResult">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @* MODALS: *@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-heading" href="#modalsbody" data-parent="#mainaccordion" data-toggle="collapse" style="cursor: pointer">
+                <span class="mdl2icon mdl2-accessarea panel-mdl2icon"></span>
+                <span>Modals</span>
+            </div>
+        </div>
+        <div id="modalsbody" class="panel-collapse collapse">
+            <div class="panel-body">
+                @* WARNING MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnWarning" value="Show Warning Modal" />
+                </div>
+                <div id="divWarning" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-warning"><span class="mdl2icon mdl2-warning modalbox-mdl2icon-warning"></span>WARNING</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            The specified details will result in a duplicate record. Please review the provided details.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                                <input type="submit" id="btnWarningOK" value="OK" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* ERROR MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnError" value="Show Error Modal" />
+                </div>
+                <div id="divError" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-error" style="color: #ED7D31"><span class="mdl2icon mdl2-error modalbox-mdl2icon-error" style="background-color: #ED7D31"></span>ERROR</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            The internet/network is unavailable. Please check the network connection and try again.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                                <input type="submit" id="btnErrorOK" value="OK" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* SUCCESS MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnSuccess" value="Show Success Modal" />
+                </div>
+                <div id="divSuccess" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-error" style="color: #468847"><span class="mdl2icon mdl2-success modalbox-mdl2icon-error" style="background-color: #468847"></span>SUCCESS</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            Item added successfully.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                                <input type="submit" id="btnSuccessOK" value="OK" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* FAILURE MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnFailure" value="Show Failure Modal" />
+                </div>
+                <div id="divFailure" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-error"><span class="mdl2icon mdl2-failure modalbox-mdl2icon-error"></span>FAILURE</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            This item cannot be deleted at this time. Please try again later.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                                <input type="submit" id="btnFailureOK" value="OK" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* INFO MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnInfo" value="Show Info Modal" />
+                </div>
+                <div id="divInfo" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-error" style="color: #428bca"><span class="mdl2icon mdl2-info modalbox-mdl2icon-error" style="background-color: #428bca"></span>INFORMATION</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            A Forensic Case unlock request has been sent. Note that the Forensic Case will only be editable once the unlock operation has been authorised.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                            </div>
+                            <div class="col-md-3 modal-btn-col">
+                                <input type="submit" id="btnInfoOK" value="OK" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* GENERIC TEMPLATE MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnGeneric" value="Show Generic Template Modal" />
+                </div>
+                <div id="divGeneric" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-error" style="color: #fff"><span class="mdl2icon mdl2-more modalbox-mdl2icon-error" style="background-color: #fff"></span>TitleText</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            MessageText.
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-3 modal-btn-col" style="text-align: center">
+                                <input type="submit" id="btnGenericOK" value="Button" class="btn btn-modal-generic" />
+                            </div>
+                            <div class="col-md-3 modal-btn-col" style="text-align: center">
+                                <input type="submit" id="btnGenericOK" value="Button" class="btn btn-modal-generic" />
+                            </div>
+                            <div class="col-md-3 modal-btn-col" style="text-align: center">
+                                <input type="submit" id="btnGenericOK" value="Button" class="btn btn-modal-generic" />
+                            </div>
+                            <div class="col-md-3 modal-btn-col" style="text-align: center">
+                                <input type="submit" id="btnGenericOK" value="Button" class="btn btn-modal-generic" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* MOTIVATED WARNING MODAL *@
+                <div class="row" style="margin: 2.5px">
+                    <input type="submit" id="btnMotivated" value="Show Motivated Warning Modal" />
+                </div>
+                <div id="divMotivated" class="modal-background">
+                    <div class="modalbox">
+                        @* TITLE *@
+                        <div class="modalbox-title-warning"><span class="mdl2icon mdl2-warning modalbox-mdl2icon-warning"></span>WARNING</div>
+                        @* MESSAGE *@
+                        <div class="modalbox-message-text">
+                            Are you sure you want to unlock the selected Forensic Case?
+                        </div>
+                        @* HELP/INFO *@
+                        @*<div class="panel-group" id="warninghelpaccordion">
+                                <div class="modal-help-panel">
+                                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                                    </div>
+                                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                                        <hr class="modal-help-hr-warning" />
+                                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                                    </div>
+                                </div>
+                            </div>*@
+                        @* BUTTONS *@
+                        <div class="modalbox-button-bar">
+                            <div class="col-md-9 modal-btn-col" style="text-align: left; padding-right: 0px">
+                                @*@Html.Label("Please provide a reason:", new { htmlAttributes = new { @class = "control-label", @style = "color: #fff" } })*@
+                                @Html.Editor("txtReason", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-top: 6.2px", @Value = "Please provide a reason..." }, @id = "txtReason", @onfocus = "this.select()", @onmouseup = "return false;" })
+                            </div>
+                            <div class="col-md-3 modal-btn-col" style="text-align: center">
+                                <input type="submit" id="btnMotivatedYes" value="Yes" class="btn btn-modal-generic" style="margin-right: 2.5px" />
+                                <input type="submit" id="btnMotivatedNo" value="No" class="btn btn-modal-generic" style="margin-left: 2.5px" />
+                                <input type="submit" id="btnFinalise" value="Finalise" class="btn btn-modal-generic" style="width: 100%" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* SCRIPTS: *@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @* DNA ANIMATION SCRIPT *@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#divProcessing").hide();
+            $('#process').click(function () {
+                $('#myform').submit();
+            });
+            $('#close').click(function () {
+                $('#divProcessing').hide();
+            });
+
+            $("#myform").on("submit", function (event) {
+                event.preventDefault();
+                $("#divProcessing").show();
+                //var url = $(this).attr("action");
+                //var formData = $(this).serialize();
+
+                //$.ajax({ url: url, type: "POST", /*data: formData, //dataType: "json",*/ success: function (resp) { $("#divProcessing").hide(); $("<h3> Action Successful. </h3>").appendTo("#divResult"); } })
+            });
+        })
+    </script>
+
+    @* LOADING TEXT SCRIPT *@
+    <script type="text/javascript">
+        var text = ["loading", " loading.", "  loading..", "   loading..."];
+        var counter = 0;
+        var elem = document.getElementById("close");
+        setInterval(change, 750);
+        function change() {
+            elem.innerHTML = text[counter];
+            counter++;
+            if(counter >= text.length) { counter = 0; }
+        }
+    </script>
+
+    @* MODALS SCRIPT *@
+    <script name="warningscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divWarning").hide();
+            $('#btnWarning').click(function () { $('#divWarning').show(); });
+            $('#btnWarningOK').click(function () { $('#divWarning').hide(); });
+        });
+    </script>
+
+    <script name="errorscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divError").hide();
+            $('#btnError').click(function () { $('#divError').show(); });
+            $('#btnErrorOK').click(function () { $('#divError').hide(); });
+        });
+    </script>
+
+    <script name="successscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divSuccess").hide();
+            $('#btnSuccess').click(function () { $('#divSuccess').show(); });
+            $('#btnSuccessOK').click(function () { $('#divSuccess').hide(); });
+        });
+    </script>
+
+    <script name="failurescript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divFailure").hide();
+            $('#btnFailure').click(function () { $('#divFailure').show(); });
+            $('#btnFailureOK').click(function () { $('#divFailure').hide(); });
+        });
+    </script>
+
+    <script name="infoscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divInfo").hide();
+            $('#btnInfo').click(function () { $('#divInfo').show(); });
+            $('#btnInfoOK').click(function () { $('#divInfo').hide(); });
+        });
+    </script>
+
+    <script name="infoscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divGeneric").hide();
+            $('#btnGeneric').click(function () { $('#divGeneric').show(); });
+            $('#btnGenericOK').click(function () { $('#divGeneric').hide(); });
+        });
+    </script>
+
+    <script name="infoscript" type="text/javascript">
+        $(document).ready(function () {
+            $("#divMotivated").hide();
+            $("#txtReason").hide();
+            $("#btnFinalise").hide();
+            $('#btnMotivated').click(function () { $('#divMotivated').show(); });
+            $('#btnMotivatedYes').click(function () { $('#txtReason').show(); $('#btnMotivatedYes').hide(); $('#btnMotivatedNo').hide(); $('#btnFinalise').show(); });
+
+            $('#btnFinalise').click(function () { $('#divMotivated').hide(); });
+        });
+    </script>
+}
