@@ -65,7 +65,7 @@ namespace DocuPath.Controllers
             catch (Exception)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Audit Log");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagInit, "Audit Log");
                 #endregion
                 return RedirectToAction("Error", "Home");
             }

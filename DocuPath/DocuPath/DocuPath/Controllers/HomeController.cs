@@ -149,7 +149,7 @@ namespace DocuPath.Controllers
             try
             {
 
-                VERTEBRAE.sendSMS("++27825592322", "CODE:xxxxxx");
+                VERTEBRAE.sendSMS("+27825592322", "CODE:xxxxxx");
                 return View("Index");
             }
             catch (Exception)

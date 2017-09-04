@@ -187,11 +187,12 @@ namespace DocuPath.Controllers
         //1APKaKtxwkbUn5Qc4oe7D7hQDJKIA4B8RjZidJHEIJOlPo1mEO5bxVOHwMtmm5Pv97g%3d%3d
         //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         ///Account/Register/1AF7rjEMiNJvOhR2b1+IDozA3ueoShCcGleCxB/jy7jXYON521XoVBG9sf4FMXq1HCw==
+        /// Account/Register/11AP5UTRHPZVNKbZuzlV2UETozW9K/z8oWvtdZurQwInIpNvWo3S3qAUoIVTTs8M22rQ==
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register(string id)
         {
-            id = Server.UrlDecode("1AF7rjEMiNJvOhR2b1%2bIDozA3ueoShCcGleCxB%2fjy7jXYON521XoVBG9sf4FMXq1HCw%3d%3d");
+            id = "11AP5UTRHPZVNKbZuzlV2UETozW9K/z8oWvtdZurQwInIpNvWo3S3qAUoIVTTs8M22rQ==";
             if (VECTOR._lock(id))
             {
                 RegisterViewModel model = new RegisterViewModel();
