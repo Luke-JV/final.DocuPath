@@ -193,7 +193,8 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.forensicCase.SessionID, "Autopsy Session", htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessionSelector.ToList(), "sessionID", "sessionDesc", Model.sessionSelector.Where(x => x.sessionID == Model.forensicCase.SessionID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                                
+                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessionSelector, "sessionID", "sessionDesc" ), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.SessionID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
