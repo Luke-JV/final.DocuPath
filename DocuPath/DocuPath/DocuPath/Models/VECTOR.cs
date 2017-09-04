@@ -1,4 +1,5 @@
 ﻿using DocuPath.DataLayer;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,30 @@ namespace DocuPath.Models
                 token.TokenID = 0;
                 token.TokenValue = Randomiser();
                 token.IssueTimestamp = DateTime.Now;
-                token.DestinationEmail = email;
-                //token.AccessLevelID = 0;
-
+                token.DestinationEmail = email;                
             }
             return token;
         }
-
+        public static string _key = "winter";
+        public static string hash(string brown)
+        {
+            PasswordHasher crypto = new PasswordHasher();
+            return crypto.HashPassword(_key+brown);
+        }
+        public static bool _lock(string key)
+        {
+            PasswordHasher crypto = new PasswordHasher();
+            int _id = Convert.ToInt32(key[0].ToString());
+            PasswordVerificationResult open = crypto.VerifyHashedPassword(key.Substring(1), _key+_id);
+            if (open == PasswordVerificationResult.Success)
+            {
+                return true ;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public static bool ValidateAccess(int userID)
         {
             if (VERTEBRAE.getCurrentUser().UserID == userID)

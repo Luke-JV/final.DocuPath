@@ -37,7 +37,7 @@ namespace DocuPath.Controllers
 
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
-        public ActionResult Add(AddForensicCaseViewModel model)
+        public ActionResult Add()
         {
             try
             {
@@ -45,6 +45,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case");
                 #endregion
                 #region PREPARE MODEL
+                AddForensicCaseViewModel model = new AddForensicCaseViewModel();
                 var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
 
                 model.forensicCase = new FORENSIC_CASE();
@@ -177,7 +178,7 @@ namespace DocuPath.Controllers
                 model.ProcessingStationName = "";
                 model.InvestigationStationID = 0;
                 model.InvestigationStationName = "";
-
+                model.forensicCase.DateAdded = DateTime.Now;
                 #endregion
                 return View(model);
             }
@@ -193,19 +194,74 @@ namespace DocuPath.Controllers
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
-        public ActionResult Add(FormCollection collection)
+        public ActionResult Add(AddForensicCaseViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
-                return View(collection);
+                return View(model);
             }
 
             try
             {
-                // TODO: Add insert logic here
+                FORENSIC_CASE inCase = new FORENSIC_CASE();
+
+                try
+                {
+                    inCase.ForensicCaseID = db.FORENSIC_CASE.Max(x => x.ForensicCaseID) + 1;
+                }
+                catch (Exception)
+                {
+                    inCase.ForensicCaseID = 1;                    
+                }
+
+                inCase.StatusID = model.forensicCase.StatusID;
+                inCase.SessionID = model.forensicCase.SessionID;
+                inCase.AutopsyAreaID = model.forensicCase.AutopsyAreaID;                
+                inCase.ForensicDRNumber = model.forensicCase.ForensicDRNumber;
+                inCase.FCBriefDescription = model.forensicCase.FCBriefDescription;
+                inCase.DateAdded = model.forensicCase.DateAdded;
+                inCase.DHANoticeDeathID = model.forensicCase.DHANoticeDeathID;
+                inCase.ActingOfficerNameSurname = model.forensicCase.ActingOfficerNameSurname;
+                inCase.ActingOfficerContactNum = model.forensicCase.ActingOfficerContactNum;
+                inCase.CauseOfDeathConclusion = model.forensicCase.CauseOfDeathConclusion;
+                inCase.DateClosed = null;
+
+                inCase.ABDOMEN_OBSERVATION.Add(model.abdObservation);
+
+                inCase.ADDITIONAL_EVIDENCE = model.additionalEvidence;
+                try
+                {
+                    inCase.CASE_COD_ESTIMATION.Add(model.primaryCODEst);
+                }
+                catch { }
+                try
+                {
+                    inCase.CASE_COD_ESTIMATION.Add(model.secondaryCODEst);
+                }
+                catch { }
+                try
+                {
+                    inCase.CASE_COD_ESTIMATION.Add(model.tertiaryCODEst);
+                }
+                catch { }
+                try
+                {
+                    inCase.CASE_COD_ESTIMATION.Add(model.quaternaryCODEst);
+                }
+                catch { }
+                inCase.CASE_STATISTICS.Add(model.stats);
+
+                inCase.CHEST_OBSERVATION.Add(model.chestObservation);
+                inCase.GENERAL_OBSERVATION.Add(model.genObservation);
+                inCase.HEAD_NECK_OBSERVATION.Add(model.headNeckObservation);
+                inCase.SPINE_OBSERVATION.Add(model.spineObservation);
+                inCase.MEDIA = model.media;
+                inCase.SERVICE_REQUEST = model.serviceRequests;
+                //404inCase.SESSION.DateID = model.sessionSelector.FirstOrDefault().
+                inCase.USER = VERTEBRAE.getCurrentUser();
 
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case");

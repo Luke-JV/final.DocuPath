@@ -27,7 +27,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/ForensicCase/Add" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
@@ -46,7 +46,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input id="btnPOST" class="hidden" type="submit" />
     <div class="form-horizontal border-generic form-generic" @*style="min-height: 705px"*@>
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#CORE">Core Data</a></li>
@@ -115,7 +115,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.forensicCase.DateAdded, htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.EditorFor(model => model.forensicCase.DateAdded, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm"), @readonly = true } })
+                                                                @Html.EditorFor(model => model.forensicCase.DateAdded, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @readonly = true } })
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.DateAdded, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -155,7 +155,7 @@
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.forensicCase.SessionID, "Autopsy Session", htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessionSelector, "sessionID", "sessionDesc", Model.sessionSelector.Where(x => x.sessionID == Model.forensicCase.SessionID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                                @Html.DropDownListFor(model => model.forensicCase.SessionID, new SelectList(Model.sessionSelector.ToList(), "sessionID", "sessionDesc", Model.sessionSelector.Where(x => x.sessionID == Model.forensicCase.SessionID)), htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
                                                                 @Html.ValidationMessageFor(model => model.forensicCase.SessionID, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -716,13 +716,13 @@
                                                                     @Html.ValidationMessageFor(model => model.abdObservation.SplenicMassKg, "", new { @class = "validation-text text-danger" })
                                                                 </div>
                                                                 <div class="col-md-2" style="padding-left: 0px; padding-top: 6px">
-                                                                    <input id="spleenToggle" type="checkbox" data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="warning" data-offstyle="default" data-size="mini" data-style="ios" data-width="70" onchange="toggleEnableMeasurements()">
+                                                                    <input id="spleenToggle" type="checkbox" data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="warning" data-offstyle="default" data-size="mini" data-style="ios" data-width="70" @*onchange="toggleEnableMeasurements()"*@>
                                                                 </div>
                                                             </div>
                                                             <div class="row" style="padding-bottom: 5px;">
                                                                 @Html.LabelFor(model => model.abdObservation.LeftKidneyMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
                                                                 <div class="col-md-2" style="padding-left: 0px">
-                                                                    @Html.EditorFor(model => model.abdObservation.LeftKidneyMassKg, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control measurement-text", @id = "leftkidneymeasurement" } })
+                                                                    @Html.EditorFor(model => model.abdObservation.LeftKidneyMassKg, new { htmlAttributes = new {@class = "form-control measurement-text", @id = "leftkidneymeasurement" } })
                                                                     @Html.ValidationMessageFor(model => model.abdObservation.LeftKidneyMassKg, "", new { @class = "validation-text text-danger" })
                                                                 </div>
                                                                 <div class="col-md-2" style="padding-left: 0px; padding-top: 6px">
@@ -1569,7 +1569,7 @@
                                                                     @Html.HiddenFor(model => model.selectedSamplesInvestigations[i].valueID);
                                                                     <div class="checkbox">
                                                                         <label>
-                                                                            @Html.CheckBoxFor(model => model.selectedSamplesInvestigations[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSamplesInvestigations[i].valueName
+                                                                            @Html.CheckBoxFor(model => model.selectedSamplesInvestigations[i].isSelected, new { id = "SI_"+Model.selectedSamplesInvestigations[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSamplesInvestigations[i].valueName
                                                                         </label>
                                                                     </div>
                                                                 }
@@ -1583,7 +1583,7 @@
                                                         <div class="form-group" id="frmSIOther">
                                                             @Html.LabelFor(model => model.otherSamplesInvestigationsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.otherSamplesInvestigationsDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.EditorFor(model => model.otherSamplesInvestigationsDescription, new { htmlAttributes = new {@id="samplesother", @class = "form-control", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.otherSamplesInvestigationsDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1792,11 +1792,11 @@
                                                                     @Html.HiddenFor(model => model.selectedMedicalTreatments[i].valueID);
                                                                     <div class="checkbox">
                                                                         <label>
-                                                                            @Html.CheckBoxFor(model => model.selectedMedicalTreatments[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedMedicalTreatments[i].valueName
+                                                                            @Html.CheckBoxFor(model => model.selectedMedicalTreatments[i].isSelected, new { id = "MT_"+ Model.selectedMedicalTreatments[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedMedicalTreatments[i].valueName
                                                                         </label>
                                                                     </div>
                                                                 }
-                                                                @*@foreach (var item in ViewBag.MedicalTreatments)
+                                                                @*@foreach (var item in ViewBag.MedicalTreatments);
                                                                     {
                                                                         <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
                                                                     }*@
@@ -1806,7 +1806,7 @@
                                                         <div class="form-group" id="frmMedTreatOther">
                                                             @Html.LabelFor(model => model.otherMedicalTreatmentsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.otherMedicalTreatmentsDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                                @Html.EditorFor(model => model.otherMedicalTreatmentsDescription, new { htmlAttributes = new { @id = "treatments-other", @class = "form-control", @style = "width: 100%" } })
                                                                 @Html.ValidationMessageFor(model => model.otherMedicalTreatmentsDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -1814,6 +1814,7 @@
                                                     @*<div class="panel-footer"></div>*@
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -2046,7 +2047,7 @@
                                                                     @Html.HiddenFor(model => model.selectedInjuryScenes[i].valueID);
                                                                     <div class="checkbox">
                                                                         <label>
-                                                                            @Html.CheckBoxFor(model => model.selectedInjuryScenes[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedInjuryScenes[i].valueName
+                                                                            @Html.CheckBoxFor(model => model.selectedInjuryScenes[i].isSelected, new { id = "SS_" + Model.selectedInjuryScenes[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedInjuryScenes[i].valueName
                                                                         </label>
                                                                     </div>
                                                                 }
@@ -2060,7 +2061,7 @@
                                                         <div class="form-group" id="frmSOIOther">
                                                             @Html.LabelFor(model => model.otherInjurySceneDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @id = "scenes-other", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
                                                                 @Html.ValidationMessageFor(model => model.otherInjurySceneDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -2105,7 +2106,7 @@
                                                                     @Html.HiddenFor(model => model.selectedExternalCauses[i].valueID);
                                                                     <div class="checkbox">
                                                                         <label>
-                                                                            @Html.CheckBoxFor(model => model.selectedExternalCauses[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedExternalCauses[i].valueName
+                                                                            @Html.CheckBoxFor(model => model.selectedExternalCauses[i].isSelected, new { id = "EC_"+ Model.selectedExternalCauses[i].valueName , data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedExternalCauses[i].valueName
                                                                         </label>
                                                                     </div>
                                                                 }
@@ -2119,7 +2120,7 @@
                                                         <div class="form-group" id="frmExtCauseOther">
                                                             @Html.LabelFor(model => model.otherExternalCauseDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @id = "extcauses-other", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
                                                                 @Html.ValidationMessageFor(model => model.otherExternalCauseDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -2164,7 +2165,7 @@
                                                                     @Html.HiddenFor(model => model.selectedSpecialCategories[i].valueID);
                                                                     <div class="checkbox">
                                                                         <label>
-                                                                            @Html.CheckBoxFor(model => model.selectedSpecialCategories[i].isSelected, new { id = "toggle-switch", data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSpecialCategories[i].valueName
+                                                                            @Html.CheckBoxFor(model => model.selectedSpecialCategories[i].isSelected, new { id = "SC_" + Model.selectedSpecialCategories[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSpecialCategories[i].valueName
                                                                         </label>
                                                                     </div>
                                                                 }
@@ -2178,7 +2179,7 @@
                                                         <div class="form-group" id="frmSpecCatOther">
                                                             @Html.LabelFor(model => model.otherSpecialCategoryDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                             <div class="col-md-12">
-                                                                @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                                @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @id = "specialcat-other", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
                                                                 @Html.ValidationMessageFor(model => model.otherSpecialCategoryDescription, "", new { @class = "validation-text text-danger" })
                                                             </div>
                                                         </div>
@@ -2213,6 +2214,12 @@
     @Scripts.Render("~/bundles/bootgrid")
     @Scripts.Render("~/bundles/materialdatetime")
 
+<script>
+        $('#btnSave').click(function () {
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
+</script>
     @* BACK TO TOP: *@
     <script>
         jQuery(document).ready(function () {
@@ -2309,9 +2316,12 @@
             $("#frmSOIOther").hide(),
             $("#frmExtCauseOther").hide(),
             $("#frmSpecCatOther").hide()
+            $("#frmMedTreatOther").hide()
         });
     </script>
-    <script type="text/javascript">
+
+
+    @*<script type="text/javascript">
         $(document).ready(function check() {
             $("#ddlAutopsyType").change(function () {
                 if ($("#ddlAutopsyType").val() == "4") {
@@ -2384,17 +2394,96 @@
                 }
             });
         });
+    </script>*@
+
+
+    @* LUKE JS *@
+    <script>
+        
+
+        $("#stats_IndividualRaceID").change(function () {
+            if ($("#stats_IndividualRaceID option:selected").text() == "Other") {
+                $("#frmRaceOther").show("slow")
+            } else {
+                $("#frmRaceOther").hide("slow")
+            }
+        });
+
+        $("#stats_HospitalClinicID").change(function () {
+            if ($("#stats_HospitalClinicID option:selected").text() == "Other") {
+                $("#frmTreatmentFacilityOther").show("slow")
+            } else {
+                $("#frmTreatmentFacilityOther").hide("slow")
+            }
+        });
+
+        $("#DeathProvinceId").change(function () {
+            if ($("#DeathProvinceId option:selected").text() == "Other/International") {
+                $("#frmDeathOther").show("slow")
+            } else {
+                $("#frmDeathOther").hide("slow")
+            }
+        });
+
+        $("#OccurrenceProvinceId").change(function () {
+            if ($("#OccurrenceProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentOccurrenceOther").show("slow")
+            } else {
+                $("#frmIncidentOccurrenceOther").hide("slow")
+            }
+        });
+        
+        $("#ReportProvinceId").change(function () {        
+            if ($("#ReportProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentReportOther").show("slow")
+            } else {
+                $("#frmIncidentReportOther").hide("slow")
+            }
+        });
+        $("#ProcessingProvinceId").change(function () {
+            if ($("#ProcessingProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentProcessingOther").show("slow")
+            } else {
+                $("#frmIncidentProcessingOther").hide("slow")
+            }
+        });
+        $("#TreatmentProvinceId").change(function () {
+            if ($("#TreatmentProvinceId option:selected").text() == "Other/International") {
+                $("#frmMedicalTreatmentOther").show("slow")
+            } else {
+                $("#frmMedicalTreatmentOther").hide("slow")
+            }
+        });
+        $("#stats_PrimaryCauseID").change(function () {
+            if ($("#stats_PrimaryCauseID option:selected").text() == "Other") {
+                $("#frmCODOther").show("slow")
+            } else {
+                $("#frmCODOther").hide("slow")
+            }
+        });
+        $("#stats_ApparentMannerID").change(function () {
+            if ($("#stats_ApparentMannerID option:selected").text() == "Other") {
+                $("#frmMOIOther").show("slow")
+            } else {
+                $("#frmMOIOther").hide("slow")
+            }
+        });
+        $("#stats_AutopsyTypeID").change(function () {
+            if ($("#stats_AutopsyTypeID option:selected").text() == "Other") {
+                $("#frmAutopsyOther").show("slow")
+            } else {
+                $("#frmAutopsyOther").hide("slow")
+            }
+        });
     </script>
+    @* LUKE JS *@
+
+
+
+
+
     <script type="text/javascript">
-        $(function toggleShowOther() {
-            $('input[type=checkbox]').change(function () {
-                if ($('#toggleSI_Other').prop("checked") == true) { $('#frmSIOther').show('slow') } else { $('#frmSIOther').hide('slow') };
-                if ($('#toggleMedTreat_Other').prop("checked") == true) { $('#frmMedTreatOther').show('slow') } else { $('#frmMedTreatOther').hide('slow') };
-                if ($('#toggleSOI_Other').prop("checked") == true) { $('#frmSOIOther').show('slow') } else { $('#frmSOIOther').hide('slow') };
-                if ($('#toggleExtCause_Other').prop("checked") == true) { $('#frmExtCauseOther').show('slow') } else { $('#frmExtCauseOther').hide('slow') };
-                if ($('#toggleSpecCat_Other').prop("checked") == true) { $('#frmSpecCatOther').show('slow') } else { $('#frmSpecCatOther').hide('slow') };
-            });
-        })
+        
 
         $(function toggleShowCODPanel() {
             $('input[type=checkbox]').change(function () {
@@ -2404,15 +2493,112 @@
             });
         })
 
-        $(function toggleEnableMeasurements() {
-            $('input[type=checkbox]').change(function () {
-                if ($('#spleenToggle').prop("checked") == true) { $('#spleenmeasurement').disabled('true') } else { $('#spleenmeasurement').disabled('') };
-                if ($('#leftkidneyToggle').prop("checked") == true) { $('#leftkidneymeasurement').disabled('true') = 'disabled' } else { $('#leftkidneymeasurement').disabled('') };
-                if ($('#rightkidneyToggle').prop("checked") == true) { $('#rightkidneymeasurement').disabled('true') = 'disabled' } else { $('#rightkidneymeasurement').disabled('') };
-            });
-        })
-    </script>
+        //$(function toggleEnableMeasurements() {
+        //    $('input[type=checkbox]').change(function () {
+        //        if ($('#spleenToggle').prop("checked") == true) { $('#spleenmeasurement').disabled('true') } else { $('#spleenmeasurement').disabled('') };
+        //        if ($('#leftkidneyToggle').prop("checked") == true) { $('#leftkidneymeasurement').disabled('true') = 'disabled' } else { $('#leftkidneymeasurement').disabled('') };
+        //        if ($('#rightkidneyToggle').prop("checked") == true) { $('#rightkidneymeasurement').disabled('true') = 'disabled' } else { $('#rightkidneymeasurement').disabled('') };
+        //    });
+        //})
 
+        
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    </script>
+    @* LUKE JS *@
+    <script>
+       /*-----------------------------------------------------------------*/
+                           // TOGGLE MEASUREMENTS
+      /*-----------------------------------------------------------------*/
+        $('#spleenToggle').change(function () {
+            var toggle = document.getElementById("spleenToggle").checked
+            if (toggle) {
+                $('#spleenmeasurement').prop("disabled",true)
+            }
+            else $('#spleenmeasurement').prop("disabled", false)
+        });
+
+        $('#leftkidneyToggle').change(function () {
+            var toggle = document.getElementById("leftkidneyToggle").checked
+            if (toggle) {
+                $('#leftkidneymeasurement').prop("disabled", true)
+            }
+            else $('#leftkidneymeasurement').prop("disabled", false)
+        });
+        $('#rightkidneyToggle').change(function () {
+            var toggle = document.getElementById("rightkidneyToggle").checked
+            if (toggle) {
+                $('#rightkidneymeasurement').prop("disabled", true)
+            }
+            else $('#rightkidneymeasurement').prop("disabled", false)
+        });
+       /*-----------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------*/
+                        // TOGGLE OTHERS
+        /*-----------------------------------------------------------------*/
+       //$(function toggleShowOther() {
+        //    $('input[type=checkbox]').change(function () {
+        //        if ($('#toggleSI_Other').prop("checked") == true) { $('#frmSIOther').show('slow') } else { $('#frmSIOther').hide('slow') };
+        //        if ($('#toggleMedTreat_Other').prop("checked") == true) { $('#frmMedTreatOther').show('slow') } else { $('#frmMedTreatOther').hide('slow') };
+        //        if ($('#toggleSOI_Other').prop("checked") == true) { $('#frmSOIOther').show('slow') } else { $('#frmSOIOther').hide('slow') };
+        //        if ($('#toggleExtCause_Other').prop("checked") == true) { $('#frmExtCauseOther').show('slow') } else { $('#frmExtCauseOther').hide('slow') };
+        //        if ($('#toggleSpecCat_Other').prop("checked") == true) { $('#frmSpecCatOther').show('slow') } else { $('#frmSpecCatOther').hide('slow') };
+        //    });
+        //})
+        
+         
+
+        $('#SI_Other').change(function () {
+           
+            var toggle = document.getElementById("SI_Other").checked
+            if (toggle) {
+                
+                $("#frmSIOther").show("slow")
+                } else {
+                $("#frmSIOther").hide("slow")
+                }
+        });      
+
+        $('#SS_Other').change(function () {
+            var toggle = document.getElementById("SS_Other").checked
+            if (toggle) {
+                $("#frmSOIOther").show("slow")
+            } else {
+                $("#frmSOIOther").hide("slow")
+            }
+        });
+        $('#EC_Other').change(function () {
+            var toggle = document.getElementById("EC_Other-toggle").checked
+            if (toggle) {
+                $('#frmExtCauseOther').show("slow")
+            }
+            else $('#frmExtCauseOther').hide("slow")
+        });
+        $('#SC_Other').change(function () {
+            var toggle = document.getElementById("SC_Other").checked
+            if (toggle) {
+                $('#frmSpecCatOther').show("slow")
+            }
+            else $('#frmSpecCatOther').hide("slow")
+        }); 
+
+
+        $('#MT_Other').change(function () {
+            var toggle = document.getElementById("MT_Other").checked
+            if (toggle) {
+                $('#frmMedTreatOther').show("slow")
+            }
+            else $('#frmMedTreatOther').hide("slow")
+        });
+
+        /*-----------------------------------------------------------------*/
+
+    </script>
+@* LUKE JS *@
     <script id="loadBootgrid" type="text/javascript">
         var gridSR = $("#tblFCSR").bootgrid({
             caseSensitive: false,

@@ -174,25 +174,38 @@ namespace DocuPath.Controllers
                     if (crypto.VerifyHashedPassword(tk.TokenValue,id) != PasswordVerificationResult.Failed)
                     {
                         db.TOKEN_LOG.Where(m => m.TokenID == tk.TokenID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
-                        return View("Register",new { id=tk.DestinationEmail});
+                        string identity = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString() );
+                        var foo = Url.Encode(identity);
+                        identity = Server.UrlEncode(identity);
+                        return RedirectToAction("Register",new { id=identity});
                     }
                 }
 
             }
             return View("Login");
         }
-        //
+        //1APKaKtxwkbUn5Qc4oe7D7hQDJKIA4B8RjZidJHEIJOlPo1mEO5bxVOHwMtmm5Pv97g%3d%3d
+        //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        ///Account/Register/1AF7rjEMiNJvOhR2b1+IDozA3ueoShCcGleCxB/jy7jXYON521XoVBG9sf4FMXq1HCw==
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string id)
         {
-            RegisterViewModel model = new RegisterViewModel();
-            using (DocuPathEntities db = new DocuPathEntities())
+            id = Server.UrlDecode("1AF7rjEMiNJvOhR2b1%2bIDozA3ueoShCcGleCxB%2fjy7jXYON521XoVBG9sf4FMXq1HCw%3d%3d");
+            if (VECTOR._lock(id))
             {
-                model.user = new USER();
-                model.titles = db.TITLE.ToList();
+                RegisterViewModel model = new RegisterViewModel();
+                using (DocuPathEntities db = new DocuPathEntities())
+                {
+                    model.user = new USER();
+                    model.titles = db.TITLE.ToList();
+                }
+                return View(model);
             }
-            return View(model);
+            else
+            {
+                return RedirectToAction("Home", "Index");
+            }
         }
 
         //
@@ -205,7 +218,28 @@ namespace DocuPath.Controllers
             if (ModelState.IsValid)
             {
                 var user = new DPUser { UserName = model.Email };
+                user.FirstName = model.user.FirstName;
+                user.AcademicID = model.user.AcademicEmail;
+                user.NationalID = model.user.NationalID;
+                user.MiddleName = model.user.MiddleName;
+                user.LastName = model.user.LastName;
+                user.PhysicalAddress = model.user.PhysicalAddress;
+                user.TitleID = model.user.TitleID;
+                user.TelNum = model.user.TelNum;
+                user.PostalAddress = model.user.PostalAddress;
+                user.PersonalEmail = model.user.PersonalEmail;
+                user.AcademicEmail = model.user.AcademicEmail;
+                user.QualificationDescription = model.user.QualificationDescription;
+                
+
+                user.Discriminator = model.user.FirstName;
+                user.DisplayInitials = model.user.DisplayInitials;
+                user.CellNum = model.user.CellNum;
+                user.DarkUIPref = model.user.DarkUIPref;
+                user.WorkNum = model.user.WorkNum;
+                user.HPCSARegNumber = model.user.HPCSARegNumber;
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

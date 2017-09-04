@@ -21,7 +21,7 @@ namespace DocuPath.Models
                 transaction.USER = db.USER.Where(x => x.UserID == uID).FirstOrDefault();
                 transaction.AUDIT_TX_TYPE = db.AUDIT_TX_TYPE.Where(x => x.TypeValue == type).FirstOrDefault();
                 transaction.AuditLogTxTypeID = transaction.AUDIT_TX_TYPE.AuditLogTxTypeID;
-                transaction.TxCriticalDataString = "User: "+transaction.USER.FirstName +" "+ transaction.USER.LastName+" performed a(n) "+transaction.AUDIT_TX_TYPE.TypeValue+" ("+context+") transaction at "+transaction.TxTimeStamp.ToString();
+                transaction.TxCriticalDataString = transaction.USER.USER_LOGIN.ACCESS_LEVEL.LevelName+": "+transaction.USER.FirstName +" "+ transaction.USER.LastName+" performed a(n) "+transaction.AUDIT_TX_TYPE.TypeValue+" ("+context+") transaction.";
                 try
                 {
                     transaction.AuditLogTxID = db.AUDIT_LOG.Max(u => u.AuditLogTxID) + 1;

@@ -11,8 +11,8 @@ using System.Web.Mvc;
 
 namespace DocuPath.Controllers
 {
-    [Authorize]
-    [HandleError]
+   // [Authorize]
+    //[HandleError]
     //[LogAction]
     public class HomeController : Controller
     {
@@ -157,19 +157,17 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        [HttpPost]
-        public ActionResult SendRSS(string rssData)
+        // localhost:56640/account/register/1AF7rjEMiNJvOhR2b1%2bIDozA3ueoShCcGleCxB%2fjy7jXYON521XoVBG9sf4FMXq1HCw%3d%3d
+        // localhost:56640/account/register/1AF7rjEMiNJvOhR2b1%252bIDozA3ueoShCcGleCxB%252fjy7jXYON521XoVBG9sf4FMXq1HCw%253d%253d
+        // localhost:56640/account/register/1AF7rjEMiNJvOhR2b1%25252bIDozA3ueoShCcGleCxB%25252fjy7jXYON521XoVBG9sf4FMXq1HCw%25253d%25253d
+        public ActionResult testEncode()
         {
-            try
-            {
-                VERTEBRAE.sendMail("docupath.vector@gmail.com", "Broadcast:\n\n"+ rssData + "\n\nSent from the DocuPath NEURON Notifications Centre.","Departmental Broadcast");
-                return null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            string str  = "1AF7rjEMiNJvOhR2b1+IDozA3ueoShCcGleCxB/jy7jXYON521XoVBG9sf4FMXq1HCw==";
+            var x = Url.Encode(str);
+            var y = Server.UrlEncode(str);
+            var z = Url.Encode(x);
+            var a = Url.Encode(z);
+            return null;
         }
-
     }
 }

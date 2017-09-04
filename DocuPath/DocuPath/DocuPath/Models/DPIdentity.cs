@@ -241,30 +241,6 @@ namespace DocuPath.Models
                 }
             }
 
-
-            user.FirstName = "DAVID";
-            user.AcademicID = "xxxxxxxxx";
-            user.NationalID = "xxxxxxxxxxxxx";
-            user.MiddleName = "x";
-            user.LastName = "x";
-            user.PhysicalAddress = "x";
-            user.TitleID = 1;
-            user.TelNum = "xxxxxxxxxx";
-            user.PostalAddress = "x";
-            user.PersonalEmail = "x";
-            user.AcademicEmail = "x";
-            user.QualificationDescription = "x";
-            //user.UserName = "x";
-
-            user.Discriminator = "x";
-            user.DisplayInitials = "x";
-            user.CellNum = "xxxxxxxxxx";
-            user.DarkUIPref = false;
-            user.WorkNum = "xxxxxxxxxx";
-            user.HPCSARegNumber = "xxxxxxxxx";
-
-
-
             #endregion
             USER adduser = user.buildDPUser();
             try
