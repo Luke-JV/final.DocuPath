@@ -58,6 +58,7 @@ namespace DocuPath.Controllers
                 model.serviceRequests = new List<SERVICE_REQUEST>();
                 model.media = new List<MEDIA>();
                 model.stats = new CASE_STATISTICS();
+                model.forensicCase.SESSION = new SESSION();
                 model.provinces = db.PROVINCE.ToList();
                 model.events = db.EVENT.ToList();
                 model.sampleInvestigations = db.SAMPLE_INVESTIGATION.ToList();
@@ -73,7 +74,7 @@ namespace DocuPath.Controllers
                 model.hospitalsClinics = db.HOSPITAL_CLINIC.ToList();
                 model.primaryCauses = db.PRIMARY_CAUSE_DEATH.ToList();
                 model.apparentManners = db.APPARENT_MANNER_DEATH.ToList();
-
+                model.forensicCase.SessionID = 0;
                 model.sessionSelector = new List<sessionKVP>();
                 foreach (var item in db.SESSION.Where(x => x.DateID > sevenDaysAgo))
                 {
@@ -201,7 +202,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
-                return View(model);
+                //return View(model);
             }
 
             try
@@ -262,11 +263,21 @@ namespace DocuPath.Controllers
                 inCase.SERVICE_REQUEST = model.serviceRequests;
                 //404inCase.SESSION.DateID = model.sessionSelector.FirstOrDefault().
                 inCase.USER = VERTEBRAE.getCurrentUser();
-
+                inCase.ADDITIONAL_EVIDENCE= new List<ADDITIONAL_EVIDENCE>();
+                inCase.SERVICE_REQUEST= new List<SERVICE_REQUEST>();
+                inCase.MEDIA= new List<MEDIA>();
+                inCase.STATUS = db.STATUS.Where(x => x.StatusID == inCase.StatusID).FirstOrDefault();
+                inCase.AUTOPSY_AREA = new AUTOPSY_AREA();
+                
+                //AE
+                //AA
+                //MEDIA
+                //SR//Session
+                db.FORENSIC_CASE.Add(inCase);
+                db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case");
                 #endregion
-
                 return RedirectToAction("Index");
             }
             catch (Exception x)
