@@ -57,11 +57,12 @@ namespace DocuPath.DataLayer
         [Required]
         public string ActingOfficerNameSurname { get; set; }
         [DisplayName("Contact Details")]
-        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
+        [Required]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0.")]
         public string ActingOfficerContactNum { get; set; }
         [DisplayName("Cause Of Death Conclusion")]
         [DataType(DataType.MultilineText)]
-        [Required(ErrorMessage = "At least a preliminary estimation is required")]
+        [Required(ErrorMessage = "At least a preliminary cause of death estimation is required.")]
         public string CauseOfDeathConclusion { get; set; }
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }

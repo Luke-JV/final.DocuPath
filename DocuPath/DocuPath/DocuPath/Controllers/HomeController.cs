@@ -169,5 +169,10 @@ namespace DocuPath.Controllers
             var a = Url.Encode(z);
             return null;
         }
+
+        public ActionResult ModalNotificationTest()
+        {
+            return View();
+        }
     }
 }
