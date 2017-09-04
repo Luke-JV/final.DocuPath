@@ -174,5 +174,19 @@ namespace DocuPath.Controllers
         {
             return View();
         }
+
+        public JsonResult SendRSS(string rssData)
+        {
+            try
+            {
+                VERTEBRAE.sendMail("docupath.vector@gmail.com", "Official Communication from the University of Pretoria Department of Forensic Medicine\nSent at " + DateTime.Now.ToString("HH:mm") + " on " + DateTime.Now.ToString("dd MMM yyyy"), rssData);
+                return Json("RSS Broadcast sent successfully!");
+            }
+            catch (Exception x)
+            {
+
+                return Json("An error occurred. Here's what happened: " + x.Message);
+            }
+        }
     }
 }
