@@ -336,6 +336,45 @@ namespace DocuPath.Controllers
             }
         }
 
+        [AuthorizeByAccessArea(AccessArea = "Migrate Forensic Case")]
+        public ActionResult Migrate(int id)
+        {
+            try
+            {
+                List<SelectListItem> selectUsers = new List<SelectListItem>();
+
+                selectUsers.Add(new SelectListItem { Value = "0", Text = "Select a User..." });
+                foreach (var item in db.USER)
+                {
+                    selectUsers.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.DisplayInitials });
+                }
+                ViewBag.Users = selectUsers;
+
+                ViewBag.CurrentAuthor = "John Doe";
+                ViewBag.AuthorSince = "5 Jan 2017 00:00:00";
+                ViewBag.MigrationMessage = "Still waiting for XYZ from ABC, contact John Smith.";
+
+                return View();
+
+
+                #region VALIDATE_ACCESS
+                bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+                #endregion
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Forensic Case");
+                #endregion
+                return View();
+            }
+            catch (Exception)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
+                #endregion
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult Edit(int id, FORENSIC_CASE updatedFC)

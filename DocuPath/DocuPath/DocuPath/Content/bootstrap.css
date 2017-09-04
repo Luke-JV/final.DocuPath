@@ -8614,8 +8614,9 @@ td.visible-print {
 }
 
 .sidenav-body {
-    padding: 5px 5px 5px 5px;
+    padding: 5px 5px 50px 5px;
     height: 100%;
+    overflow-y: auto;
 }
 
 .sidenav-notification {
@@ -11600,7 +11601,7 @@ a.cal-event-week {
 
 /*#region ABOUT US: */
 
-.about-grid{
+.about-grid {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto auto auto;
 		grid-template-areas: "hdr"
@@ -11632,13 +11633,13 @@ a.cal-event-week {
 	text-transform: uppercase;
 	font-size: 20pt;
 	text-align: center;
-	padding: 30px 10% 30px 10%;
+	padding: 10px 0 10px 0 !important;
 }
 
 .blurb-container {
 	grid-area: blurbs;
 	margin: 0 auto 0 auto;
-    padding-top: 30px;
+    padding-top: 15px;
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-areas: "C L D R M";
 }
@@ -12077,5 +12078,433 @@ a.cal-event-week {
     color:rgba(111, 111, 111, 1);
     font-weight:bold;
 }
+
+/*#endregion */
+
+/*#region INSIGHT: */
+
+.table-insight {
+		font-family: 'Segoe UI'; 		/* CHANGED!!!!! */
+	  	font-size: 9pt; 				/* CHANGED!!!!! */
+	  	border: 1px solid grey;
+	  	margin-top: 5px;
+	}
+
+	.table-insight th {
+		/*border: 1px solid black;*/
+		/*border-left: 1px solid black;*/
+	  	background-color: lightgrey;
+	  	page-break-inside: avoid;
+	  	page-break-after: avoid;
+	}
+
+	.table-insight td {
+		/*border-left: 1px solid black;*/
+		/*border-right: 1px solid black;*/
+		page-break-inside: avoid;
+	}
+
+	.table-large-identifier-insight {
+    	font-family: 'Consolas';
+    	font-weight: bold;
+    	font-size: 9pt;
+	}
+
+    .insight-mdl2icon {
+		font-family: 'Segoe MDL2 Assets';
+		font-size: 12pt;
+		padding-top: 1px;
+	}
+
+	.mdl2-info:before {
+		content: '\E946';
+	}
+
+	.mdl2-count:before {
+		content: '\EC4A';
+	}
+
+	.mdl2-param:before {
+		content: '\E8F1';
+	}
+
+	.mdl2-action:before {
+		content: '\E815';
+	}
+
+	.mdl2-datetime:before {
+		content: '\EC92';
+	}
+
+	.mdl2-individual:before {
+		content: '\E77B';
+	}
+
+	.mdl2-chart:before {
+		content: '\E9F9';
+	}
+
+	.reportcontainer {
+		width: 					750px;
+		height: 				auto;
+		overflow-x: 			hidden;
+		padding: 				5px;
+		height: 				1000px;
+		border: 				1px solid black;
+        background-color:       #fff;
+		margin-left: 			auto;
+		margin-right: 			auto;
+		align-content: space-between;
+		grid-gap: 				5px;
+		grid-template-columns: 	[v-start] 150px [v-1] 10px [v-2] minmax(auto, 4fr) [v-3] 10px [v-4] auto [v-5] 100px [v-end];
+		grid-template-rows: 	[h-start] 50px [h-1] auto [h-2] auto [h-3] 1fr [h-4] 50px [h-end];
+		grid-template-areas: 	"dplogo slash1	time 	slash2 	generator 	insightlogo"
+								"hdr 	hdr		hdr 	hdr		hdr 		hdr"
+								"params params 	params 	summary summary 	summary"
+								"report report 	report 	report 	report 		report"
+								"ftr 	ftr 	ftr 	ftr 	ftr 		ftr";
+	}
+
+	.dplogo {
+		/*grid-area: "dplogo";*/
+		grid-column: v-start / v-1;
+		grid-row: h-start / h-1;
+	}
+
+	.separator1 {
+		grid-column: v-1 / v-2;
+		grid-row: h-start / h-1;
+	}
+
+	.report-timestamp {
+		grid-column: v-2 / v-3;
+		grid-row: h-start / h-1;
+		grid-gap: 2.5px;
+		grid-template-columns: [v-stamp-start] 20px [v-stamp-1] auto [v-stamp-2] 1fr [v-stamp-end];
+		grid-template-rows: [h-stamp-start] 20px [h-stamp-1] 20px [h-stamp-end];
+		padding-top: 5px;
+		/*grid-area: "time";*/
+	}
+
+	.stamp-icon {
+		grid-column: v-stamp-start / v-stamp-1;
+		text-align: center;
+		line-height: 20px;
+		vertical-align: middle;
+	}
+	.stamp-label {
+		grid-column: v-stamp-1 / v-stamp-2;
+		font-family: 'U.S. 101';
+		font-size: 13.5pt;
+		line-height: 20px;
+		vertical-align: middle;
+		color: #000;
+		color: grey;
+	}
+	.stamp-value {
+		grid-column: v-stamp-2 / v-stamp-end;
+		line-height: 25px;
+		vertical-align: middle;
+        text-align: left !important;
+		font-family: 'Segoe UI';
+		font-size: 10pt;
+		font-weight: normal;
+		padding-bottom: 2.5px;
+		margin-top: -3px;
+	}
+	.stamp-value::before {
+		font-family: 'Segoe MDL2 Assets';
+		content: '\E76C';
+		color: rgba(174,31,31,1);
+		font-size: 6pt;
+		padding: 0 2px 0 0;
+		margin-top: 5px;
+	}
+
+	.separator2 {
+		grid-column: v-3 / v-4;
+		grid-row: h-start / h-1;
+	}
+
+	 .report-generator {
+		/*grid-area: "generator";*/
+		grid-column: v-4 / v-5;
+		grid-row: h-start / h-1;
+		grid-template-columns: [v-gen-start] 20px [v-gen-1] auto [v-gen-end];
+		grid-template-rows: [h-gen-start] 20px [h-gen-1] 20px [h-gen-end];
+		padding-top: 5px;
+	}
+
+	.generator-icon {
+		grid-column: v-gen-start / v-gen-1;
+		grid-row: h-gen-start / h-gen-1;
+		text-align: center;
+		line-height: 20px;
+		vertical-align: middle;
+	}
+	.generator-label {
+		grid-column: v-gen-1 / v-gen-end;
+		font-family: 'U.S. 101';
+		font-size: 13.5pt;
+		line-height: 20px;
+		vertical-align: middle;
+		color: #000;
+		color: grey;
+	}
+	.generator-value {
+		grid-column: v-gen-start / v-gen-end;
+		grid-row: h-gen-1 / h-gen-end;
+        text-align: center;
+		line-height: 20px;
+		vertical-align: middle;
+		font-family: 'Segoe UI';
+		font-size: 10pt;
+		font-weight: normal;
+	}
+	/*.generator-value::before {
+		font-family: 'Segoe MDL2 Assets';
+		content: '\E76C';
+		color: rgba(174,31,31,1);
+		font-size: 6pt;
+		padding: 0 2px 0 0;
+		margin-top: 5px;
+	}*/
+
+	.insightlogo {
+		/*grid-area: "insightlogo";*/
+		grid-column: v-5 / v-end;
+		grid-row: h-start / h-1;
+	}
+
+	.report-title {
+		/*grid-area: "hdr";*/
+		grid-column: v-start / v-end;
+		grid-row: h-1 / h-2;
+		height: 50px;
+        text-align: left;
+		width: 740px;
+		padding-right: 5px;
+		padding-left: 5px;
+		margin: 5px 0 5px 0;
+		color: #fff;
+		font-family: 'U.S. 101';
+		font-size: 28.5pt;
+		background-color: grey;
+		border-top-right-radius: 25px;
+		border-bottom-right-radius: 25px;
+	}
+
+	.report-params-summary-container {
+		grid-column: v-start / v-end;
+		grid-row: h-2 / h-3;
+		grid-gap: 5px;
+		grid-template-columns: [rpsc-start] 1fr [rpsc-1] auto [rpsc-2] 1fr [rpsc-end];
+		/*border: 1px solid black;*/
+	}
+
+	.params-grid {
+		grid-column: rpsc-start / rpsc-1;
+		grid-gap: 2.5px;
+		grid-template-columns: [v-params-start] 25px [v-params-1] 1fr [v-params-2] 1fr [v-params-end];
+		grid-auto-rows: 25px;
+		/* WIP */
+	}
+
+	.params-icon {
+		grid-column: v-params-start / v-params-1;
+		border-radius: 100%;
+		background-color: rgba(174,31,31,1);
+		text-align: center;
+		line-height: 25px;
+		color: #fff;
+		vertical-align: middle;
+	}
+	.params-label {
+		grid-column: v-params-1 / v-params-2;
+		font-family: 'U.S. 101';
+		font-size: 15pt;
+        text-align: left;
+		color: grey;
+		background-color: lightgrey;
+		border-top-right-radius: 12.5px;
+		border-bottom-right-radius: 12.5px;
+		padding-left: 5px;
+	}
+	.params-value {
+		grid-column: v-params-2 / v-params-end;
+        text-align: left;
+		line-height: 25px;
+		vertical-align: middle;
+		font-family: 'Segoe UI';
+		font-size: 10pt;
+		font-weight: normal;
+		padding-left: 2.5px;
+	}
+	.params-value::before {
+		font-family: 'Segoe MDL2 Assets';
+		content: '\E76C';
+		color: rgba(174,31,31,1);
+		font-size: 8pt;
+		padding-right: 2.5px;
+	}
+
+	.vsep {
+		grid-column: rpsc-1 / rpsc-2;
+		height: auto;
+		width: 2px;
+		background-color: grey;
+	}
+
+	.summary-grid {
+		grid-column: rpsc-2 / rpsc-end;
+		grid-gap: 2.5px;
+		grid-template-columns: [v-summ-start] 25px [v-summ-1] auto [v-summ-end];
+		grid-template-rows: [h-summ-start] 25px [h-summ-1] auto [h-summ-end];
+		/* WIP */
+	}
+
+	.summary-icon {
+		grid-column: v-summ-start / v-summ-1;
+		border-radius: 100%;
+		background-color: rgba(174,31,31,1);
+		text-align: center;
+		line-height: 25px;
+		color: #fff;
+		vertical-align: middle;
+	}
+	.summary-label {
+		grid-column: v-summ-1 / v-summ-end;
+		font-family: 'U.S. 101';
+		font-size: 15pt;
+        text-align: left;
+		width: 100%;
+		color: grey;
+		background-color: lightgrey;
+		border-top-right-radius: 12.5px;
+		border-bottom-right-radius: 12.5px;
+		padding-left: 5px;
+		padding-right: 7.5px;
+	}
+	.summary-value {
+		grid-column: v-summ-start / v-params-end;
+		grid-row: h-summ-1 / h-summ-end;
+		line-height: 12pt;
+		vertical-align: middle;
+		font-family: 'Segoe UI';
+		font-size: 10pt;
+		font-weight: normal;
+		text-align: justify;
+		word-wrap: normal;
+		text-overflow: ellipsis;
+	}
+
+	.report-content {
+		grid-column: v-start / v-end;
+		grid-row: h-3 / h-4;
+		/*border: 1px solid black;*/
+	}
+
+	.chart-grid {
+		margin-top: 10px;
+		grid-gap: 0px;
+		grid-template-columns: [v-chart-start] 25px [v-chart-1] auto [v-chart-2] 1fr [v-chart-end];
+		grid-template-rows: [h-chart-start] 25px [h-chart-1] auto [h-chart-end];
+	}
+
+	.chart-icon {
+		grid-column: v-chart-start / v-chart-1;
+		grid-row: h-chart-start / h-chart-1;
+		border-radius: 100%;
+		background-color: rgba(174,31,31,1);
+		text-align: center;
+		line-height: 25px;
+		color: #fff;
+		vertical-align: middle;
+	}
+
+	.chart-title {
+		grid-column: v-chart-1 / v-chart-2;
+		grid-row: h-chart-start / h-chart-1;
+		font-family: 'U.S. 101';
+		font-size: 15pt;
+        text-align: center;
+		width: auto;
+		color: grey;
+		background-color: lightgrey;
+		border-top-right-radius: 12.5px;
+		border-bottom-right-radius: 12.5px;
+		padding-left: 5px;
+		margin-left: 5px;
+		padding-right: 10px;
+	}
+
+	.chart-subtitle {
+		grid-column: v-chart-2 / v-chart-end;
+		grid-row: h-chart-start / h-chart-1;
+		width: auto;
+        text-align: left;
+		font-family: 'Segoe UI';
+		font-weight: bold;
+		padding-left: 2.5px;
+		color: grey;
+	}
+	.chart-subtitle::before {
+		font-family: 'Segoe MDL2 Assets';
+		content: '\E76C';
+		color: rgba(174,31,31,1);
+		font-size: 8pt;
+		padding-right: 2.5px;
+	}
+
+	.chart-area {
+		grid-column: v-chart-start / v-chart-end;
+		grid-row: h-chart-1 / h-chart-end;
+		font-family: 'Segoe UI';
+		width: 730px;
+		height: 500px;
+	}
+
+	.report-footer {
+		grid-gap: 0px;
+		grid-column: v-start / v-end;
+		grid-row: h-4 / h-end;
+		grid-template-columns: [v-ftr-start] 1fr [v-ftr-1] auto [v-ftr-end];
+		align-content: end;
+		/*border: 1px solid black;*/
+		page-break-inside: avoid;
+	}
+
+	.footer-bg {
+		background-image: url("Resources/_BottomActionButtonsBanner.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position-y: 5.5px;
+	}
+
+	.page-counter {
+		font-family: 'U.S. 101';
+		font-size: 16pt;
+		background-color: #fff;
+		margin: 10px 100px 10px 10px;
+		padding: 0 10px 0 10px;
+		border-radius: 12px;
+		content: "Page " + counter(page) + " of " + counter(pages);
+	}
+
+	.page-counter-accent {
+		margin-left: 4px;
+		color: grey;
+	}
+
+	@page {
+		size: a4;
+		margin: 10px;
+		/*margin: 50px 50px 0 0;*/
+
+		/*@reportcontainer {
+			width: 100%;
+			height: 100%;
+		}*/
+	}
 
 /*#endregion */

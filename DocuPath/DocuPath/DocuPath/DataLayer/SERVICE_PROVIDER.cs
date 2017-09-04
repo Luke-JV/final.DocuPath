@@ -30,10 +30,13 @@ namespace DocuPath.DataLayer
         [DisplayName("Company Name")]
         public string CompanyName { get; set; }
         [DisplayName("Telephone Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string CompanyTelNum { get; set; }
         [DisplayName("Fax Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string CompanyFaxNum { get; set; }
         [DisplayName("Email Address")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string CompanyEmail { get; set; }
         [DisplayName("Physical Address")]
         public string CompanyPhysicalAddress { get; set; }
@@ -46,10 +49,12 @@ namespace DocuPath.DataLayer
         [DisplayName("Job Description")]
         public string RepJobDescription { get; set; }
         [DisplayName("Cellphone Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string RepCellNum { get; set; }
         [DisplayName("Work Number")]
         public string RepWorkNum { get; set; }
         [DisplayName("Email Address")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string RepEmail { get; set; }
         [DisplayName("Status")]
         public bool IsDeactivated { get; set; }

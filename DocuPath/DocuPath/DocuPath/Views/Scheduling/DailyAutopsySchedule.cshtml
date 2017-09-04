@@ -1,0 +1,105 @@
+﻿@{ ViewBag.Title = "Daily Autopsy Schedule"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-autopsyschedule"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">DAILY AUTOPSY SCHEDULE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Home/Index" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="CANCEL"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                <form class="minimalform" action="~/Scheduling/SaveDutyRoster" method="post" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>*@
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px; padding-right: 15px">
+        <div class="col-md-12" style="padding: 0px">
+            <div class="panel-group" id="CaptureDASAccordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#CapturePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-capturedas panel-mdl2icon"></span>
+                        <span>Capture Daily Autopsy Schedule</span>
+                    </div>
+                    <div id="CapturePanel" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top: 30px; padding-bottom: 30px">
+                            @Html.Label("Upload Scan Of Daily Autopsy Schedule", htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-4" style="padding-right: 5px">
+                            @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "false", @id = "ofdDailyAutopsySchedule", @style = "width: 100%" } })
+                            </div>
+                            <div class="col-md-2" style="padding-left: 0px">
+                                <button class="btn btn-default btn-generic" type="submit" data-toggle="tooltip" value="Upload" style="padding: 1px; width: 34px; height: 34px; color: #fff"><i class="mdl2icon mdl2-upload" style="color: #fff"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" style="margin-top: 5px">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#RetrievePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-search panel-mdl2icon"></span>
+                        <span>Retrieve Daily Autopsy Schedule</span>
+                    </div>
+                    <div id="RetrievePanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 5px">
+                            <div class="form-group" style="margin-top: 25px; margin-bottom: 25px">
+                                @Html.Label("Select a Target Date", htmlAttributes: new { @class = "control-label col-md-4", @style = "text-align: right; margin-left: -10px" })
+                                <div class="col-md-4">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" id="TargetDate" />
+                                        <span class="input-group-addon" onclick="targetDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px">
+                                    <button class="btn btn-default btn-generic" type="submit" data-toggle="tooltip" value="Retrieve" style="padding: 1px; width: 34px; height: 34px"><i class="mdl2icon mdl2-search" style="color: #fff"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+            $('button').click(function () {
+                this.blur();
+            });
+        });
+
+    </script>
+}

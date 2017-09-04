@@ -52,12 +52,6 @@
             <th data-column-id="txCriticalData" data-formatter="critdata" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.TxCriticalDataString)
             </th>
-            <th data-column-id="txNew" data-visible="false" data-visibleInSelection="false" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.TxNewRecord)
-            </th>
-            <th data-column-id="txOld" data-visible="false" data-visibleInSelection="false" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.TxOldRecord)
-            </th>
             <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
         </tr>
     </thead>
@@ -82,12 +76,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TxCriticalDataString)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TxNewRecord)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TxOldRecord)
                 </td>
             </tr>
         }

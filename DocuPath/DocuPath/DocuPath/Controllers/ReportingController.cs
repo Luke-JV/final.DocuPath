@@ -85,7 +85,7 @@ namespace DocuPath.Controllers
         }
 
         [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
-        public ActionResult Insight(ReportingViewModel model)
+        public ActionResult Insight()
         {
             try
             {
@@ -144,11 +144,17 @@ namespace DocuPath.Controllers
                     selectActivityTypes.Add(new SelectListItem { Value = (item.AuditLogTxTypeID + 1).ToString(), Text = item.TypeValue });
                 }
                 ViewBag.ActivityTypes = selectActivityTypes;
-
+                ReportingViewModel model = new ReportingViewModel();
+                int userID = VERTEBRAE.getCurrentUser().UserID;
+                DateTime dateFrom = DateTime.Today.Date.AddDays(-7);
+                DateTime dateTo = DateTime.Today.Date;
+                model.activityTransactions = db.AUDIT_LOG.Where(x => x.UserID == userID && x.TxDateStamp > dateFrom && x.TxDateStamp < dateTo ).ToList();
+                model.activityTransactions = model.activityTransactions.OrderByDescending(x => x.TxTimeStamp).ToList();
+                                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
                 #endregion
-                return View();//404
+                return View(model);
             }
             catch (Exception x)
             {

@@ -1,0 +1,267 @@
+﻿@{ ViewBag.Title = "Monthly Duty Roster"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-mdrcompile"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">MONTHLY DUTY ROSTER</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div>
+                @using (Html.BeginForm())
+                {
+                    <input id="btnSubmit" class="hidden" type="submit" />
+                        @Html.DropDownList("ddlTargetMonth", new List<SelectListItem> {
+                                        new SelectListItem { Value = "0", Text = ViewBag.CurrentMonthName, Selected = true },
+                                        new SelectListItem { Value = "1", Text = ViewBag.NextMonthName }
+                                    }, new { @class = "form-control", @style = "height: 40px; padding: 2px; margin-top: 5px; display: inline" })
+                }
+            </div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/Home/Index" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="CANCEL"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                    <form class="minimalform" action="~/Scheduling/SaveDutyRoster" method="post" style="margin-top: 2px">
+                        <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                    </form>
+            </div>
+            @*<div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic">
+    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div id="pnlCurrentMonth" class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span class="mdl2icon mdl2-date panel-mdl2icon"></span>
+                            <span>Preliminary Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.CurrentMonthName</span></span>
+                        </div>
+                        <div class="col-md-4 text-right" style="padding-right: 20px">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>
+                    <table class="table table-striped table-condensed">
+                        <tr>
+                            <th class="colour-dpred text-center mdr-datesizing">Date</th>
+                            @foreach (var slot in ViewBag.Slots)
+                            {
+                                <th class="colour-dpred text-center mdr-allocationsizing" style="font-family: 'U.S. 101'; font-size: 20pt; font-weight: normal">
+                                    @slot.Text
+                                </th>
+                            }
+                            <th class="colour-dpred text-center mdr-commentsizing">Comments</th>
+                        </tr>
+
+                        @foreach (var date in ViewBag.DatesCurrentMonth)
+                        {
+                            if (Convert.ToDateTime(@date.Value).DayOfWeek == DayOfWeek.Saturday || Convert.ToDateTime(@date.Value).DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                <tr class="tr-weekendday">
+                                    <td class="text-right mdr-datesizing">
+                                        @*@date.Text*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1CUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S2AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S2BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("OnCallUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-commentsizing">
+                                        @*@Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @Value = "Comments here" } })*@
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="tr-weekday">
+                                    <td class="text-right mdr-datesizing" style="font-weight: bold">
+                                        @date.Text
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1CUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S2AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S2BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("OnCallUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-commentsizing">
+                                        @Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @placeholder = "Type comments here..." } })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+
+            <div id="pnlNextMonth" class="panel panel-default" style="margin-bottom: 0px">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span class="mdl2icon mdl2-date panel-mdl2icon"></span>
+                            <span>Preliminary Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.NextMonthName</span></span>
+                        </div>
+                        <div class="col-md-4 text-right" style="padding-right: 20px">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>
+                    <table class="table table-striped table-condensed">
+                        <tr>
+                            <th class="colour-dpred text-center mdr-datesizing">Date</th>
+                            @foreach (var slot in ViewBag.Slots)
+                            {
+                                <th class="colour-dpred text-center mdr-allocationsizing" style="font-family: 'U.S. 101'; font-size: 20pt; font-weight: normal">
+                                    @slot.Text
+                                </th>
+                            }
+                            <th class="colour-dpred text-center mdr-commentsizing">Comments</th>
+                        </tr>
+
+                        @foreach (var date in ViewBag.DatesNextMonth)
+                        {
+                            if (Convert.ToDateTime(@date.Value).DayOfWeek == DayOfWeek.Saturday || Convert.ToDateTime(@date.Value).DayOfWeek == DayOfWeek.Sunday)
+                            {
+                                <tr class="tr-weekendday">
+                                    <td class="text-right mdr-datesizing">
+                                        @date.Text
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S1CUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S2AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("S2BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @*@Html.DropDownList("OnCallUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })*@
+                                    </td>
+                                    <td class="mdr-commentsizing">
+                                        @*@Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @Value = "Comments here" } })*@
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr class="tr-weekday">
+                                    <td class="text-right mdr-datesizing" style="font-weight: bold">
+                                        @date.Text
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S1CUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S2AUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("S2BUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-allocationsizing">
+                                        @Html.DropDownList("OnCallUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
+                                    </td>
+                                    <td class="mdr-commentsizing">
+                                        @Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @Value = "" } })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    <script>
+        $(document).ready(function check() {
+            $("#pnlNextMonth").hide()
+        });
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $('button').click(function () {
+            this.blur();
+        });
+
+        $("#ddlTargetMonth").change(function () {
+            if ($("#ddlTargetMonth").val() == "0") {
+                $("#pnlCurrentMonth").show("slow"),
+                $("#pnlNextMonth").hide("slow")
+            } else {
+                $("#pnlCurrentMonth").hide("slow"),
+                $("#pnlNextMonth").show("slow")
+            }
+        });
+    </script>
+}

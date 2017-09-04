@@ -8,31 +8,34 @@ namespace DocuPath.Models.DPViewModels
 {
     public class ReportingViewModel
     {
-        public InsightQuery query { get; set; }
+        public List<AUDIT_LOG> activityTransactions { get; set; }
+        public USER target { get; set; }
+        //public List<string> reports { get; set; }
+        //public InsightQuery query { get; set; }
     }
-    public class InsightQuery
-    {
-        public int reportToGenerate { get; set; }
-        public int timeframeToTarget { get; set; }
-        public DateTime dateFrom { get; set; }
-        public DateTime dateTo { get; set; }
-        public List<InsightUser> allUsers { get; set; }
-        public List<ActivityType> allActivityTypes { get; set; }
-        public int selectedSuperuser { get; set; }
-        public int selectedUser { get; set; }
-        public int selectedActivityType { get; set; }
-    }
+    //public class InsightQuery
+    //{
+    //    public int reportToGenerate { get; set; }
+    //    public int timeframeToTarget { get; set; }
+    //    public DateTime dateFrom { get; set; }
+    //    public DateTime dateTo { get; set; }
+    //    public List<InsightUser> allUsers { get; set; }
+    //    public List<ActivityType> allActivityTypes { get; set; }
+    //    public int selectedSuperuser { get; set; }
+    //    public int selectedUser { get; set; }
+    //    public int selectedActivityType { get; set; }
+    //}
 
-    public class InsightUser
-    {
-        public int UserID { get; set; }
-        public string UserNameSurname { get; set; }
-    }
-    public class ActivityType
-    {
-        public int ActivityTypeID { get; set; }
-        public string ActivityTypeDesc { get; set; }
-    }
+    //public class InsightUser
+    //{
+    //    public int UserID { get; set; }
+    //    public string UserNameSurname { get; set; }
+    //}
+    //public class ActivityType
+    //{
+    //    public int ActivityTypeID { get; set; }
+    //    public string ActivityTypeDesc { get; set; }
+    //}
     //    private ReportTarget reportToGenerate { get; set; }
     //    private ReportTimeframe timeframeToTarget { get; set; }
     //    private ReportTimeframeRange timeframeRangeToTarget { get; set; }

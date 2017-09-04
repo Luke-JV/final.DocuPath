@@ -1,0 +1,117 @@
+﻿@{ ViewBag.Title = "Migrate"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Migrate Forensic Case", "Migrate") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-migrate"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">MIGRATE FORENSIC CASE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-two">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ForensicCase/All" style="margin-top: 2px">
+                    @* TODO: Code to clear out folder if cancelled after modal confirmation  *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="CANCEL MIGRATION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal border-generic form-generic">
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ForensicCaseID)*@
+
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-6" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                        <span>Current Author Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.Label("Current Author", htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-2" })
+                            <div class="col-md-4">
+                                @Html.Editor("txtCurrentAuthor", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @disabled = "disabled", @Value = (string)ViewBag.CurrentAuthor } })
+                                @Html.ValidationMessage("txtCurrentAuthor", "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Author Since", htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-2" })
+                            <div class="col-md-4">
+                                @Html.Editor("txtAuthorSince", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @disabled = "disabled", @Value = (string)ViewBag.AuthorSince } })
+                                @Html.ValidationMessage("txtAuthorSince", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                        <span>New Author Details</span>
+                    </div>
+                    <div class="panel-body" style="min-height: 83px">
+                        <div class="form-group">
+                            @Html.Label("New Author", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-4">
+                                @Html.DropDownList("ddlNewAuthorSelect", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                @Html.ValidationMessage("ddlNewAuthorSelect", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Message", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.Editor("txtMigrationMessage", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @Value = (string)ViewBag.MigrationMessage } })
+                                @Html.ValidationMessage("txtAuthorSince", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+    }

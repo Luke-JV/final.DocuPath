@@ -36,25 +36,32 @@ namespace DocuPath.DataLayer
         [DisplayName("Status")]
         public int StatusID { get; set; }
         [DisplayName("Autopsy Session")]
+        [Required]
         public int SessionID { get; set; }
         [DisplayName("Autopsy Area")]
+        [Required]
         public int AutopsyAreaID { get; set; }
         [DisplayName("Added By")]
         public int UserID { get; set; }
         [DisplayName("DR Number")]
+        [Required]
         public string ForensicDRNumber { get; set; }
         [DisplayName("Brief Description")]
         public string FCBriefDescription { get; set; }
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
         [DisplayName("Notice Of Death")]
+        [Required]
         public string DHANoticeDeathID { get; set; }
         [DisplayName("Acting Officer")]
+        [Required]
         public string ActingOfficerNameSurname { get; set; }
         [DisplayName("Contact Details")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string ActingOfficerContactNum { get; set; }
         [DisplayName("Cause Of Death Conclusion")]
         [DataType(DataType.MultilineText)]
+        [Required(ErrorMessage = "At least a preliminary estimation is required")]
         public string CauseOfDeathConclusion { get; set; }
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }

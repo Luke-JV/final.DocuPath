@@ -588,6 +588,7 @@
     <Content Include="Content\Resources\DPTextLogoWhite.png" />
     <Content Include="Content\Resources\DPTextRedTransparentBG.png" />
     <Content Include="Content\Resources\DPTextWhiteTransparentBG.png" />
+    <Content Include="Content\Resources\DP_INSIGHT_FINALLOGO_TRANSPARENTBG.png" />
     <Content Include="Content\Resources\DR.png" />
     <Content Include="Content\Resources\ERCCoverLetterPreview.png" />
     <Content Include="Content\Resources\LV.png" />
@@ -596,6 +597,7 @@
     <Content Include="Content\Resources\NoERCCoverLetter.png" />
     <Content Include="Content\Resources\NoFunctionGroupsActive.png" />
     <Content Include="Content\Resources\NoPreviewMiscMedia.png" />
+    <Content Include="Content\Resources\NoReportPreview.png" />
     <Content Include="Content\Resources\PageHeaderBackgroundBar.png" />
     <Content Include="Content\Resources\PulseBGBar.png" />
     <Content Include="Content\Resources\PulseLogo.png" />
@@ -603,6 +605,8 @@
     <Content Include="Content\Resources\ReportPreview.png" />
     <Content Include="Content\Resources\RP.png" />
     <Content Include="Content\Resources\SlantedDivider.png" />
+    <Content Include="Content\Resources\static_qr_code_without_logo.jpg" />
+    <Content Include="Content\Resources\_BottomActionButtonsBanner.png" />
     <Content Include="DataLayer\DocuPath.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DocuPath.edmx</DependentUpon>
@@ -802,11 +806,15 @@
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Reporting\Insight.cshtml" />
     <Content Include="Views\ContentTag\UpdateRepository.cshtml" />
+    <Content Include="Views\Scheduling\Calendar.cshtml" />
+    <Content Include="Views\Scheduling\MonthlyDutyRoster.cshtml" />
+    <Content Include="Views\Scheduling\DailyAutopsySchedule.cshtml" />
+    <Content Include="Views\ForensicCase\Migrate.cshtml" />
+    <Content Include="Views\ServiceRequest\LinkExternalReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\DocuPathRepositories\LC_REPO\" />
-    <Folder Include="Views\Scheduling\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

@@ -1,6 +1,7 @@
 ﻿using DocuPath.DataLayer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -73,25 +74,39 @@ namespace DocuPath.Models.DPViewModels
         public CASE_COD_ESTIMATION quaternaryCODEst { get; set; }
 
 
+        [DisplayName("Description (If 'Other')")]
         public string otherSamplesInvestigationsDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherRaceDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherTreatmentFacilityDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherMedicalTreatmentsDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherPrimaryCauseDeathDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherApparentMannerDeathDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherInjurySceneDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherExternalCauseDescription { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherSpecialCategoryDescription { get; set; }
 
         public int DeathProvinceId { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherDeathProvinceDesc { get; set; }
         public int OccurrenceProvinceId { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherOccurrenceProvinceDesc { get; set; }
         public int ReportProvinceId { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherReportProvinceDesc { get; set; }
         public int ProcessingProvinceId { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherProcessingProvinceDesc { get; set; }
         public int TreatmentProvinceId { get; set; }
+        [DisplayName("Description (If 'Other')")]
         public string otherTreatmentProvinceDesc { get; set; }
 
         public int JurisdictionStationID { get; set; }

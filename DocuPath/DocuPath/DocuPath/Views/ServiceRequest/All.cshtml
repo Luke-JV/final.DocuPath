@@ -133,7 +133,7 @@
                     //} else if (row.status.trim() === "Active") { /* CHECK IF THE REQUEST IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'CANCEL' AND 'LINK': */
                         return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
                             "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Cancel\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Link\" href=\"/ServiceRequest/Link/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
+                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Link\" href=\"/ServiceRequest/LinkExternalReport/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
                     //}
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */

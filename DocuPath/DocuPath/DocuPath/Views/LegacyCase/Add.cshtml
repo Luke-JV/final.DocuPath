@@ -63,7 +63,7 @@
                         <div class="form-group">
                             @Html.Label("Date Added", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 389.66px", @Value = System.DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 100%", @Value = System.DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
                                 @Html.ValidationMessage("txtDateAdded", "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                htmlAttributes = new
                                {
                                    @class = "form-control",
-                                   @style = "width: 389.66px"@*, @Value = "Fatal Aggravated Assault"*@ }
+                                   @style = "width: 100%"@*, @Value = "Fatal Aggravated Assault"*@ }
                            })
                                 @Html.ValidationMessage("txtBriefDesc", "", new { @class = "text-danger" })
                             </div>
@@ -91,7 +91,7 @@
                                {
                                    @id = "drnum",
                                    @class = "form-control large-identifier",
-                                   @style = "width: 389.66px"@*, @Value = "DR31625/1993"*@ }
+                                   @style = "width: 100%"@*, @Value = "DR31625/1993"*@ }
                            })
                                 @Html.ValidationMessageFor(model => model.LegacyDRNumber, "", new { @class = "text-danger" })
                             </div>
@@ -101,7 +101,10 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.DateClosed, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
-                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @id = "DateClosed" } })
+                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
+
+                            
+                                @*@Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @id = "DateClosed" } })*@
                                 @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "text-danger" })
                                 @*<span class="input-group-addon" onclick="dateClosedDTP()"><span class="mdl2icon mdl2-datetime"></span></span>*@
                             </div>

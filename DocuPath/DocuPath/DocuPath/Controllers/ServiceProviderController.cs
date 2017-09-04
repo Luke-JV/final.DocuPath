@@ -160,11 +160,14 @@ namespace DocuPath.Controllers
         {
             try
             {
+                ServiceProviderViewModel model = new ServiceProviderViewModel();
+                model.serviceProvider = db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault();
+                model.titles = db.TITLE.ToList();
 
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Service Provider");
                 #endregion
-                return View();
+                return View(model);
             }
             catch (Exception)
             {
@@ -177,21 +180,23 @@ namespace DocuPath.Controllers
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Service Provider")]
-        public ActionResult Edit(int id, SERVICE_PROVIDER updatedSP)
+        public ActionResult Edit(ServiceProviderViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Service Provider");
                 #endregion
-                return View(updatedSP);
+                return View(model);
             }
 
             try
             {
+                SERVICE_PROVIDER provider = new SERVICE_PROVIDER();
+                provider = model.serviceProvider;
                 #region DB UPDATE
-                db.SERVICE_PROVIDER.Attach(updatedSP);
-                db.Entry(updatedSP).State = EntityState.Modified;
+                db.SERVICE_PROVIDER.Attach(provider);
+                db.Entry(provider).State = EntityState.Modified;
                 db.SaveChanges();
                 #endregion
                 // TODO: Add update logic here

@@ -140,6 +140,7 @@ namespace DocuPath.Models
                     unhandledNeurons.Add(neuron);
                 }
             }
+            unhandledNeurons = unhandledNeurons.OrderByDescending(x => x.DateID).ToList();
             return unhandledNeurons;
         }
         public static USER getCurrentUser()

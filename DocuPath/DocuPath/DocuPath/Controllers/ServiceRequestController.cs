@@ -144,14 +144,30 @@ namespace DocuPath.Controllers
 
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Link External Report To Service Request")]
-        public ActionResult Edit(int id)
+        public ActionResult LinkExternalReport(int id)
         {
             try
             {
-
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Service Request");
                 #endregion
+
+                List<SelectListItem> selectExistingReports = new List<SelectListItem>();
+
+                selectExistingReports.Add(new SelectListItem { Value = "0", Text = "Select an Existing External Report..." });
+                selectExistingReports.Add(new SelectListItem { Value = "1", Text = "'NHLSreport.PDF' added by 'John Smith' on 29 Mar 2017 09:39:14" });
+                selectExistingReports.Add(new SelectListItem { Value = "2", Text = "'AmpathReport.PDF' added by 'Jane Smith' on 2 Apr 2017 08:35:54" });
+                selectExistingReports.Add(new SelectListItem { Value = "3", Text = "'LancetReport.PDF' added by 'Jeff Peters' on 10 Apr 2017 10:29:19" });
+                selectExistingReports.Add(new SelectListItem { Value = "4", Text = "'Vermaak&VennoteReport.PDF' added by 'Peter Jefferson' on 11 Apr 2017 12:32:11" });
+                selectExistingReports.Add(new SelectListItem { Value = "5", Text = "'AmpathReport.PDF' added by 'Sam Brown' on 15 Apr 2017 06:52:11" });
+                selectExistingReports.Add(new SelectListItem { Value = "6", Text = "'NHLSReport.PDF' added by 'Bronwyn Samuel' on 18 Apr 2017 09:42:24" });
+                selectExistingReports.Add(new SelectListItem { Value = "7", Text = "'Vermaak&VennoteReport.PDF' added by 'Felicia Bye' on 21 Apr 2017 14:21:16" });
+
+                ViewBag.ExistingReports = selectExistingReports;
+                ViewBag.DateReceivedDefault = "20 Apr 2017 09:25:36";
+                ViewBag.DateCapturedDefault = System.DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
+
+
                 return View();
             }
             catch (Exception)

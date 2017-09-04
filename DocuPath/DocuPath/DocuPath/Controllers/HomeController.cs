@@ -157,5 +157,19 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        [HttpPost]
+        public ActionResult SendRSS(string rssData)
+        {
+            try
+            {
+                VERTEBRAE.sendMail("docupath.vector@gmail.com", "Broadcast:\n\n"+ rssData + "\n\nSent from the DocuPath NEURON Notifications Centre.","Departmental Broadcast");
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
     }
 }

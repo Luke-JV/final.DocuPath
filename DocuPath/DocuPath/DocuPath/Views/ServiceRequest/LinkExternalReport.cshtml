@@ -1,0 +1,132 @@
+﻿<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" type="text/css" />
+@model DocuPath.DataLayer.EXTERNAL_REPORT
+@{ ViewBag.Title = "Link External Report"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Service Requests", "All", "Service Request") </li>
+    <li class="active">@Html.ActionLink("Link External Report", "LinkExternalReport") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-link"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">LINK EXTERNAL REPORT</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ForensicCase/All" style="margin-top: 2px">
+                    @* TODO: Code to clear out folder if cancelled after modal confirmation  *@
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            @*<div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>*@
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px; padding-right: 15px">
+        <div class="col-md-12" style="padding: 0px">
+            <div class="panel-group" id="LinkExternalReportAccordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#NewReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
+                        <span>Link New Report</span>
+                    </div>
+                    <div id="NewReportPanel" class="panel-collapse collapse in">
+                        <div class="panel-body" style="padding-top: 30px; padding-bottom: 30px">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DateReceived, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-4">
+                                    <div class="input-group date">
+                                        <input type="text" class="form-control" id="ReceptionDate" />
+                                        <span class="input-group-addon" onclick="receptionDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                    </div>
+                                    @*@Html.EditorFor(model => model.DateReceived, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px; margin-bottom: 0px", @Value = (string)ViewBag.DateAddedDefault } })*@
+                                    @Html.ValidationMessageFor(model => model.DateReceived, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DateCaptured, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-4">
+                                    @Html.EditorFor(model => model.DateCaptured, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @Value = (string)ViewBag.DateCapturedDefault, @disabled = "disabled" } })
+                                    @Html.ValidationMessageFor(model => model.DateCaptured, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.Label("Upload Report", htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-4" style="padding-right: 5px">
+                                    @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "false", @id = "ofdDailyAutopsySchedule", @style = "width: 352px" } })
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px; margin-left: -5px">
+                                    <button class="btn btn-default btn-generic" type="submit" style="width: auto; height: 34px"><i class="mdl2icon mdl2-upload"></i> Upload &amp; Link</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default" style="margin-top: 5px">
+                    <div class="panel-heading" data-toggle="collapse" data-target="#ExistingReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
+                        <span>Link Existing Report</span>
+                    </div>
+                    <div id="ExistingReportPanel" class="panel-collapse collapse">
+                        <div class="panel-body" style="padding: 5px">
+                            <div class="form-group" style="margin-top: 25px; margin-bottom: 25px">
+                                @Html.Label("Select Existing Report", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align: right; margin-left: -10px" })
+                                <div class="col-md-8">
+                                    @Html.DropDownList("ddlExistingReport", (IEnumerable<SelectListItem>)ViewBag.ExistingReports, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                </div>
+                                <div class="col-md-2" style="padding-left: 0px">
+                                    <button class="btn btn-default btn-generic" type="submit" style="width: auto; height: 34px"><i class="mdl2icon mdl2-done"></i> Select &amp; Link</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    @* DATETIMEPICKERS: *@
+    <script name="DTPCallers" type="text/javascript">
+        $(function receptionDTP() {
+            $('#ReceptionDate').bootstrapMaterialDatePicker({
+                format: 'D MMMM YYYY - HH:mm',
+                year: true,
+                date: true,
+                time: true,
+                clearButton: true,
+                nowButton: true,
+                nowText: "Now",
+                switchOnClick: true,
+                okText: "OK"
+            });
+        })
+    </script>
+
+}

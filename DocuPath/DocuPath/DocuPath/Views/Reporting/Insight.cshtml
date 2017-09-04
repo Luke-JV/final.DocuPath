@@ -1,4 +1,6 @@
-﻿<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" type="text/css" />
+﻿@model DocuPath.Models.DPViewModels.ReportingViewModel
+<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
 @{ ViewBag.Title = "Reporting"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -20,9 +22,9 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>        
             <div grid-area="btn1">
-                <form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
+                @*<form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT"></button>
-                </form>
+                </form>*@
             </div>
     @*<div grid-area="btn2">
         <form class="minimalform" action="~/ForensicCase/Add" method="post" style="margin-top: 2px">
@@ -103,7 +105,7 @@
                                     @Html.Label("Select a Start Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
                                     <div class="row" style="padding-left: 15px; padding-right: 15px">
                                         <div class='input-group date'>
-                                            @Html.EditorFor(model => model.dateFrom, new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
+                                            @Html.Editor("txtStartDate", new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
                                             @*<input type='text' class="form-control" id="StartDate" />*@
                                             <span class="input-group-addon" onclick="startDTP()">
                                                 <span class="mdl2icon mdl2-date">
@@ -122,7 +124,8 @@
                                     @Html.Label("Select an End Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
                                     <div class="row" style="padding-left: 15px; padding-right: 15px">
                                         <div class="input-group date">
-                                            <input type='text' class="form-control" id="EndDate" />
+                                            @Html.Editor("txtEndDate", new { htmlAttributes = new { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control", @style = "width: 100%" } })
+                                            @*<input type='text' class="form-control" id="EndDate" />*@
                                             <span class="input-group-addon" onclick="endDTP()">
                                                 <span class="mdl2icon mdl2-date">
                                                 </span>
@@ -186,10 +189,11 @@
                                         <i class="mdl2icon mdl2-done"></i>
                                         Generate Report
                                     </button>*@
-                                    <form class="minimalform" action="~/Insight/GenerateReport" method="post" style="margin-top: 2px">
-                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-go btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="GENERATE REPORT"></button>
+                                    <form class="minimalform" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px">
+                                        <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="GENERATE REPORT"></button>
                                     </form>
                                     <form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
+                                        @*<a href="" target="_blank" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon">TEST</a>*@
                                         <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT"></button>
                                     </form>
                                 </div>
@@ -206,16 +210,109 @@
                     <span class="mdl2icon mdl2-view panel-mdl2icon"></span>
                     <span>Report Output</span>
                 </div>
-                <div class="panel-body apad5 text-center">
+                <div id="pnlBody" class="panel-body apad5">
                     @* REPORT DISPLAY CODE HERE *@
                     <img id="noPreview" src="~/Content/Resources/NoReportPreview.png" style="max-height: 650px; max-width: 824px; border-radius: 4px" />
-                    <img id="reportPreview" src="~/Content/Resources/ReportPreview.png" style="max-height: 650px; max-width: 824px; border-radius: 4px" />
+                    @*<img id="reportPreview" src="~/Content/Resources/ReportPreview.png" style="max-height: 650px; max-width: 824px; border-radius: 4px" />*@
+                    <div id="reportPreview" class="grid reportcontainer">
+                        <img class="dplogo" src="~/Content/Resources/DPHorizontalLogoWhiteBG.png" style="max-height: 50px; max-width: 150px" />
+                        <img class="separator1" src="~/Content/Resources/SlantedDivider.png" style="max-height: 50px" />
+                        <div class="grid report-timestamp">
+                            <span class="stamp-icon insight-mdl2icon mdl2-action"></span>
+                            <div class="stamp-label">TIMESTAMP</div>
+                            <div class="stamp-value">@System.DateTime.Now.ToString("dd MMM yyyy HH:mm:ss")</div>
+                            <div class="stamp-icon insight-mdl2icon mdl2-datetime"></div>
+                            <div class="stamp-label">TIMEFRAME</div>
+                            <div class="stamp-value">@System.DateTime.Now.Date.AddDays(-7).ToString("dd MMM yyyy") - @System.DateTime.Now.Date.ToString("dd MMM yyyy")</div>
+                        </div>
+                        <img class="separator2" src="~/Content/Resources/SlantedDivider.png" style="max-height: 50px" />
+                        <div class="grid report-generator">
+                            <div class="generator-label">GENERATED BY</div>
+                            <span class="generator-icon insight-mdl2icon mdl2-individual"></span>
+                            <div class="generator-value">John Doe</div>
+                        </div>
+                        <img class="insightlogo" src="~/Content/Resources/DP_INSIGHT_FINALLOGO_TRANSPARENTBG.png" style="max-height: 50px; max-width: 150px" />
+                        <div class="report-title">USER ACTIVITY REPORT</div>
+                        <div class="grid report-params-summary-container">
+                            <div class="grid params-grid">
+                                <div class="params-icon insight-mdl2icon mdl2-count"></div>
+                                <div class="params-label">NUMBER OF ENTRIES</div>
+                                <div class="params-value">@Model.activityTransactions.Count</div>
+                                <div class="params-icon insight-mdl2icon mdl2-param"></div>
+                                <div class="params-label">SORTED BY</div>
+                                <div class="params-value">Timestamp</div>
+                                <div class="params-icon insight-mdl2icon mdl2-param"></div>
+                                <div class="params-label">GROUPED BY</div>
+                                <div class="params-value">None</div>
+                            </div>
+                            <div class="vsep"></div>
+                            <div class="grid summary-grid">
+                                <div class="summary-icon insight-mdl2icon mdl2-info"></div>
+                                <div class="summary-label">REPORT SUMMARY</div>
+                                <div class="summary-value">This report contains user activity information for the selected user during the specified report timeframe.</div>
+                            </div>
+                        </div>
+                        <div class="report-content">
+                            <table id="allFC" class="table table-striped table-hover table-condensed table-insight">
+                                <thead>
+                                    <tr>
+                                        <th data-id="identifier" data-column-id="FCID" data-visible="false" data-identifier="true" class="colour-dpred">
+                                            ID
+                                        </th>
+                                        <th data-column-id="addedBy" class="colour-dpred">
+                                            Activity Type
+                                        </th>
+                                        <th data-column-id="status" class="colour-dpred">
+                                            Datestamp
+                                        </th>
+                                        <th data-column-id="FCDR" data-cssClass="table-large-identifier-insight-insight" data-formatter="drnumbers" class="colour-dpred">
+                                            Timestamp
+                                        </th>
+                                        <th data-column-id="dateAdded" data-converter="dpdate" data-order="desc" class="colour-dpred">
+                                            Description
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.activityTransactions.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Model.activityTransactions[i].AuditLogTxID.ToString()
+                                            </td>
+                                            <td>
+                                                @Model.activityTransactions[i].AUDIT_TX_TYPE.TypeValue
+                                            </td>
+                                            <td>
+                                                @Model.activityTransactions[i].TxDateStamp.ToString("dd MMM yyyy")
+                                            </td>
+                                            <td>
+                                                @Model.activityTransactions[i].TxTimeStamp.ToString("HH:mm:ss")
+                                            </td>
+                                            <td>
+                                                @Model.activityTransactions[i].TxCriticalDataString
+                                            </td>
+                                        </tr>
+                                    }                                    
+                                </tbody>
+                            </table>
+                            <div class="grid chart-grid">
+                                <span class="chart-icon insight-mdl2icon mdl2-chart"></span>
+                                <div class="chart-title">USER ACTIVITY FREQUENCY GRAPH</div>
+                                <div class="chart-subtitle"></div>
+                                <canvas class="chart-area" id="myChart" width="750" height="500"></canvas>
+                            </div>
+                        </div>
+                        <div class="grid report-footer footer-bg">
+                            <div></div>
+                            <div class="page-counter">PAGE 1<!--<span class="page-counter-accent">OF 999</span>--></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -255,6 +352,8 @@
     @* FORM-GROUP VISIBILITY TOGGLING: *@
     <script type="text/javascript">
     $(document).ready(function () {
+        $("#pnlBody").addClass("text-center"),
+        $("#noPreview").show(),
         $("#frmStartDate").hide(),
         $("#frmEndDate").hide(),
         $("#frmSuperuserSelect").hide(),
@@ -262,6 +361,17 @@
         $("#frmActivityTypeSelect").hide(),
         $("#pnlReportParams").hide(),
         $("#reportPreview").hide()
+        $('[data-toggle="tooltip"]').tooltip();
+        $("button").click(function () {
+            var $target = this;
+            this.blur()
+        });
+
+        $("#toggle").click(function () {
+            $("#noPreview").hide(),
+            $("#reportPreview").show(),
+            $("#pnlBody").removeClass("text-center")
+        });
     });
     </script>
     <script type="text/javascript">
@@ -273,23 +383,19 @@
                 $("#frmUserSelect").hide("slow"),
                 $("#frmActivityTypeSelect").hide("slow"),
                 $("#pnlTimeframeParams").show("slow"),
-                $("#noPreview").show(),
                 $("#reportPreview").hide()
             } else if ($("#ddlReportSelector").val() == "8") { /* USER ACTIVITY*/
                 $("#pnlReportParams").show("slow"),
                 $("#frmSuperuserSelect").hide("slow"),
                 $("#frmUserSelect").show("slow"),
                 $("#frmActivityTypeSelect").show("slow"),
-                $("#pnlTimeframeParams").show("slow"),
-                $("#noPreview").hide(),
-                $("#reportPreview").show()
+                $("#pnlTimeframeParams").show("slow")
             } else if ($("#ddlReportSelector").val() == "5") { /* OUTSTANDING SR */
                 $("#pnlReportParams").hide("slow"),
                 $("#frmSuperuserSelect").hide("slow"),
                 $("#frmUserSelect").hide("slow"),
                 $("#frmActivityTypeSelect").hide("slow"),
                 $("#pnlTimeframeParams").hide("slow"),
-                $("#noPreview").show(),
                 $("#reportPreview").hide()
             }
             else {
@@ -298,7 +404,6 @@
                 $("#frmUserSelect").hide("slow"),
                 $("#frmActivityTypeSelect").hide("slow"),
                 $("#pnlTimeframeParams").show("slow"),
-                $("#noPreview").show(),
                 $("#reportPreview").hide()
             }
         });
@@ -388,4 +493,43 @@
     });
   });*@
     </script>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
+            label: 'Relative Frequency',
+            data: [12, 19, 3, 5, 2, 26, 25],
+            backgroundColor: [
+                'rgba(174, 31, 31, 0.2)',
+                'rgba(0, 0, 0, 0.2)',
+                'rgba(128, 128, 128, 0.2)',
+                'rgba(174, 31, 31, 0.2)',
+                'rgba(0, 0, 0, 0.2)',
+                'rgba(128, 128, 128, 0.2)',
+            ],
+            borderColor: [
+                'rgba(174, 31, 31, 1)',
+                'rgba(128, 128, 128, 1)',
+                'rgba(180, 180, 180, 1)',
+                'rgba(174, 31, 31, 1)',
+                'rgba(128, 128, 128, 1)',
+                'rgba(180, 180, 180, 1)',
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
 }

@@ -88,7 +88,7 @@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Reporting</li>
                                     <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    @*<li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
                                 </ul>
                             </li>
                             <!--PULSE-->
@@ -101,9 +101,9 @@
                                     <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Scheduling &amp; Calendar</li>
-                                    <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "SessionUser", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="divider"></li>
                                     <li class="dropdown-header">System Management</li>
                                     <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
@@ -124,19 +124,21 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    @*<li class="divider"></li>
+                                    <li class="divider"></li>
                                         <li class="dropdown-header">HELP &amp; ASSISTANCE</li>
-                                        <li>@Html.ActionLink("HAPTIC Help Centre", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                        <li class="dropdown-toggle disabled text-center" style="font-size: 8pt">Scan this QR Code with the DocuPath Mobile App to access an interactive help tutorial!</li>
+                                        <li class="text-center"><img src="~/Content/Resources/static_qr_code_without_logo.jpg" style="height: 190px; width: 190px; margin: 5px 0 5px 0"/></li>
+                                        @*<li>@Html.ActionLink("HAPTIC Help Centre", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                         <li>@Html.ActionLink("Frequently Asked Questions", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">INFORMATION</li>
-                                    <li>@Html.ActionLink("About DocuPath", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    @*<li>@Html.ActionLink("About DocuPath", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
                                     <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="divider"></li>
                                     <li class="dropdown-header">CONTACT US</li>
-                                    <li>@Html.ActionLink("Report A Bug", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("Request A Feature", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("Contact Us", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    @*<li>@Html.ActionLink("Report A Bug", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Request A Feature", null, null, null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <li>
@@ -172,8 +174,8 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">ABOUT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="divider"></li>
-                                    <li>@Html.ActionLink("ABOUT DOCUPATH", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("ABOUT THE DEVELOPERS", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    @*<li>@Html.ActionLink("ABOUT DOCUPATH", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <!--CONTACT-->
@@ -181,9 +183,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">CONTACT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="divider"></li>
-                                    <li>@Html.ActionLink("REPORT A BUG", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("REQUEST A FEATURE", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    <li>@Html.ActionLink("CONTACT US", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    @*<li>@Html.ActionLink("REPORT A BUG", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("REQUEST A FEATURE", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                         </ul>
@@ -191,7 +193,6 @@
                     </div>
                 </div>
             </div>
-
         }
         @* FOOTER: *@
         <div id="bottomNav" class="grid navbar-fixed-bottom ftr-grid footer-text" grid-area="ftr">
@@ -237,11 +238,11 @@
         </div>
         <div id="sidenavbody" class="sidenav-body" grid-area="neuron_body">
             @* RSS BROADCAST BAR: *@
-            <form class="navbar-form" action="~/Home/SendRSSBroadcast" method="post" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0px; padding: 15px">
+            <form class="navbar-form" action="javascript:void(0)"  style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Type Your RSS Broadcast Message Here..." name="srch-term" id="srch-term">
                     <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="mdl2icon mdl2-send"></i></button>
+                        <button class="btn btn-default" id="rss" type="submit"><i class="mdl2icon mdl2-send"></i></button>
                     </div>
                 </div>
             </form>
@@ -257,14 +258,11 @@
                     {
                         <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
                             <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
-                                @if (@neuron.NotificationTitle.ToLower().Contains("forensic"))
-                                {
-                                    <div><span class="mdl2icon mdl2-info neuron-mdl2icon"></span></div>
-                                }
-                                else
-                                {
-                                    <div><span class="mdl2icon mdl2-info neuron-mdl2icon"></span></div>
-                                }
+                                @if (@neuron.NotificationTitle.ToLower().Contains("forensic")) { <div><span class="mdl2icon mdl2-fc neuron-mdl2icon"></span></div> }
+                                else if (@neuron.NotificationTitle.ToLower().Contains("roster")) { <div><span class="mdl2icon mdl2-datetime neuron-mdl2icon"></span></div> }
+                                else if (@neuron.NotificationTitle.ToLower().Contains("authorisation")) { <div><span class="mdl2icon mdl2-approvedeny neuron-mdl2icon"></span></div> }
+                                else if (@neuron.NotificationTitle.ToLower().Contains("auto-archive")) { <div><span class="mdl2icon mdl2-history neuron-mdl2icon"></span></div> }
+
                                 <div grid-area="title" class="sidenav-notification-title">@neuron.NotificationTitle</div>
                                 <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.DateID.ToString("dd MMM HH:mm")</div>
                             </div>
@@ -276,7 +274,7 @@
                                         <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
                                     </div>
                                     <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
-                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@neuron.NotificationDetails</p>
+                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@Html.Raw(@neuron.NotificationDetails)</p>
                                         <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
                                             <div class="sidenav-button-bar">
                                                 @if (neuron.NotificationTypeID == 1)
@@ -320,7 +318,24 @@
             document.getElementById("NEURONsidenav").style.width = "0";
         });
     </script>
+    <script>
+        
 
+        $('#rss').click(function () {
+            var rssData = document.getElementById("srch-term").value
+        
+
+                $.ajax({
+                    url: '/Home/SendRSS/',
+                    data: "{ 'rssData': '" + rssData + "'}",
+                    dataType: "json",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8"
+                    
+                });
+        });
+       
+    </script>
     @* TOOLTIPS: *@
     <script>
         // TODO: Use this for help tooltips:
@@ -419,15 +434,17 @@
             //$("#N6").show();
             $("#neuronicon").removeClass("mdl2-neuron");
             $("#neuronicon").addClass("mdl2-neuronnew");
-        });
 
+
+        });
+        
         $('#noNotifications').click(function () { $('#noNotifications').hide("slow"); });
-        $('#N1OK').click(function () { $('#N1').hide("slow") });
-        $('#N2Approve').click(function () { $('#N2').hide("slow") });
-        $('#N2Deny').click(function () { $('#N2').hide("slow") });
-        $('#N3Accept').click(function () { $('#N3').hide("slow"); });
-        $('#N3Reject').click(function () { $('#N3').hide("slow") });
-        $('#N4OK').click(function () { $('#N4').hide("slow") });
+        $('#n_btnOK_1').click(function () { $('#n_1').hide("slow") });
+        $('#n_btnAprv_3').click(function () { $('#n_3').hide("slow") });
+        $('#n_btnDeny_3').click(function () { $('#n_3').hide("slow") });
+        $('#n_btnAcpt_2').click(function () { $('#n_2').hide("slow"); });
+        $('#n_btnRjct_2').click(function () { $('#n_2').hide("slow") });
+        $('#n_btnOK_4').click(function () { $('#n_4').hide("slow") });
         //$('#N5Approve').click(function () { $('#N5').hide("slow") });
         //$('#N5Deny').click(function () { $('#N5').hide("slow") });
         //$('#N6Approve').click(function () { $('#N6').hide("slow") });
@@ -438,7 +455,7 @@
     @* BADGE COUNTER HANDLING: *@
     <script type="text/javascript">
     // TODO: jQuery to properly decrement NEURON badge counter on notification handled...
-    $(document).on("click", ".btn-modal-generic", function (e) {
+    $(document).on("click", ".btn-neuron", function (e) {
         e.preventDefault();
 
         var $badge = $("#neuronBadge"),
