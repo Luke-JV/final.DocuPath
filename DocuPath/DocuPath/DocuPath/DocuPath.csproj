@@ -607,6 +607,7 @@
     <Content Include="Content\Resources\PulseBGBar.png" />
     <Content Include="Content\Resources\PulseLogo.png" />
     <Content Include="Content\Resources\PulseMotif.png" />
+    <Content Include="Content\Resources\QR Code to Video.jpg" />
     <Content Include="Content\Resources\ReportPreview.png" />
     <Content Include="Content\Resources\RP.png" />
     <Content Include="Content\Resources\SlantedDivider.png" />
