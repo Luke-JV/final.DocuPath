@@ -312,7 +312,7 @@
     @RenderSection("scripts", required: false)
 
     <script>
-        $('#rss').click(function () {
+        $('#rss').click(function (request,response) {
             var rssData = document.getElementById("srch-term").value
             $.ajax({
                 url: '/Home/SendRSS/',
@@ -320,6 +320,10 @@
                 dataType: "json",
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    alert(result); //Throw Success Modal 404
+                    document.getElementById("srch-term").text() ="";
+                },
             });
             rssData.value == "";
         });       
