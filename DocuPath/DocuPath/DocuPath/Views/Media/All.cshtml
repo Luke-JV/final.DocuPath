@@ -165,16 +165,16 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.purpose.trim() === "Case Related") { /* CHECK IF THE ITEM IS CASE RELATED, IF TRUE, THEN SHOW 'VIEW', 'MAINTAIN TAGS' and 'DELETE': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW 'VIEW', 'MAINTAIN TAGS', 'LINK TO FORENSIC CASE' and 'DELETE': (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Link To Forensic Case\" href=\"/Media/Link/" + row.MediaID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
-                    }
+                    //if (row.purpose.trim() == "Case Related") { /* CHECK IF THE ITEM IS CASE RELATED, IF TRUE, THEN SHOW 'VIEW', 'MAINTAIN TAGS' and 'DELETE': */
+                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
+                    //} else { /* IN ALL OTHER CASES, SHOW 'VIEW', 'MAINTAIN TAGS', 'LINK TO FORENSIC CASE' and 'DELETE': (FALLBACK): */
+                    //    return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
+                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link To Forensic Case\" href=\"/Media/Link/" + row.MediaID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>" +
+                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
+                    //}
                  }/*,*/
                 //"drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                 //    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";

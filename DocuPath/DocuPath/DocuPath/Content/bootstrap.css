@@ -664,6 +664,23 @@ dd {
     font-family: 'Segoe UI'
 }
 
+/*.details-tag:nth-child(even) {
+    background-color: rgba(174, 31, 31, 1);
+    border: 1px solid rgba(174, 31, 31, 1);
+    color: #fff;
+}
+
+.details-tag:nth-child(odd) {
+    background-color: rgba(174, 31, 31, 0.5);
+    border: 1px solid rgba(174, 31, 31, 0.5);
+    color: #000;
+}*/
+
+.details-tag:hover {
+    color: rgba(174,31,31,1);
+    background-color: rgba(255,220,220, 1);
+}
+
 @media (min-width: 768px) {
 /* DL-HORIZONTAL: */
   .dl-horizontal dt {
@@ -728,6 +745,40 @@ dd {
     content: " ";
   }
   .dl-horizontal-small dd:after {
+    clear: both;
+  }
+}
+
+/* DL-HORIZONTAL-TINY: */
+  .dl-horizontal-tiny dt {
+    float: left;
+    width: 100px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    /*white-space: nowrap;*/
+    /*white-space: normal;*/
+  }
+  .dl-horizontal-tiny dd {
+    margin-left: 110px;
+    padding-left: 10px;
+    border-left: 1px solid #999;
+  }
+  .dl-horizontal-tiny dd:before,
+  .dl-horizontal-tiny dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-tiny dd:after {
+    clear: both;
+  }
+  .dl-horizontal-tiny dd:before,
+  .dl-horizontal-tiny dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-tiny dd:after {
     clear: both;
   }
 }
@@ -2315,7 +2366,25 @@ fieldset[disabled] .btn {
     border-color: #cccccc;    
 }
 
+.modal-catcher {
+    /*Nothing here hahaha fooled you...*/
+}
+
 .btn-neuron {
+    width: 75px;
+    height: 28px;
+    font-size: 10pt !important;
+    margin-left: 5px !important;
+    text-transform: uppercase;
+    font-family:'Segoe UI';
+    background-color: #333333;
+    color: #fff;
+    margin-top: 0px;
+    margin-right: 0px;
+    border-color: #cccccc;
+}
+
+.btn-errormsg {
     width: 75px;
     height: 28px;
     font-size: 10pt !important;

@@ -1,17 +1,79 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+@*<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>*@
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("Contact Us", "Contact") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-send"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">CONTACT US - WE'D LOVE TO HEAR FROM YOU!</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div></div>
+            @*<div grid-area="btn1">
+                <form class="minimalform" action="~/Media/All" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                </form>
+            </div>*@
+            @*<div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    </form>
+                </div>*@
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="form-horizontal border-generic form-generic" style="padding: 0 20px 0 20px">
+    <form method="post">
+        <div class="form-group" style="margin: 10px 0 0 0">
+            <label asp-for="Name">Name &amp; Surname</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name"
+                  class="text-muted"></span>
+        </div>
+        <div class="form-group" style="margin: 10px 0 0 0">
+            <label asp-for="Email">Email Address</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"
+                  class="text-muted"></span>
+        </div>
+        <div class="form-group" style="margin: 10px 0 0 0">
+            <label asp-for="Subject">Message Subject</label>
+            <input asp-for="Subject" class="form-control" />
+            <span asp-validation-for="Subject"
+                  class="text-muted"></span>
+        </div>
+        <div class="form-group" style="margin: 10px 0 0 0">
+            <label asp-for="Message">Message Content</label>
+            <textarea rows="5" cols="15"
+                      asp-for="Message" class="form-control" style="margin-bottom: 5px"></textarea>
+            <span asp-validation-for="Message"
+                  class="text-muted"></span>
+        </div>
+        <div class="fullwidth" style="margin: 10px 0 10px 0">
+            <button type="submit" class="btn btn-generic fullwidth">Send</button>
+        </div>
+
+    </form>
+</div>

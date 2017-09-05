@@ -94,11 +94,50 @@
         }
     </tbody>
 </table>
+@* ERROR MODALS: *@
+<div id="divDelete" class="modal-background hidden">
+    <div class="modalbox">
+        <div id="targetItem" class="hidden"></div>
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to delete this item? This action cannot be reverted.
+        </div>
+        @* HELP/INFO *@
+        @*<div class="panel-group" id="warninghelpaccordion">
+                <div class="modal-help-panel">
+                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                    </div>
+                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                        <hr class="modal-help-hr-warning" />
+                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                    </div>
+                </div>
+            </div>*@
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col">
+            </div>
+            <div class="col-md-3 modal-btn-col">
+            </div>
+            <div class="col-md-3 modal-btn-col">
+            </div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="submit" id="btnWarningYes" value="Yes" class="btn btn-modal-generic" />
+                <input type="submit" id="btnWarningNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
 @Scripts.Render("~/bundles/bootgrid")
 @Scripts.Render("~/bundles/moment")
 @Scripts.Render("~/bundles/materialdatetime")
+
 
 <script id="loadBootgrid" type="text/javascript">
         var grid = $("#allFC").bootgrid({
@@ -155,4 +194,16 @@
             $("#btnDensityToggle").blur()
         });
 </script>
+
+@*<script name="deletescript" type="text/javascript">
+        $(document).ready(function () {
+            $('delete-catcher').click(function (event) {
+                event.preventDefault();
+                $('#divDelete').removeClass("hidden");
+                document.getElementById("targetItem").innerHTML = "someContent";
+            });
+            $('#btnDeleteYes').click(function (target) { $('#divDelete').addClass("hidden"); window.location.href = "@Url.Action("All", "ForensicCase")"; });
+            $('#btnDeleteNo').click(function () { $('#divDelete').addClass("hidden"); });
+        });
+</script>*@
 }

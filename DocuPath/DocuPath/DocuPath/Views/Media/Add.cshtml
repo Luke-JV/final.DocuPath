@@ -80,29 +80,25 @@
                             <span class="mdl2icon mdl2-upload panel-mdl2icon"></span>
                             <span>PREVIEW</span>
                         </div>
-                        <div class="panel-body" style="padding: 5px; height: 221.2px">
-                            <div class="row text-center">
-                                <div class="col-md-12">
-                                    <div class="imgPreview" style="height: 170px" @*max-width:157.19px"*@>
-                                        @if (VERTEBRAE.Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(Model.mediaList[i].MediaLocation).ToUpper()))
-	                                    {
-                                            <img class="img-thumbnail" src="~/@VERTEBRAE.GetThumbUrl(Model.mediaList[i].MediaLocation)" style="max-height: 170px; max-width: 273.75px">
-                                        }
-                                        else
-                                        {
-                                            // TODO: Brain ReturnForeignThumb() and provide relevant assets:
-                                            //VERTEBRAE.ReturnForeignThumb(Path.GetExtension(Model.mediaList[i].MediaLocation));
-                                            <img class="img-thumbnail" src="~/Content/Resources/NoPreviewMiscMedia.png" style="max-height: 170px; max-width: 273.75px">
-                                        }
-                                    </div>
-                                </div>
+                        <div class="panel-body apad5 text-center" style="height: 221.2px; max-height: 221.2px; width: auto">
+                            <div class="imgPreview" style="height: 210px; width: 270px; padding: 0px; display: grid; justify-content: center; margin: auto">
+                                @if (VERTEBRAE.Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(Model.mediaList[i].MediaLocation).ToUpper()))
+	                            {
+                                    <img class="img-thumbnail" src="~/@VERTEBRAE.GetThumbUrl(Model.mediaList[i].MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: cover">
+                                }
+                                else
+                                {
+                                    // TODO: Brain ReturnForeignThumb() and provide relevant assets:
+                                    //VERTEBRAE.ReturnForeignThumb(Path.GetExtension(Model.mediaList[i].MediaLocation));
+                                    <img class="img-thumbnail" src="~/Content/Resources/NoPreviewMiscMedia.png" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain">
+                                }
+                            </div>
                                 @*<div class="col-md-12">
                                     <form>
                                         <button class="btn btn-default btn-modal-generic" type="submit" style="width: 100px; margin-top: 5px"><i class="mdl2icon mdl2-change"></i> Change</button>
                                         <button class="btn btn-default btn-modal-generic" type="submit" style="width: 100px; margin-top: 5px"><i class="mdl2icon mdl2-cancel"></i> Clear</button>
                                     </form>
                                 </div>*@
-                            </div>
                             @*<div class="row">
                                     <div class="col-md-12">
                                         <!-- image-preview-filename input [CUT FROM HERE]-->

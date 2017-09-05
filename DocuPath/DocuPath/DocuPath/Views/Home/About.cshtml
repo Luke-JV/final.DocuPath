@@ -2,6 +2,13 @@
     ViewBag.Title = "About";
 }
 
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("About The Developers", "About") </li>
+</ol>
+
+
 <div class="grid about-grid">
     <div class="header-par">
         CLDRM ("CLOUDRIM") WAS ESTABLISHED IN 2016 AS A STUDENT PROJECT GROUP. CLDRM IS AN INFORMATION TECHNOLOGY CONSULTING AND DEVELOPMENT START-UP FORMED BY INFORMATICS STUDENTS AT THE UNIVERSITY OF PRETORIA. FOUNDED IN 2016 AND BASED IN PRETORIA, CLDRM HAS ACHIEVED SUCCESS IN VARIOUS DISCIPLINES WITHIN THE FIELD OF INFORMATICS.

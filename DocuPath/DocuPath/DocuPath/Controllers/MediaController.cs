@@ -220,8 +220,19 @@ namespace DocuPath.Controllers
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
 
-                
-                return View();
+                MediaViewModel model = new MediaViewModel();
+                model.media = db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault();
+                model.media.USER = db.USER.Where(x => x.UserID == model.media.UserID).FirstOrDefault();
+                model.media.MEDIA_PURPOSE = db.MEDIA_PURPOSE.Where(x => x.MediaPurposeID == model.media.MediaPurposeID).FirstOrDefault();
+                foreach (var tag in db.MEDIA_TAG)
+                {
+                    if (tag.MediaID == model.media.MediaID)
+                    {
+                        model.tags.Add(db.CONTENT_TAG.Where(x => x.ContentTagID == tag.ContentTagID).FirstOrDefault());
+                    }
+                }
+
+                return View(model);
             }
             catch (Exception)
             {
@@ -320,6 +331,7 @@ namespace DocuPath.Controllers
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
+        #region NON-CRUD ACTIONS:
         public ActionResult Upload()
         {
             try
@@ -333,7 +345,7 @@ namespace DocuPath.Controllers
                 throw;
             }
         }
-        #region NON-CRUD ACTIONS:
+
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Media Item(s)")]
         public ActionResult UploadFiles()
@@ -497,7 +509,6 @@ namespace DocuPath.Controllers
                 return null;
             }
         }
-
 
         [HttpPost]
         public JsonResult AutoTag(string prefix)
