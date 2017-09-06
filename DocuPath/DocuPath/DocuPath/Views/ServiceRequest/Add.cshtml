@@ -25,7 +25,7 @@
             <div></div>
             <div grid-area="btn1">
                 @* TODO: Handle properly *@
-                <form class="minimalform" action="~/Service/All" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/ServiceRequest/All" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
@@ -45,80 +45,481 @@
         </div>
     </div>
 </div>
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>SERVICE_REQUEST</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.ServiceRequestID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ServiceRequestID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ServiceRequestID, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal border-generic form-generic">
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-5" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>Service Request Details</span>
+                    </div>
+                    <div class="panel-body">
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SERVICE_PROVIDER, "Service Provider", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ServiceProviderID", (IEnumerable<SelectListItem>)ViewBag.ServiceProviders, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                @Html.ValidationMessageFor(model => model.SERVICE_PROVIDER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ServiceRequestID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ServiceRequestID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ServiceRequestID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.RequestTypeID, "Request Type", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("RequestTypeID", (IEnumerable<SelectListItem>)ViewBag.RequestTypes, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                        @Html.ValidationMessageFor(model => model.RequestTypeID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessageFor(model => model.RequestNote, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.IsCancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsCancelled)
+                                    @Html.ValidationMessageFor(model => model.IsCancelled, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsClosed, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsClosed)
+                                    @Html.ValidationMessageFor(model => model.IsClosed, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                        <span>Specimen Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.Label("Investigation Required", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtInvestigation", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtInvestigation", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Specimen Nature/Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtSpecimenNatureDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtSpecimenNatureDesc", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Specimen Serial/Seal Number", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtSerialSealNum", new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtSerialSealNum", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Chain Of Custody", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtDisposalMech", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtDisposalMech", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <hr class="dp-separator-hr" />
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-5" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>Service Request Details</span>
+                    </div>
+                    <div class="panel-body">
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SERVICE_PROVIDER, "Service Provider", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ServiceProviderID", (IEnumerable<SelectListItem>)ViewBag.ServiceProviders, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                @Html.ValidationMessageFor(model => model.SERVICE_PROVIDER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ServiceProviderID, "ServiceProviderID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ServiceProviderID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ServiceProviderID, "", new { @class = "text-danger" })
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ServiceRequestID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ServiceRequestID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ServiceRequestID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.RequestTypeID, "Request Type", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("RequestTypeID", (IEnumerable<SelectListItem>)ViewBag.RequestTypes, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                        @Html.ValidationMessageFor(model => model.RequestTypeID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessageFor(model => model.RequestNote, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.IsCancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsCancelled)
+                                    @Html.ValidationMessageFor(model => model.IsCancelled, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsClosed, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsClosed)
+                                    @Html.ValidationMessageFor(model => model.IsClosed, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                        <span>Specimen Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.Label("Investigation Required", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtInvestigation", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtInvestigation", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Specimen Nature/Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtSpecimenNatureDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtSpecimenNatureDesc", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Specimen Serial/Seal Number", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtSerialSealNum", new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtSerialSealNum", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Chain Of Custody", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtDisposalMech", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtDisposalMech", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <hr class="dp-separator-hr" />
+        <div class="row" style="margin-left: 0px">
+            <div class="col-md-5" style="padding: 0px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>Service Request Details</span>
+                    </div>
+                    <div class="panel-body">
+                        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SERVICE_PROVIDER, "Service Provider", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ServiceProviderID", (IEnumerable<SelectListItem>)ViewBag.ServiceProviders, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                @Html.ValidationMessageFor(model => model.SERVICE_PROVIDER, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestTypeID, "RequestTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("RequestTypeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RequestTypeID, "", new { @class = "text-danger" })
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ServiceRequestID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.ServiceRequestID, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ServiceRequestID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.RequestTypeID, "Request Type", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownList("RequestTypeID", (IEnumerable<SelectListItem>)ViewBag.RequestTypes, htmlAttributes: new { @class = "form-control", @style = "width: 100%" })
+                                        @Html.ValidationMessageFor(model => model.RequestTypeID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                        @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessageFor(model => model.RequestNote, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group">
+                            @Html.LabelFor(model => model.IsCancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsCancelled)
+                                    @Html.ValidationMessageFor(model => model.IsCancelled, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.IsClosed, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.IsClosed)
+                                    @Html.ValidationMessageFor(model => model.IsClosed, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>*@
+
+
+                    </div>
+                </div>
             </div>
-        </div>
+            <div class="col-md-7" style="padding-left: 5px; padding-right: 15px">
+                <div class="panel panel-default" style="margin-bottom: 0px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                        <span>Specimen Details</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.Label("Investigation Required", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtInvestigation", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtInvestigation", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                        <div class="form-group">
+                            @Html.Label("Specimen Nature/Description", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                            <div class="col-md-12">
+                                @Html.Editor("txtSpecimenNatureDesc", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.ValidationMessage("txtSpecimenNatureDesc", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RequestNote, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RequestNote, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RequestNote, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsCancelled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsCancelled)
-                    @Html.ValidationMessageFor(model => model.IsCancelled, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Specimen Serial/Seal Number", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtSerialSealNum", new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtSerialSealNum", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.Label("Chain Of Custody", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.Editor("txtDisposalMech", new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessage("txtDisposalMech", "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 }
+    @*<h4>SERVICE_REQUEST</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ServiceRequestID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ServiceRequestID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ServiceRequestID, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ServiceProviderID, "ServiceProviderID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ServiceProviderID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ServiceProviderID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RequestTypeID, "RequestTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RequestTypeID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RequestTypeID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RequestNote, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.RequestNote, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RequestNote, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsCancelled, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsCancelled)
+                        @Html.ValidationMessageFor(model => model.IsCancelled, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>*@

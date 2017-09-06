@@ -18,11 +18,12 @@
         <div class="page-buttons-subgrid buttons-one">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
-            <div grid-area="btn1">
+            <div></div>
+            @*<div grid-area="btn1">
                 <form class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT"></button>
                 </form>
-            </div>
+            </div>*@
             @*<div grid-area="btn2">
                     <form class="minimalform" action="~/ForensicCase/Add" method="post" style="margin-top: 2px">
                         <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
@@ -40,5 +41,105 @@
 </div>
 
 <div class="form-horizontal border-generic form-generic">
-    <iframe src="https://calendar.google.com/calendar/embed?title=Mr.%20John%20Doe&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23c0c0c0&amp;src=docupath.vector%40gmail.com&amp;color=%231B887A&amp;ctz=Africa%2FJohannesburg" style="border-width:0" width="1128" height="600" frameborder="0" scrolling="no"></iframe>
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px">
+        <div class="panel panel-default" style="margin-bottom: 0px">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="mdl2icon mdl2-date panel-mdl2icon"></span>
+                        <span id="monthName">@System.DateTime.Now.ToString("MMMM") <span class="colour-dpred" style="font-weight: normal">@System.DateTime.Now.Year.ToString()</span></span>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <form>
+                            <div class="btn-group">
+                                <button class="btn btn-default btn-paneltoolbar" data-calendar-view="year" style="width: 80px; margin-top: 3px">Year</button>
+                                <button class="btn btn-default btn-paneltoolbar" data-calendar-view="month" style="width: 80px; margin-top: 3px; background-color: rgba(174,31,31,1)">Month</button>
+                                <button class="btn btn-default btn-paneltoolbar" data-calendar-view="week" style="width: 80px; margin-top: 3px">Week</button>
+                                <button class="btn btn-default btn-paneltoolbar" data-calendar-view="day" style="width: 80px; margin-right: 6.2px; margin-top: 3px">Day</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" style="padding: 5px; background-color: #fff">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
 </div>
+@*<div class="modal-backdrop hide fade" id="events-modal" aria-hidden="true" style="display: none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Event</h3>
+    </div>
+    <div class="modal-body" style="height: 400px"><iframe width="600" frameborder="0" src="http://www.example.com/" style="height: 370px;"></iframe></div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn">Close</a>
+    </div>
+</div>*@
+@*<div class="form-horizontal border-generic form-generic">
+    <iframe src="https://calendar.google.com/calendar/embed?title=Mr.%20John%20Doe&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23c0c0c0&amp;src=docupath.vector%40gmail.com&amp;color=%231B887A&amp;ctz=Africa%2FJohannesburg" style="border-width:0" width="1128" height="600" frameborder="0" scrolling="no"></iframe>
+</div>*@
+
+@section Scripts{
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/calendar")
+
+    <script>
+        var calendar = $("#calendar").calendar({
+            tmpl_path: "/Content/CalendarTemplates/",
+            events_source: function () {
+                return [
+                    {
+                        "id": 001,
+                        "title": "IMPORTANT EVENT",
+                        "url": "http://example.com",
+                        "class": "event-important",
+                        "start": 1505667600000, // Milliseconds
+                        "end": 1505678400000 // Milliseconds
+                    },
+                    {
+                        "id": 002,
+                        "title": "WARNING EVENT",
+                        "url": "http://example.com",
+                        "class": "event-warning",
+                        "start": 1504692000000, // Milliseconds
+                        "end": 1504864800000 // Milliseconds
+                    },
+                    {
+                        "id": 003,
+                        "title": "INFO EVENT",
+                        "url": "http://example.com",
+                        "class": "event-info",
+                        "start": 1505556000000, // Milliseconds
+                        "end": 1505815200000 // Milliseconds
+                    },
+                    {
+                        "id": 004,
+                        "title": "INVERSE EVENT",
+                        "url": "http://example.com",
+                        "class": "event-inverse",
+                        "start": 1504605600000, // Milliseconds
+                        "end": 1504609200000 // Milliseconds
+                    },
+                    {
+                        "id": 005,
+                        "title": "SUCCESS EVENT",
+                        "url": "http://example.com",
+                        "class": "event-success",
+                        "start": 1506074400000, // Milliseconds
+                        "end": 1506078000000 // Milliseconds
+                    },
+                    {
+                        "id": 006,
+                        "title": "SPECIAL EVENT",
+                        "url": "http://example.com",
+                        "class": "event-special",
+                        "start": 1506506400000, // Milliseconds
+                        "end": 1506765600000 // Milliseconds
+                    },
+                ];
+            }
+        });
+    </script>
+    }

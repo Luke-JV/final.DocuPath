@@ -35,14 +35,31 @@ namespace DocuPath.Controllers
 
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Service Request")]
-        public ActionResult Create()
+        public ActionResult Add()
         {
             try
             {
-
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Service Request");
                 #endregion
+
+                List<SelectListItem> selectRequestType = new List<SelectListItem>();
+                List<SelectListItem> selectServiceProvider = new List<SelectListItem>();
+
+                selectRequestType.Add(new SelectListItem { Value = "0", Text = "Select a Request Type..." });
+                foreach (var item in db.REQUEST_TYPE)
+                {
+                    selectRequestType.Add(new SelectListItem { Value = item.RequestTypeID.ToString(), Text = item.RequestTypeValue });
+                }
+                ViewBag.RequestTypes = selectRequestType;
+
+                selectServiceProvider.Add(new SelectListItem { Value = "0", Text = "Select a Service Provider..." });
+                foreach (var item in db.SERVICE_PROVIDER)
+                {
+                    selectServiceProvider.Add(new SelectListItem { Value = item.ServiceProviderID.ToString(), Text = item.CompanyName/* + " (Representative: " + item.RepFirstName + " " + item.RepLastName + ")"*/ });
+                }
+                ViewBag.ServiceProviders = selectServiceProvider;
+                
                 return View();
             }
             catch (Exception)
@@ -57,7 +74,7 @@ namespace DocuPath.Controllers
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Service Request")]
-        public ActionResult Create(SERVICE_REQUEST SR)
+        public ActionResult Add(SERVICE_REQUEST SR)
         {
             if (!ModelState.IsValid)
             {

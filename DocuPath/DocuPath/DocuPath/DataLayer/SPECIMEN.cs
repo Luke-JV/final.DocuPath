@@ -25,10 +25,12 @@ namespace DocuPath.DataLayer
         [DisplayName("Service Provider")]
         public int ServiceProviderID { get; set; }
         [DisplayName("Investigation Required")]
+        [DataType(DataType.MultilineText)]
         public string InvestigationRequired { get; set; }
         [DisplayName("Chain Of Custody")]
         public string DisposalMechanism { get; set; }
         [DisplayName("Specimen Nature")]
+        [DataType(DataType.MultilineText)]
         public string SpecimenNature { get; set; }
         [DisplayName("Serial/Seal Number")]
         public string SpecimenSerialNumber { get; set; }

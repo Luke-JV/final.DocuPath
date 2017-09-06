@@ -41,6 +41,10 @@ namespace DocuPath
                             "~/Scripts/bootstrap-tagsinput.js",
                             "~/Scripts/bootstrap-tagsinput-angular"
                             ));
+
+            bundles.Add(new ScriptBundle("~/bundles/calendar").Include(
+                      "~/Scripts/calendar.js",
+                      "~/Scripts/underscore-min.js"));
             #endregion
 
             #region Stylesheet & Visual Script Bundles:
