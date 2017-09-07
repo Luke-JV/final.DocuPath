@@ -540,6 +540,18 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BrokenDNA.css" />
+    <Content Include="Content\CalendarTemplates\dark_wood.png" />
+    <Content Include="Content\CalendarTemplates\day.html" />
+    <Content Include="Content\CalendarTemplates\events-list.html" />
+    <Content Include="Content\CalendarTemplates\modal.html" />
+    <Content Include="Content\CalendarTemplates\month-day.html" />
+    <Content Include="Content\CalendarTemplates\month.html" />
+    <Content Include="Content\CalendarTemplates\slide-bg.png" />
+    <Content Include="Content\CalendarTemplates\tick.png" />
+    <Content Include="Content\CalendarTemplates\week-days.html" />
+    <Content Include="Content\CalendarTemplates\week.html" />
+    <Content Include="Content\CalendarTemplates\year-month.html" />
+    <Content Include="Content\CalendarTemplates\year.html" />
     <Content Include="Content\DNADecorationBroken.css" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia_thumb.JPG" />
     <Content Include="Content\DocuPathRepositories\MEDIA_REPO\1.1.Biliary_Atresia.JPG" />
@@ -662,6 +674,7 @@
     <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="Scripts\fileinput.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -737,6 +750,7 @@
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\typeahead.mvc.model.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

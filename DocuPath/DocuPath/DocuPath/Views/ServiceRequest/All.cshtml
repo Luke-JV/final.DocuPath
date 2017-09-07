@@ -21,14 +21,14 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/ServiceRequest/Add" style="margin-top: 2px">
                     @* TODO: Link form action to ADD SR *@
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD SERVICE REQUEST"></button>
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" onclick="this.blur()" data-toggle="tooltip" title="ADD SERVICE REQUEST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
             <div></div>
