@@ -46,7 +46,7 @@
 @using (Html.BeginForm())
 {    
     @Html.AntiForgeryToken()
-
+    <input id="btnPOST" class="hidden" type="submit" />
     <div class="form-horizontal border-generic form-generic">
         <div class="row" style="margin-left: 0px">
             <div class="col-md-12" style="padding: 0px">
@@ -76,6 +76,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>
                         <div class="row" style="margin-left: 0px;">
                             <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
@@ -103,7 +104,171 @@
 }
 
 @section Scripts{
+@* LUKE AUTOTAGSINPUT JS HERE *@
+
 @Styles.Render("~/tags/css")
 @Scripts.Render("~/bundles/tags")
+<script>
+    $("button").click(function () {
+        this.blur();
+    });
+    </script>
+<script>
+    //OFFICIAL
+    var count = 2;
+    var selected = false;
+    
+    for (var y = 1; y < count; y++) {
+
+        $('#tag-' + y).tagEditor({
+            autocomplete: {
+                autoFocus: true,
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Media/AutoTag/',
+                        data: "{ 'prefix': '" + request.term.replace(/'|\\/gi, '') + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $('#hfTag-' + y).val(i.item.val);
+                    selected = true;
+                },
+                minLength: 1
+            },
+            beforeTagSave: function (field, editor, tags, tag, val) {
+                if (!selected) {
+                    return false;
+                }
+                selected = false;
+            },
+            delimiter: "~",
+            forceLowercase: false,
+            placeholder: 'Start Tagging...'
+
+        });
+    }
+    $('#btnSave').click(function () {
+        document.getElementById("btnPOST").click();
+
+    });
+    $("#btnSubmit").click(function (request) {
+
+        var all = "";
+        
+            var mID = document.getElementById("key-1").value;
+            var field = $('#tag-1').tagEditor('getTags')[0].field;
+            all += mID + ":" + field.value + "|";
+        
+        all = all.replace(/'/gi, '`')
+        $.ajax({
+            url: '/Media/catchTags/',
+            data: "{ 'tags': '" + all + "'}",
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                response($.map(data, function (item) {
+                    return item;
+                }))
+            },
+            error: function (response) {
+                //alert(response.responseText);
+            },
+            failure: function (response) {
+                //alert(response.responseText);
+            }
+        });
+    })
+        //OFFICIAL
+
+        //DEBUG
+                //var count = document.getElementById("count").value;
+                //var selected = false;
+
+
+                //    $('#tag-1').tagEditor({
+                //        autocomplete: {
+                //            autoFocus: true,
+                //            source: function (request, response) {
+                //                $.ajax({
+                //                    url: '/Media/AutoTag/',
+                //                    data: "{ 'prefix': '" + request.term.replace(/'|\\/gi, '') + "'}",
+                //                    dataType: "json",
+                //                    type: "POST",
+                //                    contentType: "application/json; charset=utf-8",
+                //                    success: function (data) {
+                //                        response($.map(data, function (item) {
+                //                            return item;
+                //                        }))
+                //                    },
+                //                    error: function (response) {
+                //                        alert(response.responseText);
+                //                    },
+                //                    failure: function (response) {
+                //                        alert(response.responseText);
+                //                    }
+                //                });
+                //            },
+                //            select: function (e, i) {
+                //                $('#hfTag-1').val(i.item.val);
+                //                selected = true;
+                //            },
+                //            minLength: 1
+                //        },
+                //        beforeTagSave: function (field, editor, tags, tag, val) {
+                //            if (!selected) {
+                //                return false;
+                //            }
+                //            selected = false;
+                //        },
+                //        delimiter: "~",
+                //        forceLowercase: false,
+                //        placeholder: 'Start Tagging...'
+
+                //    });
+
+                //$("#btnSubmit").click(function (request) {
+
+                //    var all = "";
+                //    for (var z = 0; z < count; z++) {
+                //        var field = $('#tag-' + z).tagEditor('getTags')[0].field;
+                //        all += "item" + z + ":" + field.value + "|";
+                //    }
+                //    all = all.replace(/'/gi, '`')
+                //    $.ajax({
+                //        url: '/Home/catchTags/',
+                //        data: "{ 'tags': '" + all + "'}",
+                //        dataType: "json",
+                //        type: "POST",
+                //        contentType: "application/json; charset=utf-8",
+                //        success: function (data) {
+                //            response($.map(data, function (item) {
+                //                return item;
+                //            }))
+                //        },
+                //        error: function (response) {
+                //            alert(response.responseText);
+                //        },
+                //        failure: function (response) {
+                //            alert(response.responseText);
+                //        }
+                //    });
+                //})
+        //DEBUG
+</script>
 
 }
