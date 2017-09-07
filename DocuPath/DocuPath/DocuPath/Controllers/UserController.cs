@@ -217,7 +217,7 @@ namespace DocuPath.Controllers
                 TokenViewModel model = new TokenViewModel();
                 model.tokenCount = id;
                 model.tokenList = new List<TOKEN_LOG>();
-                model.ualList = db.ACCESS_LEVEL.ToList();
+                model.ualList = db.ACCESS_LEVEL.Where(x=>x.IsDeactivated==false).ToList();
                 for (int i = 0; i < id; i++)
                 {
                     model.tokenList.Add(new TOKEN_LOG());

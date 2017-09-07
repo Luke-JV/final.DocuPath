@@ -61,7 +61,8 @@
     <input type="hidden" id="btnSubmit" />
     //AUTOTAGGER INDEXER& SUBMITTER
 
-    for (int i = 0; i < Model.mediaList.Count; i++)
+    <div class="form-horizontal border-generic form-generic" @*style="display: none"*@>
+    @for (int i = 0; i < Model.mediaList.Count; i++)
     {
         @Html.HiddenFor(m=>m.mediaList[i].MediaID);
         //@Html.HiddenFor(m => m.mediaList[i].MediaPurposeID);
@@ -72,7 +73,6 @@
         //@Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
         //@Html.HiddenFor(m => m.mediaList[i].DateAdded);
         
-        <div class="form-horizontal border-generic apad5" @*style="display: none"*@>
             <div class="row" style="margin-left: 0px">
                 <div class="col-md-3" style="padding: 0px">
                     <div class="panel panel-default" style="margin-bottom: 0px">
@@ -258,9 +258,9 @@
                     </div>
                 </div>
             </div>
-        </div>
             <hr class="dp-separator-hr" @*style="display: none"*@ />
     }
+    </div>
 
     @*<div class="form-horizontal">
         <h4>MEDIA</h4>
