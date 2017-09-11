@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-two">
+        <div class="page-buttons-subgrid buttons-three">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -26,7 +26,12 @@
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" data-toggle="modal" data-target="#divHaptic" style="margin-top: 2px">
+                    <button id="btnHelpToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
@@ -94,7 +99,7 @@
         }
     </tbody>
 </table>
-@* ERROR MODALS: *@
+@* NOTIFICATION/WARNING MODALS: *@
 <div id="divDelete" class="modal-background hidden">
     <div class="modalbox">
         <div id="targetItem" class="hidden"></div>
@@ -130,6 +135,128 @@
                 <input type="submit" id="btnWarningNo" value="No" class="btn btn-modal-generic" />
             </div>
         </div>
+    </div>
+</div>
+@* HAPTIC CONTEXT-SENSITIVE HELP: *@
+<div id="divHaptic" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 80%; min-width: 800px; max-width: 1200px; max-height: 800px">
+        <div class="modal-content">
+            <div class="modal-header apad5" style="padding-left: 15px">
+                <button type="button" class="close" data-dismiss="modal" style="margin-top: 7.5px" onclick="this.blur()"><i class="mdl2icon inline-mdl2icon mdl2-cancel"></i></button>
+                <h4 class="modal-title">HAPTIC HELP CENTRE <span style="color: gray">—</span> <span class="colour-dpred" style="font-weight: normal">ALL FORENSIC CASES</span></h4>
+            </div>
+            <div class="modal-body apad5" style="max-height: 800px; overflow-y: auto">
+                <div class="panel-group" id="AllFCHapticAccordion">
+                    @* ON THIS PAGE *@
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#AllFCHapticAccordion" href="#OnThisPage" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                            <span>ON THIS PAGE</span>
+                        </div>
+                        <div id="OnThisPage" class="panel-collapse collapse">
+                            <div class="panel-body apad5">
+                                <ul>
+                                    <li>This page displays a table containing all Forensic Cases in the DocuPath system that you are eligible to access.</li>
+                                    <li>Superusers will be able to see all Forensic Cases (regardless of author), whilst non-Superusers will only be able to see Forensic Cases that they have authored.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    @* FREQUENTLY ASKED QUESTIONS *@
+                    <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#AllFCHapticAccordion" href="#FAQs" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-help panel-mdl2icon"></span>
+                            <span>FREQUENTLY ASKED QUESTIONS</span>
+                        </div>
+                        <div id="FAQs" class="panel-collapse collapse in">
+                            <div class="panel-body apad5">
+                                <table id="AllFCFAQs" class="table table-striped table-hover">
+                                    <tr>
+                                        @*<th data-id="identifier" data-column-id="FAQID" data-visible="false" data-identifier="true">#</th>*@
+                                        <th data-column-id="Q" class="colour-dpred">I Want To...</th>
+                                        <th data-column-id="A" class="colour-dpred">Try This:</th>
+                                    </tr>
+                                    @*@foreach (var item in Model.serviceRequests.OrderByDescending(x => x.DateAdded))
+                                    {*@
+                                        <tr>
+                                            @*<td>1</td>*@
+                                            <td>Search for a Forensic Case using a specific keyword/phrase.</td>
+                                            <td>
+                                                <ol>
+                                                    <li>Ensure the target column is visible using the column selector menu.</li>
+                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
+                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @*<td>2</td>*@
+                                            <td>Search for a Forensic Case using a specific keyword/phrase.</td>
+                                            <td>
+                                                <ol>
+                                                    <li>Ensure the target column is visible using the column selector menu.</li>
+                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
+                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @*<td>3</td>*@
+                                            <td>Search for a Forensic Case using a specific keyword/phrase.</td>
+                                            <td>
+                                                <ol>
+                                                    <li>Ensure the target column is visible using the column selector menu.</li>
+                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
+                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @*<td>3</td>*@
+                                            <td>Search for a Forensic Case using a specific keyword/phrase.</td>
+                                            <td>
+                                                <ol>
+                                                    <li>Ensure the target column is visible using the column selector menu.</li>
+                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
+                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            @*<td>3</td>*@
+                                            <td>Search for a Forensic Case using a specific keyword/phrase.</td>
+                                            <td>
+                                                <ol>
+                                                    <li>Ensure the target column is visible using the column selector menu.</li>
+                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
+                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                    @*}*@
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    @* SCREEN LAYOUT *@
+                    <div class="panel panel-default" style="height: 100%">
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#AllFCHapticAccordion" href="#Layout" style="cursor: pointer">
+                            <span class="mdl2icon mdl2-layout panel-mdl2icon"></span>
+                            <span>SCREEN LAYOUT</span>
+                        </div>
+                        <div id="Layout" class="panel-collapse collapse">
+                            <div class="panel-body apad5">
+                                <p>The layout of this screen is as follows:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="modal-footer apad5">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>*@
+        </div>
+
     </div>
 </div>
 
@@ -176,6 +303,15 @@
             }
         });
 </script>
+
+@*<script>
+    var gridHaptic = $("#AllFCFAQs").bootgrid({
+        caseSensitive: false,
+        //navigation: 1,
+        columnSelection: false,
+        rowCount: 1
+    });
+</script>*@
 
 <script id="onDomReady" type="text/javascript">
         // Enable tooltips:

@@ -2810,6 +2810,7 @@ input[type="button"].btn-block {
 
 .collapse.in {
   display: block;
+  overflow: visible !important;
 }
 
 .collapsing {
@@ -6089,8 +6090,8 @@ a.list-group-item:focus {
   line-height: 1;
   color: #000000;
   text-shadow: 0 1px 0 #ffffff;
-  opacity: 0.2;
-  filter: alpha(opacity=20);
+  opacity: 0.5;
+  filter: alpha(opacity=50);
 }
 
 .close:hover,
@@ -8200,6 +8201,14 @@ td.visible-print {
     content: '\E19C';
 }
 
+.mdl2-help:before{
+    content: '\E897';
+}
+
+.mdl2-layout:before{
+    content: '\E923';
+}
+
 .mdl2-statusicon:before {
     content: '\E1F5';
 }
@@ -9024,6 +9033,7 @@ td > a {
     padding: 3px 20px;
     clear: both;
     font-weight: normal;
+    font-size: 10pt !important;
     line-height: 1.428571429;
     color: #333333;
     white-space: nowrap;
