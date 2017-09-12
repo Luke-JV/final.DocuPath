@@ -126,6 +126,10 @@ namespace DocuPath.Models
         #region SMS NOTIFICATION CONTENTS & MARKUP:
         // TODO
         #endregion
+        #region HAPTIC HELP CONTENT:
+        const string[,] x = new string[];
+        string AllFCSearchByKeyword = "<ol class=\"haptic-ol\"><li>Ensure the target column is visible using the column selector menu.</li><li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li><li>Type the desired keyword or phrase to search by(<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li></ol>";
+        #endregion
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FETCHES, GETS & QUERIES:
@@ -258,7 +262,6 @@ namespace DocuPath.Models
                 return path;
             }
         }
-
         public static string GetThumbUrl(string inPath)
         {
             try
@@ -276,7 +279,6 @@ namespace DocuPath.Models
             //404!
 
         }
-
         public static void GenerateAndSaveThumb(string fetchFromPath)
         {
             if (fetchFromPath != null && Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(fetchFromPath).ToUpper()) && File.Exists(fetchFromPath))
@@ -308,6 +310,22 @@ namespace DocuPath.Models
                 thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
                 thumb.Save(destinationPath);
             }
+        }
+        public static List<string> GetHelp(string inPageName)
+        {
+            switch (inPageName)
+            {
+                case "All Forensic Cases":
+                    BuildHapticHelp(inPageName);
+                    break;
+                default:
+                    break;
+            }
+        }
+        public static List<string> BuildHapticHelp(string inPageName)
+        {
+            List<string> FAQs = new List<string>();
+            return FAQs;
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
@@ -440,7 +458,6 @@ namespace DocuPath.Models
                 return e.ToString();
             }
         }
-
         #endregion
         //----------------------------------------------------------------------------------------------//
 

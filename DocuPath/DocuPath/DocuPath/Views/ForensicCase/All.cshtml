@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-six">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -25,13 +25,24 @@
                 </form>
             </div>
             <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
-            <div grid-area="btn3">
+            <div grid-area="btn4">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn5">
                 <form class="minimalform" action="javascript:void(0)" data-toggle="modal" data-target="#divHaptic" style="margin-top: 2px">
-                    <button id="btnHelpToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                    <button id="btnHelpToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP MODAL"></button>
+                </form>
+            </div>
+            <div grid-area="btn6">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP SIDENAV"></button>
                 </form>
             </div>
             <div></div>
@@ -137,15 +148,15 @@
         </div>
     </div>
 </div>
-@* HAPTIC CONTEXT-SENSITIVE HELP: *@
+@* HAPTIC CONTEXT-SENSITIVE HELP MODAL: *@
 <div id="divHaptic" class="modal fade" role="dialog">
-    <div class="modal-dialog" style="width: 80%; min-width: 800px; max-width: 1200px; max-height: 800px">
+    <div class="modal-dialog" style="width: 80%; min-width: 800px; max-width: 1200px; max-height: 700px">
         <div class="modal-content">
             <div class="modal-header apad5" style="padding-left: 15px">
                 <button type="button" class="close" data-dismiss="modal" style="margin-top: 7.5px" onclick="this.blur()"><i class="mdl2icon inline-mdl2icon mdl2-cancel"></i></button>
                 <h4 class="modal-title">HAPTIC HELP CENTRE <span style="color: gray">—</span> <span class="colour-dpred" style="font-weight: normal">ALL FORENSIC CASES</span></h4>
             </div>
-            <div class="modal-body apad5" style="max-height: 800px; overflow-y: auto">
+            <div class="modal-body apad5" style="max-height: 700px; overflow-y: auto">
                 <div class="panel-group" id="AllFCHapticAccordion">
                     @* ON THIS PAGE *@
                     <div class="panel panel-default">
@@ -170,7 +181,7 @@
                         </div>
                         <div id="FAQs" class="panel-collapse collapse in">
                             <div class="panel-body apad5">
-                                <table id="AllFCFAQs" class="table table-striped table-hover">
+                                <table id="AllFCFAQs" class="table table-striped">
                                     <tr>
                                         @*<th data-id="identifier" data-column-id="FAQID" data-visible="false" data-identifier="true">#</th>*@
                                         <th data-column-id="Q" class="colour-dpred">I Want To...</th>
@@ -245,8 +256,9 @@
                             <span>SCREEN LAYOUT</span>
                         </div>
                         <div id="Layout" class="panel-collapse collapse">
-                            <div class="panel-body apad5">
-                                <p>The layout of this screen is as follows:</p>
+                            <div class="panel-body apad5 text-center">
+                                <p class="text-left">The layout of this screen is as follows:</p>
+                                <img class="img-thumbnail" src="~/Content/Resources/Screen Layouts/1.7A - Search Forensic Case.png" style="margin: auto; height: 500px"/>
                             </div>
                         </div>
                     </div>
@@ -259,6 +271,8 @@
 
     </div>
 </div>
+@* HAPTIC CONTEXT-SENSITIVE HELP SIDENAV: *@
+
 
 @section Scripts {
 @Scripts.Render("~/bundles/bootgrid")
@@ -279,22 +293,22 @@
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
                     if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
+                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
                     } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
                     } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
                     } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
                     }
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */

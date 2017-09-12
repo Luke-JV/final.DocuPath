@@ -188,5 +188,10 @@ namespace DocuPath.Controllers
                 return Json("An error occurred. Here's what happened: " + x.Message);
             }
         }
+
+        public ActionResult HapticHelp()
+        {
+            return View();
+        }
     }
 }

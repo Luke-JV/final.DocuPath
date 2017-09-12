@@ -6271,7 +6271,7 @@ button.close {
 
 .tooltip {
     position: absolute;
-    z-index: 50 !important;
+    z-index: 2550 !important;
     display: block;
     font-size: 12px;
     line-height: 1.4;
@@ -6281,6 +6281,7 @@ button.close {
     font-family: 'U.S. 101';
     font-size: 15pt;
     font-weight: normal;
+    /*transition: 0.15s all;*/
 }
 
 .tooltip.in {
@@ -8513,6 +8514,13 @@ td.visible-print {
     background-color: rgba(255,220,220,1);
 }
 
+.nopad {
+    padding: 0 !important;
+}
+.nomarg {
+    margin: 0;
+}
+
 .label-nopad {
     padding-left: 0px;
     padding-right: 0px;
@@ -8593,7 +8601,7 @@ td.visible-print {
 /* NEURON SIDENAV: */
 /* The side navigation menu */
 @media (min-width : 768px) {
-    .sidenav {
+    .neuron-sidenav {
         height: 100%;
         width: 0px;
         max-width: 400px;
@@ -8608,10 +8616,25 @@ td.visible-print {
         border-top-left-radius: 25px;
         transition: all 0.5s;
     }
+    .haptic-sidenav {
+        height: 100%;
+        width: 0px;
+        max-width: 400px;
+        position: fixed;
+        padding-bottom: 50px;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        background-color: #818181;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        border-top-left-radius: 25px;
+        transition: all 0.5s;
+    }
 }
 
 @media (max-width : 767px) {
-    .sidenav {
+    .neuron-sidenav {
         height: 100%;
         width: 100%;
         max-width: 400px;
@@ -8626,24 +8649,55 @@ td.visible-print {
         border-top-left-radius: 25px;
         transition: all 0.5s;
     }
+    .haptic-sidenav {
+        height: 100%;
+        width: 0px;
+        max-width: 400px;
+        position: fixed;
+        padding-bottom: 50px;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        background-color: #818181;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        border-top-left-radius: 25px;
+        transition: all 0.5s;
+    }
 }
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
+.closebtn {
     /*position: absolute;
     top: 50%;
     right: 5px;*/
     width: 30px;
     height: 30px;
     background-color: rgba(255, 255, 255, 0.25);
-    padding-top: 7.5px;
-    font-size: 20px;
+    padding-top: 9px;
+    font-size: 19px;
     line-height: 0.8;
     text-align: center;
     color: #cccccc;
 }
 
+.closebtn:hover{
+    background-color: #999;
+    color: #fff;
+}
+
 .sidenav-heading {
+  padding: 5px 0 5px 10px;
+  height: 51px;
+  background-color: rgba(174, 23, 23, 1);
+  /*background: linear-gradient(90deg, rgba(174, 23, 23, 1),rgba(255, 255, 255, 0.15));*/
+  border-bottom: 1px solid white;
+  font-family: 'U.S. 101';
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 0px;
+}
+.haptic-sidenav-heading {
   padding: 5px 0 5px 10px;
   height: 51px;
   background-color: rgba(174, 23, 23, 1);
@@ -9970,6 +10024,17 @@ a.cal-event-week {
     transition: 1s all;
 }
 
+.haptic-ul {
+    padding-left: 14px;
+    text-align: justify;
+}
+
+.haptic-ol {
+    font-weight: 500;
+    margin: 0;
+    padding: 5px 5px 5px 20px;
+}
+
 /* LARGE (DESKTOP/LAPTOP) SCREENS: */
 @media (min-width : 768px){
 	.grid {
@@ -9982,9 +10047,9 @@ a.cal-event-week {
     .main-page-grid {
         height: 100vh;
         grid-gap: 0px;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr;
-        grid-template-areas:  "main neuron";
+        grid-template-areas:  "haptic main neuron";
     }
 
     .login-grid {
@@ -10170,24 +10235,44 @@ a.cal-event-week {
         grid-template-areas: "left blank right";
 	}
 	.buttons-one {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, 45px) minmax(1px, 1fr) 84.38px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, auto) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 blank right";
 	}
 	.buttons-two {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(2, 45px) minmax(1px, 1fr) 84.38px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(2, auto) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 blank right";
 	}
 	.buttons-three {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(3, 45px) minmax(1px, 1fr) 84.38px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(3, auto) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 blank right";
 	}
 	.buttons-four {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(4, 45px) minmax(1px, 1fr) 84.38px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(4, auto) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 blank right";
 	}
 	.buttons-five {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(5, 45px) minmax(1px, 1fr) 84.38px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(5, auto) minmax(1px, 1fr) 84.38px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 blank right";
+	}
+    .buttons-six {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(6, auto) minmax(1px, 1fr) 84.38px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 blank right";
+	}
+    .buttons-seven {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(7, auto) minmax(1px, 1fr) 84.38px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 blank right";
+	}
+    .buttons-eight {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(8, auto) minmax(1px, 1fr) 84.38px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 blank right";
+	}
+    .buttons-nine {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(9, auto) minmax(1px, 1fr) 84.38px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 btn9 blank right";
+	}
+    .buttons-ten {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(10, auto) minmax(1px, 1fr) 84.38px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 btn9 btn10 blank right";
 	}
 
 	.page-header {
@@ -10263,9 +10348,9 @@ a.cal-event-week {
     .main-page-grid {
         height: 100vh;
         grid-gap: 0px;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr;
-        grid-template-areas:  "main neuron";
+        grid-template-areas:  "haptic main neuron";
     }
 
     .content-subgrid {
@@ -10365,28 +10450,48 @@ a.cal-event-week {
 	}
 
 	.buttons-one {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, 45px) minmax(1px, 1fr) 95px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(1, auto) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 blank right";
 	}
 
 	.buttons-two {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(2, 45px) minmax(1px, 1fr) 95px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(2, auto) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 btn2 blank right";
 	}
 
 	.buttons-three {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(3, 45px) minmax(1px, 1fr) 95px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(3, auto) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 btn2 btn3 blank right";
 	}
 
 	.buttons-four {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(4, 45px) minmax(1px, 1fr) 95px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(4, auto) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 blank right";
 	}
 
 	.buttons-five {
-		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(5, 45px) minmax(1px, 1fr) 95px;
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(5, auto) minmax(1px, 1fr) 95px;
         grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 blank right";
+	}
+    .buttons-six {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(6, auto) minmax(1px, 1fr) 95px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 blank right";
+	}
+    .buttons-seven {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(7, auto) minmax(1px, 1fr) 95px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 blank right";
+	}
+    .buttons-eight {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(8, auto) minmax(1px, 1fr) 95px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 blank right";
+	}
+    .buttons-nine {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(9, auto) minmax(1px, 1fr) 95px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 btn9 blank right";
+	}
+    .buttons-ten {
+		grid-template-columns: 54.01px minmax(1px, 1fr) repeat(10, auto) minmax(1px, 1fr) 95px;
+        grid-template-areas: "left blank btn1 btn2 btn3 btn4 btn5 btn6 btn7 btn8 btn9 btn10 blank right";
 	}
 
 	.page-buttons-subgrid div {

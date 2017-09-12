@@ -152,10 +152,13 @@
         {
             <div class="text-center" style="background-color: #fff">
                 <img src="~/Content/Resources/DPCircularLogoWhiteBG.png" style="max-height: 250px" />
+                <hr class="toast-divider" style="margin-top: 0" />
+                <p class="toast-heading">WELCOME TO DOCUPATH</p>
                 <hr class="toast-divider" />
-                <p class="toast-heading">WELCOME TO DOCUPATH.</p>
-                <hr class="toast-divider" />
-                <p class="toast-subheading">PLEASE LOG IN TO CONTINUE.</p>
+                <p class="toast-subheading">PLEASE LOG IN TO CONTINUE</p>
+                <form class="minimalform" action="~/Account/Login">
+                    <button class="btn btn-default" type="submit" onclick="this.blur()">Log In</button>
+                </form>
             </div>
         }
         <div></div>
