@@ -5115,10 +5115,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 .breadcrumb a{
   color:rgba(174,31,31,1);
+  font-weight: normal !important;
 }
 
     .breadcrumb a:hover {
-        font-weight: bold;
+        color: #999 !important;
+        font-weight: normal !important;
     }
 
     .breadcrumb > .active > a {
@@ -12654,5 +12656,16 @@ a.cal-event-week {
 			height: 100%;
 		}*/
 	}
+
+/*#endregion */
+
+/*#region HAPTIC HELP CENTRE: */
+
+.haptic-topicnav {
+    grid-gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "cortex cornea pulse";
+    text-align: center !important;
+}
 
 /*#endregion */

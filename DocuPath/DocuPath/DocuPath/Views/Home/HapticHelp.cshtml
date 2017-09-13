@@ -1,7 +1,263 @@
-﻿
-@{
-    ViewBag.Title = "HapticHelp";
+﻿@{
+    ViewBag.Title = "Haptic Help Centre";
+    ViewBag.PageName = "HapticHelpCentre";
 }
 
-<h2>HapticHelp</h2>
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li class="active">@Html.ActionLink("HAPTIC Help Centre", "HapticHelp") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-help"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">HAPTIC HELP CENTRE</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-six">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ForensicCase/Add" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="ADD FORENSIC CASE"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div grid-area="btn4">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn5">
+                <form class="minimalform" action="javascript:void(0)" data-toggle="modal" data-target="#divHaptic" style="margin-top: 2px">
+                    <button id="btnHelpToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP MODAL"></button>
+                </form>
+            </div>
+            <div grid-area="btn6">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP SIDENAV"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* HAPTIC HELP CENTRE CONTENT: *@
+<div class="form-horizontal border-generic form-generic">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#CORTEX">CORTEX</a></li>
+        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#CORNEA" style="margin-left: 5px">CORNEA</a></li>
+        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#PULSE" style="margin-left: 5px">PULSE</a></li>
+    </ul>
+    <div class="tab-content">
+        @* CORTEX HELP TOPICS *@
+        <div id="CORTEX" class="tab-pane fade in active" style="padding-top: 5px">
+            @*<div class="grid haptic-topicnav"><i class="mdl2icon mdl2-down inline-mdl2icon" grid-area="cortex" style="margin-bottom: 5px"></i><div></div><div></div></div>*@
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#FC">FORENSIC CASES</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#ERC" style="margin-left: 5px">EXTERNAL REVIEW CASES</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#LC" style="margin-left: 5px">LEGACY CASES</a></li>
+            </ul>
+            <div class="tab-content">
+                @* FC HELP TOPICS *@
+                <div id="FC" class="tab-pane fade in active" style="padding-top: 5px">
+                    <div class="panel-group" id="FCHapticTopics">
+                        @* ALL FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#AllFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-fc panel-mdl2icon"></span>
+                                <span>ALL FORENSIC CASES</span>
+                            </div>
+                            <div id="AllFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>ALL FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* ADD FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#AddFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-add panel-mdl2icon"></span>
+                                <span>ADD FORENSIC CASE</span>
+                            </div>
+                            <div id="AddFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>ADD FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* UPDATE FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#UpdateFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-edit panel-mdl2icon"></span>
+                                <span>UPDATE FORENSIC CASE</span>
+                            </div>
+                            <div id="UpdateFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>UPDATE FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* ARCHIVE FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#ArchiveFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-delete panel-mdl2icon"></span>
+                                <span>ARCHIVE FORENSIC CASE</span>
+                            </div>
+                            <div id="ArchiveFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>ARCHIVE FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* LOCK FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#LockFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-lock panel-mdl2icon"></span>
+                                <span>LOCK FORENSIC CASE</span>
+                            </div>
+                            <div id="LockFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>LOCK FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* UNLOCK FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#UnlockFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-unlock panel-mdl2icon"></span>
+                                <span>UNLOCK FORENSIC CASE</span>
+                            </div>
+                            <div id="UnlockFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>UNLOCK FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                        @* MIGRATE FC *@
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#MigrateFCTopics" style="cursor: pointer">
+                                <span class="mdl2icon mdl2-migrate panel-mdl2icon"></span>
+                                <span>MIGRATE FORENSIC CASE</span>
+                            </div>
+                            <div id="MigrateFCTopics" class="panel-collapse collapse">
+                                <div class="panel-body apad5">
+                                    <p>MIGRATE FC HELP TOPICS HERE</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* ERC HELP TOPICS *@
+                <div id="ERC" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>ERC Content Here</p>
+                </div>
+                @* LC HELP TOPICS *@
+                <div id="LC" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>LC Content Here</p>
+                </div>
+            </div>
+        </div>
+        @* CORNEA HELP TOPICS *@
+        <div id="CORNEA" class="tab-pane fade in" style="padding-top: 5px">
+            @*<div class="grid haptic-topicnav"><div></div><i class="mdl2icon mdl2-down inline-mdl2icon" grid-area="cornea" style="margin-bottom: 5px"></i><div></div></div>*@
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#MEDIA">MEDIA REPOSITORY</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#INSIGHT" style="margin-left: 5px">INSIGHT REPORTING</a></li>
+            </ul>
+            <div class="tab-content">
+                @* MEDIA REPOSITORY HELP TOPICS *@
+                <div id="MEDIA" class="tab-pane fade in active" style="padding-top: 5px">
+                    <p>Media Repo Content Here</p>
+                </div>
+                @* INSIGHT REPORTING HELP TOPICS *@
+                <div id="INSIGHT" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>INSIGHT Content Here</p>
+                </div>
+            </div>
+        </div>
+        @* PULSE HELP TOPICS *@
+        <div id="PULSE" class="tab-pane fade in" style="padding-top: 5px">
+            @*<div class="grid haptic-topicnav"><div></div><div></div><i class="mdl2icon mdl2-down inline-mdl2icon" grid-area="pulse" style="margin-bottom: 5px"></i></div>*@
+            <ul class="nav nav-tabs nav-justified">
+                <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#SP">SERVICE PROVIDERS</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#SR" style="margin-left: 5px">SERVICE REQUESTS</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#GC" style="margin-left: 5px">GOOGLE CALENDAR</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#MDR" style="margin-left: 5px">MONTHLY DUTY ROSTER</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#DAS" style="margin-left: 5px">DAILY AUTOPSY SCHEDULE</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#CT" style="margin-left: 5px">CONTENT<br />TAGS</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#USER" style="margin-left: 5px">SYSTEM<br />USERS</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#UAL" style="margin-left: 5px">ACCESS LEVELS</a></li>
+                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#AT" style="margin-left: 5px">AUDIT TRAIL</a></li>
+            </ul>
+            <div class="tab-content">
+                @* SP HELP TOPICS *@
+                <div id="SP" class="tab-pane fade in active" style="padding-top: 5px">
+                    <p>SP Content Here</p>
+                </div>
+                @* SR HELP TOPICS *@
+                <div id="SR" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>SR Content Here</p>
+                </div>
+                @* GC HELP TOPICS *@
+                <div id="GC" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>GC Content Here</p>
+                </div>
+                @* MDR HELP TOPICS *@
+                <div id="MDR" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>MDR Content Here</p>
+                </div>
+                @* DAS HELP TOPICS *@
+                <div id="DAS" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>DAS Content Here</p>
+                </div>
+                @* CT HELP TOPICS *@
+                <div id="CT" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>CT Content Here</p>
+                </div>
+                @* USERS HELP TOPICS *@
+                <div id="USER" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>USER Content Here</p>
+                </div>
+                @* UAL HELP TOPICS *@
+                <div id="UAL" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>UAL Content Here</p>
+                </div>
+                @* AT HELP TOPICS *@
+                <div id="AT" class="tab-pane fade in" style="padding-top: 5px">
+                    <p>AT Content Here</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section Scripts{
+<script id="onDomReady" type="text/javascript">
+        // Enable tooltips:
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        // Toggle Table Density:
+        $("#btnDensityToggle").click(function () {
+            var $target = $("#allFC");
+            var $condensed = "table-condensed";
+            var $minimal = "table-minimal"
+            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+            $("#btnDensityToggle").blur()
+        });
+</script>
+    }

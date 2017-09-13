@@ -143,10 +143,10 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href='@Url.Action("Index", "Home")'>
-                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
-                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
-                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                        <a href='@Url.Action("Index", "Home")' data-toggle="tooltip" title="GO HOME" data-placement="left">
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo"/>
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo"/>
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider"/>
                         </a>
                     </div>
                     <div class="navbar-collapse collapse">
@@ -245,10 +245,10 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a href='@Url.Action("Index", "Home")'>
-                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
-                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
-                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                        <a href='@Url.Action("Index", "Home")' data-toggle="tooltip" title="GO HOME" data-placement="left">
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo"/>
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo"/>
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider"/>
                         </a>
                     </div>
                     <div class="navbar-collapse collapse">
@@ -281,15 +281,15 @@
         @* FOOTER: *@
         <div id="bottomNav" class="grid navbar-fixed-bottom ftr-grid footer-text" grid-area="ftr">
             <div class="ftr-pad-left">
-                <p class="align-vc-hc par-fit-container">&copy; @DateTime.Now.Year - CLDRM DocuPath@*<span class="proto-warn-text">   INTERNAL</span>*@</p>
+                <p class="align-vc-hc par-fit-container" data-toggle="tooltip" title="COPYRIGHT INFORMATION" data-placement="top">&copy; @DateTime.Now.Year - CLDRM DocuPath@*<span class="proto-warn-text">   INTERNAL</span>*@</p>
             </div>
             <div>
-                <p class="align-vc-hc par-fit-container">
+                <a href='@Url.Action("Index", "Home")' data-toggle="tooltip" title="GO HOME" data-placement="top" class="align-vc-hc par-fit-container">
                     <img class="hricon" src="~/Content/Resources/DPHorizontalLogoWhiteBG.png" />
-                </p>
+                </a>
             </div>
             <div class="ftr-pad-right">
-                <p class="align-vc-hc par-fit-container">
+                <p class="align-vc-hc par-fit-container" data-toggle="tooltip" title="CURRENT DATE & TIME" data-placement="top">
                     @*<span class="proto-warn-text">     v0.5.5</span>*@
                     <span class="mdl2icon mdl2-date inline-mdl2icon"></span>
                     <span>@DateTime.Now.ToString("ddd dd MMM yyyy")</span>
