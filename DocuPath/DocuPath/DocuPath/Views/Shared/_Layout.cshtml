@@ -96,7 +96,7 @@
                                     <td>@i</td>
                                     <td class="apad5">
                                         <p>Search for a Forensic Case using a specific keyword/phrase.</p>
-                                        @*<div class="modal-help-panel" style="margin: 0">
+                                        <div class="modal-help-panel" style="margin: 0">
                                             <div class="panel-heading modalbox-help-panel-heading text-center" data-toggle="collapse" data-target="#CSHELP_@i"><span class="mdl2icon mdl2-down" style="font-size: 80%"></span> VIEW STEPS <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                             <div id="CSHELP_@i" class="panel-collapse collapse sidenav-notification-detail">
                                                 <ol class="haptic-ol">
@@ -105,7 +105,7 @@
                                                     <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
                                                 </ol>
                                             </div>
-                                        </div>*@
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -407,12 +407,12 @@
 
     @* HAPTIC OPEN/CLOSE: *@
     <script type="text/javascript">
-        var hapticGrid = $("#FAQs").bootgrid({
-            caseSensitive: false,
-            navigation: 1,
-            columnSelection: false,
-            rowCount: -1,
-        });
+        //var hapticGrid = $("#FAQs").bootgrid({
+        //    caseSensitive: false,
+        //    navigation: 1,
+        //    columnSelection: false,
+        //    rowCount: -1,
+        //});
 
         $("#btnHapticToggle").click(function () {
             document.getElementById("HAPTICsidenav").style.display = "initial";
