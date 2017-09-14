@@ -85,36 +85,102 @@
                     </div>
                     <div id="FAQsSidenav" class="panel-collapse collapse in">
                         <div class="panel-body apad5">
-                            <table id="FAQs" class="table table-striped">
-                                <tr>
-                                    <th data-id="identifier" data-column-id="FAQID" data-visible="false" data-searchable="false" data-identifier="true">#</th>
-                                    <th data-column-id="QA" data-sortable="true" data-searchable="true" class="colour-dpred">I Want To...</th>
-                                </tr>
-                            @for (int i=0; i<8; i++)
-                            {
-                                <tr>
-                                    <td>@i</td>
-                                    <td class="apad5">
-                                        <p>Search for a Forensic Case using a specific keyword/phrase.</p>
-                                        <div class="modal-help-panel" style="margin: 0">
-                                            <div class="panel-heading modalbox-help-panel-heading text-center" data-toggle="collapse" data-target="#CSHELP_@i"><span class="mdl2icon mdl2-down" style="font-size: 80%"></span> VIEW STEPS <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
-                                            <div id="CSHELP_@i" class="panel-collapse collapse sidenav-notification-detail">
-                                                <ol class="haptic-ol">
-                                                    <li>Ensure the target column is visible using the column selector menu.</li>
-                                                    <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' textbox.</li>
-                                                    <li>Type the desired keyword or phrase to search by (<kbd>minimum of 3 characters, filtering occurs automatically after 250ms delay</kbd>).</li>
-                                                </ol>
-                                            </div>
+                            <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                                <input type="text" class="form-control haptic-query" placeholder="Enter a keyword/phrase...">
+                            </form>
+                            <label>I want to...</label>
+
+                            @*@for (int i = 0; i < 8; i++)
+                            {*@
+                                <div class="haptic-topic-container">
+                                    <p class="haptic-catchphrase"><strong>Search/filter</strong> an item using a specific keyword/phrase.</p>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP1">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP1" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Ensure the target column is visible using the <ctrl>Column Selector</ctrl> dropdown menu, located to the right of the <ctrl>Search Bar</ctrl>.</li>
+                                                <li>Click the '<kbd>Enter a keyword/phrase...</kbd>' field on the <ctrl>Search Bar</ctrl>.</li>
+                                                <li>Type the desired keyword or phrase to search/filter by.</li>
+                                                <li>The table adapts automatically to only display records where the provided query string is present in any of the currently visible columns.</li>
+                                            </ol>
+                                            <ul class="haptic-ol">
+                                                <li class="colour-dpred">A minimum of one (1) character is required to initiate a search.</li>
+                                                <li class="colour-dpred">Clearing the contents of the <ctrl>Search Bar</ctrl> will reset the filtering and reset the table to display all entries (as determined by the current value of the <ctrl>Row Count Selector</ctrl> dropdown menu).</li>
+                                                <li class="colour-dpred">Filtering occurs automatically after a 250ms delay - no interaction other than entering a search query is needed.</li>
+                                                <li class="colour-dpred">Filtering is based only on visible columns - invisible columns will not be included in the search query.</li>
+                                            </ul>
                                         </div>
-                                    </td>
-                                </tr>
-                            }
-                            </table>
+                                    </div>
+                                </div>
+                                <div class="haptic-topic-container">
+                                    <p class="haptic-catchphrase">Change the <strong>columns</strong> that are displayed in the table.</p>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP2">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP2" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Open the <ctrl>Column Selector</ctrl> dropdown menu.</li>
+                                                <li>Tick/untick the desired column(s) by using the checkbox next to the relevant column(s)</li>
+                                                <li>The table adapts automatically to display the ticked column(s) and hide the unticked column(s).</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="haptic-topic-container">
+                                    <p class="haptic-catchphrase">Change the <strong>number of entries</strong> displayed per page.</p>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP3">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP3" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Open the <ctrl>Row Count Selector</ctrl> dropdown menu, located to the right of the <ctrl>Search Bar</ctrl>.</li>
+                                                <li>Select either <kbd>10</kbd>, <kbd>25</kbd>, <kbd>50</kbd> or <kbd>All</kbd> to display the corresponding number of items per page.</li>
+                                                <li>The table adapts automatically to display the selected number of items per page.</li>
+                                                <li>Use the <ctrl>pagination</ctrl> control to the left below the table to navigate between pages.</li>
+                                            </ol>
+                                            <ul class="haptic-ol">
+                                                <li class="colour-dpred">Note that some pages (due to the number of records that must be displayed on the page) do not have an <kbd>All</kbd> option. On these pages, the available item counts per page are <kbd>10</kbd>, <kbd>25</kbd>, <kbd>50</kbd> and <kbd>100</kbd>.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="haptic-topic-container">
+                                    <p class="haptic-catchphrase">Change the <strong>density</strong> of information displayed in the table.</p>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP4">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP4" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Click the <ctrl>Toggle Table Density</ctrl> button on the <ctrl>Page Actions</ctrl> button bar to the right of the Page Title.</li>
+                                                <li>The table cycles through three (3) levels of display density for the table (namely <kbd>Normal</kbd>, <kbd>Condensed</kbd> and <kbd>Minimal</kbd>), compressing or expanding the information displayed.</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="haptic-topic-container">
+                                    <p class="haptic-catchphrase"><strong>Sort</strong> the information displayed in the table.</p>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP5">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP5" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Decide on the desired column to sort by, and whether <kbd>Ascending</kbd> or <kbd>Descending</kbd> sort order is required.</li>
+                                                <li>Click the column title of the desired column.</li>
+                                                <li>A <kbd><i class="mdl2icon mdl2-up colour-dpred"></i></kbd> icon appears to the right of the column heading, indicating an <kbd>Ascending</kbd> sort order.</li>
+                                                <li>The table adapts automatically, sorting the currently displayed items according to specified column, in <kbd>Ascending</kbd> order.</li>
+                                                <li>Clicking the column title of the desired column again changes the displayed icon to the <kbd><i class="mdl2icon mdl2-down colour-dpred"></i></kbd> icon, indicating a <kbd>Descending</kbd> sort order.</li>
+                                                <li>The table adapts automatically, sorting the currently displayed items according to specified column, in <kbd>Descending</kbd> order.</li>
+                                            </ol>
+                                            <ul class="haptic-ol">
+                                                <li class="colour-dpred">Continuously clicking on a column's title will repeatedly switch between <kbd>Ascending</kbd> and <kbd>Descending</kbd> sort order.</li>
+                                                <li class="colour-dpred">Note that, on page load, the items displayed in the table are sorted by default according to a pre-defined column using a pre-defined sort order.</li>
+                                                <li class="colour-dpred">The items displayed in the table cannot be sorted according to the values of the <kbd>Actions</kbd> column.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            @*}*@
                         </div>
                     </div>
                 </div>
                 @* SCREEN LAYOUT *@
-                <div class="panel panel-default" style="height: 100%">
+                @*<div class="panel panel-default" style="height: 100%">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#AllFCHapticAccordionSidenav" href="#LayoutSidenav" style="cursor: pointer">
                         <span class="mdl2icon mdl2-layout panel-mdl2icon"></span>
                         <span>SCREEN LAYOUT</span>
@@ -125,7 +191,7 @@
                             <img class="img-thumbnail" src="~/Content/Resources/Screen Layouts/1.7A - Search Forensic Case.png" style="margin: auto; height: 500px" />
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -327,7 +393,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Type Your RSS Broadcast Message Here..." name="srch-term" id="srch-term">
                     <div class="input-group-btn">
-                        <button class="btn btn-default" id="rss" type="submit"><i class="mdl2icon mdl2-send"></i></button>
+                        <button class="btn btn-default" id="rss" type="submit" data-toggle="tooltip" title="SEND" data-placement="bottom"><i class="mdl2icon mdl2-send"></i></button>
                     </div>
                 </div>
             </form>
@@ -407,13 +473,6 @@
 
     @* HAPTIC OPEN/CLOSE: *@
     <script type="text/javascript">
-        //var hapticGrid = $("#FAQs").bootgrid({
-        //    caseSensitive: false,
-        //    navigation: 1,
-        //    columnSelection: false,
-        //    rowCount: -1,
-        //});
-
         $("#btnHapticToggle").click(function () {
             document.getElementById("HAPTICsidenav").style.display = "initial";
             document.getElementById("HAPTICsidenav").style.width = "400px";
@@ -429,6 +488,41 @@
             document.getElementById("topNav").style.paddingLeft = "0";
             $("#btnHelpToggle").blur();
         }
+
+        // FILTER ON SUBMIT:
+        //$('.form-search').on('submit', function () { return false; });
+        //$('.form-search .btn').on('click', function (e) {
+        //    var query = $.trim($(this).prevAll('.search-query').val()).toLowerCase();
+        //    $('div.staff-container .bold').each(function () {
+        //        var $this = $(this);
+        //        if ($this.text().toLowerCase().indexOf(query) === -1)
+        //            $this.closest('div.staff-container').fadeOut();
+        //        else $this.closest('div.staff-container').fadeIn();
+        //    });
+        //});
+
+        // FILTER ON TYPING:
+        $('.haptic-query').keyup(function (e) {
+            var query = $.trim($('.haptic-query').val()).toLowerCase();
+
+            $('.haptic-topic-container').each(function () {
+                var $this = $(this);
+                if ($this.text().toLowerCase().indexOf(query) === -1) $this.closest('div.haptic-topic-container').fadeOut();
+                else $this.closest('div.haptic-topic-container').fadeIn();
+            });
+        });
+
+
+
+        //$('input.haptic-query').keyup(function (e) {
+        //    var query = $.trim($(this).prevAll('.haptic-query').val()).toLowerCase();
+        //    $('div.haptic-topic-container').each(function () {
+        //        var $this = $(this);
+        //        if ($this.text().toLowerCase().indexOf(query) === -1)
+        //            $this.closest('div.haptic-topic-container').fadeOut();
+        //        else $this.closest('div.haptic-topic-container').fadeIn();
+        //    });
+        //});
     </script>
 
     @* NEURON OPEN/CLOSE: *@

@@ -109,8 +109,8 @@ samp {
   background: rgba(255, 220, 220, 1);
   color: rgba(174, 31, 31, 1);
   font-weight: bold;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
   border-radius: 3px;
 }
 
@@ -8260,6 +8260,10 @@ td.visible-print {
     content: '\E896';
 }
 
+.mdl2-topic:before {
+    content: '\E25C';
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -12666,6 +12670,34 @@ a.cal-event-week {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: "cortex cornea pulse";
     text-align: center !important;
+}
+
+.haptic-topic-container {
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #999 !important;
+    /*min-height: 75px;*/
+    border-radius: 4px;
+    background-color: #e8e8e8;
+}
+
+.haptic-catchphrase {
+    padding: 0 0 5px 0;
+    margin: 0 !important;
+    color: rgba(174,31,31,1);
+}
+
+ctrl {
+    /*font-family: Consolas;*/
+    text-transform: uppercase;
+    font-size: 8pt;
+    background: rgba(174,31,31,1);
+    color: #fff;
+    font-weight: bold;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+    white-space: nowrap;
 }
 
 /*#endregion */
