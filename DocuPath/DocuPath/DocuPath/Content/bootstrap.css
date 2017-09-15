@@ -114,6 +114,21 @@ samp {
   border-radius: 3px;
 }
 
+kbdicon {
+  background: rgba(255, 220, 220, 1) !important;
+  color: rgba(174, 31, 31, 1);
+  font-weight: bold;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 3px;
+  cursor: text;
+}
+
+kbdicon > .mdl2icon {
+    font-size: 90%;
+    color: rgba(174,31,31,1) !important;
+}
+
 pre {
   white-space: pre-wrap;
 }
@@ -4763,7 +4778,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-form {
-  padding: 10px 15px;
+  padding: 7.5px 15px !important;
   margin-top: 8px;
   margin-right: -15px;
   margin-bottom: 8px;
@@ -8394,7 +8409,7 @@ td.visible-print {
 .modal-help-panel {
     margin: 0 5px 5px 5px;
     background-color: #999;
-    border: 1px solid transparent;
+    border: 1px solid #999;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -9840,15 +9855,15 @@ a.cal-event-week {
 
 /*#region MINIMALIST SCROLLBAR: */
 ::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
-    background-color: #FFF;
+    height: 5px;
+    width: 5px;
+    background-color: rgba(255,220,220,1);
 }
 
 ::-webkit-scrollbar-thumb {
     background: #696969;
-    -webkit-border-radius: 5px;
-    height: 50px;
+    /*-webkit-border-radius: 5px;*/
+    height: 5px;
 }
 
 
@@ -12682,9 +12697,10 @@ a.cal-event-week {
 }
 
 .haptic-catchphrase {
-    padding: 0 0 5px 0;
+    padding: 0 5px 0 0;
     margin: 0 !important;
-    color: rgba(174,31,31,1);
+    color: #fff;
+    text-align: justify;
 }
 
 ctrl {
@@ -12700,4 +12716,24 @@ ctrl {
     white-space: nowrap;
 }
 
+.haptic-mdl2icon {
+    padding: 2px 0 0 0 !important;
+    color: #cccccc;
+}
+
+.haptic-catchphrase-grid {
+    grid-gap: 0px;
+    grid-template-columns: 20px 1fr;
+    grid-template-areas: "icon catchphrase";
+    /*background: linear-gradient(-45deg, rgba(174,31,31,0.5),rgba(174, 31, 31, 1));*/
+    /*background-color: rgba(174,31,31,1);*/
+    background-color: #333333;
+    border-radius: 3px;
+    padding: 1px 0 1px 5px;
+    margin-bottom: 5px;
+}
+
+.catchphrase-highlight {
+    color: rgba(255,100,100,1);
+}
 /*#endregion */

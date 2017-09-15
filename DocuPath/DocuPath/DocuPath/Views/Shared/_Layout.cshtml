@@ -84,16 +84,17 @@
                         <span>FREQUENTLY ASKED QUESTIONS</span>
                     </div>
                     <div id="FAQsSidenav" class="panel-collapse collapse in">
-                        <div class="panel-body apad5">
+                        <div id="FAQBody" class="panel-body apad5">
                             <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
                                 <input type="text" class="form-control haptic-query" placeholder="Enter a keyword/phrase...">
                             </form>
                             <label>I want to...</label>
-
-                            @*@for (int i = 0; i < 8; i++)
-                            {*@
+                            @*@Html.Raw(VERTEBRAE.GetHelp(ViewBag.PageName))*@
                                 <div class="haptic-topic-container">
-                                    <p class="haptic-catchphrase"><strong>Search/filter</strong> an item using a specific keyword/phrase.</p>
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase"><strong class="catchphrase-highlight">Search or filter</strong> using a specific keyword/phrase.</p>
+                                    </div>
                                     <div class="modal-help-panel" style="margin: 0">
                                         <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP1">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                         <div id="CSHELP1" class="panel-collapse collapse sidenav-notification-detail">
@@ -113,7 +114,10 @@
                                     </div>
                                 </div>
                                 <div class="haptic-topic-container">
-                                    <p class="haptic-catchphrase">Change the <strong>columns</strong> that are displayed in the table.</p>
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase">Change the <strong class="catchphrase-highlight">columns</strong> that are displayed in the table.</p>
+                                    </div>
                                     <div class="modal-help-panel" style="margin: 0">
                                         <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP2">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                         <div id="CSHELP2" class="panel-collapse collapse sidenav-notification-detail">
@@ -126,7 +130,10 @@
                                     </div>
                                 </div>
                                 <div class="haptic-topic-container">
-                                    <p class="haptic-catchphrase">Change the <strong>number of entries</strong> displayed per page.</p>
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase">Change the <strong class="catchphrase-highlight">number of entries</strong> displayed per page.</p>
+                                    </div>
                                     <div class="modal-help-panel" style="margin: 0">
                                         <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP3">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                         <div id="CSHELP3" class="panel-collapse collapse sidenav-notification-detail">
@@ -143,7 +150,10 @@
                                     </div>
                                 </div>
                                 <div class="haptic-topic-container">
-                                    <p class="haptic-catchphrase">Change the <strong>density</strong> of information displayed in the table.</p>
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase">Change the table's <strong class="catchphrase-highlight">display density</strong>.</p>
+                                    </div>
                                     <div class="modal-help-panel" style="margin: 0">
                                         <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP4">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                         <div id="CSHELP4" class="panel-collapse collapse sidenav-notification-detail">
@@ -155,16 +165,19 @@
                                     </div>
                                 </div>
                                 <div class="haptic-topic-container">
-                                    <p class="haptic-catchphrase"><strong>Sort</strong> the information displayed in the table.</p>
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase"><strong class="catchphrase-highlight">Sort</strong> the information displayed in the table.</p>
+                                    </div>
                                     <div class="modal-help-panel" style="margin: 0">
                                         <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP5">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
                                         <div id="CSHELP5" class="panel-collapse collapse sidenav-notification-detail">
                                             <ol class="haptic-ol">
                                                 <li>Decide on the desired column to sort by, and whether <kbd>Ascending</kbd> or <kbd>Descending</kbd> sort order is required.</li>
                                                 <li>Click the column title of the desired column.</li>
-                                                <li>A <kbd><i class="mdl2icon mdl2-up colour-dpred"></i></kbd> icon appears to the right of the column heading, indicating an <kbd>Ascending</kbd> sort order.</li>
+                                                <li>A <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-up colour-dpred"></i></kbdicon> icon appears to the right of the column heading, indicating an <kbd>Ascending</kbd> sort order.</li>
                                                 <li>The table adapts automatically, sorting the currently displayed items according to specified column, in <kbd>Ascending</kbd> order.</li>
-                                                <li>Clicking the column title of the desired column again changes the displayed icon to the <kbd><i class="mdl2icon mdl2-down colour-dpred"></i></kbd> icon, indicating a <kbd>Descending</kbd> sort order.</li>
+                                                <li>Clicking the column title of the desired column again changes the displayed icon to the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-down colour-dpred"></i></kbdicon> icon, indicating a <kbd>Descending</kbd> sort order.</li>
                                                 <li>The table adapts automatically, sorting the currently displayed items according to specified column, in <kbd>Descending</kbd> order.</li>
                                             </ol>
                                             <ul class="haptic-ol">
@@ -175,7 +188,50 @@
                                         </div>
                                     </div>
                                 </div>
-                            @*}*@
+                                <div class="haptic-topic-container">
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase"><strong class="catchphrase-highlight">View </strong> a single item displayed in the table.</p>
+                                    </div>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP6">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP6" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Locate the desired item in the table.</li>
+                                                <li>Locate the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-view colour-dpred"></i></kbdicon> icon in the <kbd>Actions</kbd> column next to the desired item in the table.</li>
+                                                <li>Click the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-view colour-dpred"></i></kbdicon> icon.</li>
+                                                <li>The system redirects to the relevant item's detail page, where all of the information relating to the item is displayed.</li>
+                                            </ol>
+                                            <ul class="haptic-ol">
+                                                <li class="colour-dpred">The <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-view colour-dpred"></i></kbdicon> icon displays the <ctrl>VIEW</ctrl> tooltip when hovered over.</li>
+                                                <li class="colour-dpred">To view the item's detailed information in a new browser tab, right click the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-view colour-dpred"></i></kbdicon> icon and click <kbd>Open link in new tab</kbd>.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="haptic-topic-container">
+                                    <div class="grid haptic-catchphrase-grid">
+                                        <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i>
+                                        <p class="haptic-catchphrase" grid-area="catchphrase"><strong class="catchphrase-highlight">Delete</strong> a single item displayed in the table.</p>
+                                    </div>
+                                    <div class="modal-help-panel" style="margin: 0">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#CSHELP7">TRY THE FOLLOWING: <span class="mdl2icon mdl2-down" style="font-size: 80%"></span></div>
+                                        <div id="CSHELP7" class="panel-collapse collapse sidenav-notification-detail">
+                                            <ol class="haptic-ol">
+                                                <li>Locate the desired item in the table.</li>
+                                                <li>Locate the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-delete colour-dpred"></i></kbdicon> icon in the <kbd>Actions</kbd> column next to the desired item in the table.</li>
+                                                <li>Click the <kbdicon><i class="mdl2icon haptic-mdl2icon mdl2-delete colour-dpred"></i></kbdicon> icon.</li>
+                                                <li>The system displays a <ctrl>Modal</ctrl> confirmation notification confirming deletion of the relevant item.</li>
+                                                <li>To proceed with deleting the item, click the <ctrl>Yes</ctrl> button.</li>
+                                                <li>To cancel deleting the item, click the <ctrl>No</ctrl> button.</li>
+                                            </ol>
+                                            <ul class="haptic-ol">
+                                                <li class="colour-dpred">Deletion of an item by clicking <ctrl>Yes</ctrl> on the <ctrl>Modal</ctrl> confirmation notification is irreversible from the system frontend - the item will be archived and is only retrievable by contacting a system administrator.</li>
+                                                <li class="colour-dpred">In some cases, item deletions require authorisation by a Superuser. In these cases, the <ctrl>Modal</ctrl> confirmation notification is still shown, but the item's status is changed to <kbd>Pending</kbd> and a Superuser has to approve the deletion before the status is changed to <kbd>Archived</kbd>.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -504,15 +560,74 @@
         // FILTER ON TYPING:
         $('.haptic-query').keyup(function (e) {
             var query = $.trim($('.haptic-query').val()).toLowerCase();
-
+            //$('#FAQBody').removeHighlight();
             $('.haptic-topic-container').each(function () {
                 var $this = $(this);
-                if ($this.text().toLowerCase().indexOf(query) === -1) $this.closest('div.haptic-topic-container').fadeOut();
-                else $this.closest('div.haptic-topic-container').fadeIn();
+
+                if ($this.text().toLowerCase().indexOf(query) === -1) {
+                    $this.closest('div.haptic-topic-container').slideUp("slow");
+                } else {
+                    $this.closest('div.haptic-topic-container').slideDown("slow");
+                    //$('#FAQBody').highlight(query);
+                }
             });
         });
 
+        //jQuery.fn.highlight = function (pat) {
+        //    function innerHighlight(node, pat) {
+        //        var skip = 0;
+        //        if (node.nodeType == 3) {
+        //            var pos = node.data.toUpperCase().indexOf(pat);
+        //            if (pos >= 0) {
+        //                var spannode = document.createElement('span');
+        //                spannode.className = 'highlight';
+        //                var middlebit = node.splitText(pos);
+        //                var endbit = middlebit.splitText(pat.length);
+        //                var middleclone = middlebit.cloneNode(true);
+        //                spannode.appendChild(middleclone);
+        //                middlebit.parentNode.replaceChild(spannode, middlebit);
+        //                skip = 1;
+        //            }
+        //        }
+        //        else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
+        //            for (var i = 0; i < node.childNodes.length; ++i) {
+        //                i += innerHighlight(node.childNodes[i], pat);
+        //            }
+        //        }
+        //        return skip;
+        //    }
+        //    return this.each(function () {
+        //        innerHighlight(this, pat.toUpperCase());
+        //    });
+        //};
 
+        //jQuery.fn.removeHighlight = function () {
+        //    function newNormalize(node) {
+        //        for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
+        //            var child = children[i];
+        //            if (child.nodeType == 1) {
+        //                newNormalize(child);
+        //                continue;
+        //            }
+        //            if (child.nodeType != 3) { continue; }
+        //            var next = child.nextSibling;
+        //            if (next == null || next.nodeType != 3) { continue; }
+        //            var combined_text = child.nodeValue + next.nodeValue;
+        //            new_node = node.ownerDocument.createTextNode(combined_text);
+        //            node.insertBefore(new_node, child);
+        //            node.removeChild(child);
+        //            node.removeChild(next);
+        //            i--;
+        //            nodeCount--;
+        //        }
+        //    }
+
+        //    return this.find("span.highlight").each(function () {
+        //        var thisParent = this.parentNode;
+        //        thisParent.replaceChild(this.firstChild, this);
+        //        newNormalize(thisParent);
+        //    }).end();
+        //};
 
         //$('input.haptic-query').keyup(function (e) {
         //    var query = $.trim($(this).prevAll('.haptic-query').val()).toLowerCase();
