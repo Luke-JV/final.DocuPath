@@ -1365,14 +1365,14 @@
             header: "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 actionBar\" style=\"text-align: right; padding-right: 0px\"><div class=\"col-lg-11 col-md-10 col-sm-10 col-xs-9\" style=\"padding: 0 0 0 15px; margin-left: -15px\"><p class=\"{{css.search}}\"></p></div><div class=\"col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center\" style=\"padding: 0px\"><p class=\"{{css.actions}}\"></p></div></div></div></div>",
             headerCell: "<th data-column-id=\"{{ctx.column.id}}\" class=\"{{ctx.css}}\" style=\"{{ctx.style}}; border-bottom: 2px solid rgba(174,31,31,0.75); padding-top: 4px; padding-bottom: 2px\"><a href=\"javascript:void(0);\" class=\"{{css.columnHeaderAnchor}} {{ctx.sortable}}\"><span class=\"colour-dpred {{css.columnHeaderText}}\">{{ctx.column.text}}</span>{{ctx.icon}}</a></th>",
             icon: "<span class=\"{{css.icon}} {{ctx.iconCss}}\"></span>",
-            infos: "<div class=\"{{css.infos}}\" style=\"height: 42.2px; line-height: 42.2px; vertical-align: middle\" data-toggle=\"tooltip\" title=\"RESULT COUNTER\" data-placement=\"right\">{{lbl.infos}}</div>",
+            infos: "<div class=\"{{css.infos}}\" style=\"height: 42.2px; line-height: 42.2px; vertical-align: middle\"><p data-toggle=\"tooltip\" title=\"RESULT COUNTER\" data-placement=\"left\">{{lbl.infos}}</p></div>",
             loading: "<tr><td colspan=\"{{ctx.columns}}\" class=\"loading\">{{lbl.loading}}</td></tr>",
             noResults: "<tr><td colspan=\"{{ctx.columns}}\" class=\"no-results\">{{lbl.noResults}}</td></tr>",
-            pagination: "<ul class=\"{{css.pagination}}\" data-toggle=\"tooltip\" title=\"PAGE NAVIGATION\" data-placement=\"left\"></ul>",
+            pagination: "<ul class=\"{{css.pagination}}\" data-toggle=\"tooltip\" title=\"PAGE NAVIGATION\" data-placement=\"right\"></ul>",
             paginationItem: "<li class=\"{{ctx.css}}\"><a data-page=\"{{ctx.page}}\" class=\"{{css.paginationButton}}\">{{ctx.text}}</a></li>",
             rawHeaderCell: "<th class=\"{{ctx.css}}\">{{ctx.content}}</th>", // Used for the multi select box
             row: "<tr{{ctx.attr}}>{{ctx.cells}}</tr>",
-            search: "<div class=\"{{css.search}}\" style=\"margin: 0\"><div class=\"input-group\"><div class=\"input-group-btn\"><i class=\"btn btn-default mdl2icon mdl2-search btn-mdl2icon disabled\" style=\"margin: 0px; top: 0; width: 35px; background-color: #d9d9d9\"></i></div><input type=\"text\" id=\"txtSearch\" style=\"width: 100%\" data-toggle=\"tooltip\" title=\"SEARCH BAR\" data-placement=\"bottom\" class=\"{{css.searchField}}\" placeholder=\"{{lbl.search}}\"/></div></div>",
+            search: "<div class=\"{{css.search}}\" style=\"margin: 0\"><div class=\"input-group\"><div class=\"input-group-btn\"><i class=\"btn btn-default mdl2icon mdl2-search btn-mdl2icon disabled\" style=\"margin: 0px; top: 0; width: 35px; background-color: #d9d9d9\"></i></div><input type=\"text\" id=\"txtSearch\" style=\"width: 100%\" data-toggle=\"tooltip\" title=\"SEARCH BAR\" data-placement=\"top\" class=\"{{css.searchField}}\" placeholder=\"{{lbl.search}}\"/></div></div>",
             select: "<input name=\"select\" type=\"{{ctx.type}}\" class=\"{{css.selectBox}}\" value=\"{{ctx.value}}\" {{ctx.checked}} />"
         }
     };
