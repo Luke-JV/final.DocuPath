@@ -51,18 +51,22 @@
             Are you sure you want to leave this page? Any unsaved changes will be lost.
         </div>
         @* HELP/INFO *@
-        @*<div class="panel-group" id="warninghelpaccordion">
+        <div class="panel-group" id="warninghelpaccordion">
                 <div class="modal-help-panel">
-                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
-                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
-                    </div>
+                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
                     <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
                         <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
                         <hr class="modal-help-hr-warning" />
-                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                        <ul class="haptic-ul">
+                            <li>This page allows the user to manipulate information.</li>
+                            <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                            <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                            <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                            <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                        </ul>
                     </div>
                 </div>
-            </div>*@
+            </div>
         @* BUTTONS *@
         <div class="modalbox-button-bar">
             <div class="col-md-3 modal-btn-col">
@@ -2262,7 +2266,7 @@
 <script name="warningscript" type="text/javascript">
         $(document).ready(function () {
             $('#btnBack').click(function (event) { event.preventDefault(); $('#divWarning').removeClass("hidden"); });
-            $('#btnWarningYes').click(function (target) { $('#divWarning').addClass("hidden"); window.location.href = "@Url.Action("All", "ForensicCase")"; });
+            $('#btnWarningYes').click(function (target) { window.location.href = "@Url.Action("All", "ForensicCase")"; });
             $('#btnWarningNo').click(function () { $('#divWarning').addClass("hidden"); });
         });
 </script>

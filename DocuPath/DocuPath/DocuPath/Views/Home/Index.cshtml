@@ -1,7 +1,5 @@
 ﻿<link rel="stylesheet" href="~/Content/DNADecoration.css" type="text/css" />
-@{
-    ViewBag.Title = "Home Page";
-}
+@{ ViewBag.Title = "Home Page"; ViewBag.GenericHAPTICLocator = "HomePageGeneric"; ViewBag.SpecificHAPTICLocator = "HomePageSpecific"; ViewBag.PageInfoLocator = "Home"; }
 
 <div class="grid homepage-grid">
     <div class="grid menu-form-grid homepage-menu-container" grid-area="form">
@@ -11,7 +9,7 @@
             <div class="panel-group" id="HomepageAccordion">
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-target="#CORTEXpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
-                        <img src="~/Content/Resources/CortexLogo.png" style="max-height: 60px" />
+                        <img src="~/Content/Resources/CortexLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN CORTEX MENU" data-placement="right" />
                     </div>
                     <div id="CORTEXpanel" class="panel-collapse collapse">
                         <div class="panel-body apad5" style="margin-bottom: 0px">
@@ -41,7 +39,7 @@
                 </div>
                 <div class="panel panel-default" style="margin-top: 25px; margin-bottom: 25px">
                     <div class="panel-heading" data-toggle="collapse" data-target="#CORNEApanel" data-parent="#HomepageAccordion" style="cursor: pointer">
-                        <img src="~/Content/Resources/CorneaLogo.png" style="max-height: 60px" />
+                        <img src="~/Content/Resources/CorneaLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN CORNEA MENU" data-placement="right" />
                     </div>
                     <div id="CORNEApanel" class="panel-collapse collapse">
                         <div class="panel-body apad5" style="margin-bottom: 0px">
@@ -72,7 +70,7 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading" data-toggle="collapse" data-target="#PULSEpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
-                        <img src="~/Content/Resources/PulseLogo.png" style="max-height: 60px" />
+                        <img src="~/Content/Resources/PulseLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN PULSE MENU" data-placement="right" />
                     </div>
                     <div id="PULSEpanel" class="panel-collapse collapse">
                         <div class="panel-body apad5" style="margin-bottom: 0px">

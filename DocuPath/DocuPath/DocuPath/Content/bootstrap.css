@@ -357,13 +357,22 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: rgba(174, 31, 31, 1);
   text-decoration: none;
 }
 
+/*.panel-body > ul > li a:before {
+    font-family: 'Segoe MDL2 Assets';
+    content: '\E71B';
+    color: #000;
+    font-size: 100%;
+    padding: 0 2px 0 0;
+    margin: 2px 0 0 0;
+}*/
+
 a:hover,
 a:focus {
-  color: rgba(174, 23, 23, 1);
+  color: #999;
   /*text-decoration: underline;*/
 }
 
@@ -2501,7 +2510,7 @@ fieldset[disabled] .btn {
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
   /*color: rgba(174,31,31,1);*/
-  color: #fff;
+  color: rgba(174, 31, 31, 1);
   border-color: #adadad;
 }
 
@@ -8409,10 +8418,31 @@ td.visible-print {
 .modal-help-panel {
     margin: 0 5px 5px 5px;
     background-color: #999;
-    border: 1px solid #999;
+    border: 1px solid #999 !important;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    /*-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);*/
+}
+
+.modal-help-panel > .panel-heading:after {
+  font-family: 'Segoe MDL2 Assets';
+  font-size: 80%;
+  content: "\E96E";
+  padding-left: 5px;
+}
+
+.modal-help-panel > .panel-heading[aria-expanded="true"]:after {
+  font-family: 'Segoe MDL2 Assets';
+  font-size: 80%;
+  content: "\E96D";
+  padding-left: 5px;
+}
+
+.modal-help-panel > .panel-heading[aria-expanded="false"]:after {
+  font-family: 'Segoe MDL2 Assets';
+  font-size: 80%;
+  content: "\E96E";
+  padding-left: 5px;
 }
 
 .modalbox-help-panel-text {
@@ -10047,13 +10077,17 @@ a.cal-event-week {
 
 .haptic-ul {
     padding-left: 14px;
+    margin: 0;
     text-align: justify;
+    border-bottom: 1px solid transparent;
 }
 
 .haptic-ol {
     font-weight: 500;
     margin: 0;
     padding: 5px 5px 5px 20px;
+    text-align: justify;
+    border-bottom: 1px solid transparent;
 }
 
 /* LARGE (DESKTOP/LAPTOP) SCREENS: */
@@ -12699,7 +12733,7 @@ a.cal-event-week {
 .haptic-catchphrase {
     padding: 0 5px 0 0;
     margin: 0 !important;
-    color: #fff;
+    color: #333;
     text-align: justify;
 }
 
@@ -12718,22 +12752,22 @@ ctrl {
 
 .haptic-mdl2icon {
     padding: 2px 0 0 0 !important;
-    color: #cccccc;
+    color: #999;
 }
 
 .haptic-catchphrase-grid {
     grid-gap: 0px;
     grid-template-columns: 20px 1fr;
     grid-template-areas: "icon catchphrase";
-    /*background: linear-gradient(-45deg, rgba(174,31,31,0.5),rgba(174, 31, 31, 1));*/
+    background: linear-gradient(-45deg, rgba(174,31,31,0.25),rgba(0,0,0,0));
     /*background-color: rgba(174,31,31,1);*/
-    background-color: #333333;
+    /*background-color: #5a5a5a;*/
     border-radius: 3px;
     padding: 1px 0 1px 5px;
     margin-bottom: 5px;
 }
 
 .catchphrase-highlight {
-    color: rgba(255,100,100,1);
+    color: rgba(174,31,31,1);
 }
 /*#endregion */

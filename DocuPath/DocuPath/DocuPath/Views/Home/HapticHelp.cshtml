@@ -1,8 +1,6 @@
 ﻿@using DocuPath.Models
-@{
-    ViewBag.Title = "Haptic Help Centre";
-    ViewBag.PageName = "HapticHelpCentre";
-}
+@{ ViewBag.Title = "Haptic Help Centre"; ViewBag.GenericHAPTICLocator = "HapticGeneric"; ViewBag.SpecificHAPTICLocator = "HapticSpecific"; ViewBag.PageInfoLocator = "HapticHelpCentre"; }
+
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -19,7 +17,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-six">
+        <div class="page-buttons-subgrid buttons-five">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -32,20 +30,15 @@
             </div>
             <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                    <button id="btnExpandCollapse" accordion-id="#FCHapticTopics" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
                 </form>
             </div>
             <div grid-area="btn4">
                 <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
             </div>
             <div grid-area="btn5">
-                <form class="minimalform" action="javascript:void(0)" data-toggle="modal" data-target="#divHaptic" style="margin-top: 2px">
-                    <button id="btnHelpToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP MODAL"></button>
-                </form>
-            </div>
-            <div grid-area="btn6">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP SIDENAV"></button>
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
@@ -80,8 +73,14 @@
                                 <span>ALL FORENSIC CASES</span>
                             </div>
                             <div id="AllFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    @Html.Raw(VERTEBRAE.GetHelp("All"))
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                                        <input id="AllFCSearchBar" type="text" class="form-control" placeholder="Enter a keyword/phrase...">
+                                    </form>
+                                    <div id="AllFCTopicsContent">
+                                        @Html.Raw(VERTEBRAE.GetHelp("AllGeneric"))
+                                        @Html.Raw(VERTEBRAE.GetHelp("AllFCSpecific"))
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -92,8 +91,14 @@
                                 <span>ADD FORENSIC CASE</span>
                             </div>
                             <div id="AddFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>ADD FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                                        <input id="AddFCSearchBar" type="text" class="form-control" placeholder="Enter a keyword/phrase...">
+                                    </form>
+                                    <div id="AddFCTopicsContent">
+                                        @Html.Raw(VERTEBRAE.GetHelp("AddGeneric"))
+                                        @Html.Raw(VERTEBRAE.GetHelp("AddFCSpecific"))
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -104,8 +109,14 @@
                                 <span>UPDATE FORENSIC CASE</span>
                             </div>
                             <div id="UpdateFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>UPDATE FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                                        <input id="UpdateFCSearchBar" type="text" class="form-control" placeholder="Enter a keyword/phrase...">
+                                    </form>
+                                    <div id="UpdateFCTopicsContent">
+                                        @Html.Raw(VERTEBRAE.GetHelp("UpdateGeneric"))
+                                        @Html.Raw(VERTEBRAE.GetHelp("UpdateFCSpecific"))
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -116,8 +127,10 @@
                                 <span>ARCHIVE FORENSIC CASE</span>
                             </div>
                             <div id="ArchiveFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>ARCHIVE FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <ul class="haptic-ol">
+                                        <li>Refer to <a data-toggle="collapse" data-target="#ArchiveFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -128,8 +141,10 @@
                                 <span>LOCK FORENSIC CASE</span>
                             </div>
                             <div id="LockFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>LOCK FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <ul class="haptic-ol">
+                                        <li>Refer to <a data-toggle="collapse" data-target="#LockFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -140,8 +155,10 @@
                                 <span>UNLOCK FORENSIC CASE</span>
                             </div>
                             <div id="UnlockFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>UNLOCK FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <ul class="haptic-ol">
+                                        <li>Refer to <a data-toggle="collapse" data-target="#UnlockFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -152,8 +169,10 @@
                                 <span>MIGRATE FORENSIC CASE</span>
                             </div>
                             <div id="MigrateFCTopics" class="panel-collapse collapse">
-                                <div class="panel-body apad5">
-                                    <p>MIGRATE FC HELP TOPICS HERE</p>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <ul class="haptic-ol">
+                                        <li>Refer to <a data-toggle="collapse" data-target="#MigrateFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -245,20 +264,47 @@
 
 @section Scripts{
 <script id="onDomReady" type="text/javascript">
-        // Enable tooltips:
         $(document).ready(function () {
+            // Enable tooltips:
             $('[data-toggle="tooltip"]').tooltip();
+
+            // Expand/Collapse All Panels:
+            $(".toggle-accordion").on("click", function () {
+                var accordionId = $(this).attr("accordion-id"),
+                    numPanelOpen = $(accordionId + ' .collapse.in').length;
+
+                $(this).toggleClass("active");
+
+                if (numPanelOpen == 0) {
+                    openAllPanels(accordionId);
+                } else {
+                    closeAllPanels(accordionId);
+                }
+                $("#btnExpandCollapse").blur()
+            })
+
+            openAllPanels = function (aId) {
+                console.log("setAllPanelOpen");
+                $(aId + ' .panel-collapse:not(".in")').collapse('show');
+            }
+            closeAllPanels = function (aId) {
+                console.log("setAllPanelclose");
+                $(aId + ' .panel-collapse.in').collapse('hide');
+            }
         });
 
-        // Toggle Table Density:
-        $("#btnDensityToggle").click(function () {
-            var $target = $("#allFC");
-            var $condensed = "table-condensed";
-            var $minimal = "table-minimal"
-            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
-            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
-            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
-            $("#btnDensityToggle").blur()
+        // FILTER ON TYPING:
+        $('#AllFCSearchBar').keyup(function (e) {
+            var query = $.trim($('#AllFCSearchBar').val()).toLowerCase();
+            $('#AllFCTopicsContent > .haptic-topic-container').each(function () {
+                var $this = $(this);
+
+                if ($this.text().toLowerCase().indexOf(query) === -1) {
+                    $this.closest('div.haptic-topic-container').slideUp("fast");
+                } else {
+                    $this.closest('div.haptic-topic-container').slideDown("fast");
+                }
+            });
         });
 </script>
-    }
+}
