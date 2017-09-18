@@ -52,6 +52,7 @@ namespace DocuPath.DataLayer
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string RepCellNum { get; set; }
         [DisplayName("Work Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string RepWorkNum { get; set; }
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]

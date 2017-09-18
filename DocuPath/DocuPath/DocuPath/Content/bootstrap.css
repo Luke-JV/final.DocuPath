@@ -12724,7 +12724,8 @@ a.cal-event-week {
 .haptic-topic-container {
     margin-bottom: 5px;
     padding: 5px;
-    border: 1px solid #999 !important;
+    /*border: 1px solid #999 !important;*/
+    border: 1px solid #000 !important;
     /*min-height: 75px;*/
     border-radius: 4px;
     background-color: #e8e8e8;
@@ -12759,9 +12760,11 @@ ctrl {
     grid-gap: 0px;
     grid-template-columns: 20px 1fr;
     grid-template-areas: "icon catchphrase";
-    background: linear-gradient(-45deg, rgba(174,31,31,0.25),rgba(0,0,0,0));
+    /*background: linear-gradient(-45deg, rgba(174,31,31,0.25),#fff);*/
     /*background-color: rgba(174,31,31,1);*/
     /*background-color: #5a5a5a;*/
+    background-color: #fff !important;
+    /*border: 1px solid rgba(174,31,31,1);*/
     border-radius: 3px;
     padding: 1px 0 1px 5px;
     margin-bottom: 5px;
