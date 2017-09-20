@@ -8949,6 +8949,10 @@ td.visible-print {
     padding-right: 5px;
     margin-bottom: 0px;
     padding-top: 7.5px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis !important;
 }
 
 .media-filename-none {
