@@ -8,7 +8,7 @@
         {
             <div class="panel-group" id="HomepageAccordion">
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#CORTEXpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <div id="CORTEXheading" class="panel-heading" data-toggle="collapse" data-target="#CORTEXpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
                         <img src="~/Content/Resources/CortexLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN CORTEX MENU" data-placement="right" />
                     </div>
                     <div id="CORTEXpanel" class="panel-collapse collapse">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default" style="margin-top: 25px; margin-bottom: 25px">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#CORNEApanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <div id="CORNEAheading" class="panel-heading" data-toggle="collapse" data-target="#CORNEApanel" data-parent="#HomepageAccordion" style="cursor: pointer">
                         <img src="~/Content/Resources/CorneaLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN CORNEA MENU" data-placement="right" />
                     </div>
                     <div id="CORNEApanel" class="panel-collapse collapse">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#PULSEpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
+                    <div id="PULSEheading" class="panel-heading" data-toggle="collapse" data-target="#PULSEpanel" data-parent="#HomepageAccordion" style="cursor: pointer">
                         <img src="~/Content/Resources/PulseLogo.png" style="max-height: 60px" data-toggle="tooltip" title="OPEN PULSE MENU" data-placement="right" />
                     </div>
                     <div id="PULSEpanel" class="panel-collapse collapse">
@@ -241,6 +241,15 @@
         $('button').click(function () {
             var target = this;
             this.blur();
+        });
+
+        $('#CORTEX').click(function () {
+            if ($('#CORTEX').hasClass('in')) {
+                $('#CORTEX').removeClass('in'),
+                $('#CORTEX').addClass('hidden'),
+                $('#CORNEA').addClass('hidden'),
+                $('#PULSE').addClass('hidden')
+            }
         });
     </script>
     }

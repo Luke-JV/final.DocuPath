@@ -705,6 +705,31 @@ dd {
     background-color: rgba(255,220,220, 1);
 }
 
+.haptic-subheading {
+    border: 1px solid;
+    border-color: transparent;
+    border-radius: 3px;
+    height: 30px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    /*background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5),#333333);*/
+    background-color: rgba(174, 31, 31, 1);
+    font-family: 'U.S. 101';
+    text-transform: uppercase;
+    font-size: 14pt;
+    padding-left: 15px;
+    padding-top: 2.5px;
+    letter-spacing: 0.5px;
+    color: #e1e1e1;
+}
+
+.haptic-subheading-mdl2icon{
+    font-size: 25pt;
+    margin-left: -10px;
+    padding-bottom: 10px;
+    color: rgba(255,220,220,1) !important;
+}
+
 @media (min-width: 768px) {
 /* DL-HORIZONTAL: */
   .dl-horizontal dt {
@@ -8949,9 +8974,8 @@ td.visible-print {
     padding-right: 5px;
     margin-bottom: 0px;
     padding-top: 7.5px;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
+    overflow: hidden !important;
+    white-space: nowrap !important;
     text-overflow: ellipsis !important;
 }
 
