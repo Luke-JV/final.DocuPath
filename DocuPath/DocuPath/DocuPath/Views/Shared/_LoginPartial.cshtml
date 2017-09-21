@@ -15,7 +15,7 @@
                             <div grid-area="initials_name" class="grid account-initials-name-subgrid">
                                 <div grid-area="initials" class="icon-circle display-initials-account" style="height: 45px; width: 45px; margin: 0px">@currentUser.DisplayInitials.ToUpper()</div>
                                 <div grid-area="name_email" class="text-left">
-                                    <span grid-area="name" style="text-overflow: ellipsis; text-transform: uppercase; letter-spacing: 1px">@currentUser.TITLE.TitleValue @currentUser.FirstName @currentUser.LastName</span>
+                                    <span grid-area="name" style="text-overflow: ellipsis; white-space: nowrap; text-transform: uppercase; letter-spacing: 1px">@currentUser.TITLE.TitleValue @currentUser.FirstName @currentUser.LastName</span>
                                     <span class="text-muted" grid-area="email">@currentUser.USER_LOGIN.Username</span>
                                 </div>
                             </div>

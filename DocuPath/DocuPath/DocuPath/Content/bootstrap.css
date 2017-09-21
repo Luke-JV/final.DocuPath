@@ -710,7 +710,7 @@ dd {
     border-color: transparent;
     border-radius: 3px;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 5px;
     /*background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5),#333333);*/
     background-color: rgba(174, 31, 31, 1);
@@ -7673,6 +7673,7 @@ td.visible-print {
     display: block;
     box-sizing: border-box;
     width: 476.08px;
+    min-height: 100px;
 }
 
 /*.input[data-val-required] {
@@ -8332,7 +8333,11 @@ td.visible-print {
     z-index: 99;
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle at center, #ffffff, #cccccc);
+    /*background: radial-gradient(circle at center, #ffffff, #cccccc);*/
+    /*background: radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0.5));*/
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.6), rgba(0,0,0,1));
+    /*background-color: rgba(255,255,255,0.8);*/
+    /*background-color: rgba(0,0,0,0.6);*/
     background-size: cover;
     justify-content: center;
     align-items: center;
@@ -8340,7 +8345,10 @@ td.visible-print {
 
 .modalbox {
     position: relative;
-    margin-top: 250px;
+    /*margin-top: calc(50% - 50px);*/
+    /*top: calc(25% - 95px);*/
+    top: 150px;
+    left: auto;
     margin-left: auto;
     margin-right: auto;
     z-index: 99;
@@ -8349,6 +8357,7 @@ td.visible-print {
     min-width: 355px;
     border-radius: 4px;
     border: 2px solid rgba(255, 255, 255, 0.15);
+    /*border: 5px solid rgba(255, 255, 255, 0.8);*/
     background-color: #333333;
 }
 
@@ -8785,10 +8794,20 @@ td.visible-print {
   margin-bottom: 0px;
 }
 
-.sidenav-body {
+.neuron-sidenav-body {
     padding: 5px 5px 50px 5px;
     height: 100%;
     overflow-y: auto;
+    transition: 0.5s all;
+    /*opacity: 0;*/
+}
+
+.haptic-sidenav-body {
+    padding: 5px 5px 50px 5px;
+    height: 100%;
+    overflow-y: auto;
+    transition: 0.5s all;
+    /*opacity: 0;*/
 }
 
 .sidenav-notification {
@@ -10916,6 +10935,10 @@ a.cal-event-week {
   right: -2px;
 }
 
+.ele-decor-faded{
+    opacity: 0.25 !important;
+}
+
 .ele-decor:nth-of-type(1) {
   animation-delay: -0.5s;
 }
@@ -12759,6 +12782,10 @@ a.cal-event-week {
     background-color: #e8e8e8;
 }
 
+.form-horizontal > .panel-group > .haptic-topic-container {
+    margin: 0 0 5px 20px;
+}
+
 .haptic-catchphrase {
     padding: 0 5px 0 0;
     margin: 0 !important;
@@ -12800,5 +12827,10 @@ ctrl {
 
 .catchphrase-highlight {
     color: rgba(174,31,31,1);
+}
+
+.highlight{
+    color: #000;
+    background-color: #ffff00;
 }
 /*#endregion */

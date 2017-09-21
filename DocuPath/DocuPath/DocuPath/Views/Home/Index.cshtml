@@ -235,21 +235,3 @@
         </div>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        $('button').click(function () {
-            var target = this;
-            this.blur();
-        });
-
-        $('#CORTEX').click(function () {
-            if ($('#CORTEX').hasClass('in')) {
-                $('#CORTEX').removeClass('in'),
-                $('#CORTEX').addClass('hidden'),
-                $('#CORNEA').addClass('hidden'),
-                $('#PULSE').addClass('hidden')
-            }
-        });
-    </script>
-    }

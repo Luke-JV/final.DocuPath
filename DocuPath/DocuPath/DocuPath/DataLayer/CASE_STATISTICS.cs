@@ -59,6 +59,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Individual Estimated Age")]
         public string IndividualEstimatedAge { get; set; }
         [DisplayName("Medical History")]
+        [DataType(DataType.MultilineText)]
         public string MedicalHistory { get; set; }
         [DisplayName("Medical Treatment Duration")]
         public string TreatmentDuration { get; set; }

@@ -42,7 +42,7 @@
 <div class="form-horizontal border-generic form-generic">
     <div class="panel-group" id="FCHapticTopics">
         <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
-            <input id="HapticSearchBar" type="text" class="form-control" placeholder="Enter a keyword/phrase...">
+            <input id="HapticSearchBar" type="text" class="form-control" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase...">
         </form>
         @* ALL FC *@
         <div id="AllFC" class="haptic-subheading">
@@ -70,47 +70,34 @@
             <span class="mdl2icon mdl2-delete haptic-subheading-mdl2icon"></span>
             <span>DELETE FORENSIC CASE</span>
         </div>
-        <ul class="haptic-ol">
-            <li>Refer to <a href="javascript:void(0)" onclick="window.scroll(0,findPos(document.getElementById('AllFC')));">All Forensic Cases</a>.</li>
-        </ul>
+        <div class="haptic-topic-container">
+            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to delete a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
+        </div>
         @* LOCK FC *@
         <div class="haptic-subheading">
             <span class="mdl2icon mdl2-lock haptic-subheading-mdl2icon"></span>
             <span>LOCK FORENSIC CASE</span>
         </div>
-        <ul class="haptic-ol">
-            <li>Refer to <a data-toggle="collapse" data-target="#LockFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
-        </ul>
+        <div class="haptic-topic-container">
+            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to lock a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
+        </div>
         @* UNLOCK FC *@
-        <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#UnlockFCTopics" style="cursor: pointer">
-                <span class="mdl2icon mdl2-unlock panel-mdl2icon"></span>
-                <span>UNLOCK FORENSIC CASE</span>
-            </div>
-            <div id="UnlockFCTopics" class="panel-collapse collapse">
-                <div class="panel-body" style="padding: 5px 5px 0 5px">
-                    <ul class="haptic-ol">
-                        <li>Refer to <a data-toggle="collapse" data-target="#UnlockFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="haptic-subheading">
+            <span class="mdl2icon mdl2-unlock haptic-subheading-mdl2icon"></span>
+            <span>UNLOCK FORENSIC CASE</span>
+        </div>
+        <div class="haptic-topic-container">
+            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to unlock a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
         </div>
         @* MIGRATE FC *@
-        <div class="panel panel-default">
-            <div class="panel-heading" data-toggle="collapse" data-parent="#FCHapticTopics" href="#MigrateFCTopics" style="cursor: pointer">
-                <span class="mdl2icon mdl2-migrate panel-mdl2icon"></span>
-                <span>MIGRATE FORENSIC CASE</span>
-            </div>
-            <div id="MigrateFCTopics" class="panel-collapse collapse">
-                <div class="panel-body" style="padding: 5px 5px 0 5px">
-                    <ul class="haptic-ol">
-                        <li>Refer to <a data-toggle="collapse" data-target="#MigrateFCTopics" href="javascript:void(0)" onclick="$('#AllFCTopics').collapse('show')">All Forensic Cases</a>.</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="haptic-subheading">
+            <span class="mdl2icon mdl2-migrate haptic-subheading-mdl2icon"></span>
+            <span>MIGRATE FORENSIC CASE</span>
+        </div>
+        <div class="haptic-topic-container">
+            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to migrate a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
         </div>
     </div>
-
 </div>
 
 @section Scripts{
@@ -152,21 +139,14 @@
 
                 if ($this.text().toLowerCase().indexOf(query) === -1) {
                     $this.closest('div.haptic-topic-container').slideUp("fast");
+                    $this.closest('ul.haptic-ol').slideUp("fast");
                 } else {
+                    $('.form-generic').removeHighlight();
                     $this.closest('div.haptic-topic-container').slideDown("fast");
+                    $this.closest('ul.haptic-ol').slideDown("fast");
+                    $('.form-generic').highlight(query);
                 }
             });
         });
-
-    // SCROLL TO LINK:
-        function findPos(obj) {
-            var curtop = 150;
-            if (obj.offsetParent) {
-                do {
-                    curtop += obj.offsetTop;
-                } while (obj = obj.offsetParent);
-                return [curtop];
-            }
-        }
 </script>
 }

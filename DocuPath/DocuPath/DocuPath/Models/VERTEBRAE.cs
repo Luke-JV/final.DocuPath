@@ -477,7 +477,6 @@ namespace DocuPath.Models
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region x
         #region y
         public static string xTx = "Ktm200xcw";  

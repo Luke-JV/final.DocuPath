@@ -60,7 +60,7 @@
                 <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeHapticNav()"></a>
             </div>
         </div>
-        <div id="sidenavbody" class="sidenav-body" grid-area="neuron_body">
+        <div id="sidenavbody" class="haptic-sidenav-body" grid-area="neuron_body">
             <div class="panel-group" id="HapticAccordionSidenav">
                 @* ON THIS PAGE *@
                 @if (ViewBag.PageInfoLocator != "HapticHelpCentre")
@@ -319,7 +319,7 @@
                 <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeNav()"></a>
             </div>
         </div>
-        <div id="sidenavbody" class="sidenav-body" grid-area="neuron_body">
+        <div id="sidenavbody" class="neuron-sidenav-body" grid-area="neuron_body">
             @* RSS BROADCAST BAR: *@
             <form class="navbar-form" action="javascript:void(0)"  style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
                 <div class="input-group">
@@ -400,136 +400,72 @@
             document.getElementById("NEURONsidenav").style.width = "0";
             document.getElementById("HAPTICsidenav").style.width = "0";
             $('[data-toggle="tooltip"]').tooltip();
+            $('button').click(function () { this.blur(); });
         });
     </script>
 
-    @* HAPTIC OPEN/CLOSE: *@
+    @* HAPTIC: *@
     <script type="text/javascript">
-        $("#btnHapticToggle").click(function () {
+        var hapticOpen = false;
+
+        $("#btnHapticToggle").click(function () { openHapticNav(); });
+
+        shortcut.add("F1", function () { if (hapticOpen) { closeHapticNav(); } else { openHapticNav(); } });
+
+        function openHapticNav() {
             document.getElementById("HAPTICsidenav").style.display = "initial";
             document.getElementById("HAPTICsidenav").style.width = "400px";
             document.getElementById("content").style.paddingLeft = "400px";
             document.getElementById("topNav").style.paddingLeft = "400px";
             $("#btnHapticToggle").blur();
+            hapticOpen = true;
             closeNav();
-        });
+        }
 
         function closeHapticNav() {
             document.getElementById("HAPTICsidenav").style.width = "0";
             document.getElementById("content").style.paddingLeft = "0";
             document.getElementById("topNav").style.paddingLeft = "0";
             $("#btnHelpToggle").blur();
+            hapticOpen = false;
         }
-
-        // FILTER ON SUBMIT:
-        //$('.form-search').on('submit', function () { return false; });
-        //$('.form-search .btn').on('click', function (e) {
-        //    var query = $.trim($(this).prevAll('.search-query').val()).toLowerCase();
-        //    $('div.staff-container .bold').each(function () {
-        //        var $this = $(this);
-        //        if ($this.text().toLowerCase().indexOf(query) === -1)
-        //            $this.closest('div.staff-container').fadeOut();
-        //        else $this.closest('div.staff-container').fadeIn();
-        //    });
-        //});
 
         // FILTER ON TYPING:
         $('.haptic-query').keyup(function (e) {
             var query = $.trim($('.haptic-query').val()).toLowerCase();
-            //$('#FAQBody').removeHighlight();
             $('.haptic-topic-container').each(function () {
                 var $this = $(this);
 
                 if ($this.text().toLowerCase().indexOf(query) === -1) {
                     $this.closest('div.haptic-topic-container').slideUp("fast");
                 } else {
+                    $('#FAQBody').removeHighlight();
                     $this.closest('div.haptic-topic-container').slideDown("fast");
-                    //$('#FAQBody').highlight(query);
+                    $('#FAQBody').highlight(query);
                 }
             });
         });
-
-        //jQuery.fn.highlight = function (pat) {
-        //    function innerHighlight(node, pat) {
-        //        var skip = 0;
-        //        if (node.nodeType == 3) {
-        //            var pos = node.data.toUpperCase().indexOf(pat);
-        //            if (pos >= 0) {
-        //                var spannode = document.createElement('span');
-        //                spannode.className = 'highlight';
-        //                var middlebit = node.splitText(pos);
-        //                var endbit = middlebit.splitText(pat.length);
-        //                var middleclone = middlebit.cloneNode(true);
-        //                spannode.appendChild(middleclone);
-        //                middlebit.parentNode.replaceChild(spannode, middlebit);
-        //                skip = 1;
-        //            }
-        //        }
-        //        else if (node.nodeType == 1 && node.childNodes && !/(script|style)/i.test(node.tagName)) {
-        //            for (var i = 0; i < node.childNodes.length; ++i) {
-        //                i += innerHighlight(node.childNodes[i], pat);
-        //            }
-        //        }
-        //        return skip;
-        //    }
-        //    return this.each(function () {
-        //        innerHighlight(this, pat.toUpperCase());
-        //    });
-        //};
-
-        //jQuery.fn.removeHighlight = function () {
-        //    function newNormalize(node) {
-        //        for (var i = 0, children = node.childNodes, nodeCount = children.length; i < nodeCount; i++) {
-        //            var child = children[i];
-        //            if (child.nodeType == 1) {
-        //                newNormalize(child);
-        //                continue;
-        //            }
-        //            if (child.nodeType != 3) { continue; }
-        //            var next = child.nextSibling;
-        //            if (next == null || next.nodeType != 3) { continue; }
-        //            var combined_text = child.nodeValue + next.nodeValue;
-        //            new_node = node.ownerDocument.createTextNode(combined_text);
-        //            node.insertBefore(new_node, child);
-        //            node.removeChild(child);
-        //            node.removeChild(next);
-        //            i--;
-        //            nodeCount--;
-        //        }
-        //    }
-
-        //    return this.find("span.highlight").each(function () {
-        //        var thisParent = this.parentNode;
-        //        thisParent.replaceChild(this.firstChild, this);
-        //        newNormalize(thisParent);
-        //    }).end();
-        //};
-
-        //$('input.haptic-query').keyup(function (e) {
-        //    var query = $.trim($(this).prevAll('.haptic-query').val()).toLowerCase();
-        //    $('div.haptic-topic-container').each(function () {
-        //        var $this = $(this);
-        //        if ($this.text().toLowerCase().indexOf(query) === -1)
-        //            $this.closest('div.haptic-topic-container').fadeOut();
-        //        else $this.closest('div.haptic-topic-container').fadeIn();
-        //    });
-        //});
     </script>
 
-    @* NEURON OPEN/CLOSE: *@
+    @* NEURON: *@
     <script type="text/javascript">
+        var neuronOpen = false;
+        shortcut.add("F2", function () { if (neuronOpen) { closeNav(); } else { openNav(); } });
+
         function openNav() {
             document.getElementById("NEURONsidenav").style.display = "initial";
             document.getElementById("NEURONsidenav").style.width = "400px";
             document.getElementById("content").style.paddingRight = "400px";
             document.getElementById("topNav").style.paddingRight = "400px";
             closeHapticNav();
+            neuronOpen = true;
         }
 
         function closeNav() {
             document.getElementById("NEURONsidenav").style.width = "0";
             document.getElementById("content").style.paddingRight= "0";
             document.getElementById("topNav").style.paddingRight = "0";
+            neuronOpen = false;
         }
     </script>
 
@@ -636,6 +572,14 @@
     });
     </script>
     
+    @* NAVIGATION: *@
+    <script>
+        shortcut.add("F4", function () { window.location.replace("/Home/Index") });
+        shortcut.add("1", function () { document.getElementById('CORTEXheading').click(); });
+        shortcut.add("2", function () { document.getElementById('CORNEAheading').click(); });
+        shortcut.add("3", function () { document.getElementById('PULSEheading').click(); });
+    </script>
+
     @* RSS BLASTER: *@
     <script>
         $('#rss').click(function (request,response) {
