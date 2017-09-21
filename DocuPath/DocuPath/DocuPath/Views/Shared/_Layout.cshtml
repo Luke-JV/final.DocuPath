@@ -170,7 +170,7 @@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">Reporting</li>
                                     <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    @*<li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li>@Html.ActionLink("VISION Dashboard", "VISION", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <!--PULSE-->
@@ -189,7 +189,7 @@
                                     <li class="divider"></li>
                                     <li class="dropdown-header">System Management</li>
                                     <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                    @*<li>@Html.ActionLink("System Parameters", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>*@
+                                    <li>@Html.ActionLink("System Parameters", "All", "SystemParameters", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="divider"></li>
                                     <li class="dropdown-header">User Management</li>
                                     <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
@@ -395,21 +395,44 @@
     
     @* LOADING/NOTIFICATION MODALS: *@
     <script>
+        $('[data-toggle="tooltip"]').tooltip();
+        $('button').click(function () { this.blur(); });
+        $('[data-toggle="modal"]').click(function () { this.blur(); });
+
+        $(function () {
+            $('.modal.fade').on('hidden.bs.modal', function (e) {
+                $('[data-toggle="modal"]').toggleClass('btn-no-highlight');
+            });
+
+            $('#.modal.fade').on('shown.bs.modal', function (e) {
+                $('[data-toggle="modal"]').toggleClass('btn-no-highlight');
+            });
+        });
+
         $(document).ready(function () {
             document.getElementById("divModalOverlay").style.display = "none";
             document.getElementById("NEURONsidenav").style.width = "0";
             document.getElementById("HAPTICsidenav").style.width = "0";
-            $('[data-toggle="tooltip"]').tooltip();
-            $('button').click(function () { this.blur(); });
+        });
+    </script>
+
+    <script >
+        // Toggle Table Density:
+        $("#btnDensityToggle").click(function () {
+        var $target = $("table");
+        var $condensed = "table-condensed";
+        var $minimal = "table-minimal"
+        if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+        else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+        else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+        $("#btnDensityToggle").blur()
         });
     </script>
 
     @* HAPTIC: *@
     <script type="text/javascript">
         var hapticOpen = false;
-
         $("#btnHapticToggle").click(function () { openHapticNav(); });
-
         shortcut.add("F1", function () { if (hapticOpen) { closeHapticNav(); } else { openHapticNav(); } });
 
         function openHapticNav() {

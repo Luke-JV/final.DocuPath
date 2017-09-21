@@ -16,27 +16,32 @@ namespace DocuPath.Controllers
     //[LogAction]
     public class ExternalReviewCaseController : Controller
     {
+        string controllerName = "ExternalReviewCase";
         DocuPathEntities db = new DocuPathEntities();
 
-        [AuthorizeByAccessArea(AccessArea = "View External Review Case")]
+        [AuthorizeByAccessArea(AccessArea = "Search External Review Case")]
         public ActionResult Index()
         {
+            string actionName = "Index";
             try
             {
-
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "External Review Case");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         //----------------------------------------------------------------------------------------------//
-
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult Add()
         {
+            string actionName = "Add";
             try
             {
                 #region AUDIT_WRITE
@@ -48,12 +53,13 @@ namespace DocuPath.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -61,6 +67,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult Add(ExternalReviewCaseViewModel ERC)
         {
+            string actionName = "Add";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -91,21 +98,22 @@ namespace DocuPath.Controllers
                
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "External Review Case");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region READS:
         [AuthorizeByAccessArea(AccessArea = "Search External Review Case")]
         public ActionResult All()
         {
+            string actionName = "All";
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
@@ -119,12 +127,14 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home", x.Message);
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         [AuthorizeByAccessArea(AccessArea = "View External Review Case")]
         public ActionResult Details(int id)
         {
+            string actionName = "Details";
             try
             {
                 #region AUDIT_WRITE
@@ -145,21 +155,22 @@ namespace DocuPath.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit External Review Case")]
         public ActionResult Edit(int id)
         {
+            string actionName = "Edit";
             try
             {
 
@@ -172,12 +183,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -185,6 +197,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit External Review Case")]
         public ActionResult Edit(int id, EXTERNAL_REVIEW_CASE updatedERC)
         {
+            string actionName = "Edit";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -206,21 +219,22 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "Delete External Review Case")]
         public ActionResult Delete(int id)
         {
+            string actionName = "Delete";
             try
             {
                 #region AUDIT_WRITE
@@ -234,12 +248,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -247,6 +262,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Delete External Review Case")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            string actionName = "Delete";
             if (!ModelState.IsValid)
             {
                 return View(collection);
@@ -261,22 +277,23 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "External Review Case");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
-
         #region NON-CRUD ACTIONS:
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add External Review Case")]
         public ActionResult UploadFiles()
         {
+            string actionName = "UploadFiles";
             try
             {
                 #region AUDIT_WRITE
@@ -334,12 +351,13 @@ namespace DocuPath.Controllers
                     return Json("No files selected.");
                 }
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "External Review Case");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 

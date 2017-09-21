@@ -2317,6 +2317,12 @@ textarea.input-lg {
     width: 100%;
 }
 
+@media (max-width: 768px) {
+    .form-generic {
+        margin: 10px 0 175px 0;
+    }
+}
+
 .form-horizontal .control-label,
 .form-horizontal .radio,
 .form-horizontal .checkbox,
@@ -2535,7 +2541,7 @@ fieldset[disabled] .btn {
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
   /*color: rgba(174,31,31,1);*/
-  color: rgba(174, 31, 31, 1);
+  /*color: rgba(174, 31, 31, 1);*/
   border-color: #adadad;
 }
 
@@ -4523,7 +4529,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   position: relative;
   z-index: 1000;
   min-height: 50px;
-  max-height: 51px;
+  max-height: 50px;
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
@@ -6222,9 +6228,11 @@ button.close {
 
 .modal-content {
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
   background-color: #ffffff;
   border: 1px solid #999999;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  /*border: 1px solid rgba(0, 0, 0, 0.2);*/
   border-radius: 6px;
   outline: none;
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -6242,27 +6250,53 @@ button.close {
   filter: alpha(opacity=50);
 }
 
-.modal-header {
-  min-height: 16.428571429px;
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+.btn-no-highlight {
+  background-color: transparent;
+  border-color: transparent;
+  outline: none !important;
 }
 
+/*.modal-header {
+  min-height: 16.428571429px;
+  padding: 10px 10px 10px 15px;
+  color: #fff;
+  background-color: rgba(174,31,31,1);
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  border-bottom: 1px solid #e5e5e5;
+}*/
+
+.modal-header {
+  min-height: 16.428571429px;
+  padding: 0;
+  color: #fff;
+  padding: 5px 5px 0 5px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  /*border-bottom: 1px solid #e5e5e5;*/
+}
+
+
 .modal-header .close {
-  margin-top: -2px;
+  margin-top: 8px;
+  margin-right: 5px;
+  font-size: 25pt;
+  color: #fff;
 }
 
 .modal-title {
   font-family: 'U.S. 101';
-  font-size: 20pt;
+  font-size: 30pt;
   text-transform: uppercase;
   margin: 0;
-  line-height: 1.428571429;
+  /*line-height: 1.428571429;*/
+  padding-top: 5px
 }
 
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 5px;
   transition: 1s all;
 }
 
@@ -7393,6 +7427,7 @@ td.visible-print {
 
 .colour-dpred{
     color: rgba(174, 23, 23, 1);
+    text-align: center;
     font-weight: bold;
     border-color:rgba(174, 23, 23, 1);
     border-width:2px;
@@ -8164,7 +8199,7 @@ td.visible-print {
 }
 
 .mdl2-additionalevidence:before{
-    content: '\E8F4'
+    content: '\E74C'
 }
 
 .mdl2-expand:before{
@@ -8314,6 +8349,10 @@ td.visible-print {
     content: '\E25C';
 }
 
+.mdl2-compilereport:before {
+    content: '\E1DA';
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -8333,9 +8372,9 @@ td.visible-print {
     z-index: 99;
     height: 100vh;
     width: 100%;
-    /*background: radial-gradient(circle at center, #ffffff, #cccccc);*/
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8), rgba(204, 204, 204, 0.8));
     /*background: radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0.5));*/
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.6), rgba(0,0,0,1));
+    /*background: radial-gradient(ellipse at center, rgba(0,0,0,0.6), rgba(0,0,0,1));*/
     /*background-color: rgba(255,255,255,0.8);*/
     /*background-color: rgba(0,0,0,0.6);*/
     background-size: cover;
@@ -8603,7 +8642,7 @@ td.visible-print {
     padding: 0 !important;
 }
 .nomarg {
-    margin: 0;
+    margin: 0 !important;
 }
 
 .label-nopad {
@@ -8639,7 +8678,7 @@ td.visible-print {
 
 .homepage-tile-body{
     width: 250px;
-    height: 35px;
+    height: 30px !important;
     /*background: linar-gradient(-45deg, rgba(174, 23, 23, 1),#b94a48);*/
     background-color: rgba(174,31,31,1);
     cursor: pointer;
@@ -9031,6 +9070,14 @@ td > img {
 
 td > a {
     color: #666;
+}
+
+td > a:hover {
+    color: rgba(174,31,31,1) !important;
+}
+
+td > span > a:hover {
+    color: rgba(174,31,31,1) !important;
 }
 
 .media-none {

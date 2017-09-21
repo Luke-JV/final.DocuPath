@@ -48,6 +48,10 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="IronPdf, Version=4.4.5.29418, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPdf.4.4.5.0\lib\net40\IronPdf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -486,7 +490,7 @@
     <Compile Include="Models\AuditModel.cs" />
     <Compile Include="Models\AuthorizeByAccessArea.cs" />
     <Compile Include="Models\Autocomplete.cs" />
-    <Compile Include="Models\Custom Classes\HAPTIC_ENTRY.cs" />
+    <Compile Include="Models\Custom Classes\GLIMPSE.cs" />
     <Compile Include="Models\Custom Classes\METRIC.cs" />
     <Compile Include="Models\DPIdentity.cs" />
     <Compile Include="Models\DPViewModels\AccessLevelViewModel.cs" />
@@ -660,6 +664,7 @@
       <DependentUpon>DocuPath.edmx</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-fileinput\sass\fileinput.scss" />
+    <Content Include="fonts\US101.TTF" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -839,6 +844,7 @@
     <Content Include="Views\Home\ModalNotificationTest.cshtml" />
     <Content Include="Views\Media\Edit.cshtml" />
     <Content Include="Views\Home\HapticHelp.cshtml" />
+    <Content Include="Views\Reporting\Vision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

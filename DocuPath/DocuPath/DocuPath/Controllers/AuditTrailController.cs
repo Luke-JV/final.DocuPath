@@ -13,27 +13,33 @@ namespace DocuPath.Controllers
    // [LogAction]
     public class AuditTrailController : Controller
     {
+        string controllerName = "AuditTrail";
         DocuPathEntities db = new DocuPathEntities();
 
         public ActionResult Index()
         {
+            string actionName = "Index";
             try
             {
-
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Audit Log");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Audit Trail - View")]
         public ActionResult All()
         {
+            string actionName = "All";
             try
             {
 
@@ -47,13 +53,15 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Audit Log");
                 #endregion
-                return RedirectToAction("Error", "Home", x.Message);
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Full Access Master")]
         public ActionResult Details(int id)
         {
+            string actionName = "Details";
             try
             {
 
@@ -62,12 +70,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagInit, "Audit Log");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagFail, "Audit Log");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 

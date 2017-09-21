@@ -16,19 +16,23 @@ namespace DocuPath.Controllers
     public class AccessLevelController : Controller
     {
         DocuPathEntities db = new DocuPathEntities();
+        string controllerName = "AccessLevel";
 
         [AuthorizeByAccessArea(AccessArea = "Search User Access Level")]
         public ActionResult Index()
         {
+            string actionName = "Index";
             try
             {
-
-
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Access Level");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         //----------------------------------------------------------------------------------------------//
@@ -37,6 +41,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add User Access Level")]
         public ActionResult Add()
         {
+            string actionName = "Add";
             try
             {
 
@@ -172,20 +177,21 @@ namespace DocuPath.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add User Access Level")]
         public ActionResult Add(AccessLevelViewModel model)
         {
+            string actionName = "Add";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -375,12 +381,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -390,6 +397,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Search User Access Level")]
         public ActionResult All()
         {
+            string actionName = "All";
+
             try
             {
                 #region AUDIT_WRITE
@@ -402,7 +411,8 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home", x.Message);
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -410,6 +420,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "View User Access Level")]
         public ActionResult Details(int id)
         {
+            string actionName = "Details";
+
             try
             {
                 #region AUDIT_WRITE
@@ -425,12 +437,13 @@ namespace DocuPath.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -440,6 +453,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User Access Level")]
         public ActionResult Edit(int id)
         {
+            string actionName = "Edit";
+
             try
             {
                 #region AUDIT_WRITE
@@ -448,12 +463,13 @@ namespace DocuPath.Controllers
                 //logic 404
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -462,6 +478,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User Access Level")]
         public ActionResult Edit(int id, ACCESS_LEVEL updatedLevel)
         {
+            string actionName = "Edit";
+
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -483,12 +501,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Access Level");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -498,6 +517,8 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Deactivate User Access Level")]
         public ActionResult Delete(int id)
         {
+            string actionName = "Delete";
+
             try
             {
                 #region AUDIT_WRITE
@@ -511,12 +532,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Access Level");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -525,6 +547,8 @@ namespace DocuPath.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            string actionName = "Delete";
+
             try
             {
                 // TODO: Add delete logic here
@@ -533,12 +557,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Access Level");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -547,6 +572,8 @@ namespace DocuPath.Controllers
 
         public ActionResult test()
         {
+            string actionName = "test";
+
             try
             {
 
@@ -640,9 +667,9 @@ namespace DocuPath.Controllers
 
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 

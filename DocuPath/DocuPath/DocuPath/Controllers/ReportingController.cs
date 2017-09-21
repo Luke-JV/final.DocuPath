@@ -14,26 +14,28 @@ namespace DocuPath.Controllers
     //[LogAction]
     public class ReportingController : Controller
     {
+        string controllerName = "Reporting";
         DocuPathEntities db = new DocuPathEntities();
         
         [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
         public ActionResult Index()
         {
+            string actionName = "Index";
             try
             {
-
-                return View();
+                return RedirectToAction("Insight");
             }
             catch (Exception x)
             {
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error", new HandleErrorInfo(x, "Reporting", "Index"));
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Vision Dashboard - System Health Overview")]
         public ActionResult Vision()
         {
+            string actionName = "Vision";
             try
             {
                 #region AUDIT_WRITE
@@ -80,13 +82,14 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "VISION");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error", new HandleErrorInfo(x, "Reporting", "Vision"));
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
         [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
         public ActionResult Insight()
         {
+            string actionName = "Insight";
             try
             {
                 #region AUDIT_WRITE
@@ -162,7 +165,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingFail, "Media");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error", new HandleErrorInfo(x, "Reporting", "Insight"));
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
     }

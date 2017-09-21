@@ -1,6 +1,8 @@
 ﻿@model DocuPath.DataLayer.USER
 @using DocuPath.Models;
-@{ ViewBag.Title = "Details"; }
+@if (VERTEBRAE.getCurrentUser().USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
+{ ViewBag.Title = "Details"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "ViewUserSpecific"; ViewBag.PageInfoLocator = "ViewUser"; }
+else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "MyProfileSpecific"; ViewBag.PageInfoLocator = "MyProfile"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">

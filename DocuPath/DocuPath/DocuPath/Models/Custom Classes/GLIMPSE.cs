@@ -5,9 +5,7 @@ using System.Web;
 
 namespace DocuPath.Models.Custom_Classes
 {
-    public class HAPTIC_ENTRY
+    public class GLIMPSE
     {
-        public string HapticCatchphrase { get; set; }
-        public string HapticHelpSteps { get; set; }
     }
 }

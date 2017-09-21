@@ -1,6 +1,6 @@
 ﻿@model DocuPath.Models.DPViewModels.ForensicCaseViewModel
 @using DocuPath.Models
-@{ ViewBag.Title = "Details"; }
+@{ ViewBag.Title = "Details"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "ViewFCSpecific"; ViewBag.PageInfoLocator = "ViewFC"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-four">
+        <div class="page-buttons-subgrid buttons-eight">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -27,18 +27,34 @@
                 </form>
             </div>
             <div grid-area="btn2">
+                <form class="minimalform" action="~/ForensicCase/CompileReport" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-compilereport btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="COMPILE REPORT"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnExpandCollapse" accordion-id="#FCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
                 </form>
             </div>
-            <div grid-area="btn3">
+            <div grid-area="btn5">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
-            <div grid-area="btn4">
+            <div grid-area="btn6">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnThumbsizeToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-resize btn-mdl2icon" data-toggle="tooltip" title="TOGGLE THUMBNAIL SIZE"></button>
+                </form>
+            </div>
+            <div grid-area="btn7">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn8">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
@@ -125,10 +141,10 @@
                                 <dd>
                                     @Html.DisplayFor(model => model.forensicCase.SESSION.SLOT.Description) on @if (Model.forensicCase.SESSION.DateID != null)
                                     {
-                                        @Model.forensicCase.SESSION.DateID.ToString("ddd dd MMM yyyy")
+                                    @Model.forensicCase.SESSION.DateID.ToString("ddd dd MMM yyyy")
                                     }
                                 </dd>
-                                <hr class="details-hr"/>
+                                <hr class="details-hr" />
                                 <dt>
                                     @Html.DisplayNameFor(model => model.forensicCase.CauseOfDeathConclusion)
                                 </dt>
@@ -456,13 +472,13 @@
 
                                         @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.SplenicMassKg == 0)
                                         {
-                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        <dd class="detailsview-measurement-text">Absent</dd>
                                         }
                                         else
                                         {
-                                            <dd class="detailsview-measurement-text">
-                                                @Html.DisplayFor(model => model.abdObservation.SplenicMassKg)
-                                            </dd>
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.abdObservation.SplenicMassKg)
+                                        </dd>
                                         }
 
                                         <dt>
@@ -471,13 +487,13 @@
 
                                         @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.LeftKidneyMassKg == 0)
                                         {
-                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        <dd class="detailsview-measurement-text">Absent</dd>
                                         }
                                         else
                                         {
-                                            <dd class="detailsview-measurement-text">
-                                                @Html.DisplayFor(model => model.abdObservation.LeftKidneyMassKg)
-                                            </dd>
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.abdObservation.LeftKidneyMassKg)
+                                        </dd>
                                         }
 
                                         <dt>
@@ -487,13 +503,13 @@
 
                                         @if (@*Model.abdObservation.SplenicMass != null ||*@ Model.abdObservation.RightKidneyMassKg == 0)
                                         {
-                                            <dd class="detailsview-measurement-text">Absent</dd>
+                                        <dd class="detailsview-measurement-text">Absent</dd>
                                         }
                                         else
                                         {
-                                            <dd class="detailsview-measurement-text">
-                                                @Html.DisplayFor(model => model.abdObservation.RightKidneyMassKg)
-                                            </dd>
+                                        <dd class="detailsview-measurement-text">
+                                            @Html.DisplayFor(model => model.abdObservation.RightKidneyMassKg)
+                                        </dd>
                                         }
                                     </dl>
                                 </div>
@@ -541,22 +557,153 @@
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
                                     @*<th class="colour-dpred">Request Closed</th>*@
                                 </tr>
-                                @foreach (var item in Model.serviceRequests.OrderByDescending(x=>x.DateAdded))
+                                @foreach (var item in Model.serviceRequests.OrderByDescending(x => x.DateAdded))
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
                                         <td>@Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)</td>
                                         <td>@Html.DisplayFor(modelItem => item.RequestNote)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
-                                        <td>@Html.ActionLink(" ", "Details", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
-                                        @*@if (item.IsClosed == true)
-                                            {
-                                                <td><div class="mdl2icon mdl2-greenticked"></div>Closed</td>
-                                            }
-                                            else
-                                            {
-                                                <td><div class="mdl2icon mdl2-redunticked"></div>Not Closed</td>
-                                            }*@
+                                        <td>
+                                            <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SR_@item.ServiceRequestID"></a></span>
+                                            <div class="modal fade" id="SR_@item.ServiceRequestID" role="dialog">
+                                                <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="grid hdr-grid">
+                                                                <div class="page-hdr">
+                                                                    <div class="page-header-subgrid">
+                                                                        <div class="icon-circle mdl2icon mdl2-servicerequest"></div>
+                                                                        <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                                                        <div class="page-header-text">VIEW SERVICE REQUEST</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="page-btns">
+                                                                    <div class="page-buttons-subgrid buttons-one">
+                                                                        <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                                                        <div></div>
+                                                                        <div grid-area="btn1">
+                                                                            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                                                <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div></div>
+                                                                        <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">VIEW SERVICE REQUEST</h4>*@
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-horizontal border-generic form-generic nomarg">
+                                                                <div class="row" style="margin-left: 0px">
+                                                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                                                                        <div class="panel-group">
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading">
+                                                                                    <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                                                                                    <span>SERVICE REQUEST DETAILS</span>
+                                                                                </div>
+                                                                                <div class="panel-collapse collapse in">
+                                                                                    <div class="panel-body">
+                                                                                        <dl class="dl-horizontal-small">
+                                                                                            <dt>
+                                                                                                @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                            </dt>
+
+                                                                                            <dd>
+                                                                                                @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                            </dd>
+
+
+                                                                                            <dt style="padding-top: 5.2px">
+                                                                                                @Html.DisplayNameFor(model => item.ForensicCaseID)
+                                                                                            </dt>
+
+                                                                                            <dd class="large-identifier">
+                                                                                                @Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)
+                                                                                            </dd>
+                                                                                            <hr class="details-hr" />
+                                                                                            <dt>
+                                                                                                @Html.DisplayNameFor(model => item.REQUEST_TYPE.RequestTypeValue)
+                                                                                            </dt>
+
+                                                                                            <dd>
+                                                                                                @Html.DisplayFor(model => item.REQUEST_TYPE.RequestTypeValue)
+                                                                                            </dd>
+
+                                                                                            <dt>
+                                                                                                @Html.DisplayNameFor(model => item.RequestNote)
+                                                                                            </dt>
+
+                                                                                            <dd>
+                                                                                                @Html.DisplayFor(model => item.RequestNote)
+                                                                                            </dd>
+                                                                                            <hr class="details-hr" />
+                                                                                            <dt>
+                                                                                                @Html.DisplayNameFor(model => item.DateAdded)
+                                                                                            </dt>
+
+                                                                                            <dd>
+                                                                                                @Html.DisplayFor(model => item.DateAdded)
+                                                                                            </dd>
+
+                                                                                            <dt>
+                                                                                                @Html.DisplayNameFor(model => item.IsCancelled)
+                                                                                            </dt>
+                                                                                            @if (item.IsCancelled == true)
+                                                                                            {
+                                                                                            <dd>Cancelled</dd>
+                                                                                            }
+                                                                                            else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                                                                                            {
+                                                                                            <dd>Active</dd>
+                                                                                            }
+                                                                                            else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                                                                                            {
+                                                                                            <dd>Closed - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + item.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
+                                                                                            }
+                                                                                        </dl>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="panel panel-default">
+                                                                                <div class="panel-heading">
+                                                                                    <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                                                                                    <span>SPECIMEN DETAILS</span>
+                                                                                </div>
+                                                                                <div class="panel-collapse collapse in">
+                                                                                    <div class="panel-body">
+                                                                                        <dl class="dl-horizontal-small">
+                                                                                            <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dt>
+                                                                                            <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
+
+                                                                                            <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dt>
+                                                                                            <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
+                                                                                            <hr class="details-hr" />
+                                                                                            <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
+                                                                                            <dd class="large-identifier">
+                                                                                                @VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
+                                                                                                @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
+                                                                                            </dd>
+
+                                                                                            <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
+                                                                                            <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
+                                                                                        </dl>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)"></iframe>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -582,9 +729,178 @@
                                 {
                                     <tr>
                                         <td class="text-center"><img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb" /></td>
-                                        <td>@Html.DisplayFor(modelItem => item.MediaCaption)</td>
+                                        <td><strong>@Html.DisplayFor(modelItem => item.MediaCaption)</strong></td>
                                         <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
-                                        <td>@Html.ActionLink(" ", "Details", "Media", new { id = item.MediaID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                        <td>
+                                            <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#MEDIA_@item.MediaID"></a></span>
+                                            <div class="modal fade" id="MEDIA_@item.MediaID" role="dialog">
+                                                <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="grid hdr-grid">
+                                                                <div class="page-hdr">
+                                                                    <div class="page-header-subgrid">
+                                                                        <div class="icon-circle mdl2icon mdl2-media"></div>
+                                                                        <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                                                        <div class="page-header-text">VIEW MEDIA ITEM</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="page-btns">
+                                                                    <div class="page-buttons-subgrid buttons-one">
+                                                                        <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                                                        <div></div>
+                                                                        <div grid-area="btn1">
+                                                                            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                                                <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div></div>
+                                                                        <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-horizontal border-generic form-generic nomarg">
+                                                                <div class="row" style="margin-left: 0px">
+                                                                    <div class="col-md-5" style="padding-left: 0px; padding-right: 2.5px">
+                                                                        <div class="panel panel-default" style="margin-bottom: 5px">
+                                                                            <div class="panel-heading">
+                                                                                <span class="mdl2icon mdl2-media panel-mdl2icon"></span>
+                                                                                <span>MEDIA ITEM THUMBNAIL</span>
+                                                                            </div>
+                                                                            <div id="ThumbnailPanel" class="panel-collapse collapse in">
+                                                                                <div class="panel-body apad5 text-center" style="height: 309.4px; max-height: 309.4px; width: auto">
+                                                                                    <div class="imgPreview" style="height: 300px; width: 410px; padding: 0px; display: grid; justify-content: center; margin: auto">
+                                                                                        <img class="img-thumbnail" src="~/@VERTEBRAE.GetUrl(item.MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-7" style="padding-left: 2.5px; padding-right: 15px">
+                                                                        <div class="panel panel-default" style="margin-bottom: 5px">
+                                                                            <div class="panel-heading">
+                                                                                <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                                                                <span>MEDIA ITEM DETAILS</span>
+                                                                            </div>
+                                                                            <div id="DetailsPanel" class="panel-collapse collapse in">
+                                                                                <div class="panel-body" style="min-height: 309.4px">
+                                                                                    <dl class="dl-horizontal-tiny">
+                                                                                        <dt style="padding-top: 2.8px">
+                                                                                            @Html.DisplayNameFor(model => item.MediaCaption)
+                                                                                        </dt>
+
+                                                                                        <dd class="table-large-identifier" style="font-weight: bold; text-transform: uppercase">
+                                                                                            @Html.DisplayFor(model => item.MediaCaption)
+                                                                                        </dd>
+
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.MediaDescription)
+                                                                                        </dt>
+
+                                                                                        <dd style="text-align: justify; padding-right: 10px">
+                                                                                            @Html.DisplayFor(model => item.MediaDescription)
+                                                                                        </dd>
+                                                                                        <hr class="details-hr" />
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.IsPubliclyAccessible)
+                                                                                        </dt>
+
+                                                                                        @if (item.IsPubliclyAccessible == true)
+                                                                                        {
+                                                                                            <dd>
+                                                                                                @Html.Raw(VERTEBRAE.StatusMarkup("Public", "status-danger"))
+                                                                                            </dd>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <dd>
+                                                                                                @Html.Raw(VERTEBRAE.StatusMarkup("Private", "status-ok"))
+                                                                                            </dd>
+                                                                                        }
+
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.MediaPurposeID)
+                                                                                        </dt>
+
+                                                                                        <dd>
+                                                                                            @Html.DisplayFor(model => item.MEDIA_PURPOSE.MediaPurposeValue)
+                                                                                        </dd>
+
+                                                                                        @if (item.MEDIA_PURPOSE.MediaPurposeValue == "Case Related")
+                                                                                        {
+                                                                                            <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => item.FORENSIC_CASE.ForensicDRNumber)</dt>
+                                                                                            <dd class="large-identifier">@Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)</dd>
+                                                                                        }
+                                                                                        <hr class="details-hr" />
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.UserID)
+                                                                                        </dt>
+
+                                                                                        <dd>
+                                                                                            @Html.DisplayFor(model => item.USER.FirstName) @Html.DisplayFor(model => item.USER.LastName)
+                                                                                        </dd>
+
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.DateAdded)
+                                                                                        </dt>
+
+                                                                                        <dd>
+                                                                                            @Html.DisplayFor(model => item.DateAdded)
+                                                                                        </dd>
+
+                                                                                        <dt>
+                                                                                            @Html.DisplayNameFor(model => item.STATUS.StatusValue)
+                                                                                        </dt>
+                                                                                        @if (item.STATUS.StatusValue == "Active")
+                                                                                        {
+                                                                                            <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-ok"))</dd>
+                                                                                        }
+                                                                                        else if (item.STATUS.StatusValue == "Pending")
+                                                                                        {
+                                                                                            <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-warning"))</dd>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-inactive"))</dd>
+                                                                                        }
+                                                                                    </dl>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row" style="margin-left: 0px; padding-top: 0px">
+                                                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                                                                        <div class="panel panel-default" style="margin-bottom: 0px">
+                                                                            <div class="panel-heading">
+                                                                                <span class="mdl2icon mdl2-tag panel-mdl2icon"></span>
+                                                                                <span>Media Item Tags</span>
+                                                                            </div>
+                                                                            <div id="TagPanel" class="panel-collapse collapse in">
+                                                                                <div class="panel-body apad5">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            @foreach (var tag in item.MEDIA_TAG.Where(x => x.MediaID == item.MediaID))
+                                                                                            {
+                                                                                                @Html.Label(tag.CONTENT_TAG.ContentTagText, new { @class = "details-tag", @data_toggle = "tooltip", @title = tag.CONTENT_TAG.ContentTagCode })
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)"></iframe>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -610,11 +926,45 @@
                                 @foreach (var item in Model.additionalEvidence.OrderBy(x => x.EvidenceDescription))
                                 {
                                     <tr>
-                                        <td class="table-large-identifier">@Html.DisplayFor(modelItem => item.EvidenceSerialNumber)</td>
+                                        <td class="table-large-identifier">@VERTEBRAE.ChunkString(item.EvidenceSerialNumber, 5, " ")</td>
                                         <td>@Html.DisplayFor(modelItem => item.EvidenceDescription)</td>
                                         <td>@Html.DisplayFor(modelItem => item.ContactPersonNameSurname)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.ContactPersonContactNum)</td>
-                                        <td>@Html.ActionLink(" ", "Details", "AdditionalEvidence", new { id = item.AdditionalEvidenceID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })</td>
+                                        <td>@Html.Raw(@VERTEBRAE.PhoneNumberMarkup(item.ContactPersonContactNum))</td>
+                                        <td><span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#AE_@item.AdditionalEvidenceID"></a></span>
+                                            <div class="modal fade" id="AE_@item.AdditionalEvidenceID" role="dialog">
+                                                <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="grid hdr-grid">
+                                                                <div class="page-hdr">
+                                                                    <div class="page-header-subgrid">
+                                                                        <div class="icon-circle mdl2icon mdl2-additionalevidence"></div>
+                                                                        <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                                                        <div class="page-header-text">VIEW ADDITIONAL EVIDENCE ITEM</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="page-btns">
+                                                                    <div class="page-buttons-subgrid buttons-one">
+                                                                        <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                                                        <div></div>
+                                                                        <div grid-area="btn1">
+                                                                            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                                                <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div></div>
+                                                                        <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.AdditionalEvidenceLocation)"></iframe>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 }
                             </table>
@@ -662,7 +1012,7 @@
                                 {
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.COD_PROMINENCE.ProminenceValue)</td>
-                                        <td style="width: 30%">@Html.DisplayFor(modelItem => item.CONTENT_TAG.ContentTagText)</td>
+                                        <td style="width: 30%"><strong>@Html.DisplayFor(modelItem => item.CONTENT_TAG.ContentTagText)</strong></td>
                                         @if (item.ForensicCaseID == Model.forensicCase.ForensicCaseID && item.ProminenceID == 1)
                                         {
                                             <td style="max-width: 50%; text-align: justify">As is evidenced by points 1.1, 1.2 and 1.3 in my personal notes (linked to this case) I believe that the selected Cause Of Death is the most likely Primary Estimation for the main reason that XYZ.</td>
@@ -901,7 +1251,6 @@
                                             </tr>
                                         }
                                     </table>
-
                                 </div>
                                 <div class="col-md-6">
                                     @* GEOLOCATION STATISTICS - POLICE STATIONS & ROLES *@
@@ -920,7 +1269,201 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.STATION_ROLE.StationRoleDescription)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
-                                                <td>@Html.ActionLink(" ", "Details", "ServiceProvider", new { id = item.ServiceProviderID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })
+                                                <td>
+                                                    <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SP_@item.ServiceProviderID"></a></span>
+                                                    <div class="modal fade" id="SP_@item.ServiceProviderID" role="dialog">
+                                                        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <div class="grid hdr-grid">
+                                                                        <div class="page-hdr">
+                                                                            <div class="page-header-subgrid">
+                                                                                <div class="icon-circle mdl2icon mdl2-serviceprovider"></div>
+                                                                                <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                                                                <div class="page-header-text">VIEW SERVICE PROVIDER</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="page-btns">
+                                                                            <div class="page-buttons-subgrid buttons-one">
+                                                                                <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                                                                <div></div>
+                                                                                <div grid-area="btn1">
+                                                                                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div></div>
+                                                                                <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @*<button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">VIEW SERVICE REQUEST</h4>*@
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-horizontal border-generic form-generic nomarg">
+                                                                        <div class="row" style="margin-left: 0px">
+                                                                            <div class="col-md-6" style="padding-left: 0px; padding-right: 2.5px">
+                                                                                <div class="panel panel-default" style="margin-bottom: 0px">
+                                                                                    <div class="panel-heading">
+                                                                                        <span class="mdl2icon mdl2-company panel-mdl2icon"></span>
+                                                                                        <span>Company Details</span>
+                                                                                    </div>
+                                                                                    <div id="CompanyPanel" class="panel-collapse collapse in">
+                                                                                        <div class="panel-body apad5" style="min-height: 160px">
+                                                                                            <dl class="dl-horizontal-small">
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyPhysicalAddress)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyPhysicalAddress)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyPostalAddress)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyPostalAddress)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.IsDeactivated)
+                                                                                                </dt>
+                                                                                                @if (item.SERVICE_PROVIDER.IsDeactivated == true)
+                                                                                                {
+                                                                                                    <dd>
+                                                                                                        Deactivated
+                                                                                                    </dd>
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    <dd>
+                                                                                                        Active
+                                                                                                    </dd>
+                                                                                                }
+                                                                                                <hr class="details-hr" />
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyTelNum)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.PhoneNumberMarkup(item.SERVICE_PROVIDER.CompanyTelNum))
+                                                                                                    @*@Html.DisplayFor(model => model.CompanyTelNum)*@
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyFaxNum)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.PhoneNumberMarkup(item.SERVICE_PROVIDER.CompanyFaxNum))
+                                                                                                    @*@Html.DisplayFor(model => model.CompanyFaxNum)*@
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyEmail)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.EmailMarkup(item.SERVICE_PROVIDER.CompanyEmail))
+                                                                                                    @*@Html.DisplayFor(model => model.CompanyEmail)*@
+                                                                                                </dd>
+
+                                                                                            </dl>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6" style="padding-left: 2.5px; padding-right: 15px">
+                                                                                <div class="panel panel-default" style="margin-bottom: 0px">
+                                                                                    <div class="panel-heading">
+                                                                                        <span class="mdl2icon mdl2-representative panel-mdl2icon"></span>
+                                                                                        <span>Representative Details</span>
+                                                                                    </div>
+                                                                                    <div id="RepPanel" class="panel-collapse collapse in">
+                                                                                        <div class="panel-body apad5" style="min-height: 160px">
+                                                                                            <dl class="dl-horizontal-small">
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.TitleID)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.TITLE.TitleValue)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepFirstName)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.RepFirstName)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepLastName)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.RepLastName)
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepJobDescription)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.DisplayFor(model => item.SERVICE_PROVIDER.RepJobDescription)
+                                                                                                </dd>
+                                                                                                <hr class="details-hr" />
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepCellNum)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.PhoneNumberMarkup(item.SERVICE_PROVIDER.RepCellNum))
+                                                                                                    @*@Html.DisplayFor(model => model.RepCellNum)*@
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepWorkNum)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.PhoneNumberMarkup(item.SERVICE_PROVIDER.RepWorkNum))
+                                                                                                    @*@Html.DisplayFor(model => model.RepWorkNum)*@
+                                                                                                </dd>
+
+                                                                                                <dt>
+                                                                                                    @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.RepEmail)
+                                                                                                </dt>
+
+                                                                                                <dd>
+                                                                                                    @Html.Raw(VERTEBRAE.EmailMarkup(item.SERVICE_PROVIDER.RepEmail))
+                                                                                                    @*@Html.DisplayFor(model => model.RepEmail)*@
+                                                                                                </dd>
+                                                                                            </dl>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)"></iframe>*@
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @*@Html.ActionLink(" ", "Details", "ServiceProvider", new { id = item.ServiceProviderID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View" })*@
                                             </tr>
                                         }
                                     </table>
@@ -992,7 +1535,7 @@
                                         <dd>
                                             @foreach (var speccat in Model.specialCategory)
                                             {
-                                                @Html.Label(speccat.SPECIAL_CATEGORY.SpecialCategoryDescription, new { @class = "details-tag" })
+                                            @Html.Label(speccat.SPECIAL_CATEGORY.SpecialCategoryDescription, new { @class = "details-tag" })
                                             }
                                         </dd>
                                     </dl>
@@ -1011,6 +1554,14 @@
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/materialdatetime")
 
+    <script name="warningscript" type="text/javascript">
+        $(document).ready(function () {
+            $('#btnBack').click(function (event) { event.preventDefault(); $('#divWarning').removeClass("hidden"); });
+            $('#btnWarningYes').click(function (target) { window.location.href = "@Url.Action("All", "ForensicCase")"; });
+            $('#btnWarningNo').click(function () { $('#divWarning').addClass("hidden"); });
+        });
+    </script>
+
     <script id="loadBootgrids" type="text/javascript">
         //var FCSRgrid = $("#FCSR").bootgrid({
         //    caseSensitive: false,
@@ -1026,27 +1577,27 @@
         //            return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>";
         //        }
         //    }
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-            //        } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-            //        } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-            //        } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-            //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-            //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-            //        }
-            //     },
-            //    "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-            //        return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-            //    }
-            //}
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
+        //        } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
+        //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+        //        } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
+        //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
+        //        } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
+        //            return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Edit\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Lock\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
+        //        "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Migrate\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+        //        }
+        //     },
+        //    "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+        //        return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
+        //    }
+        //}
         //});
 
         //var FCMediagrid = $("#FC_Media").bootgrid({});

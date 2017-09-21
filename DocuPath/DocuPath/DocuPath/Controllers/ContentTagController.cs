@@ -16,27 +16,32 @@ namespace DocuPath.Controllers
   //  [LogAction]
     public class ContentTagController : Controller
     {
+        string controllerName = "ContentTag";
         DocuPathEntities db = new DocuPathEntities();
 
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult Index()
         {
+            string actionName = "Index";
             try
             {
-
                 return RedirectToAction("All");
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Content Tags");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         //----------------------------------------------------------------------------------------------//
-
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add()
         {
+            string actionName = "Add";
             try
             {
 
@@ -72,12 +77,13 @@ namespace DocuPath.Controllers
                 return View(model);
 
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -85,6 +91,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Content Tag")]
         public ActionResult Add(ContentTagViewModel model)
         {
+            string actionName = "Add";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -108,7 +115,6 @@ namespace DocuPath.Controllers
                 }
                 catch (Exception)
                 {
-
                     tag.ContentTagID = 0;
                 }
 
@@ -120,21 +126,22 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Add");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region READS:
-
         [AuthorizeByAccessArea(AccessArea = "Search Content Tag")]
         public ActionResult All()
         {
+            string actionName = "All";
             try
             {
                 ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
@@ -146,15 +153,17 @@ namespace DocuPath.Controllers
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Error", "Home", x.Message);
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
         [AuthorizeByAccessArea(AccessArea = "View Content Tag")]
         public ActionResult Details(int id)
         {
+            string actionName = "Details";
             try
             {
                 #region AUDIT_WRITE
@@ -170,12 +179,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -184,6 +194,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult UpdateRepository()
         {
+            string actionName = "UpdateRepository";
             try
             {
                 #region AUDIT_WRITE
@@ -191,12 +202,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -204,6 +216,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            string actionName = "Edit";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
@@ -220,12 +233,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tags");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -235,6 +249,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id)
         {
+            string actionName = "Delete";
             try
             {
                 #region AUDIT_WRITE
@@ -242,12 +257,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return View();
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Content Tag");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Content Tags");
                 #endregion
-                return RedirectToAction("Error", "Home");
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -256,6 +272,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "404")]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            string actionName = "Delete";
             if (!ModelState.IsValid)
             {
                 return View(collection);
@@ -269,12 +286,13 @@ namespace DocuPath.Controllers
                 #endregion
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
-                //AuditModel.WriteTransaction(0, "404");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteFail, "Content Tags");
                 #endregion
-                return View();
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         #endregion
@@ -282,14 +300,19 @@ namespace DocuPath.Controllers
         #region NON-CRUD ACTIONS:
         public ActionResult GetCategories(string query)
         {
+            string actionName = "GetCategories";
             try
             {
 
                 return Json(_GetCategories(query), JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagFail, "Content Tags");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -330,14 +353,19 @@ namespace DocuPath.Controllers
 
         public ActionResult GetSubcategories(string query)
         {
+            string actionName = "GetSubcategories";
             try
             {
 
                 return Json(_GetSubcategories(query), JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagFail, "Content Tags");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -378,14 +406,19 @@ namespace DocuPath.Controllers
 
         public ActionResult GetConditions(string query)
         {
+            string actionName = "GetConditions";
             try
             {
 
                 return Json(_GetConditions(query), JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagFail, "Content Tags");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -426,14 +459,19 @@ namespace DocuPath.Controllers
 
         public ActionResult GetTags(string query)
         {
+            string actionName = "GetTags";
             try
             {
 
                 return Json(_GetTags(query), JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                return RedirectToAction("Error", "Home");
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SysFlagFail, "Content Tags");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -474,6 +512,7 @@ namespace DocuPath.Controllers
         
         public ActionResult ParseXML()
         {
+            string actionName = "ParseXML";
             #region AUDIT_WRITE
             AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
             #endregion
