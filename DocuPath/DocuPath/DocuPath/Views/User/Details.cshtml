@@ -20,7 +20,7 @@ else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-two">
+        <div class="page-buttons-subgrid buttons-five">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -29,8 +29,19 @@ else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric
                 </form>
             </div>
             <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnExpandCollapse" accordion-id="#UserDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
+                </form>
+            </div>
+            <div grid-area="btn4">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn5">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>

@@ -1,10 +1,36 @@
-﻿@{
-    ViewBag.Title = "Confirm Email";
-}
+﻿@{ ViewBag.Title = "Email Confirmed"; ViewBag.GenericHAPTICLocator = "EmailConfirmedGeneric"; ViewBag.SpecificHAPTICLocator = "EmailConfirmedSpecific"; ViewBag.PageInfoLocator = "EmailConfirmed"; }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li class="active">@Html.ActionLink("Email Confirmed", "ConfirmEmail") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-done"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">EMAIL CONFIRMED COMPLETED</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-one">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                @*<form class="minimalform" action="~/AccessLevel/All" method="post" style="margin-top: 2px">
+                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                    </form>*@
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal border-generic form-generic text-center">
+    <p class="text-center nomarg alert-bar alert-bar-success fullwidth" style="margin-bottom: 5px">
+        Your email has been successfully confirmed.
     </p>
+    @Html.ActionLink("Log In Now", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default", id = "loginLink", @style = "margin-top: 5px" })
 </div>

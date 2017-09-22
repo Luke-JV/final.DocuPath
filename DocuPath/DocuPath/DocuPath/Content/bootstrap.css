@@ -2553,7 +2553,7 @@ fieldset[disabled] .btn {
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
   /*color: rgba(174,31,31,1);*/
-  /*color: rgba(174, 31, 31, 1);*/
+  color: rgba(174, 31, 31, 1);
   border-color: #adadad;
 }
 
@@ -3725,7 +3725,7 @@ input[type="button"].btn-block {
 .dropdown-toggle {
     font-family: 'Segoe UI';
     font-size: 10pt;
-    height: 50px !important;
+    /*height: 50px !important;*/
     color: #fff;
     font-weight: 500;
     text-transform: uppercase;
@@ -3769,7 +3769,7 @@ input[type="button"].btn-block {
   height: 1px;
   margin: 2px 0;
   overflow: hidden;
-  background-color: rgba(174, 31, 31, 1);
+  border-top: 1px solid rgba(174, 31, 31, 1);
 }
 
 .dropdown-menu > li > a {
@@ -3777,6 +3777,7 @@ input[type="button"].btn-block {
   padding: 3px 20px;
   clear: both;
   font-weight: normal;
+  height: auto;
   line-height: 1.428571429;
   color: #fff;
   white-space: nowrap;
@@ -3822,6 +3823,7 @@ input[type="button"].btn-block {
 }
 
 .dropdown-header {
+    border-top: 2px solid rgba(174,31,31,1);
   display: block;
   padding: 3px 8px;
   background-color: #333333;
@@ -5578,6 +5580,32 @@ a.thumbnail:focus {
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+.alert-bar {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  border-top-right-radius: 17px;
+  border-bottom-left-radius: 17px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
+}
+
+.alert-bar-success {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
 }
 
 .alert h4 {
@@ -7441,7 +7469,6 @@ td.visible-print {
 
 .colour-dpred{
     color: rgba(174, 23, 23, 1);
-    text-align: center;
     font-weight: bold;
     border-color:rgba(174, 23, 23, 1);
     border-width:2px;
@@ -9995,11 +10022,11 @@ a.cal-event-week {
 ::-webkit-scrollbar {
     height: 5px;
     width: 5px;
-    background-color: rgba(255,220,220,1);
+    background-color: #818181;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #696969;
+    background: #333333;
     /*-webkit-border-radius: 5px;*/
     height: 5px;
 }
@@ -10161,7 +10188,7 @@ a.cal-event-week {
 		width: 40px;
 		height: 40px;
 		font-size: 15pt;
-        color: white;
+        color: white !important;
 	}
 
     .fullwidth {

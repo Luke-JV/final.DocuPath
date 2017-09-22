@@ -18,11 +18,10 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-six">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-               
                 <form class="minimalform" action="~/User/All" method="post" name="tokenCount" id="tokenCount" style="margin-top: 2px">
                     @*<a class="btn btn-default dropdown-toggle" style="text-align: left; padding: 3px; width: 40px; height: 40px" data-toggle="dropdown"><span class="dropdown-text" style="color: #000">#</span><span class="mdl2icon mdl2-down inline-mdl2icon" style="padding: 0 0 0 2px"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -86,8 +85,19 @@
                 </form>
             </div>
             <div grid-area="btn3">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
+                </form>
+            </div>
+            <div grid-area="btn5">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn6">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
