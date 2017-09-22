@@ -2478,7 +2478,19 @@ fieldset[disabled] .btn {
 
 .login-dropdown {
     background-color: #979797;
-    border-bottom: 1px solid black;
+    height: 100% !important;
+    border-bottom: none !important;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #373737
+}
+
+.myprofile-dropdown {
+    background-color: #979797;
+    height: 100% !important;
+    border-bottom: none !important;
     border-radius: 25px;
     padding-left: 5px;
     padding-right: 5px;
@@ -2532,7 +2544,7 @@ fieldset[disabled] .btn {
     }
 
     .login-dropdown:hover {
-        background-color: rgba(174,31,31,1);
+        background-color: #333333 !important;
     }
 
 .btn-default:hover,
@@ -3713,6 +3725,7 @@ input[type="button"].btn-block {
 .dropdown-toggle {
     font-family: 'Segoe UI';
     font-size: 10pt;
+    height: 50px !important;
     color: #fff;
     font-weight: 500;
     text-transform: uppercase;
@@ -4692,6 +4705,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-fixed-top {
   top: 0;
+  height: 51px;
   z-index: 1030;
   transition: all 0.75s;
 }
