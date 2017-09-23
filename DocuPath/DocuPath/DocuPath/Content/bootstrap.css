@@ -7931,6 +7931,14 @@ td.visible-print {
     content: '\E713'
 }
 
+.mdl2-wrench:before{
+    content: '\E90F'
+}
+
+.mdl2-config:before{
+    content: '\E9F5'
+}
+
 .mdl2-backprevious:before{
     content: '\E72B'
 }
@@ -12921,4 +12929,188 @@ ctrl {
     color: #000;
     background-color: #ffff00;
 }
+/*#endregion */
+
+/*#region SYSTEM PARAMETERS TREE VIEW: */
+
+.sys-params-grid {
+    grid-gap: 5px;
+    padding: 0;
+    margin: 0;
+    grid-template-columns: 285px 1fr;
+    grid-template-rows: minmax(600px, auto);
+    grid-template-areas: "params_tree params_content"
+}
+
+.sys-params-panel {
+    min-height: 550px;
+    max-height: 550px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.btn-param-action {
+    height: 35px;
+    width: 35px;
+    float: right;
+    top: 4.5px;
+    margin-right: 4.5px
+}
+
+.placeholder-container{
+    display: grid;
+    vertical-align: middle !important;
+    text-align: center !important;
+}
+
+.placeholder-content {
+    display: grid;
+    align-content: center;
+    margin: 0 25px 0 25px;
+    border-radius: 10px;
+    border-right: 1px solid #666;
+    border-left: 1px solid #666;
+    background-color: #e8e8e8;
+    font-family: 'U.S. 101';
+    font-size: 20pt;
+}
+
+.placeholder-mdl2icon{
+    font-size: 60pt;
+    color: #333;
+}
+
+/*.sys-params-grid div, ul {
+    border: 1px solid black;
+}*/
+
+.tree, .tree ul {
+    display: inline-block;            
+    max-width: 300px !important;
+    margin: auto;
+    padding: 0;
+    list-style: none;
+    color: #000 !important;
+    overflow-y: auto;
+}
+
+            .tree ul {
+                margin-left: 1em;
+                position: relative;
+                /*transition: 0.75s all;*/
+            }
+
+                .tree ul ul {
+                    margin-left: .5em;
+                }
+
+                .tree ul:before {
+                    content: "";
+                    display: block;
+                    width: 0;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    border-left: 1px solid #afafaf;
+                    /*transition: 0.75s all;*/
+                }
+
+            .tree li {
+                /*width: inherit;*/
+                margin: 0;
+                padding: 0 1em;
+                line-height: 2em;
+                position: relative;
+                /*transition: 0.75s all;*/
+            }
+
+            .tree li .branch {
+                /*width: inherit;*/
+                padding-right: 0;
+                border-left: 1px #afafaf !important;
+                /*transition: 0.75s all;*/
+            }
+
+            .tree li a:hover {
+                /*padding: 0 2.5px;*/
+                color: rgba(174,31,31,1) !important;
+                background-color: rgba(255,220,220,1) !important;
+            }
+
+            .tree li span:hover {
+                /*padding: 0 2.5px;*/
+                color: rgba(174,31,31,1) !important;
+            }
+
+            .tree ul li:before {
+                content: "";
+                background-color: inherit;
+                display: block;
+                width: 10px;
+                height: 0;
+                border-top: 1px solid #afafaf !important;
+                margin-top: -1px;
+                position: absolute;
+                top: 1em;
+                left: 0;
+                transition: 0.75s all;
+            }
+
+            .tree ul li:last-child:before {
+                background: #f9f9f9;
+                height: auto;
+                top: 1em;
+                bottom: 0;
+                transition: 0.75s all;
+            }
+
+        .indicator {
+            font-size: 80% !important;
+            color: #999 !important;
+            transition: 0.75s all;
+        }
+
+        .tree li a {
+            text-decoration: none;
+            text-transform: uppercase;
+            font-family: 'U.S. 101';
+            font-size: 13pt;
+            font-weight: normal;
+            cursor: pointer !important;
+            transition: 0.75s all;
+            background-color: #ddd;
+            padding: 0 7.5px 0 7.5px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .tree li span {
+            cursor: pointer !important;
+            transition: 0.75s all;
+        }
+
+            .tree li span:before {
+                font-family: 'Segoe MDL2 Assets';
+                content: '\E713';
+                font-size: 85%;
+                padding-right: 5px;
+            }
+
+        .tree li button, .tree li button:active, .tree li button:focus {
+            text-decoration: none;
+            color: #369;
+            border: none;
+            background: transparent;
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 0px 0px;
+            outline: 0;
+            transition: 0.75s all;
+        }
+
+        .params-panel-heading-grid {
+            grid-gap: 0px;
+            grid-template-columns: auto auto 1fr;
+            grid-template-areas "parms_hdr_ico parms_hdr_txt parms_hdr_btn";
+        }
 /*#endregion */

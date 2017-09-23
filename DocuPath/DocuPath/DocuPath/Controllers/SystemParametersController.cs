@@ -80,6 +80,29 @@ namespace DocuPath.Controllers
 
                 #region MODEL PREPARATION
                 SystemParametersViewModel model = new SystemParametersViewModel();
+                // SCHEDULING:
+                model.allocationStatuses = db.ALLOCATION_STATUS.ToList();
+                model.dutySlots = db.SLOT.ToList();
+                // AUTOPSIES:
+                model.autopsyAreas = db.AUTOPSY_AREA.ToList();
+                model.autopsyTypes = db.AUTOPSY_TYPE.ToList();
+                // STATISTICS:
+                model.apparentMOD = db.APPARENT_MANNER_DEATH.ToList();
+                model.externalCauses = db.EXTERNAL_CAUSE.ToList();
+                model.hospitalsClinics = db.HOSPITAL_CLINIC.ToList();
+                model.genders = db.INDIVIDUAL_GENDER.ToList();
+                model.races = db.INDIVIDUAL_RACE.ToList();
+                model.primaryCOD = db.PRIMARY_CAUSE_DEATH.ToList();
+                model.medicalTreatments = db.MEDICAL_TREATMENTS.ToList();
+                model.provinces = db.PROVINCE.ToList();
+                model.samplesInvestigations = db.SAMPLE_INVESTIGATION.ToList();
+                model.scenesOfInjury = db.SCENE_OF_INJURY.ToList();
+                model.specialCategories = db.SPECIAL_CATEGORY.ToList();
+                // STATUSES & TYPES:
+                model.mediaPurposes = db.MEDIA_PURPOSE.ToList();
+                model.requestTypes = db.REQUEST_TYPE.ToList();
+                model.statuses = db.STATUS.ToList();
+                model.titles = db.TITLE.ToList();
                 #endregion
 
                 return View(model);
