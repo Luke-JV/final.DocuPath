@@ -238,6 +238,7 @@
     <Compile Include="Controllers\SchedulingController.cs" />
     <Compile Include="Controllers\ServiceProviderController.cs" />
     <Compile Include="Controllers\ServiceRequestController.cs" />
+    <Compile Include="Controllers\SystemParametersController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataLayer\ABDOMEN_OBSERVATION.cs">
@@ -504,6 +505,7 @@
     <Compile Include="Models\DPViewModels\SchedulingViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceProviderViewModel.cs" />
     <Compile Include="Models\DPViewModels\ServiceRequestViewModel.cs" />
+    <Compile Include="Models\DPViewModels\SystemParametersViewModel.cs" />
     <Compile Include="Models\DPViewModels\TestViewModels.cs" />
     <Compile Include="Models\DPViewModels\TokenViewModel.cs" />
     <Compile Include="Models\DPViewModels\UserViewModel.cs" />
@@ -845,6 +847,7 @@
     <Content Include="Views\Media\Edit.cshtml" />
     <Content Include="Views\Home\HapticHelp.cshtml" />
     <Content Include="Views\Reporting\Vision.cshtml" />
+    <Content Include="Views\SystemParameters\Maintain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

@@ -58,7 +58,7 @@
                 @Html.DisplayNameFor(model => model.SERVICE_PROVIDER.CompanyName)
             </th>
             <th data-column-id="status" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.IsCancelled)
+                @Html.DisplayName("Status")
             </th>
             <th data-column-id="requestType" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.RequestTypeID)
@@ -76,48 +76,52 @@
         @{ DocuPathEntities db = new DocuPathEntities(); }
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceRequestID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)
-                </td>
-                @if (item.IsCancelled == true)
-                {
-                    <td>Cancelled</td>
-                }
-                else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
-                {
-                    <td>Active</td>
-                }
-                else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
-                {
-                    <td>Closed</td>
-                }
-
-            @*@if (db.SPECIMEN.Where(x => x.ServiceRequestID == item.ServiceRequestID && x.EXTERNAL_REPORT.DateCaptured != null).Count() == 0)
-                {
+            if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+            {
+                <tr class="row-faded">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceRequestID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)
+                    </td>
+                    <td>
+                        Active
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestNote)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateAdded)
+                    </td>
+                </tr>
+            }
+            else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceRequestID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)
+                    </td>
                     <td>
                         Closed
                     </td>
-                }
-                else
-                {
-                <td>
-                    Active
-                </td>
-            }*@ 
-                <td>
-                    @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RequestNote)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateAdded)
-                </td>
-            </tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestNote)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateAdded)
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
@@ -139,13 +143,14 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    //if (row.status.trim() === "Closed") { /* CHECK IF THE REQUEST IS CLOSED, IF TRUE, THEN SHOW 'VIEW': */
-                    //    return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>";
-                    //} else if (row.status.trim() === "Active") { /* CHECK IF THE REQUEST IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'CANCEL' AND 'LINK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Cancel\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Link\" href=\"/ServiceRequest/LinkExternalReport/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
-                    //}
+                    if (row.status.trim() == "Closed") {
+                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" data-placement=\"right\" style=\"font-style: normal\"></i></a>";
+                    } else if (row.status.trim() == "Active")
+                    {
+                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" data-placement=\"right\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
+                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Cancel\" data-placement=\"right\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
+                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link\" data-placement=\"right\" href=\"/ServiceRequest/LinkExternalReport/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
+                    }
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                     return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";

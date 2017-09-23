@@ -191,11 +191,11 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() == "Active") { /* CHECK IF THE USER IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'EDIT' AND 'TOGGLE ACTIVATION': */
+                    if (row.status.trim() == "Active") {
                         return "<a class=\"mdl2icon colour-dpblack\" href=\"/User/Details/" + row.UID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/User/Edit/" + row.UID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Status\" href=\"/User/ToggleStatus/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() == "Deactivated") { /* CHECK IF THE USER IS DEACTIVATED, IF TRUE, THEN SHOW 'VIEW' and 'TOGGLE ACTIVATION': */
+                    } else if (row.status.trim() == "Deactivated") {
                         return "<a class=\"mdl2icon colour-dpblack\" href=\"/User/Details/" + row.UID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Status\" href=\"/User/ToggleStatus/" + row.UID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
                     }

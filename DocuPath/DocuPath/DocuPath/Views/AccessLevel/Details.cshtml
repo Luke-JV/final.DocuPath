@@ -330,6 +330,31 @@
                         }
                     </dd>
                 </dl>
+                @* PARAMS *@
+                <div class="details-subheading">
+                    <span class="mdl2icon mdl2-cog details-subheading-mdl2icon"></span>
+                    <span>SYSTEM PARAMETERS </span>
+                </div>
+                <dl class="dl-horizontal-small">
+                    <dt>
+                        @Html.DisplayName("Accessible Areas")
+                    </dt>
+
+                    <dd>
+                        @{ var paramslist = Model.LEVEL_AREA.Where(x => x.ACCESS_AREA.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > System Parameters"); }
+                        @if (paramslist.Count() > 0)
+                        {
+                            foreach (var area in paramslist)
+                            {
+                                @Html.Label(area.ACCESS_AREA.AccessAreaDescription, new { @class = "details-tag" })
+                            }
+                        }
+                        else
+                        {
+                            @Html.Label("None")
+                        }
+                    </dd>
+                </dl>
                 @* USERS *@
                 <div class="details-subheading">
                     <span class="mdl2icon mdl2-user details-subheading-mdl2icon"></span>
