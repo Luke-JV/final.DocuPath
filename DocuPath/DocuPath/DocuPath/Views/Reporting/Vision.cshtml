@@ -1,4 +1,5 @@
 ﻿@{ ViewBag.Title = "VISION"; ViewBag.GenericHAPTICLocator = "VisionGeneric"; ViewBag.SpecificHAPTICLocator = "VisionSpecific"; ViewBag.PageInfoLocator = "Vision"; }
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -37,43 +38,242 @@
     </div>
 </div>
 @* DASHBOARD CONTENT: *@
-<div class="form-horizontal border-generic form-generic grid vision-grid">
-    @*<div>HEADING</div>*@
+<div class="form-horizontal border-generic form-generic">
+    @* FORENSIC CASE METRICS: *@
     <div class="metric-header">FORENSIC CASES</div>
-    @foreach (var metric in ViewBag.VISIONMetrics)
-    {
-        if (metric.MetricGroupID == 1 && metric.IsMain) //Forensic Case
-        {
-            <div class="metric-container metric-main">
-                <div class="grid metric-grid">
-                    <div class="metric-name" grid-area="name">@metric.MetricName</div>
-                    <div class="@metric.IconClass" grid-area="icon"></div>
-                    <div class="metric-value" grid-area="value">@metric.MetricValue</div>
-                    <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
-                    <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
-                    <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
-                    <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+    <div class="modal fade" id="FCCharts" role="dialog">
+        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="grid hdr-grid">
+                        <div class="page-hdr">
+                            <div class="page-header-subgrid">
+                                <div class="icon-circle mdl2icon mdl2-fc"></div>
+                                <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                <div class="page-header-text">VISUAL METRICS<span style="color: #999"> — </span><span style="color: rgba(174,31,31,1)">FORENSIC CASES</span></div>
+                            </div>
+                        </div>
+                        <div class="page-btns">
+                            <div class="page-buttons-subgrid buttons-one">
+                                <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                <div></div>
+                                <div grid-area="btn1">
+                                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                    </form>
+                                </div>
+                                <div></div>
+                                <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal form-generic nomarg grid glimpse-grid">
+                        @foreach (var metric in ViewBag.VISIONMetrics)
+                        {
+                            if (metric.MetricGroupID == 1 && metric.ContainerType == 3) //Forensic Case, Container Type = Wide (Graphs)
+                            {
+                        <div class="metric-container metric-wide">
+                            <div class="grid chart-grid">
+                                <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                                <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                                <div class="metric-chart" grid-area="chart">
+                                    <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="450"></canvas>
+                                </div>
+                                <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                                <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                            </div>
+                        </div>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
-        }
-        else if (metric.MetricGroupID == 1 && !metric.IsMain)
+        </div>
+    </div>
+
+    <div class="grid vision-grid" style="border: 1px solid red">
+        @foreach (var metric in ViewBag.VISIONMetrics)
         {
-            <div class="metric-container metric-sub">
-                <div class="grid metric-grid">
-                    <div class="metric-name" grid-area="name">@metric.MetricName</div>
-                    <div class="@metric.IconClass" grid-area="icon"></div>
-                    <div class="metric-value" grid-area="value">@metric.MetricValue</div>
-                    <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
-                    <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
-                    <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
-                    <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+            if (metric.MetricGroupID == 1 && metric.ContainerType == 1) //Forensic Case, Container Type = Main
+            {
+                <div class="metric-container metric-main">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
+            }
+            else if (metric.MetricGroupID == 1 && metric.ContainerType == 2) //Forensic Case, Container Type = Sub
+            {
+                <div class="metric-container metric-sub">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff" data-toggle="modal" data-target="#FCCharts"></i></div>
+    </div>
+    @* LEGACY CASE METRICS: *@
+    <div class="metric-header">LEGACY CASES</div>
+    <div class="modal fade" id="LCCharts" role="dialog">
+        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="grid hdr-grid">
+                        <div class="page-hdr">
+                            <div class="page-header-subgrid">
+                                <div class="icon-circle mdl2icon mdl2-lc"></div>
+                                <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                <div class="page-header-text">VISUAL METRICS<span style="color: #999"> — </span><span style="color: rgba(174,31,31,1)">LEGACY CASES</span></div>
+                            </div>
+                        </div>
+                        <div class="page-btns">
+                            <div class="page-buttons-subgrid buttons-one">
+                                <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                <div></div>
+                                <div grid-area="btn1">
+                                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                    </form>
+                                </div>
+                                <div></div>
+                                <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal form-generic nomarg grid glimpse-grid">
+                        @foreach (var metric in ViewBag.VISIONMetrics)
+                        {
+                            if (metric.MetricGroupID == 2 && metric.ContainerType == 3) //Legacy Case, Container Type = Wide (Graphs)
+                            {
+                        <div class="metric-container metric-wide">
+                            <div class="grid chart-grid">
+                                <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                                <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                                <div class="metric-chart" grid-area="chart">
+                                    <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="450"></canvas>
+                                </div>
+                                <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                                <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                            </div>
+                        </div>
+                            }
+                        }
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="grid vision-grid" style="border: 1px solid red">
+        @foreach (var metric in ViewBag.VISIONMetrics)
+        {
+            if (metric.MetricGroupID == 2 && metric.ContainerType == 1) //Legacy Case, Container Type = Main
+            {
+                <div class="metric-container metric-main">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
+            }
+            else if (metric.MetricGroupID == 2 && metric.ContainerType == 2) //Legacy Case, Container Type = Sub
+            {
+                <div class="metric-container metric-sub">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
+            }
         }
-    }
-    <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></div>    
+        <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff" data-toggle="modal" data-target="#LCCharts"></i></div>
+    </div>
 </div>
 
 @section Scripts {
-
+    <script>
+        var ctx = document.getElementById("Forensic_Cases_By_Status").getContext('2d');
+        var myChart1 = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Active Cases', 'Pending Cases', 'Archived Cases', 'Locked Cases'],
+                datasets: [
+                    {
+                        //label: 'Count',
+                        data: [1, 2, 5, 3],
+                        backgroundColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)'],
+                        borderColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'],
+                        borderWidth: 1,
+                        //labels: ['Active Cases', 'Pending Cases', 'Archived Cases', 'Locked Cases'],
+                    }
+                ]
+                @*//@ViewBag.VISIONMetrics[5].MetricValue.ToString()*@
+            },
+            options: {
+                cutoutPercentage: 50,
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById("Forensic_Cases_Added_&_Closed").getContext('2d');
+        var myChart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'],
+                datasets: [
+                    {
+                        label: 'Forensic Cases Added',
+                        data: [5, 15, 35, 56, 68],
+                        backgroundColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)', 'rgba(174, 31, 31, 0.2)'],
+                        borderColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'],
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Forensic Cases Closed',
+                        data: [3, 10, 38, 48, 78],
+                        backgroundColor: ['rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 0.8)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 128, 128, 0.4)', 'rgba(128, 128, 128, 0.2)'],
+                        borderColor: ['rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)'],
+                        borderWidth: 1
+                    }
+                ]
+                @*//@ViewBag.VISIONMetrics[5].MetricValue.ToString()*@
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 }

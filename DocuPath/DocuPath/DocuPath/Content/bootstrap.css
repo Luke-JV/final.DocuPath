@@ -13120,7 +13120,8 @@ ctrl {
 .vision-grid {
     padding: 15px;
     grid-gap: 15px;
-    grid-template-columns: repeat(6, 1fr) 25px;
+    grid-template-columns: repeat(6, 1fr) /*25px*/;
+    justify-content: center;
     /*background: radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0.5));*/
 }
 
@@ -13140,6 +13141,7 @@ ctrl {
 
 .metric-container {
     height: 150px;
+    min-width: 121.825px;
     border: 1px solid #999 !important;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -13158,18 +13160,24 @@ ctrl {
     border: 1px solid transparent !important;
 }
 
+.metric-sub .metric-value {
+    font-size: 30pt;
+}
+
 .metric-more {
     /*font-family: 'Segoe MDL2 Assets';
     content: '\E76C';
     font-size: 10pt;*/
     margin: 5px 0;
     height: 140px;
+    width: 20%;
     display: grid;
     align-content: center;
     padding: 0;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: #333;
+    transition: 1s all;
 }
 
 .metric-container:hover {
@@ -13220,6 +13228,8 @@ ctrl {
     font-size: 13pt;
     text-transform: uppercase;
     line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .metric-value {
     font-family: 'Consolas';
@@ -13288,5 +13298,37 @@ ctrl {
 .metric-container:hover .metric-description {
     display: inline;
 }
+
+.glimpse-grid {
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+/*.glimpse-grid div {
+    border: 1px solid black;
+}*/
+.glimpse-grid .metric-container:hover {
+    background-color: #efefef;
+}
+
+.metric-wide {
+    height: auto;
+}
+.metric-chart {
+        grid-column: 1/-1;
+        padding: 20px;
+}
+
+.chart-grid {
+    grid-gap: 0px;
+    grid-template-columns: 22px 1fr;
+    grid-template-areas:    "icon name"
+                            "chart chart"
+                            "description"
+                            "refreshed";
+}
+
+
 
 /*#endregion */

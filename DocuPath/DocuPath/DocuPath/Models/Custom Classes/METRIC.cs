@@ -9,8 +9,9 @@ namespace DocuPath.Models.Custom_Classes
     {
         // Members:
         private int mMetricGroupID;
-        private bool mIsMain;
+        private int mContainerType; //1 = main, 2 = sub, 3 = wide
         private string mIconClass;
+        private string mExploreURL;
         private string mMetricName;
         private string mMetricValue;
         private string mMetricUnit;
@@ -20,8 +21,9 @@ namespace DocuPath.Models.Custom_Classes
 
         // Properties:
         public int MetricGroupID { get { return mMetricGroupID; } set { mMetricGroupID = value; } }
-        public bool IsMain { get { return mIsMain; } set { mIsMain = value; } }
+        public int ContainerType { get { return mContainerType; } set { mContainerType = value; } }
         public string IconClass { get { return mIconClass; } set { mIconClass = value; } }
+        public string ExploreURL { get { return mExploreURL; } set { mExploreURL = value; } }
         public string MetricName { get { return mMetricName; } set { mMetricName = value; } }
         public string MetricValue { get { return mMetricValue; } set { mMetricValue = value; } }
         public string MetricUnit { get { return mMetricUnit; } set { mMetricUnit = value; } }
@@ -33,22 +35,24 @@ namespace DocuPath.Models.Custom_Classes
         public METRIC()
         {
             MetricGroupID = 0;
-            IsMain = true;
+            ContainerType = 1;
             IconClass = "mdl2icon mdl2-info metric-mdl2icon";
+            ExploreURL = "~/Home/Index";
             MetricName = "";
             MetricValue = "";
             MetricUnit = "";
             MetricSummary = "";
             MetricDescription = "";
-            mMetricLastRefreshed = System.DateTime.Now;
+            mMetricLastRefreshed = DateTime.Now;
         }
 
         // Parameterised Constructor:
-        public METRIC(int inGroupID, bool inIsMain, string inIconClass, string inName, string inValue, string inUnit, string inSummary, string inDescription, DateTime inRefreshStamp)
+        public METRIC(int inGroupID, int inContainerType, string inIconClass, string inExploreURL, string inName, string inValue, string inUnit, string inSummary, string inDescription, DateTime inRefreshStamp)
         {
             MetricGroupID = inGroupID;
-            IsMain = inIsMain;
+            ContainerType = inContainerType;
             IconClass = inIconClass;
+            ExploreURL = inExploreURL;
             MetricName = inName;
             MetricValue = inValue;
             MetricUnit = inUnit;

@@ -168,72 +168,123 @@ namespace DocuPath.Models
         {
             using (DocuPathEntities db = new DocuPathEntities())
             {
+                #region Parameters, Extracted Constants & Values:
                 List<METRIC> visionMetrics = new List<METRIC>();
+                DateTime dtToday = DateTime.Today;
+                DateTime dtDateToday = DateTime.Today.Date;
+                DateTime dtTimeNow = DateTime.Now;
+                DateTime dtDateNow = DateTime.Now.Date; 
+                double targetAge = TimeSpan.FromDays(365 * 11).TotalDays;
+                var pastSeven = dtToday.AddDays(-7);
+                var pastThirty = dtToday.AddDays(-30);
+                var pastSixty = dtToday.AddDays(-60);
+                var pastNinety = dtToday.AddDays(-90);
+                #endregion
 
-                DateTime dtToday = System.DateTime.Today;
-                DateTime dtDateToday = System.DateTime.Today.Date;
-                DateTime dtTimeNow = System.DateTime.Now;
-                DateTime dtDateNow = System.DateTime.Now.Date;
-
-                // CASE MANAGEMENT OVERVIEW:
+                ////////////////////////////////// CASE MANAGEMENT OVERVIEW: //////////////////////////////////
                 // ======= FORENSIC CASES (GROUP ID: 1) =======
-                METRIC vmFCCount = new METRIC(1, true, "mdl2icon mdl2-fc metric-mdl2icon", "All Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "in total", "The total number of Forensic Cases in the DocuPath database, regardless of case status.", System.DateTime.Now);
+                #region Forensic Case Metrics
+                METRIC vmFCCount = new METRIC(1, 1, "mdl2icon mdl2-fc metric-mdl2icon", "/ForensicCase/All", "All Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "in total", "The total number of Forensic Cases in the DocuPath database, regardless of case status.", DateTime.Now);
                 visionMetrics.Add(vmFCCount);
 
                 // --> COUNT OF FC BY STATUS:
                 // Active:
-                METRIC vmActiveFCCount = new METRIC(1, false, "mdl2icon mdl2-done metric-mdl2icon", "Active Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                METRIC vmActiveFCCount = new METRIC(1, 2, "mdl2icon mdl2-done metric-mdl2icon", "/ForensicCase/All", "Active Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Forensic Cases in the DocuPath database.", DateTime.Now);
                 visionMetrics.Add(vmActiveFCCount);
                 // Pending:
-                METRIC vmPendingFCCount = new METRIC(1, false, "mdl2icon mdl2-warning metric-mdl2icon", "Pending Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                METRIC vmPendingFCCount = new METRIC(1, 2, "mdl2icon mdl2-warning metric-mdl2icon", "/ForensicCase/All", "Pending Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending Forensic Cases in the DocuPath database.", DateTime.Now);
                 visionMetrics.Add(vmPendingFCCount);
                 // Archived:
-                METRIC vmArchivedFCCount = new METRIC(1, false, "mdl2icon mdl2-delete metric-mdl2icon", "Archived Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                METRIC vmArchivedFCCount = new METRIC(1, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/ForensicCase/All", "Archived Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Forensic Cases in the DocuPath database.", DateTime.Now);
                 visionMetrics.Add(vmArchivedFCCount);
                 // Locked:
-                METRIC vmLockedFCCount = new METRIC(1, false, "mdl2icon mdl2-lock metric-mdl2icon", "Locked Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                METRIC vmLockedFCCount = new METRIC(1, 2, "mdl2icon mdl2-lock metric-mdl2icon", "/ForensicCase/All", "Locked Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked Forensic Cases in the DocuPath database.", DateTime.Now);
                 visionMetrics.Add(vmLockedFCCount);
-                // Average Duration
-                var avg = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue).Average(fc => SqlFunctions.DateDiff("month", fc.DateClosed, fc.DateAdded));
-                METRIC vmAvgFCDuration = new METRIC(1, false, "mdl2icon mdl2-time metric-mdl2icon", "Average Duration", avg.ToString(), "months", "open", "The average duration of a typical Forensic Case in the DocuPath database.", System.DateTime.Now);
+                // FC Counts By Status:
+                #region Case Counts:
+                string FCByStatusChartData = "labels: ['" + vmActiveFCCount.MetricName + "', '" + vmPendingFCCount.MetricName + "', '" + vmArchivedFCCount.MetricName + "', '" + vmLockedFCCount.MetricName + "'], datasets: [{ label: 'Counts By Status', data: [" + vmActiveFCCount.MetricValue + ", " + vmPendingFCCount.MetricValue + ", " + vmArchivedFCCount.MetricValue + ", " + vmLockedFCCount.MetricValue + "], backgroundColor: [ 'rgba(174, 31, 31, 0.2)', 'rgba(0, 0, 0, 0.2)', 'rgba(128, 128, 128, 0.2)', 'rgba(174, 31, 31, 0.2)'], borderColor: [ 'rgba(174, 31, 31, 1)', 'rgba(128, 128, 128, 1)', 'rgba(180, 180, 180, 1)', 'rgba(174, 31, 31, 1)'], borderWidth: 1 }]";
+                #endregion
+                METRIC vmFCCountsByStatusGraph = new METRIC(1, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/ForensicCase/All", "Forensic Cases By Status", FCByStatusChartData, "cases", "by status", "Doughnut chart of Forensic Case counts in the DocuPath database, by status.", DateTime.Now);
+                visionMetrics.Add(vmFCCountsByStatusGraph);
+                // Average Duration:
+                #region Average Duration Calculation
+                var avgFC = Math.Round((double)db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue).Average(fc => SqlFunctions.DateDiff("month", fc.DateClosed, fc.DateAdded)),2);
+                #endregion
+                METRIC vmAvgFCDuration = new METRIC(1, 2, "mdl2icon mdl2-time metric-mdl2icon", "/ForensicCase/All", "Average Duration", avgFC.ToString(), "months", "open", "The average duration of a typical Forensic Case in the DocuPath database.", DateTime.Now);
                 visionMetrics.Add(vmAvgFCDuration);
-                //// --> COUNT OF FC BY DATE ADDED:
-                //ViewBag.FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded == dtToday).Count();
-                //ViewBag.FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > dtToday.AddDays(-7)).Count();
-                //ViewBag.FCAddedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > dtToday.AddDays(-30)).Count();
-                //ViewBag.FCAddedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > dtToday.AddDays(-60)).Count();
-                //ViewBag.FCAddedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > dtToday.AddDays(-90)).Count();
-                //// --> COUNT OF FC BY DATE CLOSED:
-                //ViewBag.FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed == dtToday);
-                //ViewBag.FCClosedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-7)).Count();
-                //ViewBag.FCClosedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-30)).Count();
-                //ViewBag.FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-60)).Count();
-                //ViewBag.FCClosedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-90)).Count();
-                //// --> MISC FC STATS:
-                //// Aged:Non-Aged Forensic Case Ratio:
-                //double dAgedFCPercentage = db.FORENSIC_CASE.Where(fc => (dtDateNow - fc.DateClosed).Value.Days > 365 * 11).Count() / db.FORENSIC_CASE.Count() * 100;
-                //double dRoundedAgedFCPercentage = Math.Round(dAgedFCPercentage, 2);
-                //double dRoundedNonAgedFCPercentage = Math.Round(100 - dRoundedAgedFCPercentage, 2);
-                //ViewBag.AgedFCPercentage = dRoundedAgedFCPercentage;
-                //ViewBag.NonAgedFCPercentage = dRoundedNonAgedFCPercentage;
+                // Aged:Non-Aged Ratio:
+                #region Aged:Non-Aged Ratio Calculation:
+                double iAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
+                double iNonAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
+                string ratio = "1:" + Math.Round(iAgedCount / iNonAgedCount, 2).ToString();
+                #endregion
+                METRIC vmAgedNonAgedFCRatio = new METRIC(1, 2, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Aged Case Ratio", ratio, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Forensic Cases in the DocuPath database.", DateTime.Now);
+                visionMetrics.Add(vmAgedNonAgedFCRatio);
+                // FC Additions:
+                var FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded == dtToday).Count();
+                var FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSeven).Count();
+                var FCAddedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastThirty).Count();
+                var FCAddedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSixty).Count();
+                var FCAddedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastNinety).Count();
+                var FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed == dtToday).Count();
+                var FCClosedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSeven).Count();
+                var FCClosedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastThirty).Count();
+                var FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSixty).Count();
+                var FCClosedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastNinety).Count();
+                #region FC Additions:
+                string FCAddedClosedChartData = "labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'], datasets: [{" +
+                    " label: 'Forensic Cases Added', data: [" + FCAddedToday + ", " + FCAddedPastSevenDays + ", " + FCAddedPastThirtyDays + ", " + FCAddedPastSixtyDays + ", " + FCAddedPastNinetyDays + "], backgroundColor: [ 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)', 'rgba(174, 31, 31, 0.2)'], borderColor: [ 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'], borderWidth: 1 }, {" +
+                    " label: 'Forensic Cases Closed', data: [" + FCClosedToday + ", " + FCClosedPastSevenDays + ", " + FCClosedPastThirtyDays + ", " + FCClosedPastSixtyDays + ", " + FCClosedPastNinetyDays + "], backgroundColor: [ 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 0.8)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 128, 128, 0.4)', 'rgba(128, 128, 128, 0.2)'], borderColor: [ 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)'], borderWidth: 1 }]";
+                #endregion
+                METRIC vmFCAddedByDayGraph = new METRIC(1, 3, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Forensic Cases Added & Closed", FCAddedClosedChartData, "cases", "added/closed", "Bar chart of Forensic Cases added and closed in the DocuPath database, by time interval.", DateTime.Now);
+                visionMetrics.Add(vmFCAddedByDayGraph);
+                #endregion
+                // ======= LEGACY CASES (GROUP ID: 2) =======
+                #region Legacy Case Metrics
+                METRIC vmLCCount = new METRIC(1, 1, "mdl2icon mdl2-lc metric-mdl2icon", "/LegacyCase/All", "All Cases", db.LEGACY_CASE.Count().ToString(), "cases", "in total", "The total number of Legacy Cases in the DocuPath database, regardless of case status.", DateTime.Now);
+                visionMetrics.Add(vmLCCount);
 
-                //// ======= LEGACY CASES =======
-                //ViewBag.TotalLCCount = db.LEGACY_CASE.Count();
-                //// --> COUNT OF LC BY STATUS:
-                //ViewBag.ActiveLCCount = db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Active").Count();
-                //ViewBag.ArchivedLCCount = db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Archived").Count();
-                //// --> COUNT OF LC BY DATE ADDED:
-                //ViewBag.LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded == dtToday).Count();
-                //ViewBag.LCAddedPastSevenDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-7)).Count();
-                //ViewBag.LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-30)).Count();
-                //ViewBag.LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-60)).Count();
-                //ViewBag.LCAddedPastNinetyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-90)).Count();
-                //// --> COUNT OF LC BY DATE CLOSED:
-                //ViewBag.LCClosedToday = db.LEGACY_CASE.Where(fc => fc.DateClosed == dtToday);
-                //ViewBag.LCClosedPastSevenDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-7)).Count();
-                //ViewBag.LCClosedPastThirtyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-30)).Count();
-                //ViewBag.LCClosedPastSixtyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-60)).Count();
-                //ViewBag.LCClosedPastNinetyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-90)).Count();
+                // --> COUNT OF LC BY STATUS:
+                // Active:
+                METRIC vmActiveLCCount = new METRIC(1, 2, "mdl2icon mdl2-done metric-mdl2icon", "/LegacyCase/All", "Active Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Legacy Cases in the DocuPath database.", DateTime.Now);
+                visionMetrics.Add(vmActiveLCCount);
+                // Archived:
+                METRIC vmArchivedLCCount = new METRIC(1, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/LegacyCase/All", "Archived Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Legacy Cases in the DocuPath database.", DateTime.Now);
+                visionMetrics.Add(vmArchivedLCCount);
+                // LC Counts By Status:
+                #region Case Counts:
+                string LCByStatusChartData = "labels: ['" + vmActiveLCCount.MetricName + "', '" + vmArchivedLCCount.MetricName + "'], datasets: [{ label: 'Counts By Status', data: [" + vmActiveLCCount.MetricValue + ", " + vmArchivedLCCount.MetricValue + "], backgroundColor: [ 'rgba(174, 31, 31, 0.2)', 'rgba(0, 0, 0, 0.2)'], borderColor: [ 'rgba(174, 31, 31, 1)', 'rgba(128, 128, 128, 1)'], borderWidth: 1 }]";
+                #endregion
+                METRIC vmLCCountsByStatusGraph = new METRIC(1, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/LegacyCase/All", "Legacy Cases By Status", LCByStatusChartData, "cases", "by status", "Doughnut chart of Legacy Case counts in the DocuPath database, by status.", DateTime.Now);
+                visionMetrics.Add(vmLCCountsByStatusGraph);
+                // Average Duration:
+                #region Average Duration Calculation
+                var avgLC = Math.Round((double)db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue).Average(lc => SqlFunctions.DateDiff("month", lc.DateClosed, lc.DateAdded)), 2);
+                #endregion
+                METRIC vmAvgLCDuration = new METRIC(1, 2, "mdl2icon mdl2-time metric-mdl2icon", "/LegacyCase/All", "Average Duration", avgLC.ToString(), "months", "open", "The average duration of a typical Legacy Case in the DocuPath database.", DateTime.Now);
+                visionMetrics.Add(vmAvgLCDuration);
+                // Aged:Non-Aged Ratio:
+                #region Aged:Non-Aged Ratio Calculation:
+                double iAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
+                double iNonAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
+                string ratioLC = "1:" + Math.Round(iAgedLCCount / iNonAgedLCCount, 2).ToString();
+                #endregion
+                METRIC vmAgedNonAgedLCRatio = new METRIC(1, 2, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Aged Case Ratio", ratioLC, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Legacy Cases in the DocuPath database.", DateTime.Now);
+                visionMetrics.Add(vmAgedNonAgedLCRatio);
+                // LC Additions:
+                var LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded == dtToday).Count();
+                var LCAddedPastSevenDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSeven).Count();
+                var LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastThirty).Count();
+                var LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSixty).Count();
+                var LCAddedPastNinetyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastNinety).Count();
+                #region LC Additions:
+                string LCAddedChartData = "labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'], datasets: [{" +
+                    " label: 'Forensic Cases Added', data: [" + LCAddedToday + ", " + LCAddedPastSevenDays + ", " + LCAddedPastThirtyDays + ", " + LCAddedPastSixtyDays + ", " + LCAddedPastNinetyDays + "], backgroundColor: [ 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)', 'rgba(174, 31, 31, 0.2)'], borderColor: [ 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'], borderWidth: 1 }]";
+                #endregion
+                METRIC vmLCAddedByDayGraph = new METRIC(1, 3, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Legacy Cases Captured", LCAddedChartData, "cases", "captured", "Bar chart of Legacy Cases added captured into the DocuPath database, by time interval.", DateTime.Now);
+                visionMetrics.Add(vmLCAddedByDayGraph);
+
+                #endregion
 
                 //// ======= EXTERNAL REVIEW CASES =======
                 //ViewBag.TotalERCCount = db.EXTERNAL_REVIEW_CASE.Count();
