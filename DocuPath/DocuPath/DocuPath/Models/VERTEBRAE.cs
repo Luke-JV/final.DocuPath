@@ -21,6 +21,7 @@ using Twilio.TwiML;
 using System.Configuration;
 using Twilio.Types;
 using context = System.Web.HttpContext;
+using System.Data.Entity.SqlServer;
 
 namespace DocuPath.Models
 {
@@ -175,15 +176,27 @@ namespace DocuPath.Models
                 DateTime dtDateNow = System.DateTime.Now.Date;
 
                 // CASE MANAGEMENT OVERVIEW:
-                // ======= FORENSIC CASES =======
-                METRIC vmFCCount = new METRIC("Forensic Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "", "", System.DateTime.Now);
+                // ======= FORENSIC CASES (GROUP ID: 1) =======
+                METRIC vmFCCount = new METRIC(1, true, "mdl2icon mdl2-fc metric-mdl2icon", "All Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "in total", "The total number of Forensic Cases in the DocuPath database, regardless of case status.", System.DateTime.Now);
                 visionMetrics.Add(vmFCCount);
 
-                //// --> COUNT OF FC BY STATUS:
-                //ViewBag.ActiveFCCount = db.FORENSIC_CASE.Where(fc => fc.STATUS.StatusValue == "Active").Count();
-                //ViewBag.PendingFCCount = db.FORENSIC_CASE.Where(fc => fc.STATUS.StatusValue == "Pending").Count();
-                //ViewBag.ArchivedFCCount = db.FORENSIC_CASE.Where(fc => fc.STATUS.StatusValue == "Archived").Count();
-                //ViewBag.LockedFCCount = db.FORENSIC_CASE.Where(fc => fc.STATUS.StatusValue == "Locked").Count();
+                // --> COUNT OF FC BY STATUS:
+                // Active:
+                METRIC vmActiveFCCount = new METRIC(1, false, "mdl2icon mdl2-done metric-mdl2icon", "Active Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                visionMetrics.Add(vmActiveFCCount);
+                // Pending:
+                METRIC vmPendingFCCount = new METRIC(1, false, "mdl2icon mdl2-warning metric-mdl2icon", "Pending Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                visionMetrics.Add(vmPendingFCCount);
+                // Archived:
+                METRIC vmArchivedFCCount = new METRIC(1, false, "mdl2icon mdl2-delete metric-mdl2icon", "Archived Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                visionMetrics.Add(vmArchivedFCCount);
+                // Locked:
+                METRIC vmLockedFCCount = new METRIC(1, false, "mdl2icon mdl2-lock metric-mdl2icon", "Locked Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked Forensic Cases in the DocuPath database.", System.DateTime.Now);
+                visionMetrics.Add(vmLockedFCCount);
+                // Average Duration
+                var avg = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue).Average(fc => SqlFunctions.DateDiff("month", fc.DateClosed, fc.DateAdded));
+                METRIC vmAvgFCDuration = new METRIC(1, false, "mdl2icon mdl2-time metric-mdl2icon", "Average Duration", avg.ToString(), "months", "open", "The average duration of a typical Forensic Case in the DocuPath database.", System.DateTime.Now);
+                visionMetrics.Add(vmAvgFCDuration);
                 //// --> COUNT OF FC BY DATE ADDED:
                 //ViewBag.FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded == dtToday).Count();
                 //ViewBag.FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > dtToday.AddDays(-7)).Count();
@@ -197,10 +210,6 @@ namespace DocuPath.Models
                 //ViewBag.FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-60)).Count();
                 //ViewBag.FCClosedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-90)).Count();
                 //// --> MISC FC STATS:
-                //// Average Forensic Case Duration:
-                //double dAverageTicks = db.FORENSIC_CASE.Average(fc => (fc.DateClosed - fc.DateAdded).Value.Ticks);
-                //long lAverageTicks = Convert.ToInt64(dAverageTicks);
-                //ViewBag.AverageFCDuration = new TimeSpan(lAverageTicks);
                 //// Aged:Non-Aged Forensic Case Ratio:
                 //double dAgedFCPercentage = db.FORENSIC_CASE.Where(fc => (dtDateNow - fc.DateClosed).Value.Days > 365 * 11).Count() / db.FORENSIC_CASE.Count() * 100;
                 //double dRoundedAgedFCPercentage = Math.Round(dAgedFCPercentage, 2);
@@ -219,6 +228,12 @@ namespace DocuPath.Models
                 //ViewBag.LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-30)).Count();
                 //ViewBag.LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-60)).Count();
                 //ViewBag.LCAddedPastNinetyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > dtToday.AddDays(-90)).Count();
+                //// --> COUNT OF LC BY DATE CLOSED:
+                //ViewBag.LCClosedToday = db.LEGACY_CASE.Where(fc => fc.DateClosed == dtToday);
+                //ViewBag.LCClosedPastSevenDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-7)).Count();
+                //ViewBag.LCClosedPastThirtyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-30)).Count();
+                //ViewBag.LCClosedPastSixtyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-60)).Count();
+                //ViewBag.LCClosedPastNinetyDays = db.LEGACY_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > dtToday.AddDays(-90)).Count();
 
                 //// ======= EXTERNAL REVIEW CASES =======
                 //ViewBag.TotalERCCount = db.EXTERNAL_REVIEW_CASE.Count();

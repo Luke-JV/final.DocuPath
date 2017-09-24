@@ -8,6 +8,9 @@ namespace DocuPath.Models.Custom_Classes
     public class METRIC
     {
         // Members:
+        private int mMetricGroupID;
+        private bool mIsMain;
+        private string mIconClass;
         private string mMetricName;
         private string mMetricValue;
         private string mMetricUnit;
@@ -16,6 +19,9 @@ namespace DocuPath.Models.Custom_Classes
         private System.DateTime mMetricLastRefreshed;
 
         // Properties:
+        public int MetricGroupID { get { return mMetricGroupID; } set { mMetricGroupID = value; } }
+        public bool IsMain { get { return mIsMain; } set { mIsMain = value; } }
+        public string IconClass { get { return mIconClass; } set { mIconClass = value; } }
         public string MetricName { get { return mMetricName; } set { mMetricName = value; } }
         public string MetricValue { get { return mMetricValue; } set { mMetricValue = value; } }
         public string MetricUnit { get { return mMetricUnit; } set { mMetricUnit = value; } }
@@ -26,6 +32,9 @@ namespace DocuPath.Models.Custom_Classes
         // Default Constructor:
         public METRIC()
         {
+            MetricGroupID = 0;
+            IsMain = true;
+            IconClass = "mdl2icon mdl2-info metric-mdl2icon";
             MetricName = "";
             MetricValue = "";
             MetricUnit = "";
@@ -35,8 +44,11 @@ namespace DocuPath.Models.Custom_Classes
         }
 
         // Parameterised Constructor:
-        public METRIC(string inName, string inValue, string inUnit, string inSummary, string inDescription, DateTime inRefreshStamp)
+        public METRIC(int inGroupID, bool inIsMain, string inIconClass, string inName, string inValue, string inUnit, string inSummary, string inDescription, DateTime inRefreshStamp)
         {
+            MetricGroupID = inGroupID;
+            IsMain = inIsMain;
+            IconClass = inIconClass;
             MetricName = inName;
             MetricValue = inValue;
             MetricUnit = inUnit;

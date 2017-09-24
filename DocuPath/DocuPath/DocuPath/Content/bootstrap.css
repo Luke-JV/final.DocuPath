@@ -13114,3 +13114,179 @@ ctrl {
             grid-template-areas "parms_hdr_ico parms_hdr_txt parms_hdr_btn";
         }
 /*#endregion */
+
+/*#region VISION DASHBOARD: */
+
+.vision-grid {
+    padding: 15px;
+    grid-gap: 15px;
+    grid-template-columns: repeat(6, 1fr) 25px;
+    /*background: radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0.5));*/
+}
+
+.metric-header {
+    padding: 0 5px;
+    transition: 0.5s all;
+    border: 1px solid #999 !important;
+    height: 30px !important;
+    grid-column: 1/-1;
+    border-radius: 5px !important;
+    font-family: 'U.S. 101';
+    font-size: 20pt;
+    line-height: 30px;
+    background-color: rgba(174, 31, 31, 0.8);
+    color: #fff;
+}
+
+.metric-container {
+    height: 150px;
+    border: 1px solid #999 !important;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 5px !important;
+    transition: 0.5s all;
+}
+
+.metric-main {
+    background-color: #dddddd;
+}
+
+.metric-sub {
+    margin: 2.5px;
+    height: 145px;
+    background-color: #f1f1f1;
+    border: 1px solid transparent !important;
+}
+
+.metric-more {
+    /*font-family: 'Segoe MDL2 Assets';
+    content: '\E76C';
+    font-size: 10pt;*/
+    margin: 5px 0;
+    height: 140px;
+    display: grid;
+    align-content: center;
+    padding: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #333;
+}
+
+.metric-container:hover {
+    border: 1px solid #333;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: rgba(174, 31, 31, 0.1);
+    padding: 5px;
+    cursor: help;
+}
+
+.metric-container:hover .metric-value {
+    color: rgba(174,31,31,1);
+}
+
+.metric-more:hover {
+    border: 1px solid #333;
+    border-radius: 15px;
+    background-color: rgba(174, 31, 31, 1);
+    cursor: pointer;
+}
+
+.metric-grid {
+    grid-gap: 0px;
+    grid-template-columns: 1fr 22px;
+    grid-template-areas:    "name icon"
+                            "value value"
+                            "unit summary"
+                            "description"
+                            "refreshed";
+}
+
+.metric-mdl2icon {
+    line-height: 20px;
+    background-color: rgba(174,31,31,1);
+    border-radius: 100%;
+    margin: 0;
+    padding-left: 4px;
+    padding-top: 1px;
+    font-size: 11pt;
+    color: #fff;
+}
+.metric-name {
+    padding: 1px 0 0 2.5px;
+    font-family: 'U.S. 101';
+    font-size: 13pt;
+    text-transform: uppercase;
+    line-height: 20px;
+}
+.metric-value {
+    font-family: 'Consolas';
+    font-size: 40pt;
+    line-height: 60px;
+    text-align: center;
+    color: #666;
+    grid-column: 1/-1;
+    text-shadow: 0 0 10px #fff;
+}
+.metric-unit {
+    line-height: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-style: italic;
+    color: #666;
+    grid-column: 1/-1;
+}
+.metric-summary {
+    line-height: 15px;
+    text-align: center;
+    color: #666;
+    grid-column: 1/-1;
+    margin-bottom: 5px;
+}
+.metric-refreshed {
+    border-top: 1px solid black;
+    line-height: 25px;
+    text-align: left;
+    color: #999;
+    grid-column: 1/-1;
+    font-size: 10pt;
+    font-weight: bold;
+}
+.metric-refreshed:before {
+    padding: 0 5px;
+    color: #999;
+    vertical-align:central;
+    font-family: 'Segoe MDL2 Assets';
+    font-size: 85%;
+    font-weight: normal;
+    content: "\E121";}
+.metric-description {
+    display: none;
+    font-size: 8pt;
+    color: #666;
+    grid-column: 1/-1;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.metric-container:hover .metric-unit {
+    display: none;
+}
+
+.metric-container:hover .metric-summary {
+    display: none;
+}
+
+.metric-container:hover .metric-refreshed {
+    display: none;
+}
+
+.metric-container:hover .metric-description {
+    display: inline;
+}
+
+/*#endregion */

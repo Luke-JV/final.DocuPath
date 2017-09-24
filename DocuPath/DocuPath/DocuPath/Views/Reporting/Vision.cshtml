@@ -36,7 +36,44 @@
         </div>
     </div>
 </div>
+@* DASHBOARD CONTENT: *@
+<div class="form-horizontal border-generic form-generic grid vision-grid">
+    @*<div>HEADING</div>*@
+    <div class="metric-header">FORENSIC CASES</div>
+    @foreach (var metric in ViewBag.VISIONMetrics)
+    {
+        if (metric.MetricGroupID == 1 && metric.IsMain) //Forensic Case
+        {
+            <div class="metric-container metric-main">
+                <div class="grid metric-grid">
+                    <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                    <div class="@metric.IconClass" grid-area="icon"></div>
+                    <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                    <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                    <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                    <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                    <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                </div>
+            </div>
+        }
+        else if (metric.MetricGroupID == 1 && !metric.IsMain)
+        {
+            <div class="metric-container metric-sub">
+                <div class="grid metric-grid">
+                    <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                    <div class="@metric.IconClass" grid-area="icon"></div>
+                    <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                    <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                    <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                    <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                    <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                </div>
+            </div>
+        }
+    }
+    <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></div>    
+</div>
 
 @section Scripts {
 
-    }
+}
