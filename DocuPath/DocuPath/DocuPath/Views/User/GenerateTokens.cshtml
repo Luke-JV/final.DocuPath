@@ -65,8 +65,8 @@
                 {
                     <tr>
                         <td class="table-large-identifier text-center">@(i + 1)</td>
-                        <td>@Html.DropDownListFor(model => model.tokenList[i].AccessLevelID, new SelectList(Model.ualList, "AccessLevelID", "LevelName", "Select a Desired Access Level..."), new { @class = "form-control", @style = "width: 100%" })</td>
-                        <td>@Html.EditorFor(model => model.tokenList[i].DestinationEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @placeholder = "Type a Valid Destination Email Address..." } })</td>
+                        <td>@Html.DropDownListFor(model => model.tokenList[i].AccessLevelID, new SelectList(Model.ualList, "AccessLevelID", "LevelName", "Select a Desired Access Level..."), new { @class = "form-control frmctrl-small", @style = "width: 100%" })</td>
+                        <td>@Html.EditorFor(model => model.tokenList[i].DestinationEmail, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @placeholder = "Type a Valid Destination Email Address..." } })</td>
                     </tr>
                 }
                 @*@{int i = 1;}

@@ -98,15 +98,15 @@
                                 </dt>
                                 @if (Model.IsCancelled == true)
                                 {
-                                    <dd>Cancelled</dd>
+                                    <dd class="status-inactive">Cancelled</dd>
                                 }
                                 else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
                                 {
-                                    <dd>Active</dd>
+                                    <dd class="status-danger">Active</dd>
                                 }
                                 else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
                                 {
-                                    <dd>Closed - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + Model.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
+                                    <dd><span class="status-ok">Closed</span> - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + Model.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
                                 }
 
                                 @*<dt>

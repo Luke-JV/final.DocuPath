@@ -41,8 +41,20 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ViewInit, "VISION");
                 #endregion
-                ViewBag.VISIONMetrics = VERTEBRAE.GetVisionMetrics();
-                ViewBag.FCByStatusChartData = "";
+                var metrics = VERTEBRAE.GetVisionMetrics();
+                ViewBag.VISIONMetrics = metrics;
+
+                ViewBag.FCByStatusChartData = metrics.Where(m => m.MetricName == "Forensic Cases By Status").FirstOrDefault().MetricValue;
+
+                var fcaddedmetricvalue = metrics.Where(m => m.MetricName == "Forensic Cases Added & Closed").FirstOrDefault().MetricValue;
+                ViewBag.FCAddedChartData = fcaddedmetricvalue.Substring(0, fcaddedmetricvalue.IndexOf('|') - 1);
+                ViewBag.FCClosedChartData = fcaddedmetricvalue.Substring(fcaddedmetricvalue.IndexOf('|') + 1);
+
+                ViewBag.LCByStatusChartData = metrics.Where(m => m.MetricName == "Legacy Cases By Status").FirstOrDefault().MetricValue;
+
+                ViewBag.LCCapturedChartData = metrics.Where(m => m.MetricName == "Legacy Cases Captured").FirstOrDefault().MetricValue;
+
+                ViewBag.ERCByStatusChartData = metrics.Where(m => m.MetricName == "External Review Cases By Status").FirstOrDefault().MetricValue;
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion

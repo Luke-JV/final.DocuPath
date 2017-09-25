@@ -79,16 +79,12 @@
                                 @Html.DisplayNameFor(model => model.IsDeactivated)
                             </dt>
                         @if (Model.IsDeactivated == true)
-	                    {
-                            <dd>
-                                Deactivated
-                            </dd>
+                        {
+                            <dd class="status-inactive">Deactivated</dd>
                         }
                         else
                         {
-                            <dd>
-                                Active
-                            </dd>
+                            <dd class="status-ok">Active</dd>
                         }
                             <hr class="details-hr"/>
                             <dt>

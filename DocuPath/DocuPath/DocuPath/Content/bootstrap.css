@@ -2313,7 +2313,7 @@ textarea.input-lg {
 
 .form-generic {
     padding: 5px;
-    margin: 10px 0 75px 0;
+    margin: 10px 0 60px 0 !important;
     width: 100%;
 }
 
@@ -6001,6 +6001,7 @@ a.list-group-item:focus {
   border-top-left-radius: 3px;
   font-family: 'U.S. 101';
   font-size: 30px;
+  text-transform: uppercase;
 }
 
 .panel-title {
@@ -6333,7 +6334,8 @@ button.close {
   text-transform: uppercase;
   margin: 0;
   /*line-height: 1.428571429;*/
-  padding-top: 5px
+  padding-top: 5px;
+  color: #000;
 }
 
 .modal-body {
@@ -8402,6 +8404,10 @@ td.visible-print {
     content: '\E1DA';
 }
 
+.mdl2-piechart:before {
+    content: '\EB05';
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -10046,6 +10052,34 @@ a.cal-event-week {
 /*#endregion */
 
 /*#region CSS GRID LAYOUT: */
+    /*#region PAGE FIXES: */
+        /*VIEW ERC:*/
+            .erc-view-grid {
+                grid-gap: 5px;
+                grid-template-columns: 2fr 1fr 1fr;
+                grid-template-areas: "details cover report";
+            }
+            .erc-view-grid .panel-body {
+                display: grid;
+                height: 100%;
+                justify-content: center;
+                height: 230px;
+            }
+
+            @media (max-width: 991px) {
+                .erc-view-grid {
+                    grid-gap: 5px;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: auto auto;
+                    grid-template-areas:    "details details"
+                                            "cover report";
+                }
+            }
+
+        /*VIEW XXX:*/
+
+/*#endregion */
+
 /* ALL SCREENS: */
 
 .nocrumb {
@@ -10157,7 +10191,7 @@ a.cal-event-week {
 		line-height: 45px;
         color: white;
         margin-top: -1px;
-        margin-bottom: 1px
+        margin-bottom: 1px;
 	}
 
 	.page-header-text {
@@ -11983,7 +12017,8 @@ a.cal-event-week {
 	text-transform: uppercase;
 	font-size: 20pt;
 	text-align: center;
-	padding: 10px 0 10px 0 !important;
+    line-height: 25px;
+	/*padding: 10px 0 10px 0 !important;*/
 }
 
 .blurb-container {
@@ -12433,6 +12468,78 @@ a.cal-event-week {
 
 /*#region INSIGHT: */
 
+.insight-grid {
+    grid-gap: 5px;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas:    "selector"
+                            "timeframe"
+                            "parameters"
+                            "actions";
+}
+
+.insight-subgrid {
+    grid-gap: 0px;
+    grid-template-columns: 400px 1fr;
+    grid-template-areas: "controls guidance";
+}
+
+.insight-actions-subgrid {
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "generate download";
+}
+
+.insight-subgrid .form-group:before {
+    display: none;
+    content: '';
+}
+
+.insight-subgrid .form-group:after {
+    display: none;
+    content: '';
+}
+
+.insight-grid .panel {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.insight-grid .panel-body:before {
+    display: none;
+    content: '';
+}
+
+.insight-grid .panel-body:after {
+    display: none;
+    content: '';
+}
+
+/*.insight-subgrid div {
+    border: 1px solid black;
+}*/
+
+.insight-guidance {
+    display: grid;
+    margin-left: 15px;
+    padding: 5px;
+    align-content: center;
+    border-radius: 5px;
+    background-color: rgba(255,220,220,0.4);
+    border-left: 2px solid rgba(174,31,31,1) !important;
+    border-top: 1px solid rgba(174,31,31,1) !important;
+    border-right: 1px solid rgba(174,31,31,1) !important;
+    border-bottom: 1px solid rgba(174,31,31,1) !important;
+}
+
+.insight-separator {
+    grid-area: "separator";
+    background-color: rgba(174,31,31,1);
+}
+
+/*.insight-grid .panel-default {
+    margin-top: 0px! important;
+}*/
+
 .table-insight {
 		font-family: 'Segoe UI'; 		/* CHANGED!!!!! */
 	  	font-size: 9pt; 				/* CHANGED!!!!! */
@@ -12496,15 +12603,16 @@ a.cal-event-week {
 
 	.reportcontainer {
 		width: 					750px;
-		height: 				auto;
+		/*height: 				auto;*/
+        max-height: 690px;
 		overflow-x: 			hidden;
 		padding: 				5px;
 		height: 				1000px;
-		border: 				1px solid black;
+		/*border: 				1px solid black;*/
         background-color:       #fff;
 		margin-left: 			auto;
 		margin-right: 			auto;
-		align-content: space-between;
+		align-content:          space-between;
 		grid-gap: 				5px;
 		grid-template-columns: 	[v-start] 150px [v-1] 10px [v-2] minmax(auto, 4fr) [v-3] 10px [v-4] auto [v-5] 100px [v-end];
 		grid-template-rows: 	[h-start] 50px [h-1] auto [h-2] auto [h-3] 1fr [h-4] 50px [h-end];
@@ -12514,6 +12622,12 @@ a.cal-event-week {
 								"report report 	report 	report 	report 		report"
 								"ftr 	ftr 	ftr 	ftr 	ftr 		ftr";
 	}
+
+    @media (min-height: 900px) {
+        .reportcontainer {
+            max-height: 850px;
+        }
+    }
 
 	.dplogo {
 		/*grid-area: "dplogo";*/
@@ -12754,7 +12868,7 @@ a.cal-event-week {
 		/*border: 1px solid black;*/
 	}
 
-	.chart-grid {
+	.insight-chart-grid {
 		margin-top: 10px;
 		grid-gap: 0px;
 		grid-template-columns: [v-chart-start] 25px [v-chart-1] auto [v-chart-2] 1fr [v-chart-end];
@@ -13141,7 +13255,7 @@ ctrl {
 
 .metric-container {
     height: 150px;
-    min-width: 121.825px;
+    /*min-width: 121.825px;*/
     border: 1px solid #999 !important;
     border-top-right-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -13162,22 +13276,20 @@ ctrl {
 
 .metric-sub .metric-value {
     font-size: 30pt;
+    line-height: 55px;
 }
 
 .metric-more {
-    /*font-family: 'Segoe MDL2 Assets';
-    content: '\E76C';
-    font-size: 10pt;*/
     margin: 5px 0;
     height: 140px;
-    width: 20%;
+    width: 25px;
     display: grid;
     align-content: center;
     padding: 0;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: #333;
-    transition: 1s all;
+    background-color: #666;
+    transition: 0.5s all;
 }
 
 .metric-container:hover {
@@ -13193,6 +13305,7 @@ ctrl {
 
 .metric-container:hover .metric-value {
     color: rgba(174,31,31,1);
+    transition: 1s all;
 }
 
 .metric-more:hover {
@@ -13204,7 +13317,7 @@ ctrl {
 
 .metric-grid {
     grid-gap: 0px;
-    grid-template-columns: 1fr 22px;
+    grid-template-columns: 1fr 25px;
     grid-template-areas:    "name icon"
                             "value value"
                             "unit summary"
@@ -13213,21 +13326,21 @@ ctrl {
 }
 
 .metric-mdl2icon {
-    line-height: 20px;
+    line-height: 25px;
     background-color: rgba(174,31,31,1);
     border-radius: 100%;
     margin: 0;
-    padding-left: 4px;
-    padding-top: 1px;
+    padding-left: 5.5px;
+    /*padding-top: 1px;*/
     font-size: 11pt;
     color: #fff;
 }
 .metric-name {
-    padding: 1px 0 0 2.5px;
+    padding: 2px 0 0 5px;
     font-family: 'U.S. 101';
     font-size: 13pt;
     text-transform: uppercase;
-    line-height: 20px;
+    line-height: 22px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -13266,7 +13379,7 @@ ctrl {
     font-weight: bold;
 }
 .metric-refreshed:before {
-    padding: 0 5px;
+    padding: 0 2px;
     color: #999;
     vertical-align:central;
     font-family: 'Segoe MDL2 Assets';
@@ -13279,6 +13392,7 @@ ctrl {
     color: #666;
     grid-column: 1/-1;
     text-align: center;
+    line-height: 1.2em;
     font-weight: bold;
     font-style: italic;
 }
@@ -13302,32 +13416,43 @@ ctrl {
 .glimpse-grid {
     grid-gap: 10px;
     grid-template-columns: repeat(2, 1fr);
+    /*grid-auto-rows: 330px;*/
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 /*.glimpse-grid div {
     border: 1px solid black;
 }*/
 .glimpse-grid .metric-container:hover {
-    background-color: #efefef;
+    background-color: #fff;
 }
 
 .metric-wide {
-    height: auto;
+    height: 315px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: #f1f1f1;
 }
 .metric-chart {
         grid-column: 1/-1;
-        padding: 20px;
+        padding: 5px;
 }
 
 .chart-grid {
-    grid-gap: 0px;
-    grid-template-columns: 22px 1fr;
+    /*grid-gap: 0px;*/
+    margin: 0px;
+    grid-template-columns: 25px 1fr;
+    grid-template-rows: auto auto auto auto;
     grid-template-areas:    "icon name"
                             "chart chart"
                             "description"
                             "refreshed";
 }
+/*#endregion */
+
+/*#region INSIGHT REPORTING */
 
 
 

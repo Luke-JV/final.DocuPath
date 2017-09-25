@@ -13,6 +13,7 @@ namespace DocuPath
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/autogrow.min.js",
                         "~/Scripts/shortcut.js",
+                        "~/Scripts/chart.js",
                         "~/Scripts/mark.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootgrid").Include(

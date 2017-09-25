@@ -1,5 +1,5 @@
 ﻿@{ ViewBag.Title = "VISION"; ViewBag.GenericHAPTICLocator = "VisionGeneric"; ViewBag.SpecificHAPTICLocator = "VisionSpecific"; ViewBag.PageInfoLocator = "Vision"; }
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -42,13 +42,13 @@
     @* FORENSIC CASE METRICS: *@
     <div class="metric-header">FORENSIC CASES</div>
     <div class="modal fade" id="FCCharts" role="dialog">
-        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;min-height:450px">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="grid hdr-grid">
                         <div class="page-hdr">
                             <div class="page-header-subgrid">
-                                <div class="icon-circle mdl2icon mdl2-fc"></div>
+                                <div class="icon-circle mdl2icon mdl2-piechart"></div>
                                 <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
                                 <div class="page-header-text">VISUAL METRICS<span style="color: #999"> — </span><span style="color: rgba(174,31,31,1)">FORENSIC CASES</span></div>
                             </div>
@@ -74,17 +74,17 @@
                         {
                             if (metric.MetricGroupID == 1 && metric.ContainerType == 3) //Forensic Case, Container Type = Wide (Graphs)
                             {
-                        <div class="metric-container metric-wide">
-                            <div class="grid chart-grid">
-                                <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
-                                <div class="metric-name" grid-area="name">@metric.MetricName</div>
-                                <div class="metric-chart" grid-area="chart">
-                                    <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="450"></canvas>
+                                <div class="metric-container metric-wide">
+                                    <div class="grid chart-grid">
+                                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                                        <div class="metric-chart" grid-area="chart">
+                                            <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="200" style="margin: auto"></canvas>
+                                        </div>
+                                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                                    </div>
                                 </div>
-                                <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
-                                <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
-                            </div>
-                        </div>
                             }
                         }
                     </div>
@@ -92,8 +92,7 @@
             </div>
         </div>
     </div>
-
-    <div class="grid vision-grid" style="border: 1px solid red">
+    <div class="grid vision-grid">
         @foreach (var metric in ViewBag.VISIONMetrics)
         {
             if (metric.MetricGroupID == 1 && metric.ContainerType == 1) //Forensic Case, Container Type = Main
@@ -125,12 +124,12 @@
                 </div>
             }
         }
-        <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff" data-toggle="modal" data-target="#FCCharts"></i></div>
+        <span id="FCChartsTrigger" class="metric-more" data-toggle="modal" data-target="#FCCharts"><span class="text-center" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
     </div>
     @* LEGACY CASE METRICS: *@
     <div class="metric-header">LEGACY CASES</div>
     <div class="modal fade" id="LCCharts" role="dialog">
-        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;min-height:450px">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="grid hdr-grid">
@@ -167,7 +166,7 @@
                                 <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
                                 <div class="metric-name" grid-area="name">@metric.MetricName</div>
                                 <div class="metric-chart" grid-area="chart">
-                                    <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="450"></canvas>
+                                    <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="200" style="margin: auto"></canvas>
                                 </div>
                                 <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
                                 <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
@@ -180,8 +179,7 @@
             </div>
         </div>
     </div>
-
-    <div class="grid vision-grid" style="border: 1px solid red">
+    <div class="grid vision-grid">
         @foreach (var metric in ViewBag.VISIONMetrics)
         {
             if (metric.MetricGroupID == 2 && metric.ContainerType == 1) //Legacy Case, Container Type = Main
@@ -213,67 +211,269 @@
                 </div>
             }
         }
-        <div class="metric-more" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff" data-toggle="modal" data-target="#LCCharts"></i></div>
-    </div>
+        <div id="LCChartsTrigger" class="metric-more" data-toggle="modal" data-target="#LCCharts"><div class="text-center" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></div>
+        </div>
 </div>
-
-@section Scripts {
-    <script>
-        var ctx = document.getElementById("Forensic_Cases_By_Status").getContext('2d');
-        var myChart1 = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Active Cases', 'Pending Cases', 'Archived Cases', 'Locked Cases'],
-                datasets: [
-                    {
-                        //label: 'Count',
-                        data: [1, 2, 5, 3],
-                        backgroundColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)'],
-                        borderColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'],
-                        borderWidth: 1,
-                        //labels: ['Active Cases', 'Pending Cases', 'Archived Cases', 'Locked Cases'],
-                    }
-                ]
-                @*//@ViewBag.VISIONMetrics[5].MetricValue.ToString()*@
-            },
-            options: {
-                cutoutPercentage: 50,
-            }
-        });
-    </script>
-    <script>
-        var ctx = document.getElementById("Forensic_Cases_Added_&_Closed").getContext('2d');
-        var myChart2 = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'],
-                datasets: [
-                    {
-                        label: 'Forensic Cases Added',
-                        data: [5, 15, 35, 56, 68],
-                        backgroundColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 0.8)', 'rgba(174, 31, 31, 0.6)', 'rgba(174, 31, 31, 0.4)', 'rgba(174, 31, 31, 0.2)'],
-                        borderColor: ['rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)', 'rgba(174, 31, 31, 1)'],
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Forensic Cases Closed',
-                        data: [3, 10, 38, 48, 78],
-                        backgroundColor: ['rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 0.8)', 'rgba(128, 128, 128, 0.6)', 'rgba(128, 128, 128, 0.4)', 'rgba(128, 128, 128, 0.2)'],
-                        borderColor: ['rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)', 'rgba(128, 128, 128, 1)'],
-                        borderWidth: 1
-                    }
-                ]
-                @*//@ViewBag.VISIONMetrics[5].MetricValue.ToString()*@
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+    @* EXTERNAL REVIEW CASE METRICS: *@
+    <div class="metric-header">EXTERNAL REVIEW CASES</div>
+    <div class="modal fade" id="ERCCharts" role="dialog">
+        <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;min-height:450px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="grid hdr-grid">
+                        <div class="page-hdr">
+                            <div class="page-header-subgrid">
+                                <div class="icon-circle mdl2icon mdl2-piechart"></div>
+                                <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                <div class="page-header-text">VISUAL METRICS<span style="color: #999"> — </span><span style="color: rgba(174,31,31,1)">EXTERNAL REVIEW CASES</span></div>
+                            </div>
+                        </div>
+                        <div class="page-btns">
+                            <div class="page-buttons-subgrid buttons-one">
+                                <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                <div></div>
+                                <div grid-area="btn1">
+                                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                    </form>
+                                </div>
+                                <div></div>
+                                <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal form-generic nomarg grid glimpse-grid">
+                        @foreach (var metric in ViewBag.VISIONMetrics)
+                        {
+                            if (metric.MetricGroupID == 3 && metric.ContainerType == 3) //External Review Case, Container Type = Wide (Graphs)
+                            {
+                                <div class="metric-container metric-wide">
+                                    <div class="grid chart-grid">
+                                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                                        <div class="metric-chart" grid-area="chart">
+                                            <canvas id="@metric.MetricName.Replace(" ","_")" width="450" height="200" style="margin: auto"></canvas>
+                                        </div>
+                                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                                    </div>
+                                </div>
+                            }
                         }
-                    }]
-                }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid vision-grid">
+        @foreach (var metric in ViewBag.VISIONMetrics)
+        {
+            if (metric.MetricGroupID == 3 && metric.ContainerType == 1) //External Review Case, Container Type = Main
+            {
+                <div class="metric-container metric-main">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
             }
-        });
+            else if (metric.MetricGroupID == 3 && metric.ContainerType == 2) //External Review Case, Container Type = Sub
+            {
+                <div class="metric-container metric-sub">
+                    <div class="grid metric-grid">
+                        <div class="metric-name" grid-area="name">@metric.MetricName</div>
+                        <a class="@metric.IconClass" data-toggle="tooltip" title="EXPLORE" data-placement="bottom" href="@metric.ExploreURL" grid-area="icon"></a>
+                        <div class="metric-value" grid-area="value">@metric.MetricValue</div>
+                        <div class="metric-unit" grid-area="unit">@metric.MetricUnit</div>
+                        <div class="metric-summary" grid-area="summary">@metric.MetricSummary</div>
+                        <div class="metric-refreshed" grid-area="refreshed">@metric.MetricLastRefreshed.ToString("HH:mm")</div>
+                        <div class="metric-description" grid-area="description">@metric.MetricDescription</div>
+                    </div>
+                </div>
+            }
+        }
+        <span id="ERCChartsTrigger" class="metric-more" data-toggle="modal" data-target="#ERCCharts"><span class="text-center" data-toggle="tooltip" title="MORE" data-placement="bottom"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
+    </div>
+
+</div>
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/toggle")
+@Scripts.Render("~/bundles/materialdatetime")
+
+
+    <script>
+        $(document).ready(function () {
+            //Chart Colour Palettes:
+            var Green = "#468847";
+            var DarkGreen = "#316731";
+            var Orange = "#ff7d00";
+            var DarkOrange = "#a2601f";
+            var Grey = "#999";
+            var DarkGrey = "#666";
+            var DPRed = "#ae1f1f";
+            var DarkRed = "#7b1515";
+
+            var DPRedEighty = "rgba(174, 31, 31, 0.8)";
+            var DPRedSixty = "rgba(174, 31, 31, 0.6)";
+            var DPRedForty = "rgba(174, 31, 31, 0.4)";
+            var DPRedTwenty = "rgba(174, 31, 31, 0.2)";
+
+            var GreyHundred = "rgba(128, 128, 128, 1)";
+            var GreyEighty = "rgba(128, 128, 128, 0.8)";
+            var GreySixty = "rgba(128, 128, 128, 0.6)";
+            var GreyForty = "rgba(128, 128, 128, 0.4)";
+            var GreyTwenty = "rgba(128, 128, 128, 0.2)";
+
+            // FC Status Doughnut:
+            var ctx = document.getElementById("Forensic_Cases_By_Status").getContext('2d');
+            var FCByStatusDoughnut = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Active', 'Pending', 'Archived', 'Locked'],
+                    datasets: [
+                        {
+                            data: [ @ViewBag.FCByStatusChartData ],
+                            backgroundColor: [Green, Orange, Grey, DPRed],
+                            borderColor: [DarkGreen, DarkOrange, DarkGrey, DarkRed],
+                            borderWidth: 1,
+                        }
+                    ]
+                },
+                options: { cutoutPercentage: 50, aspectRatio: 1 }
+            });
+            // FC Add & Close Bar:
+            var ctx = document.getElementById("Forensic_Cases_Added_&_Closed").getContext('2d');
+            var FCAddedClosedBar = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'],
+                    datasets: [
+                        {
+                            label: 'Forensic Cases Added',
+                            data: [ @ViewBag.FCAddedChartData ],
+                            backgroundColor: [DPRed, DPRedEighty, DPRedSixty, DPRedForty, DPRedTwenty],
+                            borderColor: [DPRed, DPRed, DPRed, DPRed, DPRed],
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Forensic Cases Closed',
+                            data: [ @ViewBag.FCClosedChartData ],
+                            backgroundColor: [GreyHundred, GreyEighty, GreySixty, GreyForty, GreyTwenty],
+                            borderColor: [GreyHundred, GreyHundred, GreyHundred, GreyHundred, GreyHundred],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: { scales: { yAxes: [{ ticks: { beginAtZero: true, stepSize: 1 } }] } }
+            });
+            // LC Status Doughnut:
+            var ctx = document.getElementById("Legacy_Cases_By_Status").getContext('2d');
+            var LCByStatusDoughnut = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Active', 'Archived'],
+                    datasets: [
+                        {
+                            data: [ @ViewBag.LCByStatusChartData ],
+                            backgroundColor: [Green, Grey],
+                            borderColor: [DarkGreen, DarkGrey],
+                            borderWidth: 1,
+                        }
+                    ]
+                },
+                options: { cutoutPercentage: 50, aspectRatio: 1 }
+            });
+            // LC Add & Close Bar:
+            var ctx = document.getElementById("Legacy_Cases_Captured").getContext('2d');
+            var FCAddedClosedBar = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Today', 'Past 7 Days', 'Past 30 Days', 'Past 60 Days', 'Past 90 Days'],
+                    datasets: [
+                        {
+                            label: 'Legacy Cases Captured',
+                            data: [ @ViewBag.LCCapturedChartData ],
+                            backgroundColor: [DPRed, DPRedEighty, DPRedSixty, DPRedForty, DPRedTwenty],
+                            borderColor: [DPRed, DPRed, DPRed, DPRed, DPRed],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: { scales: { yAxes: [{ ticks: { beginAtZero: true, stepSize: 1 } }] } }
+            });
+            // ERC Status Doughnut:
+            var ctx = document.getElementById("External_Review_Cases_By_Status").getContext('2d');
+            var ERCByStatusDoughnut = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Active', 'Pending', 'Archived', 'Locked'],
+                    datasets: [
+                        {
+                            data: [ @ViewBag.ERCByStatusChartData ],
+                            backgroundColor: [Green, Orange, Grey, DPRed],
+                            borderColor: [DarkGreen, DarkOrange, DarkGrey, DarkRed],
+                            borderWidth: 1,
+                        }
+                    ]
+                },
+                options: { cutoutPercentage: 50, aspectRatio: 1 }
+            });
+        })
     </script>
+    @*<script>
+        (function () {
+            // set up the timeout variable
+            var t;
+            // setup the sizing function,
+            // with an argument that tells the chart to animate or not
+            function size(animate) {
+                // If we are resizing, we don't want the charts drawing on every resize event.
+                // This clears the timeout so that we only run the sizing function
+                // when we are done resizing the window
+                clearTimeout(t);
+                // This will reset the timeout right after clearing it.
+                t = setTimeout(function () {
+                    $("canvas").each(function (i, el) {
+                        // Set the canvas element's height and width to it's parent's height and width.
+                        // The parent element is the div.canvas-container
+                        $(el).attr({
+                            "width": $(el).parent().width(),
+                            "height": $(el).parent().outerHeight()
+                        });
+                    });
+                    // kickoff the redraw function, which builds all of the charts.
+                    redraw(animate);
+
+                    // loop through the widgets and find the tallest one, and set all of them to that height.
+                    //var m = 0;
+                    // we have to remove any inline height setting first so that we get the automatic height.
+                    //$(".widget").height("");
+                    //$(".widget").each(function(i,el){ m = Math.max(m,$(el).height()); });
+                    //$(".widget").height(m);
+
+                }, 100); // the timeout should run after 100 milliseconds
+            }
+            $(window).on('resize', size);
+            function redraw(animation) {
+                var options = {};
+                if (!animation) {
+                    options.animation = false;
+                } else {
+                    options.animation = true;
+                }
+                // ....
+                // the rest of our chart drawing will happen here
+                // ....
+            }
+            size(); // this kicks off the first drawing; note that the first call to size will animate the charts in.
+        });
+    </script>*@
 }

@@ -151,7 +151,7 @@
                         <ul class="nav navbar-nav">
                             <!--CORTEX-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">Case Management</li>
                                         <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
@@ -161,7 +161,7 @@
                             </li>
                             <!--CORNEA-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">Media Management</li>
                                         <li>@Html.ActionLink("Media Repository", "All", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
@@ -172,7 +172,7 @@
                             </li>
                             <!--PULSE-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-header">External Interactions</li>
                                         <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
@@ -196,7 +196,7 @@
                             </li>*@
                             <!--HAPTIC-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">INTERACTIVE ASSISTANCE</li>
                                         <li class="dropdown-toggle disabled text-center" style="font-size: 8pt">Scan this QR Code with the DocuPath Mobile App to access an interactive help tutorial!</li>
@@ -239,17 +239,19 @@
                         <ul class="nav navbar-nav">
                             <!--ABOUT-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">ABOUT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="~/Home/About" class="dropdown-toggle">ABOUT THE DEVELOPERS</a>                                
+                                @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">ABOUT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                </ul>
+                                </ul>*@
                             </li>
                             <!--CONTACT-->
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CONTACT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
+                                <a href="~/Home/Contact" class="dropdown-toggle">CONTACT US</a>
+                                @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">CONTACT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                </ul>
+                                </ul>*@
                             </li>
                         </ul>
                         @Html.Partial("_LoginPartial")
