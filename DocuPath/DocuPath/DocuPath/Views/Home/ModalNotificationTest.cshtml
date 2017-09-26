@@ -1,4 +1,5 @@
-﻿@*<link rel="stylesheet" href="~/Content/LoadingHelix.css" type="text/css" />*@
+﻿@model DocuPath.DataLayer.SPINE_OBSERVATION
+@*<link rel="stylesheet" href="~/Content/LoadingHelix.css" type="text/css" />*@
 @{
     ViewBag.Title = "Demo";
 }
@@ -352,9 +353,66 @@
     </div>
 </div>
 
+<div class="grid ico-container">
+    <div class="ico ppt-mini" data-toggle="tooltip" title="PPT, PPTX, POT, POTX" data-placement="bottom"></div>
+    <div class="ico xls-mini" data-toggle="tooltip" title="XLS, XLSX, XLT, XLTX" data-placement="bottom"></div>
+    <div class="ico doc-mini" data-toggle="tooltip" title="DOC, DOCX, DOT, DOTX" data-placement="bottom"></div>
+    <div class="ico pdf-mini" data-toggle="tooltip" title="PDF" data-placement="bottom"></div>
+    <div class="ico imagefile-mini" data-toggle="tooltip" title="BMP, GIF, JPG, PNG, TIFF" data-placement="bottom"></div>
+    <div class="ico videofile-mini" data-toggle="tooltip" title="3GP, AVI, MP4, MPG, WMV" data-placement="bottom"></div>
+    <div class="ico audiofile-mini" data-toggle="tooltip" title="MP3, WAV" data-placement="bottom"></div>
+    <div class="ico txtfile-mini" data-toggle="tooltip" title="TXT, RTF" data-placement="bottom"></div>
+    <div class="ico markupfile-mini" data-toggle="tooltip" title="XML" data-placement="bottom"></div>
+    <div class="ico compressedfile-mini" data-toggle="tooltip" title="ZIP, RAR" data-placement="bottom"></div>
+</div>
+
+<div class="grid ico-container">
+    <div class="ico-lg"><div class="ico ppt-mini"></div><br /><span>PPT</span></div>
+    <div class="ico-lg"><div class="ico ppt-mini"></div><br /><span>POT</span></div>
+    <div class="ico-lg"><div class="ico ppt-mini"></div><br /><span>PPTX</span></div>
+    <div class="ico-lg"><div class="ico ppt-mini"></div><br /><span>POTX</span></div>
+    <div class="ico-lg"><div class="ico xls-mini"></div><br /><span>XLS</span></div>
+    <div class="ico-lg"><div class="ico xls-mini"></div><br /><span>XLT</span></div>
+    <div class="ico-lg"><div class="ico xls-mini"></div><br /><span>XLSX</span></div>
+    <div class="ico-lg"><div class="ico xls-mini"></div><br /><span>XLTX</span></div>
+    <div class="ico-lg"><div class="ico doc-mini"></div><br /><span>DOC</span></div>
+    <div class="ico-lg"><div class="ico doc-mini"></div><br /><span>DOT</span></div>
+    <div class="ico-lg"><div class="ico doc-mini"></div><br /><span>DOCX</span></div>
+    <div class="ico-lg"><div class="ico doc-mini"></div><br /><span>DOTX</span></div>
+    <div class="ico-lg"><div class="ico pdf-mini"></div><br /><span>PDF</span></div>
+    <div class="ico-lg"><div class="ico audiofile-mini"></div><br /><span>MP3</span></div>
+    <div class="ico-lg"><div class="ico audiofile-mini"></div><br /><span>WAV</span></div>
+    <div class="ico-lg"><div class="ico imagefile-mini"></div><br /><span>BMP</span></div>
+    <div class="ico-lg"><div class="ico imagefile-mini"></div><br /><span>GIF</span></div>
+    <div class="ico-lg"><div class="ico imagefile-mini"></div><br /><span>JPG</span></div>
+    <div class="ico-lg"><div class="ico imagefile-mini"></div><br /><span>PNG</span></div>
+    <div class="ico-lg"><div class="ico imagefile-mini"></div><br /><span>TIFF</span></div>
+    <div class="ico-lg"><div class="ico videofile-mini"></div><br /><span>3GP</span></div>
+    <div class="ico-lg"><div class="ico videofile-mini"></div><br /><span>AVI</span></div>
+    <div class="ico-lg"><div class="ico videofile-mini"></div><br /><span>MP4</span></div>
+    <div class="ico-lg"><div class="ico videofile-mini"></div><br /><span>MPG</span></div>
+    <div class="ico-lg"><div class="ico videofile-mini"></div><br /><span>WMV</span></div>
+    <div class="ico-lg"><div class="ico txtfile-mini"></div><br /><span>TXT</span></div>
+    <div class="ico-lg"><div class="ico txtfile-mini"></div><br /><span>RTF</span></div>
+    <div class="ico-lg"><div class="ico markupfile-mini"></div><br /><span>XML</span></div>
+    <div class="ico-lg"><div class="ico compressedfile-mini"></div><br /><span>ZIP</span></div>
+    <div class="ico-lg"><div class="ico compressedfile-mini"></div><br /><span>RAR</span></div>
+</div>
+
+<ckp>Body Text Sample</ckp>
+<ckh1>Heading 1</ckh1>
+<ckh2>Heading 2</ckh2>
+<ckh3>Heading 3</ckh3>
+<ckh4>Heading 4</ckh4>
+
+@using (Html.BeginForm()) {
+    @Html.LabelFor(model => model.SpinalColumn)
+    @Html.TextAreaFor(model => model.SpinalColumn, new { @class="ckeditor"})
+}
+
 @* SCRIPTS: *@
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")    
 
     @* DNA ANIMATION SCRIPT *@
     <script type="text/javascript">

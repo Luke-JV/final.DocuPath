@@ -6,6 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - DocuPath</title>
+    @*<script type="text/javascript">CKEDITOR_BASEPATH = "@Url.Content("~/Content/ckeditor/")";</script>*@
     <script src="jquery.js" type="text/javascript"></script>
     <style type="text/css"> .js #NEURONsidenav, #HAPTICsidenav { display: none; } </style>
     <script type="text/javascript"> document.documentElement.className = 'js'; </script>
@@ -48,7 +49,9 @@
         <p id="loadingText" class="loading-text">LOADING...</p>
     </div>
     @* HAPTIC SIDENAV: *@
-    <div id="HAPTICsidenav" class="haptic-sidenav grid sidenav-grid" grid-area="haptic">
+    @if (Request.IsAuthenticated)
+    {
+        <div id="HAPTICsidenav" class="haptic-sidenav grid sidenav-grid" grid-area="haptic">
         <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
             <div class="align-vc-hc" grid-area="icon">
                 <span class="mdl2icon mdl2-help" style="font-size: 22px; color: #cccccc"></span>
@@ -72,7 +75,8 @@
                         </div>
                         <div id="OnThisPageSidenav" class="panel-collapse collapse">
                             <div class="panel-body apad5">
-                                @Html.Raw(@VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
+                                @Html.Raw(VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
+                                @Html.Raw(VERTEBRAE.GetAcceptedFileTypeMinis("powerpoint,word,image,text,compressed,audio", true))
                             </div>
                         </div>
                     </div>
@@ -127,6 +131,7 @@
             </div>
         </div>
     </div>
+    }
     @* PAGE CONTENT: *@
     <div id="content" class="grid content-subgrid" grid-area="main">
         @* TOP NAVBAR: *@
@@ -290,7 +295,9 @@
         </div>
     </div>
     @* NEURON SIDENAV: *@
-    <div id="NEURONsidenav" class="neuron-sidenav grid sidenav-grid" grid-area="neuron">
+    @if (Request.IsAuthenticated)
+    {
+        <div id="NEURONsidenav" class="neuron-sidenav grid sidenav-grid" grid-area="neuron">
         <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
             <div class="align-vc-hc" grid-area="icon">
                 <span id="noNotificationsToggle" class="mdl2icon mdl2-neuronnew" style="font-size: 22px; color: #cccccc"></span>
@@ -367,11 +374,13 @@
             }
         </div>
     </div>
+    }
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/typeahead")
     @Scripts.Render("~/bundles/materialdatetime")
+    @Scripts.Render("~/bundles/ckeditor")
    
     <script src="~/Scripts/typeahead.mvc.model.js" ></script>
     @RenderSection("scripts", required: false)

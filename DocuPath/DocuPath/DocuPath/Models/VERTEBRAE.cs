@@ -427,6 +427,57 @@ namespace DocuPath.Models
             List<string> FAQs = new List<string>();
             return FAQs;
         }
+        ///<summary>
+        ///Pass a single comma-separated string of any combination of the following to fetch the relevant file type icons (case insensitive): PowerPoint / Excel / Word / PDF / Image / Video / Audio / Text / Markup / Compressed. An additional bool parameter specifies whether icons should be returned with or without their container.
+        ///</summary>
+        public static string GetAcceptedFileTypeMinis(string inAcceptedFiletypes, bool inContainerNeeded)
+        {
+            var split = inAcceptedFiletypes.Split(',');
+            var markup = "";
+            if (inContainerNeeded)
+            {
+                markup += "<div class=\"grid ico-container\">";
+                foreach (var type in split)
+                {
+                    switch (type.ToUpper())
+                    {
+                        case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;                    
+                        case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;                    
+                        case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;                    
+                        case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
+                        case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
+                        case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
+                        case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
+                        case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
+                        case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
+                        case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
+                        default: markup += ""; break;
+                    }
+                }
+                markup += "</div>";
+            }
+            else
+            {
+                foreach (var type in split)
+                {
+                    switch (type.ToUpper())
+                    {
+                        case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;
+                        case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;
+                        case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;
+                        case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
+                        case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
+                        case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
+                        case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
+                        case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
+                        case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
+                        case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
+                        default: markup += ""; break;
+                    }
+                }
+            }
+            return markup;
+        }
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FORMATTING & MARKUP:

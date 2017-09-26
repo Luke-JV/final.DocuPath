@@ -172,7 +172,8 @@ namespace DocuPath.Controllers
 
         public ActionResult ModalNotificationTest()
         {
-            return View();
+            SPINE_OBSERVATION model = new SPINE_OBSERVATION();
+            return View(model);
         }
 
         public JsonResult SendRSS(string rssData)

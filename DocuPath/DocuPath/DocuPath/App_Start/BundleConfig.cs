@@ -16,6 +16,10 @@ namespace DocuPath
                         "~/Scripts/chart.js",
                         "~/Scripts/mark.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
+                        "~/Scripts/ckeditor/ckeditor.js"/*,
+                        "~/Scripts/ckeditor/adapters/jquery.js"*/));
+
             bundles.Add(new ScriptBundle("~/bundles/bootgrid").Include(
                         "~/Scripts/jquery.bootgrid.js"));
 
