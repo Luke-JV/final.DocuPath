@@ -134,7 +134,7 @@ namespace DocuPath.Models.DPViewModels
         public SPINE_OBSERVATION spineObservation { get; set; }
     }
 
-    public class ServiceRequestViewModel
+    public class FCServiceRequestViewModel
     {
         public List<SERVICE_REQUEST> serviceRequests { get; set; }
     }
