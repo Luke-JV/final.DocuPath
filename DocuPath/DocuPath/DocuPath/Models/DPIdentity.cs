@@ -24,6 +24,7 @@ namespace DocuPath.Models
 
 
         public int TitleID { get; set; }
+        public int AccessLevelID { get; set; }
 
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -97,9 +98,9 @@ namespace DocuPath.Models
 
             //outLogin.UserLoginID = db.USER_LOGIN.Max(u => u.UserLoginID) + 1;//405
 
-            outLogin.Username = UserName;
+            outLogin.Username = AcademicEmail;
             outLogin.Password = PasswordHash;
-
+            outLogin.AccessLevelID = AccessLevelID;
             return outLogin;
         }
 

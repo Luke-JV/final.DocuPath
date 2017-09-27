@@ -20,8 +20,8 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/Account/Register" method="post" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & SUBMIT"></button>
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
+                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & SUBMIT"></button>
                 </form>
             </div>
             <div grid-area="btn3">
@@ -42,7 +42,8 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary("", new { @class = "text-danger" })
-
+    @Html.HiddenFor(model => model.user.USER_LOGIN.AccessLevelID);
+    <input id = "btnPOST" class="hidden" type="submit" />
     <div class="form-horizontal border-generic apad5">
         @*<div class="row">
                 <div class="col-md-12">
@@ -145,7 +146,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.user.PersonalEmail, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
-                                    @Html.EditorFor(model => model.user.PersonalEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
                                     @Html.ValidationMessageFor(model => model.user.PersonalEmail, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -264,7 +265,7 @@
                             <div class="form-group" style="margin-bottom: 5px">
                                 @Html.LabelFor(model => model.user.USER_LOGIN.Password, htmlAttributes: new { @class = "col-md-4 control-label" })
                                 <div class="col-md-8">
-                                    @Html.PasswordFor(model => model.user.USER_LOGIN.Password, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                    @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
                                     @Html.ValidationMessageFor(model => model.user.USER_LOGIN.Password, "", new { @class = "text-danger text-center" })
                                 </div>
                             </div>
@@ -372,4 +373,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $('#btnSave').click(function () {
+            var btnPost = document.getElementById('btnPOST');
+           
+            btnPost.click();
+          
+        });
+
+</script>
 }
