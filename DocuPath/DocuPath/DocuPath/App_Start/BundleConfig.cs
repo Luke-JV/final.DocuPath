@@ -15,6 +15,7 @@ namespace DocuPath
                         "~/Scripts/shortcut.js",
                         "~/Scripts/chart.js",
                         "~/Scripts/mark.js",
+                        "~/Scripts/jquery.maskedinput.js",
                         "~/Scripts/fort.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(

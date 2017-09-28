@@ -2324,6 +2324,18 @@ textarea.input-lg {
     }
 }
 
+.panel .panel-default > .emph{
+    text-transform: uppercase !important;
+    font-family: 'U.S. 101';
+    font-weight: normal;
+    font-size: 15pt;
+    line-height: 15px;
+    cursor: pointer;
+}
+.panel .panel-default > .emph:hover {
+    color: #ae1f1f;
+}
+
 .emph{
     text-transform: uppercase !important;
     font-family: 'U.S. 101';
@@ -13711,5 +13723,28 @@ ctrl {
   font-size: 80%;
   color: rgba(174,31,31,1);
 } 
+
+/*#endregion */
+
+/*#region REGISTRATION GRID: */
+
+.register-user-grid {
+    padding: 15px 0 15px 0;
+    /*padding: 5px 0 5px 0;*/
+    grid-gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, auto);
+    grid-template-areas:    "name contact"
+                            "id qualification"
+                            "address login"
+                            "sysprefs";
+    /*grid-template-columns: 500px;*/
+    justify-content: center;
+    /*border: 1px solid #666;*/
+}
+
+/*.register-user-grid div{
+    border: 1px solid black;
+}*/
 
 /*#endregion */

@@ -91,7 +91,18 @@
                 }
             }
 
-            //Set color of bar as solid
+            var widthTest = 100 - (r / i * 100);
+            if (widthTest <= 50.0) {
+                hex = "#ae1f1f";
+                //document.getElementById("top1").style.color = "#fff";
+            } else if (widthTest <= 70.0) {
+                hex = "#eea236";
+                //document.getElementById("top1").style.color = "#000";
+            } else if (widthTest > 70.0) {
+                hex = "#5cb85c";
+                //document.getElementById("top1").style.color = "#fff";
+            }
+
             document.getElementById("top1").style.background = hex;
         }
     },
