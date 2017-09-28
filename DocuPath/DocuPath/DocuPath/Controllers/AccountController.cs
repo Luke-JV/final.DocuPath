@@ -169,36 +169,43 @@ namespace DocuPath.Controllers
                 
                 PasswordHasher crypto = new PasswordHasher();
                 //string hash = crypto.HashPassword(id);
-                foreach (var tk in db.TOKEN_LOG)
+                foreach (var tk in db.TOKEN_LOG.Where(x=>x.RedemptionTimestamp == null))
                 {
                     if (crypto.VerifyHashedPassword(tk.TokenValue,id) != PasswordVerificationResult.Failed)
                     {
                         db.TOKEN_LOG.Where(m => m.TokenID == tk.TokenID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
-                        string identity = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString() );
-                        var foo = Url.Encode(identity);
-                        identity = Server.UrlEncode(identity);
-                        return RedirectToAction("Register",new { id=identity});
+                        RegSesh session = new RegSesh();
+                        session.id = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString()); 
+                        session.alID = tk.AccessLevelID;
+                        Session["REG"] = session;
+                        return RedirectToAction("Register");
                     }
                 }
 
             }
             return View("Login");
         }
-        //1APKaKtxwkbUn5Qc4oe7D7hQDJKIA4B8RjZidJHEIJOlPo1mEO5bxVOHwMtmm5Pv97g%3d%3d
-        //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        ///Account/Register/1AF7rjEMiNJvOhR2b1+IDozA3ueoShCcGleCxB/jy7jXYON521XoVBG9sf4FMXq1HCw==
-        /// Account/Register/11AP5UTRHPZVNKbZuzlV2UETozW9K/z8oWvtdZurQwInIpNvWo3S3qAUoIVTTs8M22rQ==
+        struct RegSesh
+        {
+            public string id;
+            public int alID;
+        }
+
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register(string id)
+        public ActionResult Register()
         {
-            id = "11AP5UTRHPZVNKbZuzlV2UETozW9K/z8oWvtdZurQwInIpNvWo3S3qAUoIVTTs8M22rQ==";
-            if (VECTOR._lock(id))
+            RegSesh session = new RegSesh();
+            session = (RegSesh)Session["REG"];
+            Session["REG"] = null;
+            if (VECTOR._lock(session.id))
             {
                 RegisterViewModel model = new RegisterViewModel();
                 using (DocuPathEntities db = new DocuPathEntities())
                 {
                     model.user = new USER();
+                    model.user.USER_LOGIN = new USER_LOGIN();
+                    model.user.USER_LOGIN.AccessLevelID = session.alID;
                     model.titles = db.TITLE.ToList();
                 }
                 return View(model);
@@ -220,7 +227,7 @@ namespace DocuPath.Controllers
             {
                 var user = new DPUser { UserName = model.Email };
                 user.FirstName = model.user.FirstName;
-                user.AcademicID = model.user.AcademicEmail;
+                user.AcademicID = model.user.AcademicID;
                 user.NationalID = model.user.NationalID;
                 user.MiddleName = model.user.MiddleName;
                 user.LastName = model.user.LastName;
@@ -228,10 +235,10 @@ namespace DocuPath.Controllers
                 user.TitleID = model.user.TitleID;
                 user.TelNum = model.user.TelNum;
                 user.PostalAddress = model.user.PostalAddress;
-                user.PersonalEmail = model.user.PersonalEmail;
+                user.PersonalEmail = model.Email;
                 user.AcademicEmail = model.user.AcademicEmail;
                 user.QualificationDescription = model.user.QualificationDescription;
-                
+                user.AccessLevelID = model.user.USER_LOGIN.AccessLevelID;
 
                 user.Discriminator = model.user.FirstName;
                 user.DisplayInitials = model.user.DisplayInitials;

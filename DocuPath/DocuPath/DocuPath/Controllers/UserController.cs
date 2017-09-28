@@ -272,7 +272,7 @@ namespace DocuPath.Controllers
                     mailbody = "Good Day,\n\n" +
 
                                "Please follow the link below in order to register your User profile on the DocuPath system.\n" +
-                               "http://docupath.co.za/account/redeemtoken/"+final.TokenValue+"\n\n" +
+                               "http://localhost:56640/account/redeemtoken/" + final.TokenValue+"\n\n" +
 
                                "Regards,\n" +
                                "The DocuPath team";
