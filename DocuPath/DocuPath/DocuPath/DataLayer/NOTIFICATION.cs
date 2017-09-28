@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,12 +25,16 @@ namespace DocuPath.DataLayer
         public int NotificationTypeID { get; set; }
         [DisplayName("Creation Stamp")]
         public System.DateTime DateID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Title")]
         public string NotificationTitle { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Summary")]
         public string NotificationSummary { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Details")]
         public string NotificationDetails { get; set; }
+        //todo [DefaultValue(FLAG.Text)]
         [DisplayName("Handling Stamp")]
         public Nullable<System.DateTime> HandledDateTimeStamp { get; set; }
     

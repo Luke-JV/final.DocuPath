@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,8 +25,10 @@ namespace DocuPath.DataLayer
 
         [DisplayName("Autopsy Area")]
         public int AutopsyAreaID { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Area Number")]
         public string AreaCode { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Area Description")]
         public string AreaNote { get; set; }
     

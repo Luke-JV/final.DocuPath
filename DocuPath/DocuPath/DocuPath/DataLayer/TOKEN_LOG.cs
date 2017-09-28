@@ -9,17 +9,21 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class TOKEN_LOG
     {
         public int TokenID { get; set; }
         public int AccessLevelID { get; set; }
         public int UserID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string TokenValue { get; set; }
         public System.DateTime IssueTimestamp { get; set; }
         public Nullable<System.DateTime> RedemptionTimestamp { get; set; }
+        [DefaultValue(FLAG.Email)]
         public string DestinationEmail { get; set; }
     
         public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }

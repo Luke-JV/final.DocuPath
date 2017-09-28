@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -20,20 +21,28 @@ namespace DocuPath.DataLayer
         public int ObsGeneralID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("General Description")]
         public string GeneralDescription { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Height (m)")]
         public decimal HeightMeters { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Mass (kg)")]
         public decimal MassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Physique")]
         public string Physique { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Nutrition")]
         public string Nutrition { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Special Identifying Features")]
         public string SpecialIdentifyingFeatures { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Secondary Postmortem Changes")]
         public string SecondaryPostMortemChanges { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("External Appearance & Limb Condition")]
         public string ExtAppearanceLimbCondition { get; set; }
     

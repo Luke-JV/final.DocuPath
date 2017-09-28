@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -26,10 +27,13 @@ namespace DocuPath.DataLayer
         public System.DateTime TxDateStamp { get; set; }
         [DisplayName("Timestamp")]
         public System.DateTime TxTimeStamp { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description")]
         public string TxCriticalDataString { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Old Record")]
         public string TxOldRecord { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("New Record")]
         public string TxNewRecord { get; set; }
     

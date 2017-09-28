@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -30,8 +31,10 @@ namespace DocuPath.DataLayer
         public int RequestTypeID { get; set; }
         [DisplayName("Related Case")]
         public Nullable<int> ForensicCaseID { get; set; }
+        //todo [DefaultValue(FLAG.Text)]
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Request Note")]
         public string RequestNote { get; set; }
         [DisplayName("Status")]

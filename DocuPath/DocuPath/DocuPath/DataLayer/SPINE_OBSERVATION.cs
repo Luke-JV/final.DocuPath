@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -20,8 +21,10 @@ namespace DocuPath.DataLayer
         public int ObsSpineID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Spinal Column")]
         public string SpinalColumn { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Spinal Cord")]
         public string SpinalCord { get; set; }
     

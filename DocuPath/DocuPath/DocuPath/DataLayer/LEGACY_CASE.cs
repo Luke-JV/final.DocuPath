@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -28,12 +29,16 @@ namespace DocuPath.DataLayer
         public int StatusID { get; set; }
         [DisplayName("Added By")]
         public int UserID { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("DR Number")]
         public string LegacyDRNumber { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Brief Description")]
         public string LCBriefDescription { get; set; }
+        //todo [DefaultValue(FLAG.Text)]
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
+        //todo [DefaultValue(FLAG.Text)]
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
     

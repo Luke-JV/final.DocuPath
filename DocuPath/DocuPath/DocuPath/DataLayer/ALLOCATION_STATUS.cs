@@ -9,9 +9,11 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class ALLOCATION_STATUS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +23,7 @@ namespace DocuPath.DataLayer
         }
     
         public int AllocationStatusID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string StatusValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

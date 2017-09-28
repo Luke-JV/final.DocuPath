@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,14 +25,18 @@ namespace DocuPath.DataLayer
         public Nullable<int> ExternalReportID { get; set; }
         [DisplayName("Service Provider")]
         public int ServiceProviderID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Investigation Required")]
         [DataType(DataType.MultilineText)]
         public string InvestigationRequired { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Chain Of Custody")]
         public string DisposalMechanism { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Specimen Nature")]
         [DataType(DataType.MultilineText)]
         public string SpecimenNature { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Serial/Seal Number")]
         public string SpecimenSerialNumber { get; set; }
     

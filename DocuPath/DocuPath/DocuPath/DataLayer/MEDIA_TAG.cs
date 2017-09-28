@@ -9,13 +9,16 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class MEDIA_TAG
     {
         public int ContentTagID { get; set; }
         public int MediaID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string MediaTagOtherDescription { get; set; }
     
         public virtual CONTENT_TAG CONTENT_TAG { get; set; }

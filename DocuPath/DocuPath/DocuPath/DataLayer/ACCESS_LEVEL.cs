@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -26,6 +27,7 @@ namespace DocuPath.DataLayer
 
         [DisplayName("ID")]
         public int AccessLevelID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Level Name")]
         public string LevelName { get; set; }
         [DisplayName("Status")]

@@ -9,12 +9,16 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class MDR_DAY_COMMENT
     {
         public System.DateTime DateID { get; set; }
+        [DefaultValue(FLAG.Text)]
+
         public string CommentsValue { get; set; }
     }
 }

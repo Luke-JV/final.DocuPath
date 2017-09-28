@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -20,16 +21,22 @@ namespace DocuPath.DataLayer
         public int ObsHeadNeckID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Scalp & Skull")]
         public string ScalpSkull { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Intracranial Contents")]
         public string IntracranialContents { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Brain Mass (kg)")]
         public decimal BrainMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Orbital, Nasal & Aural Cavities")]
         public string OrbitalNasalAuralCavities { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Mouth, Tongue & Pharynx")]
         public string MouthTonguePharynx { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Neck Structures")]
         public string NeckStructures { get; set; }
     

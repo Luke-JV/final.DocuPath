@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -44,35 +45,50 @@ namespace DocuPath.DataLayer
         public int IndividualRaceID { get; set; }
         [DisplayName("Primary Cause Of Death")]
         public Nullable<int> PrimaryCauseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Surname of Body Collector")]
         public string BodyCollectorSurname { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Surname of Eviscerator")]
         public string EvisceratorSurname { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Surname of Organ Dissector")]
         public string OrganDissectorSurname { get; set; }
+        //TODO: DATE DEFAULT
         [DisplayName("Estimated Date of Injury")]
         public Nullable<System.DateTime> EstimatedInjuryDate { get; set; }
+        //TODO: DATE DEFAULT
         [DisplayName("Date of Discovery")]
         public Nullable<System.DateTime> DiscoveryDate { get; set; }
+        //TODO: DATE DEFAULT
         [DisplayName("Estimated Date of Death")]
         public Nullable<System.DateTime> EstimatedDeathDate { get; set; }
+        [DefaultValue(FLAG.Integer)]
         [DisplayName("Individual Estimated Age")]
         public string IndividualEstimatedAge { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Medical History")]
         [DataType(DataType.MultilineText)]
         public string MedicalHistory { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Medical Treatment Duration")]
         public string TreatmentDuration { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string OtherPrimaryCauseDescription { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string OtherApparentMannerDescription { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string AutopsyTypeOtherDescription { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string HospitalClinicOtherDescription { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string IndividualGenderOtherDescription { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description (If 'Other')")]
         public string IndividualRaceOtherDescription { get; set; }
     

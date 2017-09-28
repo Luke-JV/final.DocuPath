@@ -9,14 +9,17 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class CASE_COD_ESTIMATION
     {
         public int ProminenceID { get; set; }
         public int ContentTagID { get; set; }
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string CODMotivation { get; set; }
     
         public virtual COD_PROMINENCE COD_PROMINENCE { get; set; }

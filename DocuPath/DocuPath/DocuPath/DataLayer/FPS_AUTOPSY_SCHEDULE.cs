@@ -9,9 +9,11 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class FPS_AUTOPSY_SCHEDULE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,10 +26,15 @@ namespace DocuPath.DataLayer
     
         public System.DateTime FPSScheduleDate { get; set; }
         public int UserID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string ReceptionStaff { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string DryHandsStaff { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string LodoxStaff { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string PrimaryBodyReleaseStaff { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string SecondaryBodyReleaseStaff { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

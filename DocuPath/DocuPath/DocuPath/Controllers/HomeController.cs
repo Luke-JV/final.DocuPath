@@ -1,5 +1,6 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
+using DocuPath.Models.Custom_Classes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -90,6 +91,19 @@ namespace DocuPath.Controllers
 
                 ViewBag.Message = "Your contact page.";
 
+                return View();
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Contact(CONTACT_US model)
+        {
+            try
+            {
                 return View();
             }
             catch (Exception)

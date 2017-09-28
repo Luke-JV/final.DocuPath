@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -27,6 +28,7 @@ namespace DocuPath.DataLayer
         public int AccessAreaID { get; set; }
         [DisplayName("Function Group")]
         public int FunctionGroupID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Description")]
         public string AccessAreaDescription { get; set; }
     

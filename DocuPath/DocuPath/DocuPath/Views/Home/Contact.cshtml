@@ -1,9 +1,4 @@
-﻿@{
-    ViewBag.Title = "Contact";
-}
-@*<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>*@
-
+﻿@{ ViewBag.Title = "Contact"; }
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
@@ -24,15 +19,15 @@
             <div></div>
             <div></div>
             @*<div grid-area="btn1">
-                <form class="minimalform" action="~/Media/All" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
-                </form>
-            </div>
-            <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
-                </form>
-            </div>*@
+                    <form class="minimalform" action="~/Media/All" style="margin-top: 2px">
+                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                    </form>
+                </div>
+                <div grid-area="btn2">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                    </form>
+                </div>*@
             @*<div grid-area="btn2">
                     <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                         <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
@@ -44,36 +39,34 @@
     </div>
 </div>
 
-<div class="form-horizontal border-generic form-generic" style="padding: 0 20px 0 20px">
-    <form method="post">
-        <div class="form-group" style="margin: 10px 0 0 0">
-            <label asp-for="Name">Name &amp; Surname</label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name"
-                  class="text-muted"></span>
-        </div>
-        <div class="form-group" style="margin: 10px 0 0 0">
-            <label asp-for="Email">Email Address</label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email"
-                  class="text-muted"></span>
-        </div>
-        <div class="form-group" style="margin: 10px 0 0 0">
-            <label asp-for="Subject">Message Subject</label>
-            <input asp-for="Subject" class="form-control" />
-            <span asp-validation-for="Subject"
-                  class="text-muted"></span>
-        </div>
-        <div class="form-group" style="margin: 10px 0 0 0">
-            <label asp-for="Message">Message Content</label>
-            <textarea rows="5" cols="15"
-                      asp-for="Message" class="form-control" style="margin-bottom: 5px"></textarea>
-            <span asp-validation-for="Message"
-                  class="text-muted"></span>
-        </div>
-        <div class="fullwidth" style="margin: 10px 0 10px 0">
-            <button type="submit" class="btn btn-generic btn-page-action mdl2icon mdl2-send btn-mdl2icon fullwidth" data-toggle="tooltip" title="SEND" data-placement="bottom"></button>
-        </div>
-
-    </form>
-</div>
+@using (Html.BeginForm("Contact", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "contact-form", role = "form" }))
+{
+    <div class="form-horizontal border-generic form-generic" style="padding: 0 20px 0 20px">
+        <form method="post">
+            <div class="form-group" style="margin: 10px 0 0 0">
+                <label asp-for="Name">Name &amp; Surname</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="validation-text text-danger"></span>
+            </div>
+            <div class="form-group" style="margin: 10px 0 0 0">
+                <label asp-for="Email">Email Address</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="validation-text text-danger"></span>
+            </div>
+            <div class="form-group" style="margin: 10px 0 0 0">
+                <label asp-for="Subject">Message Subject</label>
+                <input asp-for="Subject" class="form-control" />
+                <span asp-validation-for="Subject" class="validation-text text-danger"></span>
+            </div>
+            <div class="form-group" style="margin: 10px 0 0 0">
+                <label asp-for="Message">Message Content</label>
+                <textarea rows="5" cols="15"
+                          asp-for="Message" class="form-control" style="margin-bottom: 5px"></textarea>
+                <span asp-validation-for="Message" class="validation-text text-danger"></span>
+            </div>
+            <div class="fullwidth" style="margin: 10px 0 10px 0">
+                <button type="submit" class="btn btn-generic btn-page-action mdl2icon mdl2-send btn-mdl2icon fullwidth" data-toggle="tooltip" title="SEND" data-placement="bottom"></button>
+            </div>
+        </form>
+    </div>
+}
