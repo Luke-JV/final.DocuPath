@@ -491,6 +491,7 @@
     <Compile Include="Models\AuditModel.cs" />
     <Compile Include="Models\AuthorizeByAccessArea.cs" />
     <Compile Include="Models\Autocomplete.cs" />
+    <Compile Include="Models\Custom Classes\CONTACT_US.cs" />
     <Compile Include="Models\Custom Classes\GLIMPSE.cs" />
     <Compile Include="Models\Custom Classes\METRIC.cs" />
     <Compile Include="Models\DPIdentity.cs" />
@@ -1063,6 +1064,7 @@
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\fileinput.js" />
     <Content Include="Scripts\fileinput.min.js" />
+    <Content Include="Scripts\fort.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />

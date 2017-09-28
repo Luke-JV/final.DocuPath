@@ -14,11 +14,11 @@ namespace DocuPath
                         "~/Scripts/autogrow.min.js",
                         "~/Scripts/shortcut.js",
                         "~/Scripts/chart.js",
-                        "~/Scripts/mark.js"));
+                        "~/Scripts/mark.js",
+                        "~/Scripts/fort.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include(
-                        "~/Scripts/ckeditor/ckeditor.js"/*,
-                        "~/Scripts/ckeditor/adapters/jquery.js"*/));
+                        "~/Scripts/ckeditor/ckeditor.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootgrid").Include(
                         "~/Scripts/jquery.bootgrid.js"));

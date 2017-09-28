@@ -1992,6 +1992,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display:table;
   height: 34px;
   width: 100%;
+  margin-bottom: 5px;
   padding: 6px 6px;
   font-size: 14px;
   line-height: 1.428571429;
@@ -2107,7 +2108,7 @@ textarea.form-control {
 }
 
 .form-group {
-  margin-bottom: 5px;
+  margin-bottom: 0 !important;
 }
 
 .radio,
@@ -5621,8 +5622,8 @@ a.thumbnail:focus {
   white-space: nowrap;
   vertical-align: middle;
   border: 1px solid transparent;
-  border-top-right-radius: 17px;
-  border-bottom-left-radius: 17px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -5635,6 +5636,21 @@ a.thumbnail:focus {
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
+/*.alert-bar-warning {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.alert-bar-danger {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.alert-bar-info {
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}*/
 
 .alert h4 {
   margin-top: 0;
@@ -5719,126 +5735,6 @@ a.thumbnail:focus {
 
 .alert-danger .alert-link {
   color: #953b39;
-}
-
-@-webkit-keyframes progress-bar-stripes {
-  from {
-    background-position: 40px 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-
-@-moz-keyframes progress-bar-stripes {
-  from {
-    background-position: 40px 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-
-@-o-keyframes progress-bar-stripes {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 40px 0;
-  }
-}
-
-@keyframes progress-bar-stripes {
-  from {
-    background-position: 40px 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-
-.progress {
-  height: 15px;
-  /*margin-bottom: 20px;*/
-  overflow: hidden;
-  background-color: #f5f5f5;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.progress-bar {
-  float: left;
-  width: 0;
-  height: 100%;
-  font-size: 12px;
-  color: #ffffff;
-  text-align: center;
-  background-color: #428bca;
-  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-          box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  -webkit-transition: width 0.6s ease;
-          transition: width 0.6s ease;
-}
-
-.progress-striped .progress-bar {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-size: 40px 40px;
-}
-
-.progress.active .progress-bar {
-  -webkit-animation: progress-bar-stripes 2s linear infinite;
-     -moz-animation: progress-bar-stripes 2s linear infinite;
-      -ms-animation: progress-bar-stripes 2s linear infinite;
-       -o-animation: progress-bar-stripes 2s linear infinite;
-          animation: progress-bar-stripes 2s linear infinite;
-}
-
-.progress-bar-success {
-  background-color: #5cb85c;
-}
-
-.progress-striped .progress-bar-success {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-}
-
-.progress-bar-info {
-  background-color: #5bc0de;
-}
-
-.progress-striped .progress-bar-info {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-}
-
-.progress-bar-warning {
-  background-color: #f0ad4e;
-}
-
-.progress-striped .progress-bar-warning {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-}
-
-.progress-bar-danger {
-  background-color: #d9534f;
-}
-
-.progress-striped .progress-bar-danger {
-  background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
 
 .media,
@@ -5965,10 +5861,7 @@ a.list-group-item:focus {
 }
 
 .panel-body {
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 0px;
+  padding: 5px;
   background-color: #f9f9f9;
   box-sizing: border-box;
 }
@@ -6187,9 +6080,9 @@ a.list-group-item:focus {
 
 .well {
   min-height: 20px;
-  padding: 19px;
+  padding: 19px 19px 0 19px;
   margin-bottom: 20px;
-  background-color: #f5f5f5;
+  background-color: #fdfdfd;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -6202,13 +6095,65 @@ a.list-group-item:focus {
 }
 
 .well-lg {
-  padding: 24px;
+  padding: 24px 24px 0 24px;
   border-radius: 6px;
 }
 
 .well-sm {
-  padding: 9px;
-  border-radius: 3px;
+  padding: 7.5px !important;
+  border-radius: 5px;
+  margin-bottom: 5px !important;
+}
+
+.well ul {
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+    font-weight: 500;
+}
+
+.well ol {
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+    font-weight: 500;
+}
+
+.well p {
+    margin: 0 0 10px;
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+    font-weight: 500;
+}
+.well h1{
+    margin: 0 0 10px;
+    font-family: 'U.S. 101';
+    font-size: 15pt;
+    line-height: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.well h2{
+    margin: 0 0 10px;
+    font-family: 'U.S. 101';
+    color: #666;
+    line-height: 15px;
+    text-transform: uppercase;
+    font-size: 13pt;
+}
+.well h3 {
+    margin: 0 0 10px;
+    font-family: 'Segoe UI';
+    text-transform: uppercase;
+    font-size: 9pt;
+    font-weight: bold;
+}
+.well h4 {
+    margin: 0 0 10px;
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+    color: #666;
+    text-decoration: underline;
+    font-weight: 700;
+    font-style: italic;
 }
 
 .close {
@@ -7597,6 +7542,10 @@ td.visible-print {
 
 .apad5{
     padding: 5px;
+}
+
+.bpad5{
+    padding: 0 0 5px 0 !important;
 }
 
 .btn-generic{
@@ -12344,6 +12293,18 @@ a.cal-event-week {
   margin-left: -1.5px;
 }
 
+.timeline li:first-child{
+    margin-top: 10px;
+}
+
+.timeline li:last-child{
+    margin-bottom: 10px !important;
+}
+
+.timeline > li .timeline-inverted:last-child{
+    margin-bottom: 10px;
+}
+
 .timeline > li {
   margin-bottom: 10px;
   position: relative;
@@ -12498,7 +12459,7 @@ a.cal-event-week {
 /*#region INSIGHT: */
 
 .insight-grid {
-    grid-gap: 5px;
+    /*grid-gap: 5px;*/
     grid-template-rows: auto auto auto auto;
     grid-template-areas:    "selector"
                             "timeframe"
@@ -12508,7 +12469,7 @@ a.cal-event-week {
 
 .insight-subgrid {
     grid-gap: 0px;
-    grid-template-columns: 400px 1fr;
+    grid-template-columns: 450px 1fr;
     grid-template-areas: "controls guidance";
 }
 
@@ -12529,7 +12490,7 @@ a.cal-event-week {
 }
 
 .insight-grid .panel {
-    margin-top: 0 !important;
+    /*margin-top: 0 !important;*/
     margin-bottom: 0 !important;
 }
 
@@ -13596,4 +13557,159 @@ ctrl {
         border-bottom-left-radius: 7.5px;
     }
     /*border
+/*#endregion */
+
+/*#region PROGRESS BAR & FORT.JS: */
+
+.top-one {
+    /*background: linear-gradient(to right, #009dff 0, #00c8ff 100%);*/
+    /*position: fixed;*/
+    /*z-index: 1031;*/
+    /*top: 0;*/
+    /*left: 0*/
+    height: 25px !important;
+    margin-top: -1px !important;
+    /*margin-left: -0.5px !important;*/
+    transition: all 1s ease;
+    /*width: 0;*/
+    overflow: hidden;
+    border-radius: 5px;
+      -webkit-box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+    /*margin-top: -0.5px;*/
+    padding-right: 2.5px;
+    font-size: 14pt;
+    line-height: 25px !important;
+    font-family: 'U.S. 101';
+    font-weight: normal;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-align: right;
+}
+
+.fort-container{
+    border-radius: 5px;
+    background: #f5f5f5;
+    border: 1px solid #CCCCCC;
+    height: 25px;
+    margin-top: 2px;
+    /*padding: 0 1px 0.5px 0.5px;*/
+}
+
+.colors {
+    width: 0;
+    /*height: 100%;*/
+    border: none !important;
+      -webkit-box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+
+}
+.fort-container:before{
+}
+
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@-moz-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@-o-keyframes progress-bar-stripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/*.progress {
+  display: table;
+  align-items: center;
+  width: 100%;
+  height: 15px !important;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 15px !important;
+  margin-top: 1px;
+  border: none;
+  line-height: 15px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-size: 11pt;
+  font-family: 'U.S. 101';
+  font-weight: normal;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-align: right;
+  background-color: #5cb85c;
+  background: linear-gradient(90deg, #888,#5cb85c);
+  -webkit-box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: width 1s ease;
+          transition: width 1s ease;
+}*/
+
+.done{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10pt;
+    line-height: 22.5px;
+    color: #666;
+}
+.missing{
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10pt;
+    line-height: 22.5px;
+    color: #666;
+}
+
+.fort-container > .done:before{
+  font-family: 'Segoe MDL2 Assets';
+  /*content: "\EC61";*/
+  content: "\E73E";
+  padding-right: 5px;
+  font-size: 80%;
+  color: #468847;
+} 
+.fort-container > .missing:before{
+  font-family: 'Segoe MDL2 Assets';
+  /*content: "\EB90";*/
+  content: "\E711";
+  padding-right: 5px;
+  font-size: 80%;
+  color: rgba(174,31,31,1);
+} 
+
 /*#endregion */

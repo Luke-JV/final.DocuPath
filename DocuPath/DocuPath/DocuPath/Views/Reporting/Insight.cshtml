@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div class="form-horizontal border-generic form-generic" style="padding-bottom: 0">
+<div class="form-horizontal border-generic form-generic apad5">
     @* ACCORDION START *@
     <div class="panel-group grid insight-grid" id="INSIGHTaccordion">
             <div class="panel panel-default" grid-area="selector">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default" grid-area="timeframe" id="pnlTimeframeParams">
+            <div class="panel panel-default" grid-area="timeframe" id="pnlTimeframeParams" style="margin-top: 5px">
                 <div class="panel-heading" data-toggle="collapse" data-target="#timeframe" data-parent="#INSIGHTaccordion" style="cursor: pointer">
                     <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
                     <span>Report Timeframe</span>
@@ -144,7 +144,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default" grid-area="parameters" id="pnlReportParams">
+            <div class="panel panel-default" grid-area="parameters" id="pnlReportParams" style="margin-top: 5px">
                 <div class="panel-heading" data-toggle="collapse" data-target="#parameters" data-parent="#INSIGHTaccordion" style="cursor: pointer">
                     <span class="mdl2icon mdl2-params panel-mdl2icon"></span>
                     <span>Report Parameters</span>
@@ -188,10 +188,10 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default" grid-area="actions">
+            <div class="panel panel-default" grid-area="actions" style="margin-top: 5px">
                 <div class="panel-heading" data-toggle="collapse" data-target="#reportactions" data-parent="#INSIGHTaccordion" style="cursor: pointer">
                     <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
-                    <span>Report Actions</span>
+                    <span>Report Summary & Actions</span>
                 </div>
                 <div id="reportactions" class="panel-collapse collapse">
                     <div class="panel-body grid insight-subgrid apad5">
@@ -202,17 +202,39 @@
                                         <i class="mdl2icon mdl2-done"></i>
                                         Generate Report
                                     </button>*@
-                                <form grid-area="generate" class="minimalform" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px"data-toggle="modal" data-target="#report_gen">
-                                    <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon" onclick="this.blur()" @*type="submit"*@ data-toggle="tooltip" title="GENERATE REPORT" data-placement="bottom"></button>
-                                </form>
-                                @*<form grid-area="download" class="minimalform" action="~/Insight/DownloadReport" method="post" style="margin-top: 2px">
-                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-download btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="DOWNLOAD REPORT" data-placement="bottom"></button>
-                                </form>*@
+                                @*<span class="emph">Pending Report Summary:</span>*@
+                                <p class="alert-bar alert-bar-success fullwidth" grid-area="alertbar">Ready to generate report. Review the information below.</p>
+                                <hr class="details-hr" />
+                                <dl class="dl-horizontal-tiny">
+                                    <dt>Report Type</dt>
+                                    <dd><kbd>User Activity Report</kbd></dd>
+                                    <dt>Timeframe</dt>
+                                    <dd><kbd>18 Sep 2017 - 25 Sep 2017</kbd></dd>
+                                    <dt>Parameters</dt>                                    
+                                    <dd>
+                                        <ul class="haptic-ul">
+                                            <li>User: <kbd>John Doe</kbd></li>
+                                            <li>Activity Type(s): <kbd>All Activity Types</kbd></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                <hr class="details-hr" />
+                                <div class="grid insight-actions-subgrid">
+                                    <form grid-area="generate" class="minimalform" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
+                                        <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon pull-right" onclick="this.blur()" @*type="submit"*@ data-toggle="tooltip" title="GENERATE REPORT" data-placement="left"></button>
+                                    </form>
+                                    <form grid-area="reset" class="minimalform" action="~/Reporting/Insight" style="margin-top: 2px">
+                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-reset btn-mdl2icon pull-left" onclick="this.blur()" type="submit" data-toggle="tooltip" title="RESET REPORT BUILDER" data-placement="right"></button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="insight-guidance" grid-area="guidance">
                             <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
-                                <li>That's it! Click the <kbd>Generate Report</kbd> button to generate the report. </li>
+                                <li>That's it! Your report is ready to be generated.</li>
+                                <li>Take a moment to review the information on the left and confirm its correctness.</li>
+                                <li>If the summary is correct, click the <kbd>Generate Report</kbd> button to generate the report.</li>
+                                <li>To start over, click the <kbd>Reset Report Builder</kbd> button.</li>
                             </ul>
                         </div>
                     </div>
