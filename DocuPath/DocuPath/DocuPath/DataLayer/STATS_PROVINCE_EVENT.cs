@@ -9,15 +9,18 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class STATS_PROVINCE_EVENT
     {
         public int CaseStatsID { get; set; }
         public int ForensicCaseID { get; set; }
         public int EventID { get; set; }
         public int ProvinceID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string ProvinceOtherDescription { get; set; }
     
         public virtual CASE_STATISTICS CASE_STATISTICS { get; set; }

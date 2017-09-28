@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -27,33 +28,45 @@ namespace DocuPath.DataLayer
         public int ServiceProviderID { get; set; }
         [DisplayName("Title")]
         public int TitleID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Company Name")]
         public string CompanyName { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Telephone Number")]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string CompanyTelNum { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Fax Number")]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string CompanyFaxNum { get; set; }
+        [DefaultValue(FLAG.Email)]
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string CompanyEmail { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Physical Address")]
         public string CompanyPhysicalAddress { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Postal Address")]
         public string CompanyPostalAddress { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("First Name")]
         public string RepFirstName { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Last Name")]
         public string RepLastName { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Job Description")]
         public string RepJobDescription { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Cellphone Number")]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string RepCellNum { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Work Number")]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string RepWorkNum { get; set; }
+        [DefaultValue(FLAG.Email)]
         [DisplayName("Email Address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string RepEmail { get; set; }

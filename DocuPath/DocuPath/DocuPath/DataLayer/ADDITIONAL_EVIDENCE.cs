@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -20,14 +21,19 @@ namespace DocuPath.DataLayer
         public int AdditionalEvidenceID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Item Description")]
         public string EvidenceDescription { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Serial/Seal Number")]
         public string EvidenceSerialNumber { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Contact Person")]
         public string ContactPersonNameSurname { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Contact Number")]
         public string ContactPersonContactNum { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Item Location")]
         public string AdditionalEvidenceLocation { get; set; }
     

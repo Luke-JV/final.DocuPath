@@ -9,13 +9,16 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class LEVEL_AREA
     {
         public int AccessAreaID { get; set; }
         public int AccessLevelID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string LevelAreaDescription { get; set; }
     
         public virtual ACCESS_AREA ACCESS_AREA { get; set; }

@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -19,6 +20,8 @@ namespace DocuPath.DataLayer
         public int CaseStatsID { get; set; }
         public int ForensicCaseID { get; set; }
         public int SampleInvestigationID { get; set; }
+        [DefaultValue(FLAG.Text)]
+
         [DisplayName("Description (If 'Other')")]
         public string SampleInvestigationOtherDescription { get; set; }
     

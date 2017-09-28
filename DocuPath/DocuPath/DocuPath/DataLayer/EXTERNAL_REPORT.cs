@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -28,6 +29,7 @@ namespace DocuPath.DataLayer
         public System.DateTime DateReceived { get; set; }
         [DisplayName("Date Captured")]
         public System.DateTime DateCaptured { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("External Report Location")]
         public string ExternalReportLocation { get; set; }
     

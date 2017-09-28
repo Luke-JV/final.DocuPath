@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace DocuPath.DataLayer
 
         [DisplayName("ID")]
         public int ApparentMannerID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Apparent Manner of Death Description")]
         public string ApparentMannerDescription { get; set; }
     

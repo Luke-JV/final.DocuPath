@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -20,22 +21,31 @@ namespace DocuPath.DataLayer
         public int ObsChestID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Thoracic Cage & Diaphragm")]
         public string ThoracicCageDiaphragm { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Mediastinum & Oesophagus")]
         public string MediastinumOesophagus { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Trachea & Bronchi")]
         public string TracheaBronchi { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Pleura & Lungs")]
         public string PleuraLungs { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Left Lung Mass (kg)")]
         public decimal LeftLungMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Right Lung Mass (kg)")]
         public decimal RightLungMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Heart & Pericardium")]
         public string HeartPericardium { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Heart Mass (kg)")]
         public decimal HeartMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Large Blood Vessels")]
         public string LargeBloodVessels { get; set; }
     

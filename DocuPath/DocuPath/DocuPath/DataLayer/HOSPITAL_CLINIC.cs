@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace DocuPath.DataLayer
 
         [DisplayName("ID")]
         public int HospitalClinicID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Hospital/Clinic Name")]
         public string HospitalClinicName { get; set; }
     

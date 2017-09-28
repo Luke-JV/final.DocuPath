@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -43,27 +44,34 @@ namespace DocuPath.DataLayer
         public int AutopsyAreaID { get; set; }
         [DisplayName("Added By")]
         public int UserID { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("DR Number")]
         [Required]
         public string ForensicDRNumber { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Brief Description")]
         public string FCBriefDescription { get; set; }
+        //todo
         [DisplayName("Date Added")]
-        public System.DateTime DateAdded { get; set; }
+        public System.DateTime DateAdded { get; set; }   
         [DisplayName("Notice Of Death")]
         [Required]
         public string DHANoticeDeathID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Acting Officer")]
         [Required]
         public string ActingOfficerNameSurname { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Contact Details")]
         [Required]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0.")]
         public string ActingOfficerContactNum { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Cause Of Death Conclusion")]
         [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = "At least a preliminary cause of death estimation is required.")]
         public string CauseOfDeathConclusion { get; set; }
+        //todo [DefaultValue(FLAG.Date)]
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
     

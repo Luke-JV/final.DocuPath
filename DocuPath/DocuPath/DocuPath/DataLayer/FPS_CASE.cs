@@ -9,9 +9,11 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class FPS_CASE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,13 +24,21 @@ namespace DocuPath.DataLayer
     
         public int FPSCaseID { get; set; }
         public int FPSAssistantID { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         public string FPSDRNum { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSDeceasedName { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSRace { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSGender { get; set; }
+        [DefaultValue(FLAG.Integer)]
         public int FPSAge { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSCircumstanceCause { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSDoctor { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string FPSComment { get; set; }
     
         public virtual FPS_ASSISTANT FPS_ASSISTANT { get; set; }

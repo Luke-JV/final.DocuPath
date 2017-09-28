@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -25,6 +26,7 @@ namespace DocuPath.DataLayer
         [DisplayName("ID")]
         public int AutopsyTypeID { get; set; }
         [DisplayName("Autopsy Type")]
+        [DefaultValue(FLAG.Text)]
         public string AutopsyTypeValue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -38,44 +39,61 @@ namespace DocuPath.DataLayer
         public int TitleID { get; set; }
         [DisplayName("Login ID")]
         public Nullable<int> UserLoginID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Middle Name")]
         public string MiddleName { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Initials")]
         public string DisplayInitials { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Qualification Description")]
         public string QualificationDescription { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("HPCSA Registration Number")]
         public string HPCSARegNumber { get; set; }
+        [DefaultValue(FLAG.NationalID)]
         [DisplayName("National ID")]
         public string NationalID { get; set; }
+        [DefaultValue(FLAG.AcademicID)]
         [DisplayName("Academic ID")]
         public string AcademicID { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Cellphone Number")]
         public string CellNum { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Telephone Number")]
         public string TelNum { get; set; }
+        [DefaultValue(FLAG.ContactNumber)]
         [DisplayName("Work Number")]
         public string WorkNum { get; set; }
+        [DefaultValue(FLAG.Email)]
         [DisplayName("Personal Email")]
         public string PersonalEmail { get; set; }
+        [DefaultValue(FLAG.Email)]
         [DisplayName("Academic Email")]
         public string AcademicEmail { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Physical Address")]
         public string PhysicalAddress { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Postal Address")]
         public string PostalAddress { get; set; }
         [DisplayName("Status")]
         public bool IsDeactivated { get; set; }
         [DisplayName("UI Theme Preference")]
         public Nullable<bool> DarkUIPref { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Username")]
         public string UserName { get; set; }
         [DisplayName("Confirmation Status")]
         public bool IsConfirmed { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Security Stamp")]
         public string SecurityStamp { get; set; }
         [DisplayName("Lockout Enabled")]
