@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace DocuPath.DataLayer
 
         [DisplayName("ID")]
         public int IndividualGenderID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Individual Gender")]
         public string IndividualGenderValue { get; set; }
     

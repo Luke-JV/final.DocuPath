@@ -9,9 +9,11 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class USER_LOGIN
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +24,9 @@ namespace DocuPath.DataLayer
     
         public int UserLoginID { get; set; }
         public int AccessLevelID { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string Username { get; set; }
+        [DefaultValue(FLAG.Text)]
         public string Password { get; set; }
     
         public virtual ACCESS_LEVEL ACCESS_LEVEL { get; set; }

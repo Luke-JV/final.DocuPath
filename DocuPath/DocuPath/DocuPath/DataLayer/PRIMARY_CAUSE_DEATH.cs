@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -24,6 +25,7 @@ namespace DocuPath.DataLayer
 
         [DisplayName("ID")]
         public int PrimaryCauseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Primary Cause Of Death Description")]
         public string PrimaryCauseDescription { get; set; }
     

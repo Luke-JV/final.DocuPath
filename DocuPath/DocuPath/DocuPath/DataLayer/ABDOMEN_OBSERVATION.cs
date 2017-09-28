@@ -9,45 +9,63 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    
         
     public partial class ABDOMEN_OBSERVATION
     {
-        [DisplayName("Abdomen Observation ID")]
+        
+        [DisplayName("Abdomen Observation ID")]        
         public int ObsAbdomenID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Peritoneal Cavity")]
         public string PeritonealCavity { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Stomach Contents")]
         public string StomachContents { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Intestines & Mesentery")]
         public string IntestinesMesentery { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Liver, Gallbladder & Biliary Passages")]
         public string LiverGallbladderBilliaryPassages { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Liver Mass (kg)")]
         public decimal LiverMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Pancreas")]
         public string Pancreas { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Spleen")]
         public string Spleen { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Splenic Mass (kg)")]
         public Nullable<decimal> SplenicMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Adrenals")]
         public string Adrenals { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Kidneys & Ureters")]
         public string KidneysUreters { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Left Kidney Mass (kg)")]
         public Nullable<decimal> LeftKidneyMassKg { get; set; }
+        [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Right Kidney Mass (kg)")]
         public Nullable<decimal> RightKidneyMassKg { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Urinary Bladder & Urethra")]
         public string UrinaryBladderUrethra { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Pelvic Walls")]
         public string PelvicWalls { get; set; }
+        [DefaultValue(FLAG.Text)]
         [DisplayName("Genital Organs")]
         public string GenitalOrgans { get; set; }
 

@@ -9,6 +9,7 @@
 
 namespace DocuPath.DataLayer
 {
+    using DocuPath.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -32,8 +33,10 @@ namespace DocuPath.DataLayer
         public int TagSubCategoryID { get; set; }
         [DisplayName("Condition")]
         public int TagConditionID { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Tag Code")]
         public string ContentTagCode { get; set; }
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Tag Text")]
         public string ContentTagText { get; set; }
     
