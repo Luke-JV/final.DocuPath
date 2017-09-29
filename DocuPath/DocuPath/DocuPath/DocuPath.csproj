@@ -1229,6 +1229,7 @@
     <Content Include="Views\Reporting\Vision.cshtml" />
     <Content Include="Views\SystemParameters\Maintain.cshtml" />
     <Content Include="Views\Account\RegisterUserProfile.cshtml" />
+    <Content Include="Views\AuditTrail\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

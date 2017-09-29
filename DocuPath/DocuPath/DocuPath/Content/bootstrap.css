@@ -8341,26 +8341,6 @@ td.visible-print {
     content: '\E1F5';
 }
 
-.status-ok {
-  font-weight: bold;
-  color: #468847;
-}
-
-.status-warning {
-  font-weight: bold;
-  color: #c09853;
-}
-
-.status-danger {
-  font-weight: bold;
-  color: #b94a48;
-}
-
-.status-inactive {
-  font-weight: bold;
-  color: #999;
-}
-
 .mdl2-borderless:before {
     content: '\E2B3';
 }
@@ -8395,6 +8375,34 @@ td.visible-print {
 
 .mdl2-piechart:before {
     content: '\EB05';
+}
+
+.mdl2-copy:before{
+    content: '\E8C8';
+}
+
+.mdl2-clear:before{
+    content: '\E94F';
+}
+
+.status-ok {
+  font-weight: bold;
+  color: #468847;
+}
+
+.status-warning {
+  font-weight: bold;
+  color: #c09853;
+}
+
+.status-danger {
+  font-weight: bold;
+  color: #b94a48;
+}
+
+.status-inactive {
+  font-weight: bold;
+  color: #999;
 }
 
 /* MODAL CSS: */
@@ -13732,15 +13740,19 @@ ctrl {
     padding: 15px 0 15px 0;
     /*padding: 5px 0 5px 0;*/
     grid-gap: 15px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(4, auto);
     grid-template-areas:    "name contact"
                             "id qualification"
                             "address login"
                             "sysprefs";
-    /*grid-template-columns: 500px;*/
+    /*grid-template-columns: 600px;*/
     justify-content: center;
     /*border: 1px solid #666;*/
+}
+
+.register-user-grid .panel.panel-default, .register-user-grid .panel.panel-default .panel-body{
+    height: 100%;
 }
 
 /*.register-user-grid div{
@@ -13748,3 +13760,23 @@ ctrl {
 }*/
 
 /*#endregion */
+
+.audit-trail-highlight{
+    background-color: rgba(255,220,220,1) !important;
+    /*padding: 1px;*/
+    font-weight: bold !important;
+    color: rgba(174,31,31,1) !important;
+}
+
+.tx-details{
+    font-family: 'Consolas';
+    font-size: 10pt;
+}
+
+.details-ul{
+    list-style: square !important;
+}
+
+.details-li{
+    font-weight: bold !important;
+}
