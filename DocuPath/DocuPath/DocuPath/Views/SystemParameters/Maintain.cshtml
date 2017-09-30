@@ -176,7 +176,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">DUTY SLOTS</span>
-                            <button id="btnAddDutySlot" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddDutySlot" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -190,28 +190,32 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_dutyslots">
-                                        @for (int i = 0; i < Model.dutySlots.Count; i++)
-                                        {
-                                            <tr>
-                                                <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.dutySlots[i].SlotID)
-                                                </td>
-                                                <td>
-                                                    @Html.EditorFor(model => model.dutySlots[i].Description, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
-                                                </td>
-                                                <td>
-                                                    @Html.EditorFor(model => model.dutySlots[i].StartTime, new { htmlAttributes = new { @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].StartTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
-                                                </td>
-                                                <td>
-                                                    @Html.EditorFor(model => model.dutySlots[i].EndTime, new { htmlAttributes = new { @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].EndTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
-                                                </td>
-                                                <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
+                                        <tbody id="tbody_dutyslots" class="slotList">
+                                    
+                                            @for (int i = 0; i < Model.dutySlots.Count; i++)
+                                            {
+
+                                                    <tr class="slotRow">
+                                                        <td class="table-large-identifier text-center">
+                                                            @Html.DisplayFor(model => model.dutySlots[i].SlotID, new { htmlAttributes = new { @id = "slotId" } })
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.dutySlots[i].Description, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.dutySlots[i].StartTime, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].StartTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                        </td>
+                                                        <td>
+                                                            @Html.EditorFor(model => model.dutySlots[i].EndTime, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].EndTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                        </td>
+                                                        <td>
+                                                            <a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                        </td>
+                                                    </tr>
+                                               
+                                            }
+                                    
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
@@ -222,7 +226,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">AUTOPSY AREAS</span>
-                            <button id="btnAddAutopsyArea" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddAutopsyArea" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -235,21 +239,21 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_autopsyarea">
+                                    <tbody id="tbody_autopsyarea" class="areaList">
                                         @for (int i = 0; i < Model.autopsyAreas.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="areaRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.autopsyAreas[i].AutopsyAreaID)
+                                                    @Html.DisplayFor(model => model.autopsyAreas[i].AutopsyAreaID, new { htmlAttributes = new { @id = "areaID" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.autopsyAreas[i].AreaCode, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.autopsyAreas[i].AreaCode, new { htmlAttributes = new { @id = "areaCode", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.autopsyAreas[i].AreaNote, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.autopsyAreas[i].AreaNote, new { htmlAttributes = new { @id = "areaNote",@class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a class="mdl2icon colour-dpblack" id="remAARow"href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -264,7 +268,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">AUTOPSY TYPES</span>
-                            <button id="btnAddAutopsyType" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddAutopsyType" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -276,18 +280,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_autopsytype">
+                                    <tbody id="tbody_autopsytype" class="typeList">
                                         @for (int i = 0; i < Model.autopsyTypes.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="typeRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.autopsyTypes[i].AutopsyTypeID)
+                                                    @Html.DisplayFor(model => model.autopsyTypes[i].AutopsyTypeID, new { htmlAttributes = new { @id="typeID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.autopsyTypes[i].AutopsyTypeValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.autopsyTypes[i].AutopsyTypeValue, new { htmlAttributes = new { @id = "typeValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remATRow"class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -302,7 +306,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">APPARENT MANNERS OF DEATH</span>
-                            <button id="btnAddApparentMOD" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddApparentMOD" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -314,18 +318,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_apparentMOD">
+                                    <tbody id="tbody_apparentMOD" class="mannerList">
                                         @for (int i = 0; i < Model.apparentMOD.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="mannerRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.apparentMOD[i].ApparentMannerID)
+                                                    @Html.DisplayFor(model => model.apparentMOD[i].ApparentMannerID, new { htmlAttributes = new { @id="mannerID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.apparentMOD[i].ApparentMannerDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.apparentMOD[i].ApparentMannerDescription, new { htmlAttributes = new { @id="mannerValue",@class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remAMRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -340,7 +344,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">EXTERNAL CAUSES</span>
-                            <button id="btnAddExternalCause" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddExternalCause" type="button"class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -352,18 +356,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_externalcauses">
+                                    <tbody id="tbody_externalcauses" class="causeList">
                                         @for (int i = 0; i < Model.externalCauses.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="causeRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.externalCauses[i].ExternalCauseID)
+                                                    @Html.DisplayFor(model => model.externalCauses[i].ExternalCauseID, new { htmlAttributes = new { @id = "causeID" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.externalCauses[i].ExternalCauseDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.externalCauses[i].ExternalCauseDescription, new { htmlAttributes = new { @id = "causeValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remECRow"class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -378,7 +382,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">HOSPITALS &amp; CLINICS</span>
-                            <button id="btnAddHospitalClinic" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddHospitalClinic" type="button"class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -390,18 +394,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_hospitalsclinics">
+                                    <tbody id="tbody_hospitalsclinics" class="HCList">
                                         @for (int i = 0; i < Model.hospitalsClinics.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="HCRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.hospitalsClinics[i].HospitalClinicID)
+                                                    @Html.DisplayFor(model => model.hospitalsClinics[i].HospitalClinicID, new { htmlAttributes = new { @id = "HCID" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.hospitalsClinics[i].HospitalClinicName, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.hospitalsClinics[i].HospitalClinicName, new { htmlAttributes = new { @id = "HCValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remHCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -416,7 +420,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">INDIVIDUAL GENDERS</span>
-                            <button id="btnAddGender" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddGender" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -428,18 +432,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_genders">
+                                    <tbody id="tbody_genders" class="genderList">
                                         @for (int i = 0; i < Model.genders.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="genderRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.genders[i].IndividualGenderID)
+                                                    @Html.DisplayFor(model => model.genders[i].IndividualGenderID, new { htmlAttributes = new { @id="genderID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.genders[i].IndividualGenderValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.genders[i].IndividualGenderValue, new { htmlAttributes = new { @id = "genderValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remGRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -454,7 +458,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">INDIVIDUAL RACES</span>
-                            <button id="btnAddRace" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddRace" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -466,18 +470,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_races">
+                                    <tbody id="tbody_races" class="raceList">
                                         @for (int i = 0; i < Model.races.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="raceRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.races[i].IndividualRaceID)
+                                                    @Html.DisplayFor(model => model.races[i].IndividualRaceID, new { htmlAttributes = new { @id="raceID" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.races[i].IndividualRaceValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.races[i].IndividualRaceValue, new { htmlAttributes = new {@id="raceValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remRRow"class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -492,7 +496,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">MEDICAL TREATMENTS</span>
-                            <button id="btnAddMedicalTreatment" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddMedicalTreatment" type="button"class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -504,10 +508,10 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_medicaltreatments">
+                                    <tbody id="tbody_medicaltreatments" class="medList">
                                         @for (int i = 0; i < Model.medicalTreatments.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="medRow">
                                                 <td class="table-large-identifier text-center">
                                                     @Html.DisplayFor(model => model.medicalTreatments[i].MedicalTreatmentID)
                                                 </td>
@@ -515,7 +519,7 @@
                                                     @Html.EditorFor(model => model.medicalTreatments[i].MedicalTreatmentDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remMTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -530,7 +534,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">PRIMARY CAUSE OF DEATH</span>
-                            <button id="btnAddPrimaryCOD" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddPrimaryCOD" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -542,18 +546,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_primaryCOD">
+                                    <tbody id="tbody_primaryCOD" class="CODList">
                                         @for (int i = 0; i < Model.primaryCOD.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="CODRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.primaryCOD[i].PrimaryCauseID)
+                                                    @Html.DisplayFor(model => model.primaryCOD[i].PrimaryCauseID, new { htmlAttributes = new { @id="CODID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.primaryCOD[i].PrimaryCauseDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.primaryCOD[i].PrimaryCauseDescription, new { htmlAttributes = new { @id="CODValue",@class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remCODRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -568,7 +572,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">PROVINCES</span>
-                            <button id="btnAddProvince" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddProvince" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -580,18 +584,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_provinces">
+                                    <tbody id="tbody_provinces" class="provList">
                                         @for (int i = 0; i < Model.provinces.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="provRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.provinces[i].ProvinceID)
+                                                    @Html.DisplayFor(model => model.provinces[i].ProvinceID, new { htmlAttributes = new { @id="provID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.provinces[i].ProvinceName, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.provinces[i].ProvinceName, new { htmlAttributes = new { @id = "provValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remPRow"class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -606,7 +610,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">SAMPLES &amp; INVESTIGATIONS</span>
-                            <button id="btnAddSampleInvestigation" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddSampleInvestigation" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -618,18 +622,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_sampleinvestigation">
+                                    <tbody id="tbody_sampleinvestigation" class="sampleList">
                                         @for (int i = 0; i < Model.samplesInvestigations.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="sampleRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.samplesInvestigations[i].SampleInvestigationID)
+                                                    @Html.DisplayFor(model => model.samplesInvestigations[i].SampleInvestigationID, new { htmlAttributes = new { @id="sampleID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.samplesInvestigations[i].SampleInvestigationDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.samplesInvestigations[i].SampleInvestigationDescription, new { htmlAttributes = new {@id="sampleValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remSIRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -644,7 +648,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">SCENES OF INJURY</span>
-                            <button id="btnAddSceneOfInjury" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddSceneOfInjury" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -656,18 +660,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_sceneofinjury">
+                                    <tbody id="tbody_sceneofinjury" class="sceneList">
                                         @for (int i = 0; i < Model.scenesOfInjury.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="sceneRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.scenesOfInjury[i].InjurySceneID)
+                                                    @Html.DisplayFor(model => model.scenesOfInjury[i].InjurySceneID, new { htmlAttributes = new { @id="sceneID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.scenesOfInjury[i].InjurySceneDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.scenesOfInjury[i].InjurySceneDescription, new { htmlAttributes = new { @id = "sceneValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remSCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -682,7 +686,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">SPECIAL CATEGORIES</span>
-                            <button id="btnAddSpecialCategory" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddSpecialCategory" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -694,18 +698,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_specialcategories">
+                                    <tbody id="tbody_specialcategories" class="categoryList">
                                         @for (int i = 0; i < Model.specialCategories.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="categoryRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.specialCategories[i].SpecialCategoryID)
+                                                    @Html.DisplayFor(model => model.specialCategories[i].SpecialCategoryID, new { htmlAttributes = new { @id="categoryID" } })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.specialCategories[i].SpecialCategoryDescription, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.specialCategories[i].SpecialCategoryDescription, new { htmlAttributes = new { @id = "categoryValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remSCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -720,7 +724,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">MEDIA PURPOSES</span>
-                            <button id="btnAddMediaPurpose" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddMediaPurpose" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -732,18 +736,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_mediapurpose">
+                                    <tbody id="tbody_mediapurpose" class="purposeList">
                                         @for (int i = 0; i < Model.mediaPurposes.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="purposeRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.mediaPurposes[i].MediaPurposeID)
+                                                    @Html.DisplayFor(model => model.mediaPurposes[i].MediaPurposeID, new { htmlAttributes = new { @id="purposeID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.mediaPurposes[i].MediaPurposeValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.mediaPurposes[i].MediaPurposeValue, new { htmlAttributes = new { @id="purposeValue",@class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remPPRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -758,7 +762,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">SERVICE REQUEST TYPES</span>
-                            <button id="btnAddRequestType" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddRequestType" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -770,18 +774,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_requesttype">
+                                    <tbody id="tbody_requesttype" class="requestList">
                                         @for (int i = 0; i < Model.requestTypes.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="requestRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.requestTypes[i].RequestTypeID)
+                                                    @Html.DisplayFor(model => model.requestTypes[i].RequestTypeID, new { htmlAttributes = new { @id="requestID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.requestTypes[i].RequestTypeValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.requestTypes[i].RequestTypeValue, new { htmlAttributes = new {@id="requestValue", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remRTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -834,7 +838,7 @@
                         <div class="panel-heading params-panel-heading-grid">
                             <span class="mdl2icon mdl2-wrench panel-mdl2icon" grid-area="parm_hdr_ico"></span>
                             <span grid-area="parm_hdr_txt">TITLES</span>
-                            <button id="btnAddTitle" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            <button id="btnAddTitle" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
                         </div>
                         <div class="panel-default">
                             <div class="panel-body sys-params-panel">
@@ -846,18 +850,18 @@
                                             <td style="width: 100px">Actions</td>
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody_titles">
+                                    <tbody id="tbody_titles" class="titleList">
                                         @for (int i = 0; i < Model.titles.Count; i++)
                                         {
-                                            <tr>
+                                            <tr class="titleRow">
                                                 <td class="table-large-identifier text-center">
-                                                    @Html.DisplayFor(model => model.titles[i].TitleID)
+                                                    @Html.DisplayFor(model => model.titles[i].TitleID, new { htmlAttributes = new { @id="titleID"} })
                                                 </td>
                                                 <td>
-                                                    @Html.EditorFor(model => model.titles[i].TitleValue, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                    @Html.EditorFor(model => model.titles[i].TitleValue, new { htmlAttributes = new { id="titleValue",@class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                 </td>
                                                 <td>
-                                                    <a class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
+                                                    <a id="remTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -967,4 +971,535 @@
             }
         };
     </script>
+
+<script type="text/javascript">
+    //////////////DUTY SLOTS////////////////////////////////////////
+
+        $(document).ready(function () {
+
+            $("#btnAddDutySlot").click(function () {
+                var rowCount = $('.slotRow').length;
+                
+                //todo
+                $(".slotList").append('<tr class="slotRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" name="dutySlots[' + rowCount + '].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[' + rowCount + '].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[' + rowCount + '].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+                //<tr>
+                //<td class="table-large-identifier text-center">6</td><td><input class="form-control frmctrl-small text-box single-line" id="dutySlots_5__Description" name="dutySlots[5].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value="CALL"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[5].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[5].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>
+            });
+
+            $(".slotList").on('click', '#remRow', function () {
+
+                $(this).closest('.slotRow').remove();
+               
+                $('#slotId').each(function (index) {
+                    $(this).attr('name', 'dutySlots[' + index + '].SlotID');
+                });
+
+                $('#slotDescription').each(function (index) {
+                    $(this).attr('name', 'dutySlots[' + index + '].Description');
+                });
+
+                $('#slotStart').each(function (index) {
+                    $(this).attr('name', 'dutySlots[' + index + '].StartTime');
+                });
+
+                $('#slotEnd').each(function (index) {
+                    $(this).attr('name', 'dutySlots[' + index + '].EndTime');
+                });
+
+
+
+                
+            })
+        });
+
+    ////////////////////////////////////////////////////////////////
+
+    //////////////AUTOPSY AREAS////////////////////////////////////////
+
+    $(document).ready(function () {
+
+        $("#btnAddAutopsyArea").click(function () {
+            var rowCount = $('.areaRow').length;
+
+            //todo
+            $(".areaList").append('<tr class="areaRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="areaCode" name="autopsyAreas[' + rowCount + '].AreaCode" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><input class="form-control frmctrl-small text-box single-line" id="areaNote" name="autopsyAreas[' + rowCount + '].AreaNote" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a class="mdl2icon colour-dpblack" id="remRow " href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+           
+        });
+
+        $(".areaList").on('click', '#remAARow', function () {
+
+            $(this).closest('.areaRow').remove();
+
+            $('#areaID').each(function (index) {
+                $(this).attr('name', 'autopsyAreas[' + index + '].AutopsyAreaID');
+            });
+
+            $('#areaCode').each(function (index) {
+                $(this).attr('name', 'autopsyAreas[' + index + '].AreaCode');
+            });
+
+            $('#areaNote').each(function (index) {
+                $(this).attr('name', 'autopsyAreas[' + index + '].AreaNote');
+            });
+
+            
+
+
+
+
+        })
+    });
+
+////////////////////////////////////////////////////////////////
+
+//////////////AUTOPSY TYPES////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddAutopsyType").click(function () {
+        var rowCount = $('.typeRow').length;
+
+        //todo
+        $(".typeList").append('<tr class="typeRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="autopsyTypes_0__AutopsyTypeValue" name="autopsyTypes[' + rowCount +'].AutopsyTypeValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remATRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".typeList").on('click', '#remATRow', function () {
+
+        $(this).closest('.typeRow').remove();
+
+        $('#typeID').each(function (index) {
+            $(this).attr('name', 'autopsyTypes[' + index + '].AutopsyTypeID');
+        });
+        $('#typeValue').each(function (index) {
+            $(this).attr('name', 'autopsyTypes[' + index + '].AutopsyTypeValue');
+        });
+
+
+
+
+
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+//////////////APPARENT MANNERS////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddApparentMOD").click(function () {
+        var rowCount = $('.mannerRow').length;
+
+        //todo
+        $(".mannerList").append('<tr class="mannerRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="mannerValue" name="apparentManners[' + rowCount + '].ApparentMannerValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remAMRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".mannerList").on('click', '#remAMRow', function () {
+
+        $(this).closest('.mannerRow').remove();
+
+        $('#mannerID').each(function (index) {
+            $(this).attr('name', 'apparentManners[' + index + '].ApparentMannerID');
+        });
+        $('#mannerValue').each(function (index) {
+            $(this).attr('name', 'apparentManners[' + index + '].ApparentMannerValue');
+        });
+
+
+
+
+
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////External Cause////////////////////////////////////////
+
+    $(document).ready(function () {
+
+        $("#btnAddExternalCause").click(function () {
+            var rowCount = $('.causeRow').length;
+
+            //todo
+            $(".causeList").append('<tr class="causeRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="causeValue" name="externalCauses[' + rowCount +'].ExternalCauseDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remECRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+        });
+
+        $(".causeList").on('click', '#remECRow', function () {
+
+            $(this).closest('.causeRow').remove();
+
+            $('#causeID').each(function (index) {
+                $(this).attr('name', 'externalCauses[' + index + '].ExternalCauseID');
+            });
+            $('#causeValue').each(function (index) {
+                $(this).attr('name', 'externalCauses[' + index + '].ExternalCauseValue');
+            });
+
+
+        })
+    });
+
+////////////////////////////////////////////////////////////////
+
+/////////////////HOSPITAL/CLINIC////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddHospitalClinic").click(function () {
+        var rowCount = $('.HCRow').length;
+
+        //todo
+        $(".HCList").append('<tr class="HCRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="HCValue" name="hospitalsClinics[' + rowCount +'].HospitalClinicName" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remHCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".HCList").on('click', '#remHCRow', function () {
+
+        $(this).closest('.HCRow').remove();
+
+        $('#HCID').each(function (index) {
+            $(this).attr('name', 'hospitalClinics[' + index + '].HospitalClinicID');
+        });
+        $('#HCValue').each(function (index) {
+            $(this).attr('name', 'hospitalClinics[' + index + '].HospitalClinicValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////INDIVIDUAL GENDER////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddGender").click(function () {
+        var rowCount = $('.genderRow').length;
+
+        //todo
+        $(".genderList").append('<tr class="genderRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="genderValue" name="genders[' + rowCount +'].IndividualGenderValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remGRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".genderList").on('click', '#remGRow', function () {
+
+        $(this).closest('.genderRow').remove();
+
+        $('#genderID').each(function (index) {
+            $(this).attr('name', 'individualGenders[' + index + '].IndividualGenderID');
+        });
+        $('#genderValue').each(function (index) {
+            $(this).attr('name', 'individualGenders[' + index + '].IndividualGenderValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////INDIVIDUAL RACE////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddRace").click(function () {
+        var rowCount = $('.raceRow').length;
+
+        //todo
+        $(".raceList").append('<tr class="raceRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="raceValue" name="races[' + rowCount +'].IndividualRaceValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remRRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".raceList").on('click', '#remRRow', function () {
+
+        $(this).closest('.raceRow').remove();
+
+        $('#raceID').each(function (index) {
+            $(this).attr('name', 'individualRaces[' + index + '].IndividualRaceID');
+        });
+        $('#raceValue').each(function (index) {
+            $(this).attr('name', 'individualRaces[' + index + '].IndividualRaceValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////MED TREATMENTS////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddMedicalTreatment").click(function () {
+        var rowCount = $('.medRow').length;
+
+        //todo
+        $(".medList").append('<tr class="medRow"><td class="table-large-identifier text-center" >' + (rowCount + 1) + '</td ><td><input class="form-control frmctrl-small text-box single-line" id="medicalTreatments_0__MedicalTreatmentDescription" name="medicalTreatments[' + rowCount + '].MedicalTreatmentDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remMTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".medList").on('click', '#remMTRow', function () {
+
+        $(this).closest('.medRow').remove();
+
+        $('#medID').each(function (index) {
+            $(this).attr('name', 'medicalTreatments[' + index + '].MedicalTreatmentID');
+        });
+        $('#medValue').each(function (index) {
+            $(this).attr('name', 'medicalTreatments[' + index + '].MedicalTreatmentValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////COD////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddPrimaryCOD").click(function () {
+        var rowCount = $('.CODRow').length;
+
+        //todo
+        $(".CODList").append('<tr class="CODRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="CODValue" name="primaryCOD[' + rowCount + '].PrimaryCauseDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remCODRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".CODList").on('click', '#remCODRow', function () {
+
+        $(this).closest('.CODRow').remove();
+
+        $('#CODID').each(function (index) {
+            $(this).attr('name', 'primaryCOD[' + index + '].PrimaryCauseID');
+        });
+        $('#CODValue').each(function (index) {
+            $(this).attr('name', 'primaryCOD[' + index + '].PrimaryCauseValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////Provinces////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddProvince").click(function () {
+        var rowCount = $('.provRow').length;
+
+        //todo
+        $(".provList").append('<tr class="provRow"><td class="table-large-identifier text-center">' + rowCount + '</td><td><input class="form-control frmctrl-small text-box single-line" id="provValue" name="provinces[' + rowCount +'].ProvinceName" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remPRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".provList").on('click', '#remPRow', function () {
+
+        $(this).closest('.provRow').remove();
+
+        $('#provID').each(function (index) {
+            $(this).attr('name', 'provinces[' + index + '].ProvinceID');
+        });
+        $('#provValue').each(function (index) {
+            $(this).attr('name', 'provinces[' + index + '].ProvinceValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////SamplesInvestigations////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddSampleInvestigation").click(function () {
+        var rowCount = $('.sampleRow').length;
+
+        //todo
+        $(".sampleList").append('<tr class="sampleRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="sampleValue" name="samplesInvestigations[' + rowCount +'].SampleInvestigationDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remSIRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".sampleList").on('click', '#remSIRow', function () {
+
+        $(this).closest('.sampleRow').remove();
+
+        $('#sampleID').each(function (index) {
+            $(this).attr('name', 'sampleInvestigations[' + index + '].SampleInvestigationsID');
+        });
+        $('#sampleValue').each(function (index) {
+            $(this).attr('name', 'sampleInvestigations[' + index + '].SampleInvestigationsValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+
+/////////////////ScenesofInjury////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddSceneOfInjury").click(function () {
+        var rowCount = $('.sceneRow').length;
+
+        //todo
+        $(".sceneList").append('<tr class="sceneRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="sceneValue" name="scenesOfInjury[' + rowCount +'].InjurySceneDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remSCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".sceneList").on('click', '#remSCRow', function () {
+
+        $(this).closest('.sceneRow').remove();
+
+        $('#sceneID').each(function (index) {
+            $(this).attr('name', 'scenesOfInjury[' + index + '].InjurySceneID');
+        });
+        $('#sceneValue').each(function (index) {
+            $(this).attr('name', 'scenesOfInjury[' + index + '].InjurySceneValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+
+/////////////////SpecialCategory////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddSpecialCategory").click(function () {
+        var rowCount = $('.categoryRow').length;
+
+        //todo
+        $(".categoryList").append('<tr class="categoryRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="categoryValue" name="specialCategories[' + rowCount +'].SpecialCategoryDescription" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remSCRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".categoryList").on('click', '#remSCRow', function () {
+
+        $(this).closest('.categoryRow').remove();
+
+        $('#categoryID').each(function (index) {
+            $(this).attr('name', 'specialCategories[' + index + '].SpecialCategoryID');
+        });
+        $('#categoryValue').each(function (index) {
+            $(this).attr('name', 'specialCategories[' + index + '].SpecialCategoryValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////MediaPurposes////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddMediaPurpose").click(function () {
+        var rowCount = $('.purposeRow').length;
+
+        //todo
+        $(".purposeList").append('<tr class="purposeRow"><td class="table-large-identifier text-center">' + (rowCount + 1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="purposeValue" name="mediaPurposes[' + rowCount +'].MediaPurposeValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remPPRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".purposeList").on('click', '#remPPRow', function () {
+
+        $(this).closest('.purposeRow').remove();
+
+        $('#purposeID').each(function (index) {
+            $(this).attr('name', 'mediaPurposes[' + index + '].MediaPurposeID');
+        });
+        $('#purposeValue').each(function (index) {
+            $(this).attr('name', 'mediaPurposes[' + index + '].MediaPurposeValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////SRType////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddRequestType").click(function () {
+        var rowCount = $('.requestRow').length;
+
+        //todo
+        $(".requestList").append('<tr class="requestRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="requestValue" name="requestTypes[' + rowCount +'].RequestTypeValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remRTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".requestList").on('click', '#remRTRow', function () {
+
+        $(this).closest('.requestRow').remove();
+
+        $('#requestID').each(function (index) {
+            $(this).attr('name', 'requestTypes[' + index + '].RequestTypeID');
+        });
+        $('#requestValue').each(function (index) {
+            $(this).attr('name', 'requestTypes[' + index + '].RequestTypeValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+
+/////////////////Titles////////////////////////////////////////
+
+$(document).ready(function () {
+
+    $("#btnAddTitle").click(function () {
+        var rowCount = $('.titleRow').length;
+
+        //todo
+        $(".titleList").append('<tr class="titleRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" id="titleValue" name="titles[' + rowCount +'].TitleValue" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><a id="remTRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
+    });
+
+    $(".titleList").on('click', '#remTRow', function () {
+
+        $(this).closest('.titleRow').remove();
+
+        $('#titleID').each(function (index) {
+            $(this).attr('name', 'titles[' + index + '].TitleID');
+        });
+        $('#titleValue').each(function (index) {
+            $(this).attr('name', 'titles[' + index + '].TitleValue');
+        });
+
+
+    })
+});
+
+////////////////////////////////////////////////////////////////
+</script>
+
+
+
 }

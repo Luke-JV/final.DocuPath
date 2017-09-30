@@ -1079,6 +1079,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\locales\ar.js" />
     <Content Include="Scripts\locales\az.js" />
     <Content Include="Scripts\locales\bg.js" />
@@ -1241,6 +1242,7 @@
     <Content Include="Views\ForensicCase\AddStatistics.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseAddedSuccess.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseUpdatedSuccess.cshtml" />
+    <Content Include="Views\Test\bindTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
