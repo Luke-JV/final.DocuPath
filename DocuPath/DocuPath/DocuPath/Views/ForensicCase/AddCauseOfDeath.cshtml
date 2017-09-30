@@ -1,0 +1,450 @@
+﻿@model DocuPath.Models.DPViewModels.CODViewModel
+@using DocuPath.Models;
+@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Add Forensic Case (Cause Of Death)", "AddCauseOfDeath") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">CAUSE OF DEATH</span></div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="@Url.Action("AddCauseOfDeath","ForensicCase")" method="post" style="margin-top: 2px">
+                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PAGE CONTENT: *@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+
+    <div class="form-horizontal border-generic form-generic">
+        <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
+            <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
+        </ul>
+
+        <div id="COD" class="tab-pane" style="padding-top: 5px">
+            <div class="container" id="single-left-timelinecontainer">
+                <article id="single-left-timeline">
+                    <ul class="single-left-timeline" id="bSTime">
+                        @* SETUP *@
+                        <li class="single-left-timeline-inverted" style="margin-bottom: 0px">
+                            <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-cog single-left-timeline-badge-mdl2icon"></i></div>
+                            <div class="single-left-timeline-panel">
+                                <div class="single-left-timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h4 class="single-left-timeline-title"><span class="mdl2icon mdl2-cog single-left-timeline-mdl2icon"></span> Enable/Disable Estimations</h4>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="row" style="margin-left: 5px; margin-right: 5px">
+                                                <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                    <input id="primarytoggle" type="checkbox" checked disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Primary</span>
+                                                </div>
+                                                <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                    <input id="secondarytoggle" type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Secondary</span>
+                                                </div>
+                                                <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                    <input id="tertiarytoggle" type="checkbox" disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Tertiary</span>
+                                                </div>
+                                                <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                    <input id="quaternarytoggle" type="checkbox" disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Quaternary</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="single-left-timeline-body">
+                                    <p class="alert-bar alert-bar-info fullwidth" style="margin: 2.5px 0 0 0">Use the switches above to enable up to four (4) Cause Of Death estimations for this Forensic Case. At least one (1) estimation must be made.</p>
+                                    @*<div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#single-left-timelinecontainer" href="#SETUPPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="SETUPPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body apad5">
+                                                    <div class="row" style="margin-left: 5px; margin-right: 5px">
+                                                        <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                            <input id="primarytoggle" type="checkbox" checked disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Primary</span>
+                                                        </div>
+                                                        <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                            <input id="secondarytoggle" type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Secondary</span>
+                                                        </div>
+                                                        <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                            <input id="tertiarytoggle" type="checkbox" disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Tertiary</span>
+                                                        </div>
+                                                        <div class="col-md-3" style="padding-left: 0px; padding-right: 0px;">
+                                                            <input id="quaternarytoggle" type="checkbox" disabled data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-style="ios" data-width="30" onchange="toggleShowCODPanel()"><span> Quaternary</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="setupfooter" class="panel-footer text-center"></div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </li>
+                        @* PRIMARY ESTIMATION *@
+                        <li class="single-left-timeline-inverted" style="margin-bottom: 0px">
+                            <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-one single-left-timeline-badge-mdl2icon"></i></div>
+                            <div class="single-left-timeline-panel">
+                                <div class="single-left-timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="single-left-timeline-title"><span class="mdl2icon mdl2-one single-left-timeline-mdl2icon"></span> Primary Estimation</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="single-left-timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#single-left-timelinecontainer" href="#PRIMARYPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="PRIMARYPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Estimated Primary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12 autocomplete-wrapper">
+                                                            @Html.AutocompleteFor(model => model.primaryCODEst.CONTENT_TAG.ContentTagText, model => model.primaryCODEst.ContentTagID, "GetTags", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.primaryCODEst.CONTENT_TAG.ContentTagText, "", new { @class = "validation-text text-danger" })
+                                                            @*<input type="text" data-role="tagsinput" style="width: 100%" value="A00.0 - Cholera due to Vibrio cholerae 01, biovar cholerae" />*@
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="form-group">
+                                                        @Html.Label("Estimated Primary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownList("ddlPrimaryCOD", (IEnumerable<SelectListItem>)ViewBag.ContentTags, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessage("ddlPrimaryCOD", "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>*@
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Primary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.TextAreaFor(model => model.primaryCODEst.CODMotivation, new { @class = "ckeditor" })
+                                                            @Html.ValidationMessageFor(model => model.primaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div id="primaryfooter" class="panel-footer text-center">
+                                                    <input id="showSecondaryCOD" class="btn btn-default btn-generic" type="button" style="width: auto; margin-top: 0px" value="Add Secondary Estimation"/>
+
+                                                    <button id="showSecondaryCOD" type="button" data-toggle="collapse" data-target="#PRIMARYPANEL" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                        <i class="mdl2icon mdl2-add"></i>
+                                                        Add Secondary
+                                                    </button>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* SECONDARY ESTIMATION *@
+                        <li class="single-left-timeline-inverted" id="2ndCOD" style="margin-bottom: 0px">
+                            <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-two single-left-timeline-badge-mdl2icon"></i></div>
+                            <div class="single-left-timeline-panel">
+                                <div class="single-left-timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="single-left-timeline-title"><span class="mdl2icon mdl2-two single-left-timeline-mdl2icon"></span> Secondary Estimation</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="single-left-timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#single-left-timelinecontainer" href="#SECONDARYPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="SECONDARYPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Estimated Secondary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12 autocomplete-wrapper">
+                                                            @Html.AutocompleteFor(model => model.secondaryCODEst.CONTENT_TAG.ContentTagText, model => model.secondaryCODEst.ContentTagID, "GetTags", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.secondaryCODEst.CONTENT_TAG.ContentTagText, "", new { @class = "validation-text text-danger" })
+                                                            @*<input type="text" data-role="tagsinput" style="width: 100%" value="A00.9 - Cholera, unspecified" />*@
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="form-group">
+                                                        @Html.Label("Estimated Secondary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownList("ddlSecondaryCOD", (IEnumerable<SelectListItem>)ViewBag.ContentTags, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessage("ddlSecondaryCOD", "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>*@
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Secondary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.TextAreaFor(model => model.secondaryCODEst.CODMotivation, new { @class = "ckeditor" })
+                                                            @Html.ValidationMessageFor(model => model.secondaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div id="secondaryfooter" class="panel-footer text-center">
+                                                    <input id="showSecondaryCOD" class="btn btn-default btn-generic" type="button" style="width: auto; margin-top: 0px" value="Add Secondary Estimation"/>
+                                                    <div class="row">
+                                                        <div id="showTertiaryColumn" class="col-md-6" style="margin-left: auto; margin-right: auto">
+                                                            <button id="showTertiaryCOD" type="button" data-toggle="collapse" data-target="#SECONDARYPANEL" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                                <i class="mdl2icon mdl2-add"></i>
+                                                                Add Tertiary
+                                                            </button>
+                                                        </div>
+                                                        <div id="removeSecondaryColumn" class="col-md-6" style="margin-left: auto; margin-right: auto">
+                                                            <button id="removeSecondaryCOD" type="button" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                                <i class="mdl2icon mdl2-delete"></i>
+                                                                Remove Secondary
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* TERTIARY ESTIMATION *@
+                        <li id="3rdCOD" class="single-left-timeline-inverted" style="margin-bottom: 0px">
+                            <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-three single-left-timeline-badge-mdl2icon"></i></div>
+                            <div class="single-left-timeline-panel">
+                                <div class="single-left-timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="single-left-timeline-title"><span class="mdl2icon mdl2-three single-left-timeline-mdl2icon"></span> Tertiary Estimation</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="single-left-timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#single-left-timelinecontainer" href="#TERTIARYPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="TERTIARYPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Estimated Tertiary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12 autocomplete-wrapper">
+                                                            @Html.AutocompleteFor(model => model.tertiaryCODEst.CONTENT_TAG.ContentTagText, model => model.tertiaryCODEst.ContentTagID, "GetTags", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.tertiaryCODEst.CONTENT_TAG.ContentTagText, "", new { @class = "validation-text text-danger" })
+                                                            @*<input type="text" data-role="tagsinput" style="width: 100%" value="" />*@
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="form-group">
+                                                        @Html.Label("Estimated Tertiary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownList("ddlTertiaryCOD", (IEnumerable<SelectListItem>)ViewBag.ContentTags, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessage("ddlTertiaryCOD", "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>*@
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Tertiary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.TextAreaFor(model => model.tertiaryCODEst.CODMotivation, new { @class = "ckeditor" })
+                                                            @Html.ValidationMessageFor(model => model.tertiaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div id="tertiaryfooter" class="panel-footer text-center">
+                                                    <input id="showSecondaryCOD" class="btn btn-default btn-generic" type="button" style="width: auto; margin-top: 0px" value="Add Secondary Estimation"/>
+                                                    <div class="row">
+                                                        <div id="showQuaternaryColumn" class="col-md-6">
+                                                            <button id="showQuaternaryCOD" type="button" data-toggle="collapse" data-target="#TERTIARYPANEL" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                                <i class="mdl2icon mdl2-add"></i>
+                                                                Add Quaternary
+                                                            </button>
+                                                        </div>
+                                                        <div id="removeTertiaryColumn" class="col-md-6">
+                                                            <button id="removeTertiaryCOD" type="button" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                                <i class="mdl2icon mdl2-delete"></i>
+                                                                Remove Tertiary
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* QUATERNARY ESTIMATION *@
+                        <li class="single-left-timeline-inverted" id="4thCOD" style="margin-bottom: 0px">
+                            <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-four single-left-timeline-badge-mdl2icon"></i></div>
+                            <div class="single-left-timeline-panel">
+                                <div class="single-left-timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="single-left-timeline-title"><span class="mdl2icon mdl2-four single-left-timeline-mdl2icon"></span> Quaternary Estimation</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="single-left-timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#single-left-timelinecontainer" href="#QUATERNARYPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="QUATERNARYPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Estimated Quaternary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12 autocomplete-wrapper">
+                                                            @Html.AutocompleteFor(model => model.quaternaryCODEst.CONTENT_TAG.ContentTagText, model => model.quaternaryCODEst.ContentTagID, "GetTags", "ContentTag", false, new { htmlAttributes = new { @class = "form-control", @style = "width: 100% !important" } })
+                                                            @Html.ValidationMessageFor(model => model.quaternaryCODEst.CONTENT_TAG.ContentTagText, "", new { @class = "validation-text text-danger" })
+                                                            @*<input type="text" data-role="tagsinput" style="width: 100%" value="" />*@
+                                                        </div>
+                                                    </div>
+
+                                                    @*<div class="form-group">
+                                                        @Html.Label("Estimated Quaternary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownList("ddlQuaternaryCOD", (IEnumerable<SelectListItem>)ViewBag.ContentTags, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessage("ddlQuaternaryCOD", "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>*@
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Quaternary Cause Of Death Motivation", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.TextAreaFor(model => model.quaternaryCODEst.CODMotivation, new { @class = "ckeditor" })
+                                                            @Html.ValidationMessageFor(model => model.quaternaryCODEst.CODMotivation, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div id="quaternaryfooter" class="panel-footer text-center">
+                                                    <input id="showSecondaryCOD" class="btn btn-default btn-generic" type="button" style="width: auto; margin-top: 0px" value="Add Secondary Estimation"/>
+                                                    <div class="row">
+                                                        <button id="removeQuaternaryCOD" type="button" class="btn btn-default btn-generic" style="width: 196px; margin-top: 0px">
+                                                            <i class="mdl2icon mdl2-delete"></i>
+                                                                Remove Quaternary
+                                                        </button>
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>                    
+                </article>
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/bootgrid")
+    @Scripts.Render("~/bundles/materialdatetime")
+
+    <script name="CODToggles" type="text/javascript">
+            $('textarea').autogrow();
+            $('textarea').addClass("form-control");
+            $('.typeahead').addClass("fullwidth");
+            $(document).ready(function () {
+                $("#primarytoggle").checked = true
+                $("#2ndCOD").hide()
+                $("#3rdCOD").hide()
+                $("#4thCOD").hide()
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+
+            $(function toggleShowCODPanel() {
+                $('input[type=checkbox]').change(function () {
+                    if ($('#secondarytoggle').prop("checked") == true) { $('#2ndCOD').show('slow'), $('#tertiarytoggle').bootstrapToggle('enable') } else { $('#2ndCOD').hide('slow'), $('#3rdCOD').hide('slow'), $('#4thCOD').hide('slow'), $('#tertiarytoggle').bootstrapToggle('disable') };
+                    if ($('#tertiarytoggle').prop("checked") == true) { $('#3rdCOD').show('slow'), $('#quaternarytoggle').bootstrapToggle('enable'), $('#secondarytoggle').bootstrapToggle('disable') } else { $('#3rdCOD').hide('slow'), $('#4thCOD').hide('slow'), $('#quaternarytoggle').bootstrapToggle('disable'), $('#secondarytoggle').bootstrapToggle('enable') };
+                    if ($('#quaternarytoggle').prop("checked") == true) { $('#4thCOD').show('slow'), $('#secondarytoggle').bootstrapToggle('disable'), $('#tertiarytoggle').bootstrapToggle('disable') } else { $('#4thCOD').hide('slow') };
+                });
+            })
+    </script>
+}

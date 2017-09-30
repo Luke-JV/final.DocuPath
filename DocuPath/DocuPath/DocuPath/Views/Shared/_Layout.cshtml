@@ -48,6 +48,43 @@
         </div>
         <p id="loadingText" class="loading-text">LOADING...</p>
     </div>
+    <div id="divHomeNavWarning" class="modal-background hidden">
+        <div class="modalbox">
+            @* TITLE *@
+            <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+            @* MESSAGE *@
+            <div class="modalbox-message-text">
+                Are you sure you want to leave this page and return to the DocuPath Home Page? Any unsaved changes will be lost.
+            </div>
+            @* HELP/INFO *@
+            <div class="panel-group" id="homenav_helpaccordion">
+                <div class="modal-help-panel">
+                    <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#homenav_helpbody" data-parent="#homenav_helpaccordion">More Information</div>
+                    <div id="homenav_helpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                        <p style="margin-bottom: 0px; font-weight: bold">Code: W002</p>
+                        <hr class="modal-help-hr-warning" />
+                        <ul class="haptic-ul">
+                            <li>This is a generic system warning for navigating to the DocuPath Home Page via the keyboard <kbd>Shift + Home</kbd> shortcut.</li>
+                            <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                            <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                            <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                            <li>To discard changes and return to the DocuPath Home Page, click the <kbd>Yes</kbd> button.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @* BUTTONS *@
+            <div class="modalbox-button-bar">
+                <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+                <div class="col-md-3 modal-btn-col"></div>
+                <div class="col-md-3 modal-btn-col">
+                    <input type="button" id="btnHomeYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("Index","Home"))" />
+                    <input type="button" id="btnHomeNo" value="No" class="btn btn-modal-generic" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     @* HAPTIC SIDENAV: *@
     @if (Request.IsAuthenticated)
     {
@@ -593,10 +630,14 @@
     
     @* NAVIGATION: *@
     <script>
-        shortcut.add("F4", function () { window.location.replace("/Home/Index") });
         shortcut.add("1", function () { document.getElementById('CORTEXheading').click(); });
         shortcut.add("2", function () { document.getElementById('CORNEAheading').click(); });
         shortcut.add("3", function () { document.getElementById('PULSEheading').click(); });
+        shortcut.add("F5", function (e) { e.preventDefault(); });
+
+        shortcut.add("Ctrl+Home", function () { if (document.title.indexOf('Home',0) != 0) { $('#divHomeNavWarning').removeClass("hidden"); } });
+        $('#btnHomeYes').click(function (target) { window.location.href = "@Url.Action("Index", "Home")"; });
+        $('#btnHomeNo').click(function () { $('#divHomeNavWarning').addClass("hidden"); });
     </script>
 
     @* RSS BLASTER: *@

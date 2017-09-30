@@ -1,0 +1,184 @@
+﻿@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">MEDIA ITEMS</span></div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            @*<div grid-area="btn1">
+                <form id="backForm" class="minimalform" action="javascript:void(0))" style="margin-top: 2px">
+                    <button id="btnCancel" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" type="submit" data-toggle="tooltip" title="CANCEL ADD"></button>
+                </form>
+            </div>*@
+            <div grid-area="btn1">
+                <form class="minimalform" action="@Url.Action("UploadFiles","ForensicCase")" method="post" style="margin-top: 2px">
+                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PAGE CONTENT: *@
+<div class="form-horizontal border-generic form-generic">
+    <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
+        <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
+        <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
+    </ul>
+
+    <p class="alert-bar alert-bar-info fullwidth" style="margin: 7.5px 0 7.5px 0">Media items are graphical, image, audio or video evidence items directly related to a Forensic Case.</p>
+
+    <form action="~/ForensicCase/SelectMediaItems"><input id="btnPOST" class="hidden" type="submit" /></form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+            <span>SELECT MEDIA ITEMS TO UPLOAD</span>
+        </div>
+        <div class="panel-body apad5">
+            <div class="row">
+                @*@Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })*@
+                <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                    <input id="MediaItems" name="MediaItems" type="file" multiple @*class="file-loading"*@ />
+                    @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
+                    @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+
+    <script>
+        $(document).ready(function () {
+            //$('[title=""]').tooltip();
+
+
+            $("#MediaItems").fileinput({
+                theme: "fa",
+                uploadUrl: "/ForensicCase/SelectMediaItems",
+                fileActionSettings: {
+                    showUpload: false
+                },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['jpg', 'jpeg', 'bmp', 'gif', 'png', 'pdf', 'txt']
+            });
+
+            $('#btnNext').click(function () {
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+                    var files = $("#MediaItems").fileinput('getFileStack');
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    gdata = fileData;
+
+                    // Adding one more key to FormData object
+                    // none needed here
+                    //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                    $.ajax({
+                        url: '/ForensicCase/UploadMediaFiles',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            alert(result); //Throw Success Modal 404
+                            document.getElementById("btnPOST").click();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            });
+        });
+    </script>
+
+}

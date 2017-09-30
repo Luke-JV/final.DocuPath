@@ -48,7 +48,6 @@
 @* PROVIDE METADATA FOR EACH MEDIA ITEM: *@
 @using (Html.BeginForm())
 {
-
     @*for (int i = 0; i < Model.fcList.Count; i++)
     {
         @Html.HiddenFor(m=>m.fcList[i].ForensicCaseID);
@@ -219,7 +218,7 @@
                                     <div class="form-group" style="margin-bottom: 0px">
                                         @Html.LabelFor(model => model.mediaList[i].MediaDescription, htmlAttributes: new { @class = "control-label col-md-2 label-nopad" })
                                         <div class="col-md-10 col-nopad">
-                                            @Html.EditorFor(model => model.mediaList[i].MediaDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; height: 159.2px" } })
+                                            @Html.EditorFor(model => model.mediaList[i].MediaDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; height: 159.2px; overflow-y: scroll" } })
                                             @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "validation-text text-danger" })
                                         </div>
                                     </div>
@@ -264,99 +263,6 @@
             <hr class="dp-separator-hr" @*style="display: none"*@ />
     }
     </div>
-
-    @*<div class="form-horizontal">
-        <h4>MEDIA</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StatusID, "StatusID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForensicCaseID, "ForensicCaseID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ForensicCaseID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ForensicCaseID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaPurposeID, "MediaPurposeID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MediaPurposeID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MediaPurposeID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserID, "UserID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UserID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateAdded, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateAdded, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateAdded, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaCaption, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaCaption, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaCaption, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaDescription, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaDescription, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsPubliclyAccessible, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsPubliclyAccessible)
-                    @Html.ValidationMessageFor(model => model.IsPubliclyAccessible, "", new { @class = "validation-text text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MediaLocation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaLocation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MediaLocation, "", new { @class = "validation-text text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>*@
 }
 
 @section Scripts {
