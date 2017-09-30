@@ -1,0 +1,57 @@
+﻿@model DocuPath.Models.DPViewModels.BindViewModel
+@{
+    ViewBag.Title = "bindTest";
+}
+
+
+<h2>bindTest</h2>
+
+
+<form action="/Test/bindTest" method="post">
+    <div id="typeList">
+        @for (int i = 0; i < Model.autopsyTypes.Count; i++)
+    {
+        <div class="typeRow">
+            @Html.HiddenFor(m => m.autopsyTypes[i].AutopsyTypeID, new { @class= "typeID"})
+            @Html.EditorFor(m => m.autopsyTypes[i].AutopsyTypeValue, new { @class = "typeValue" })
+            <a href="javascript:void(0);" class="remRow">Remove</a>
+        </div>
+    }
+    </div>
+        <p>
+            <a href="javascript:void(0);" class="addRow">Add row</a>
+        </p>
+
+        <p>
+            <input type="submit" name="btnSubmit" value="Edit" />
+        </p>
+</form>
+@section Scripts
+{
+<script>
+    //<input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." name="autopsyTypes['+rowCount+'].AutopsyTypeID" type="hidden" value="'+rowCount+'" /><input class="text-box single-line" name="autopsyTypes['+rowCount+'].AutopsyTypeValue" type="text" value="" />
+    $(document).ready(function () {
+
+        $(".addRow").click(function () {
+
+            var rowCount = $('.typeRow').length;
+           
+            $("#typeList").append('<div class="typeRow"><input data-val="true" data-val-number="The field ID must be a number." data-val-required="The ID field is required." name="autopsyTypes[' + rowCount + '].AutopsyTypeID" type="hidden" value="' + rowCount + '" /><input class="text-box single-line" name="autopsyTypes[' + rowCount + '].AutopsyTypeValue" type="text" value="" /><a href="javascript:void(0);" class="remRow">Remove</a></div>');
+
+        });
+
+        $("#typeList").on('click', '.remRow', function () {
+            
+            $(this).closest('.typeRow').remove();
+
+            $('.typeID').each(function (index) {
+                $(this).attr('name', 'autopsyTypes[' + index + '].AutopsyTypeID');
+            });
+
+            $('.typeValue').each(function (index) {
+                $(this).attr('name', 'autopsyTypes[' + index + '].AutopsyTypeValue');
+            });
+        })
+    });
+</script>
+}

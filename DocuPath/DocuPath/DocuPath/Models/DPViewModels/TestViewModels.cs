@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocuPath.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,4 +30,12 @@ namespace DocuPath.Models.DPViewModels
         //public string areaName;
         //public bool hasAccess;
     }
+
+    public class BindViewModel
+    {
+        public List<AUTOPSY_TYPE> autopsyTypes { get; set; }
+    }
+
+
+
 }

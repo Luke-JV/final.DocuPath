@@ -100,5 +100,19 @@ namespace DocuPath.Controllers
         {
             return View();
         }
+
+        public ActionResult bindTest()
+        {
+            BindViewModel model = new BindViewModel();
+
+            model.autopsyTypes = db.AUTOPSY_TYPE.ToList();
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult bindTest(BindViewModel model)
+        {
+            return View();
+        }
     }
 }
