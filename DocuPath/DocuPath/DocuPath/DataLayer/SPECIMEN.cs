@@ -25,16 +25,15 @@ namespace DocuPath.DataLayer
         public Nullable<int> ExternalReportID { get; set; }
         [DisplayName("Service Provider")]
         public int ServiceProviderID { get; set; }
-        [DefaultValue(FLAG.Text)]
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Investigation Required")]
         [DataType(DataType.MultilineText)]
         public string InvestigationRequired { get; set; }
-        [DefaultValue(FLAG.Text)]
+        [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Chain Of Custody")]
         public string DisposalMechanism { get; set; }
-        [DefaultValue(FLAG.Text)]
-        [DisplayName("Specimen Nature")]
-        [DataType(DataType.MultilineText)]
+        [DefaultValue(FLAG.Alphanumeric)]
+        [DisplayName("Specimen Nature/Description")]
         public string SpecimenNature { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Serial/Seal Number")]

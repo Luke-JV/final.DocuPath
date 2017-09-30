@@ -1,0 +1,390 @@
+﻿@model DocuPath.Models.DPViewModels.FCServiceRequestViewModel
+@using DocuPath.Models;
+@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Add Forensic Case (Service Requests)", "AddServiceRequests") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">SERVICE REQUESTS</span></div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-four">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="@Url.Action("AddServiceRequests","ForensicCase")" method="post" style="margin-top: 2px">
+                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnAdd" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD SERVICE REQUEST"></button>
+                </form>
+            </div>
+            <div grid-area="btn3">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn4">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divMaxLimitWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-info"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoInfo.png" />INFORMATION</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Maximum Service Request limit reached.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="maxlimithelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#maxlimithelpbody" data-parent="#maxlimithelpaccordion">More Information</div>
+                <div id="maxlimithelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: I001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>The maximum number of Service Requests that can be added during the Forensic Case add or update process is maintained in a system parameter.</li>
+                        <li>The current value of this parameter is <kbd>@VERTEBRAE.maxSRPerFCAddUpdate</kbd> Service Requests.</li>
+                        <li>As the current page already contains @VERTEBRAE.maxSRPerFCAddUpdate Service Requests, no additional Service Request containers have been added.</li>
+                        <li>To dismiss this notification, click the <kbd>OK</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnLimitOK" value="OK" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PAGE CONTENT: *@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+
+    <div class="form-horizontal border-generic form-generic">
+        <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
+            <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
+            <li><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
+        </ul>
+
+        <div class="grid sr-add-grid">
+            @for (int sr = 0; sr < Model.serviceRequests.Count; sr++)
+            {
+                if (sr == 0)
+                {
+                    <hr class="dp-separator-hr" id="sep_@sr"/>
+                    <div class="grid sr-add-subgrid" id="frmgrp_@sr">
+                        <div grid-area="request">
+                            <div class="panel panel-default" style="margin-bottom: 0px">
+                                <div class="panel-heading params-panel-heading-grid">
+                                    <span class="mdl2icon mdl2-servicerequest panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                                    <span grid-area="parm_hdr_txt">SERVICE REQUEST DETAILS</span>
+                                    <button id="btnRemoveSR_@sr" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-delete btn-mdl2icon" data-toggle="tooltip" title="DELETE" data-placement="left" grid-area="parm_hdr_btn"></button>
+                                </div>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.serviceRequests[sr].ServiceProviderID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownListFor(model => model.serviceRequests[sr].ServiceProviderID, new SelectList(Model.activeSP, "ServiceProviderID", "CompanyName"), "Select a Service Provider...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                            @Html.ValidationMessageFor(model => model.serviceRequests[sr].ServiceProviderID, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.serviceRequests[sr].RequestTypeID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.DropDownListFor(model => model.serviceRequests[sr].RequestTypeID, new SelectList(Model.requestTypes, "RequestTypeID", "RequestTypeValue"), "Select a Type...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                    @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestTypeID, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.serviceRequests[sr].DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.serviceRequests[sr].DateAdded, new { htmlAttributes = new { @class = "form-control", @readonly = true, @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                                    @Html.ValidationMessageFor(model => model.serviceRequests[sr].DateAdded, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.serviceRequests[sr].RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.serviceRequests[sr].RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestNote, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div grid-area="specimen">
+                            <div class="panel panel-default" style="margin-bottom: 0px">
+                                <div class="panel-heading">
+                                    <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                                    <span>SPECIMEN DETAILS</span>
+                                </div>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.specimens[sr].InvestigationRequired, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.specimens[sr].InvestigationRequired, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.specimens[sr].InvestigationRequired, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.specimens[sr].SpecimenNature, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.specimens[sr].SpecimenNature, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenNature, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.specimens[sr].SpecimenSerialNumber, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.specimens[sr].SpecimenSerialNumber, new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                                    @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenSerialNumber, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.specimens[sr].DisposalMechanism, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.specimens[sr].DisposalMechanism, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                    @Html.ValidationMessageFor(model => model.specimens[sr].DisposalMechanism, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <hr class="dp-separator-hr hidden" id="sep_@sr"/>
+                    <div class="grid sr-add-subgrid hidden" id="frmgrp_@sr">
+                        <div grid-area="request">
+                            <div class="panel panel-default" style="margin-bottom: 0px">
+                                <div class="panel-heading params-panel-heading-grid">
+                                    <span class="mdl2icon mdl2-servicerequest panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                                    <span grid-area="parm_hdr_txt">SERVICE REQUEST DETAILS</span>
+                                    <button id="btnRemoveSR_@sr" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-delete btn-mdl2icon" data-toggle="tooltip" title="DELETE" data-placement="left" grid-area="parm_hdr_btn"></button>
+                                </div>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.serviceRequests[sr].ServiceProviderID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.DropDownListFor(model => model.serviceRequests[sr].ServiceProviderID, new SelectList(Model.activeSP, "ServiceProviderID", "CompanyName"), "Select a Service Provider...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                            @Html.ValidationMessageFor(model => model.serviceRequests[sr].ServiceProviderID, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.serviceRequests[sr].RequestTypeID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.DropDownListFor(model => model.serviceRequests[sr].RequestTypeID, new SelectList(Model.requestTypes, "RequestTypeID", "RequestTypeValue"), "Select a Type...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                    @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestTypeID, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.serviceRequests[sr].DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.serviceRequests[sr].DateAdded, new { htmlAttributes = new { @class = "form-control", @readonly = true, @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                                    @Html.ValidationMessageFor(model => model.serviceRequests[sr].DateAdded, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.serviceRequests[sr].RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.serviceRequests[sr].RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestNote, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div grid-area="specimen">
+                            <div class="panel panel-default" style="margin-bottom: 0px">
+                                <div class="panel-heading">
+                                    <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                                    <span>SPECIMEN DETAILS</span>
+                                </div>
+                                <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.specimens[sr].InvestigationRequired, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.specimens[sr].InvestigationRequired, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.specimens[sr].InvestigationRequired, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.specimens[sr].SpecimenNature, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.specimens[sr].SpecimenNature, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                            @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenNature, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.specimens[sr].SpecimenSerialNumber, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.specimens[sr].SpecimenSerialNumber, new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                                    @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenSerialNumber, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.specimens[sr].DisposalMechanism, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.specimens[sr].DisposalMechanism, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                    @Html.ValidationMessageFor(model => model.specimens[sr].DisposalMechanism, "", new { @class = "validation-text text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script name="warningscript" type="text/javascript">
+        // FORT:
+        //Fort.solid('#ae1f1f', '#fortContainerCoreData');
+        // CANCEL WARNING:
+        $(document).ready(function () {
+            $('#btnCancel').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
+            $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "ForensicCase")"; });
+            $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
+
+            $('#btnAdd').click(function (event) {
+                event.preventDefault();
+
+                var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
+                var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
+
+                if (invisibleSRPanels.length <= 10) {
+                    invisibleSRPanels[0].classList.remove('hidden');
+                    invisibleSeparators[0].classList.remove('hidden');
+                } else if (invisibleSRPanels.length == 10) {
+                    $('#divMaxLimitWarning').removeClass("hidden");
+                }
+
+                $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
+
+
+                @*for (var sr = @Model.serviceRequests.Count; sr > 0 ; sr--) {
+                var tId = "frmgrp_"+sr;
+                $().
+            }*@
+            });
+ 
+            $('#btnRemoveSR_0').click(function(e){
+                e.preventDefault();
+                var targetPanel = document.queryselector('frmgrp_0');
+                var targetSeparator = document.queryselector('sep_0');
+                
+                alert(targetPanel.length);
+                alert(targetSeparator.length);
+
+                targetpanel.addClass('hidden');
+                targetSeparator.addClass('hidden');
+            });
+        });
+    </script>
+}

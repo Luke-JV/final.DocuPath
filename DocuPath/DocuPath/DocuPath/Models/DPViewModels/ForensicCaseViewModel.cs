@@ -123,6 +123,8 @@ namespace DocuPath.Models.DPViewModels
     public class CoreDataViewModel
     {
         public FORENSIC_CASE forensicCase { get; set; }
+        public List<sessionKVP> sessionSelector { get; set; }
+        public List<AUTOPSY_AREA> autopsyAreas { get; set; }
     }
 
     public class ObservationsViewModel
@@ -137,6 +139,9 @@ namespace DocuPath.Models.DPViewModels
     public class FCServiceRequestViewModel
     {
         public List<SERVICE_REQUEST> serviceRequests { get; set; }
+        public List<SPECIMEN> specimens { get; set; }
+        public List<REQUEST_TYPE> requestTypes { get; set; }
+        public List<SERVICE_PROVIDER> activeSP { get; set; }
     }
 
     public class CaseMediaViewModel

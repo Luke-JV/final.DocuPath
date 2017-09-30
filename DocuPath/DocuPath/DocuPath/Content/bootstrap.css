@@ -4416,6 +4416,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
   max-width: none;
 }
 
+.link-disabled{
+    cursor: not-allowed !important;
+    background-color: #eee !important;
+    color: #cccccc !important;
+}
+
 .nav-tabs {
   border-bottom: 1px solid #dddddd;
 }
@@ -4429,21 +4435,30 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-right: 2px;
   line-height: 1.428571429;
   border: 1px solid transparent;
-  border-radius: 4px 4px 0 0;
+  border-radius: 4px;
 }
 
 .nav-tabs > li > a:hover {
-  border-color: #eeeeee #eeeeee #dddddd;
+  /*border-color: #eeeeee #eeeeee #dddddd;*/
+  background-color: #666;
+  color: #fff;
 }
 
-.nav-tabs > li.active > a,
+.nav-tabs > li.active > a {
+  color: #fff;
+  cursor: auto !important;
+  background: rgba(174, 31, 31, 1);
+  /*border: 1px solid #dddddd;*/
+  /*border-bottom-color: transparent;*/
+}
+
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   color: #fff;
-  cursor: default;
-  background-color: rgba(174, 41, 41, 1);
-  border: 1px solid #dddddd;
-  border-bottom-color: transparent;
+  cursor: default !important;
+  /*background: linear-gradient(90deg, rgba(174, 31, 31, 1),rgba(255, 31, 31, 0.75));*/
+  /*border: 1px solid #dddddd;*/
+  /*border-bottom-color: transparent;*/
 }
 
 .nav-tabs.nav-justified {
@@ -7688,9 +7703,10 @@ td.visible-print {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
-    color: #999;
+    color: #fff;
     border-bottom: 1px solid transparent;
-    background-color: #eee;
+    background-color: #999;
+    transition: 1s all !important;
 }
 
 .navbar-text-logo{
@@ -8482,6 +8498,23 @@ td.visible-print {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
+.modalbox-title-info {
+    height: 40px !important;
+    max-height: 40px !important;
+    min-height: 40px !important;
+    width: 500px;
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 1040;
+    font-family: 'U.S. 101';
+    font-size: 20pt;
+    color: #428bca;
+    text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+    /*text-shadow: 1px 1px 2px black;*/
+    letter-spacing: 2px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
 .modalbox-title-success {
     height: 40px;
     width: 500px;
@@ -8705,13 +8738,6 @@ td.visible-print {
 .col-nopad {
     padding-left: 10px;
     padding-right: 15px;
-}
-
-.dp-separator-hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    border: 1px solid rgba(174, 23, 23, 1);
 }
 
 /* HOMEPAGE TILES: */
@@ -10245,7 +10271,7 @@ a.cal-event-week {
     word-spacing: 1px;
     letter-spacing: 0.5px;
     font-weight: normal;
-    text-transform: uppercase;
+    text-transform: uppercase !important;
     transition: 1s all;
     line-height: 2px;
 }
@@ -13761,22 +13787,53 @@ ctrl {
 
 /*#endregion */
 
-.audit-trail-highlight{
+/*#region AUDIT TRAIL: */
+
+.audit-trail-highlight {
     background-color: rgba(255,220,220,1) !important;
     /*padding: 1px;*/
     font-weight: bold !important;
     color: rgba(174,31,31,1) !important;
 }
 
-.tx-details{
+.tx-details {
     font-family: 'Consolas';
     font-size: 10pt;
 }
 
-.details-ul{
+.details-ul {
     list-style: square !important;
 }
 
-.details-li{
+.details-li {
     font-weight: bold !important;
 }
+
+/*#endregion */
+
+/*#region SERVICE REQUEST ADD: */
+
+.sr-add-grid{
+    /*grid-gap: 5px;*/
+    /*grid-auto-rows: 260px;*/
+    grid-template-columns: 1fr;
+    padding: 0;
+}
+
+.sr-add-subgrid{
+    grid-gap: 5px;
+    grid-template-columns: 3fr 5fr;
+    grid-template-areas:    "request    specimen";
+    transition: 1s all;
+}
+
+.dp-separator-hr {
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+    width: 100%;
+    height: 1.5px !important;
+    background-color: rgba(174, 23, 23, 1) !important;
+    transition: 1s all;
+}
+
+/*#endregion */

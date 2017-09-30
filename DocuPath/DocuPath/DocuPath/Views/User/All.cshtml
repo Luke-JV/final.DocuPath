@@ -22,43 +22,11 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/User/All" method="post" name="tokenCount" id="tokenCount" style="margin-top: 2px">
-                    @*<a class="btn btn-default dropdown-toggle" style="text-align: left; padding: 3px; width: 40px; height: 40px" data-toggle="dropdown"><span class="dropdown-text" style="color: #000">#</span><span class="mdl2icon mdl2-down inline-mdl2icon" style="padding: 0 0 0 2px"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/1" class="dropdown-item dropdown-item-button">1</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/2" class="dropdown-item dropdown-item-button">2</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/3" class="dropdown-item dropdown-item-button">3</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/4" class="dropdown-item dropdown-item-button">4</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/5" class="dropdown-item dropdown-item-button">5</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/6" class="dropdown-item dropdown-item-button">6</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/7" class="dropdown-item dropdown-item-button">7</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/8" class="dropdown-item dropdown-item-button">8</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/9" class="dropdown-item dropdown-item-button">9</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/10" class="dropdown-item dropdown-item-button">10</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/11" class="dropdown-item dropdown-item-button">11</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/12" class="dropdown-item dropdown-item-button">12</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/13" class="dropdown-item dropdown-item-button">13</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/14" class="dropdown-item dropdown-item-button">14</a></li>
-                        <li aria-selected="false"><a href="~/Users/GenerateTokens/15" class="dropdown-item dropdown-item-button">15</a></li>
-                    </ul>*@
-                    @*<ul>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Media Management</li>
-                                <li>@Html.ActionLink("Media Repository", "All", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Reporting</li>
-                                <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                <li>@Html.ActionLink("VISION Dashboard", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                            </ul>
-                        </li>
-                    </ul>*@
+                <form class="minimalform" action="~/User/All" method="post" name="tokenCount" id="tokenCount" style="margin-top: 2px">                    
                     @using (Html.BeginForm())
                     {
                         <input id="btnSubmit" class="hidden" type="submit" />
-                   @Html.DropDownListFor(m => m.tkCount , new List<SelectListItem> {
+                        @Html.DropDownListFor(m => m.tkCount , new List<SelectListItem> {
                                         new SelectListItem { Value = "0", Text = "1", Selected = true },
                                         new SelectListItem { Value = "1", Text = "2" },
                                         new SelectListItem { Value = "2", Text = "3" },
@@ -74,14 +42,14 @@
                                         new SelectListItem { Value = "12", Text = "13" },
                                         new SelectListItem { Value = "13", Text = "14" },
                                         new SelectListItem { Value = "14", Text = "15" },
-                                    }, new { @id = "ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline" }) 
+                                    }, new { @id = "ddlNumTokens", @class = "form-control", @style = "height: 40px; padding: 2px; display: inline; margin-bottom: 0", @data_toggle = "tooltip", @title = "TOKEN QUANTITY SELECTOR", @data_placement = "left" }) 
                     }
                 </form>
             </div>
             <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     @* TODO: Link form action to GENERATE RATS *@
-                    <button id="btnGenTokens" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-rat btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE REGISTRATION TOKEN(S)"></button>
+                    <button id="btnGenTokens" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-rat btn-mdl2icon" type="submit" data-toggle="tooltip" title="GENERATE TOKEN(S)"></button>
                 </form>
             </div>
             <div grid-area="btn3">

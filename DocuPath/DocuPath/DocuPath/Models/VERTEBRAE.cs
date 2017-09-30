@@ -71,16 +71,21 @@ namespace DocuPath.Models
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region CONSTANTS:
-            #region ROOT PATHS:
-            // Functions:
-            public const string ErrorDumpRootPath = "~/Content/DocuPathRepositories/ERRORDUMPS/";
-            // Repositories:
-            public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
-            public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
-            public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
-            public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
-            public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+            #region NON-DATABASE SYSTEM PARAMETERS:
+                public const int lockoutDelayMinutes = 10;
+                public const int maxSRPerFCAddUpdate = 10;
+                public const int maxAEPerFCAddUpdate = 10;
             #endregion
+            #region ROOT PATHS:
+                // Functions:
+                public const string ErrorDumpRootPath = "~/Content/DocuPathRepositories/ERRORDUMPS/";
+                // Repositories:
+                public const string LC_REPORootPath = "~/Content/DocuPathRepositories/LC_REPO/";
+                public const string ERC_REPORootPath = "~/Content/DocuPathRepositories/ERC_REPO/";
+                public const string ADD_EV_REPORootPath = "~/Content/DocuPathRepositories/ADD_EV_REPO/";
+                public const string EXT_REPORT_REPORootPath = "~/Content/DocuPathRepositories/EXT_REPORT_REPO/";
+                public const string MEDIA_REPORootPath = "~/Content/DocuPathRepositories/MEDIA_REPO/";
+                #endregion
             #region FILE / MEDIA HANDLING:
             public static List<string> Thumbnail_AcceptedFileTypes()
             {
