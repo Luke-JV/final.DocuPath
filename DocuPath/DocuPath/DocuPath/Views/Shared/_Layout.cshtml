@@ -387,6 +387,9 @@
     
     @* LOADING/NOTIFICATION MODALS: *@
     <script>
+        $('input').on('focus', function () {
+            $(this).select();
+        });
         $('[data-toggle="tooltip"]').tooltip();
         $('button').click(function () { this.blur(); });
         $('.btn').click(function () { this.blur(); });

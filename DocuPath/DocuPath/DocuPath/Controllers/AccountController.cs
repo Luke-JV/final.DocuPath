@@ -216,6 +216,20 @@ namespace DocuPath.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public ActionResult RegisterUserProfile()
+        {
+            RegisterViewModel model = new RegisterViewModel();
+            using (DocuPathEntities db = new DocuPathEntities())
+            {
+                model.user = new USER();
+                model.user.USER_LOGIN = new USER_LOGIN();
+                model.user.USER_LOGIN.AccessLevelID = 1;
+                model.titles = db.TITLE.ToList();
+            }
+            return View(model);
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -329,7 +343,8 @@ namespace DocuPath.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View();
+            //return code == null ? View("Error") : View();
+            return View();
         }
 
         //

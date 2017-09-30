@@ -17,7 +17,7 @@ namespace DocuPath.Controllers
    // [LogAction]
     public class ForensicCaseController : Controller
     {
-        
+        string controllerName = "ForensicCase";
         DocuPathEntities db = new DocuPathEntities();
 
         [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
@@ -33,12 +33,12 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        //----------------------------------------------------------------------------------------------//
-
+//----------------------------------------------------------------------------------------------//
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         public ActionResult Add()
         {
+            string actionName = "Add";
             try
             {
                 #region AUDIT_WRITE
@@ -189,7 +189,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error", new HandleErrorInfo(x, "ForensicCase", "Add"));
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
 
@@ -289,11 +289,223 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, "ForensicCase", "Add"));
             }
         }
-        #endregion
-        //----------------------------------------------------------------------------------------------//
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Core Data Section")]
+        public ActionResult AddCoreData()
+        {
+            string actionName = "AddCoreData";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Core Data");
+                #endregion
+                #region PREPARE MODEL
+                CoreDataViewModel model = new CoreDataViewModel();
+                var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
 
+                model.forensicCase = new FORENSIC_CASE();
+                model.autopsyAreas = db.AUTOPSY_AREA.ToList();
+                model.forensicCase.SESSION = new SESSION();
+                model.forensicCase.SessionID = 0;
+                model.sessionSelector = new List<sessionKVP>();
+                foreach (var item in db.SESSION.Where(x => x.DateID > sevenDaysAgo))
+                {
+                    sessionKVP newSesh = new sessionKVP();
+                    newSesh.sessionID = item.SessionID;
+                    newSesh.sessionDesc = item.SLOT.Description + " at " + item.SLOT.StartTime.ToString("HH:mm") + " on " + item.DateID.ToString("dd MMM yyyy");
+                    model.sessionSelector.Add(newSesh);
+                }
+                
+                model.forensicCase.DateAdded = DateTime.Now;
+                #endregion
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Core Data");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Core Data Section")]
+        public ActionResult AddCoreData(CoreDataViewModel model)
+        {
+            string actionName = "AddCoreData";
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Core Data");
+                #endregion
+                //return View(model);
+            }
+
+            try
+            {
+                //TODO: DB Logic
+                //db.SaveChanges();
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Core Data");
+                #endregion
+                return RedirectToAction("AddObservations");
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Core Data");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Observations Section")]
+        public ActionResult AddObservations()
+        {
+            string actionName = "AddObservations";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Observations");
+                #endregion
+                #region PREPARE MODEL
+                ObservationsViewModel model = new ObservationsViewModel();
+
+                model.genObservation = new GENERAL_OBSERVATION();
+                model.abdObservation = new ABDOMEN_OBSERVATION();
+                model.chestObservation = new CHEST_OBSERVATION();
+                model.headNeckObservation = new HEAD_NECK_OBSERVATION();
+                model.spineObservation = new SPINE_OBSERVATION();
+                #endregion
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Observations");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Observations Section")]
+        public ActionResult AddObservations(ObservationsViewModel model)
+        {
+            string actionName = "AddObservations";
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Observations");
+                #endregion
+                //return View(model);
+            }
+
+            try
+            {
+                //TODO: DB Logic
+                //db.SaveChanges();
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
+                #endregion
+                return RedirectToAction("AddServiceRequests");
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Observations");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>        
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
+        public ActionResult AddServiceRequests()
+        {
+            string actionName = "AddServiceRequests";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Service Requests");
+                #endregion
+                #region PREPARE MODEL
+                FCServiceRequestViewModel model = new FCServiceRequestViewModel();
+                List<SERVICE_REQUEST> srList = new List<SERVICE_REQUEST>();
+                List<SPECIMEN> specimenList = new List<SPECIMEN>();
+
+                for (int i = 0; i < VERTEBRAE.maxSRPerFCAddUpdate; i++)
+                {
+                    SERVICE_REQUEST newSR = new SERVICE_REQUEST();
+                    srList.Add(newSR);
+                    SPECIMEN newSpecimen = new SPECIMEN();
+                    specimenList.Add(newSpecimen);
+                }
+
+
+                model.serviceRequests = srList;
+                model.specimens = specimenList;
+                model.activeSP = db.SERVICE_PROVIDER.Where(sp => sp.IsDeactivated == false).ToList();
+                model.requestTypes = db.REQUEST_TYPE.ToList();
+
+                #endregion
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Service Requests");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
+        public ActionResult AddServiceRequests(FCServiceRequestViewModel model)
+        {
+            string actionName = "AddServiceRequests";
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Service Requests");
+                #endregion
+                //return View(model);
+            }
+
+            try
+            {
+                //TODO: DB Logic
+                //db.SaveChanges();
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Service Requests");
+                #endregion
+                return RedirectToAction("ForensicCaseServiceRequests");
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Observations");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+        #endregion
+//----------------------------------------------------------------------------------------------//
         #region READS:
-        
+
         [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
         public ActionResult All()
         {
@@ -376,8 +588,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
-
+//----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult Edit(int id)
@@ -476,8 +687,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
-
+//----------------------------------------------------------------------------------------------//
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "Delete Forensic Case")]
         public ActionResult Delete(int id)
@@ -530,8 +740,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
-
+//----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
         public ActionResult GetSP(string query)
         {

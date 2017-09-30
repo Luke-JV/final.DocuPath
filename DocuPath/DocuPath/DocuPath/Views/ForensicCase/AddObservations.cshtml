@@ -1,0 +1,676 @@
+﻿@model DocuPath.Models.DPViewModels.ObservationsViewModel
+@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Add Forensic Case (Observations)", "AddObservations") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">OBSERVATIONS</span></div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="@Url.Action("AddObservations","ForensicCase")" method="post" style="margin-top: 2px">
+                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PAGE CONTENT: *@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+
+    <div class="form-horizontal border-generic form-generic">
+        <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
+            <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
+            <li><a class="dynamic-tab-heading" href="@Url.Action("AddServiceRequests","ForensicCase")" style="margin-left: 5px">Service Requests</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
+        </ul>
+        <div id="OBS" class="tab-pane fade in active" style="padding-top: 5px">
+            <div class="container" id="timelinecontainer">
+                <article id="timeline">
+                    <ul class="timeline" id="bSTime">
+                        @* GENOBS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-observations timeline-mdl2icon"></span> General Observations</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#GENOBSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="GENOBSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.GeneralDescription, htmlAttributes: new { @data_toggle = "collapse", @href = "#GeneralDescription", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="GeneralDescription" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.GeneralDescription, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.GeneralDescription, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.Physique, htmlAttributes: new { @data_toggle = "collapse", @href = "#Physique", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="Physique" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.Physique, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.Physique, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.Nutrition, htmlAttributes: new { @data_toggle = "collapse", @href = "#Nutrition", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="Nutrition" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.Nutrition, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.Nutrition, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.SpecialIdentifyingFeatures, htmlAttributes: new { @data_toggle = "collapse", @href = "#SpecialIdentifyingFeatures", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="SpecialIdentifyingFeatures" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.SpecialIdentifyingFeatures, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.SpecialIdentifyingFeatures, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.SecondaryPostMortemChanges, htmlAttributes: new { @data_toggle = "collapse", @href = "#SecondaryPostMortemChanges", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="SecondaryPostMortemChanges" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.SecondaryPostMortemChanges, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.SecondaryPostMortemChanges, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.genObservation.ExtAppearanceLimbCondition, htmlAttributes: new { @data_toggle = "collapse", @href = "#ExtAppearanceLimbCondition", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="ExtAppearanceLimbCondition" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.genObservation.ExtAppearanceLimbCondition, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.genObservation.ExtAppearanceLimbCondition, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-measurements timeline-mdl2icon"></span> Measurements</p>
+                                                    <div class="form-group">
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.genObservation.HeightMeters, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.genObservation.HeightMeters, new { htmlAttributes = new { @placeholder = "9.999", @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.genObservation.HeightMeters, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row">
+                                                            @Html.LabelFor(model => model.genObservation.MassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.genObservation.MassKg, new { htmlAttributes = new { @placeholder = "999.999", @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.genObservation.MassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* HNOBS *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-observations timeline-mdl2icon"></span> Head &amp; Neck Observations</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#HNOBSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="HNOBSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.headNeckObservation.ScalpSkull, htmlAttributes: new { @data_toggle = "collapse", @href = "#ScalpSkull", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="ScalpSkull" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.ScalpSkull, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.headNeckObservation.ScalpSkull, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.headNeckObservation.IntracranialContents, htmlAttributes: new { @data_toggle = "collapse", @href = "#IntracranialContents", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="IntracranialContents" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.IntracranialContents, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.headNeckObservation.IntracranialContents, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, htmlAttributes: new { @data_toggle = "collapse", @href = "#OrbitalNasalAuralCavities", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="OrbitalNasalAuralCavities" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.headNeckObservation.OrbitalNasalAuralCavities, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.headNeckObservation.MouthTonguePharynx, htmlAttributes: new { @data_toggle = "collapse", @href = "#MouthTonguePharynx", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="MouthTonguePharynx" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.MouthTonguePharynx, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.headNeckObservation.MouthTonguePharynx, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.headNeckObservation.NeckStructures, htmlAttributes: new { @data_toggle = "collapse", @href = "#NeckStructures", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="NeckStructures" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.headNeckObservation.NeckStructures, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.headNeckObservation.NeckStructures, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-measurements timeline-mdl2icon"></span> Measurements</p>
+                                                    <div class="form-group">
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.headNeckObservation.BrainMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.headNeckObservation.BrainMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.headNeckObservation.BrainMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* CHESTOBS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-observations timeline-mdl2icon"></span> Chest Observations</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#CHESTOBSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="CHESTOBSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.ThoracicCageDiaphragm, htmlAttributes: new { @data_toggle = "collapse", @href = "#ThoracicCageDiaphragm", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="ThoracicCageDiaphragm" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.ThoracicCageDiaphragm, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.ThoracicCageDiaphragm, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.MediastinumOesophagus, htmlAttributes: new { @data_toggle = "collapse", @href = "#MediastinumOesophagus", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="MediastinumOesophagus" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.MediastinumOesophagus, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.MediastinumOesophagus, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.TracheaBronchi, htmlAttributes: new { @data_toggle = "collapse", @href = "#TracheaBronchi", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="TracheaBronchi" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.TracheaBronchi, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.TracheaBronchi, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.PleuraLungs, htmlAttributes: new { @data_toggle = "collapse", @href = "#PleuraLungs", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="PleuraLungs" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.PleuraLungs, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.PleuraLungs, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.HeartPericardium, htmlAttributes: new { @data_toggle = "collapse", @href = "#HeartPericardium", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="HeartPericardium" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.HeartPericardium, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.HeartPericardium, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.chestObservation.LargeBloodVessels, htmlAttributes: new { @data_toggle = "collapse", @href = "#LargeBloodVessels", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="LargeBloodVessels" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.chestObservation.LargeBloodVessels, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.chestObservation.LargeBloodVessels, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-measurements timeline-mdl2icon"></span> Measurements</p>
+                                                    <div class="form-group">
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.chestObservation.LeftLungMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.chestObservation.LeftLungMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.chestObservation.LeftLungMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.chestObservation.RightLungMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.chestObservation.RightLungMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.chestObservation.RightLungMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row">
+                                                            @Html.LabelFor(model => model.chestObservation.HeartMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-7" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.chestObservation.HeartMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @style = "width: 75px !important" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.chestObservation.HeartMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* ABDOMENOBS *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-observations timeline-mdl2icon"></span> Abdomen Observations</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#ABDOMENOBSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="ABDOMENOBSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.PeritonealCavity, htmlAttributes: new { @data_toggle = "collapse", @href = "#PeritonealCavity", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="PeritonealCavity" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.PeritonealCavity, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.PeritonealCavity, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.StomachContents, htmlAttributes: new { @data_toggle = "collapse", @href = "#StomachContents", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="StomachContents" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.StomachContents, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.StomachContents, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.IntestinesMesentery, htmlAttributes: new { @data_toggle = "collapse", @href = "#IntestinesMesentery", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="IntestinesMesentery" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.IntestinesMesentery, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.IntestinesMesentery, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, htmlAttributes: new { @data_toggle = "collapse", @href = "#LiverGallbladderBilliaryPassages", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="LiverGallbladderBilliaryPassages" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.LiverGallbladderBilliaryPassages, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.Pancreas, htmlAttributes: new { @data_toggle = "collapse", @href = "#Pancreas", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="Pancreas" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.Pancreas, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.Pancreas, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.Spleen, htmlAttributes: new { @data_toggle = "collapse", @href = "#Spleen", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="Spleen" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.Spleen, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.Spleen, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.Adrenals, htmlAttributes: new { @data_toggle = "collapse", @href = "#Adrenals", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="Adrenals" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.Adrenals, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.Adrenals, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.KidneysUreters, htmlAttributes: new { @data_toggle = "collapse", @href = "#KidneysUreters", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="KidneysUreters" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.KidneysUreters, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.KidneysUreters, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.UrinaryBladderUrethra, htmlAttributes: new { @data_toggle = "collapse", @href = "#UrinaryBladderUrethra", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="UrinaryBladderUrethra" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.UrinaryBladderUrethra, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.UrinaryBladderUrethra, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.PelvicWalls, htmlAttributes: new { @data_toggle = "collapse", @href = "#PelvicWalls", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="PelvicWalls" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.PelvicWalls, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.PelvicWalls, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.abdObservation.GenitalOrgans, htmlAttributes: new { @data_toggle = "collapse", @href = "#GenitalOrgans", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="GenitalOrgans" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.abdObservation.GenitalOrgans, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.abdObservation.GenitalOrgans, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-footer">
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-measurements timeline-mdl2icon"></span> Measurements</p>
+                                                    <div class="form-group">
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.abdObservation.LiverMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-2" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.abdObservation.LiverMassKg, new { htmlAttributes = new { @class = "form-control measurement-text" } })
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.abdObservation.LiverMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.abdObservation.SplenicMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-2" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.abdObservation.SplenicMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @id = "spleenmeasurement" } })
+                                                            </div>
+                                                            <div class="col-md-5" style="padding-left: 0px; padding-top: 6px">
+                                                                <input id="spleenToggle" type="checkbox" data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="warning" data-offstyle="default" data-size="mini" data-style="ios" data-width="70" @*onchange="toggleEnableMeasurements()"*@>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.abdObservation.SplenicMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row" style="padding-bottom: 5px;">
+                                                            @Html.LabelFor(model => model.abdObservation.LeftKidneyMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-2" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.abdObservation.LeftKidneyMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @id = "leftkidneymeasurement" } })
+                                                            </div>
+                                                            <div class="col-md-5" style="padding-left: 0px; padding-top: 6px">
+                                                                <input id="leftkidneyToggle" type="checkbox" data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="warning" data-offstyle="default" data-size="mini" data-style="ios" data-width="70" onchange="toggleEnableMeasurements()">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.abdObservation.LeftKidneyMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                        <div class="row">
+                                                            @Html.LabelFor(model => model.abdObservation.RightKidneyMassKg, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                            <div class="col-md-2" style="padding-left: 0px">
+                                                                @Html.EditorFor(model => model.abdObservation.RightKidneyMassKg, new { htmlAttributes = new { @class = "form-control measurement-text", @id = "rightkidneymeasurement" } })
+                                                            </div>
+                                                            <div class="col-md-5" style="padding-left: 0px; padding-top: 6px">
+                                                                <input id="rightkidneyToggle" type="checkbox" data-toggle="toggle" data-on="Absent" data-off="Present" data-onstyle="warning" data-offstyle="default" data-size="mini" data-style="ios" data-width="70" onchange="toggleEnableMeasurements()">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row text-center" style="padding-bottom: 5px;">
+                                                            @Html.ValidationMessageFor(model => model.abdObservation.RightKidneyMassKg, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* SPINEOBS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-observations timeline-mdl2icon"></span> Spine Observations</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#SPINEOBSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="SPINEOBSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body apad5">
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.spineObservation.SpinalColumn, htmlAttributes: new { @data_toggle = "collapse", @href = "#SpinalColumn", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="SpinalColumn" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.spineObservation.SpinalColumn, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.spineObservation.SpinalColumn, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default" style="padding: 5px 5px 0 5px">
+                                                        @Html.LabelFor(model => model.spineObservation.SpinalCord, htmlAttributes: new { @data_toggle = "collapse", @href = "#SpinalCord", @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                                                        <div id="SpinalCord" class="panel-collapse collapse">
+                                                            <div class="panel-body bpad5">
+                                                                @Html.TextAreaFor(model => model.spineObservation.SpinalCord, new { @class = "ckeditor" })
+                                                                @Html.ValidationMessageFor(model => model.spineObservation.SpinalCord, "", new { @class = "validation-text text-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer">Panel Footer</div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+
+    <script name="warningscript" type="text/javascript">
+        // FORT:
+        Fort.solid('#ae1f1f', '#fortContainerCoreData');
+        // CANCEL WARNING:
+        $(document).ready(function () {
+            $('#btnCancel').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
+            $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "ForensicCase")"; });
+            $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
+        });
+
+        $('#spleenToggle').on('change', function () {
+            var toggle = document.getElementById("spleenToggle").checked
+            if (toggle) {
+                $('#spleenmeasurement').prop("disabled", true)
+            }
+            else $('#spleenmeasurement').prop("disabled", false)
+        });
+
+        //$('#spleenToggle').change(function () {
+        //    var toggle = document.getElementById("spleenToggle").checked
+        //    if (toggle) {
+        //        $('#spleenmeasurement').prop("disabled", true)
+        //    }
+        //    else $('#spleenmeasurement').prop("disabled", false)
+        //});
+
+        $('#leftkidneyToggle').change(function () {
+            var toggle = document.getElementById("leftkidneyToggle").checked
+            if (toggle) {
+                $('#leftkidneymeasurement').prop("disabled", true)
+            }
+            else $('#leftkidneymeasurement').prop("disabled", false)
+        });
+        $('#rightkidneyToggle').change(function () {
+            var toggle = document.getElementById("rightkidneyToggle").checked
+            if (toggle) {
+                $('#rightkidneymeasurement').prop("disabled", true)
+            }
+            else $('#rightkidneymeasurement').prop("disabled", false)
+        });
+    </script>
+}

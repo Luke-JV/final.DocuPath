@@ -1,0 +1,183 @@
+﻿@model DocuPath.DataLayer.AUDIT_LOG
+@{ ViewBag.Title = "Details"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "ViewAuditTrailSpecific"; ViewBag.PageInfoLocator = "ViewAuditTrail"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail") </li>
+    <li class="active">@Html.ActionLink("View Audit Trail Entry", "Details") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-auditlog"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">VIEW AUDIT TRAIL ENTRY</div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/AuditTrail/All" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                </form>
+            </div>            
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* DETAILS OF SELECTED FORENSIC CASE: *@
+
+<div class="form-horizontal border-generic form-generic">
+    <div class="row" style="margin-left: 0px">
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div class="panel-group" id="TxDetailsAccordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                        <span>Basic Transaction Data</span>
+                    </div>
+                    <div id="CorePanel" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal-tiny">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.UserID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.USER.FirstName) @Html.DisplayFor(model => model.USER.LastName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayName("Type")
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.AUDIT_TX_TYPE.TypeValue)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayName("Stamp")
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.TxDateStamp)
+                                </dd>                                
+
+                                <dt>
+                                    @Html.DisplayName("Critical Data")
+                                </dt>
+
+                                <dd>
+                                    <strong>@Html.DisplayFor(model => model.TxCriticalDataString)</strong>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+            <div class="panel-group" id="TxDetailsAccordion">
+                <div class="panel panel-default" style="margin-top: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                        <span>New Record &amp; Old Record Data</span>
+                    </div>
+                    <div id="NewOldPanel" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <dl class="dl-horizontal-tiny">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.TxOldRecord)
+                                </dt>
+                                <dd class="tx-details" id="old">
+                                    @*<div class="well well-sm">*@
+                                        @Html.DisplayFor(model => model.TxOldRecord)
+                                    @*</div>*@
+                                </dd>
+                                @*<dd class="tx-details" id="old">
+                                    <ul id="ulOld">
+                                    </ul>
+                                </dd>*@
+
+                                <hr class="details-hr"/>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.TxNewRecord)
+                                </dt>
+                                <dd class="tx-details" id="new">
+                                    @*<div class="well well-sm">*@
+                                        @Html.DisplayFor(model => model.TxNewRecord)
+                                    @*</div>*@
+                                </dd>
+                                @*<dd class="tx-details" id="new">
+                                    <ul id="ulNew">
+                                    </ul>
+                                </dd>*@
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        @*var ulOld = $('#ulOld');
+        var jsonOld = @Model.TxOldRecord;
+        console.log(jsonOld);
+        $(jsonOld.attributes).each(function (index, attr) {
+            ulOld.append($(document.createElement('li')).addClass('details-li').text(attr.name + ': ' + attr.value));
+        });
+
+        var ulNew = $('#ulNew');
+        var jsonNew = @Model.TxNewRecord;
+        console.log(jsonNew);
+        $(jsonNew.attributes).each(function (index, attr) {
+            ulNew.append($(document.createElement('li')).addClass('details-li').text(attr.name + ': ' + attr.value));
+        });*@
+
+        @*var ulNew = $('<ul class="details-ul">').appendTo('#new');
+        var jsonNew = @Model.TxNewRecord;
+        $(jsonNew.attributes).each(function (index, attr) {
+            ulNew.append($(document.createElement('li')).addClass('details-li').text(attr.name + ': ' + attr.value));
+        });*@
+
+        highlight($("#new"), $("#old"));
+
+        function highlight(newElem, oldElem) {
+            var newText = newElem.text();
+            var oldText = oldElem.text();
+
+            var text = "";
+            newElem.text().split("").forEach(function (value, index) {
+                if (value != oldText.charAt(index))
+                    text += "<span class='audit-trail-highlight'>" + value + "</span>";
+                else
+                    text += value;
+            });
+            newElem.html(text);
+        }
+
+        //var ul = $('<ul class="test">').appendTo('body');
+        //var json = { attributes: [{ name: 'name1', value: 'val1' }, { name: 'name2', value: 'val2' }, { name: 'name3', value: 'val3' }] };
+        //$(json.attributes).each(function (index, attr) {
+        //    ul.append($(document.createElement('li')).addClass('bold-li').text(attr.name + ': ' + attr.value));
+        //});
+
+    </script>
+    }

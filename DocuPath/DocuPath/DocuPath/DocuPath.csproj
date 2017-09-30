@@ -1073,6 +1073,7 @@
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.bootgrid.js" />
     <Content Include="Scripts\jquery.caret.min.js" />
+    <Content Include="Scripts\jquery.maskedinput.js" />
     <Content Include="Scripts\jquery.tag-editor.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -1227,6 +1228,11 @@
     <Content Include="Views\Home\HapticHelp.cshtml" />
     <Content Include="Views\Reporting\Vision.cshtml" />
     <Content Include="Views\SystemParameters\Maintain.cshtml" />
+    <Content Include="Views\Account\RegisterUserProfile.cshtml" />
+    <Content Include="Views\AuditTrail\Details.cshtml" />
+    <Content Include="Views\ForensicCase\AddCoreData.cshtml" />
+    <Content Include="Views\ForensicCase\AddObservations.cshtml" />
+    <Content Include="Views\ForensicCase\AddServiceRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

@@ -64,11 +64,12 @@ namespace DocuPath.Controllers
             string actionName = "Details";
             try
             {
-
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Audit Log");
                 #endregion
-                return View();
+                AUDIT_LOG model = new AUDIT_LOG();
+                model = db.AUDIT_LOG.Where(x => x.AuditLogTxID == id).FirstOrDefault();
+                return View(model);
             }
             catch (Exception x)
             {

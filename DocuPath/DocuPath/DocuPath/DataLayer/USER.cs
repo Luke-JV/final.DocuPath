@@ -40,48 +40,70 @@ namespace DocuPath.DataLayer
         [DisplayName("Login ID")]
         public Nullable<int> UserLoginID { get; set; }
         [DefaultValue(FLAG.Text)]
+        [Required]
         [DisplayName("First Name")]
         public string FirstName { get; set; }
         [DefaultValue(FLAG.Text)]
+        [Required]
         [DisplayName("Middle Name")]
         public string MiddleName { get; set; }
         [DefaultValue(FLAG.Text)]
+        [Required]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DefaultValue(FLAG.Text)]
+        [Required]
         [DisplayName("Initials")]
         public string DisplayInitials { get; set; }
         [DefaultValue(FLAG.Text)]
+        [Required]
         [DisplayName("Qualification Description")]
         public string QualificationDescription { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
+        [Required]
         [DisplayName("HPCSA Registration Number")]
         public string HPCSARegNumber { get; set; }
         [DefaultValue(FLAG.NationalID)]
+        [Required]
         [DisplayName("National ID")]
         public string NationalID { get; set; }
         [DefaultValue(FLAG.AcademicID)]
+        [Required]
         [DisplayName("Academic ID")]
         public string AcademicID { get; set; }
         [DefaultValue(FLAG.ContactNumber)]
+        [Required]
         [DisplayName("Cellphone Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string CellNum { get; set; }
         [DefaultValue(FLAG.ContactNumber)]
+        [Required]
         [DisplayName("Telephone Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string TelNum { get; set; }
         [DefaultValue(FLAG.ContactNumber)]
+        [Required]
         [DisplayName("Work Number")]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         public string WorkNum { get; set; }
         [DefaultValue(FLAG.Email)]
+        [Required]
         [DisplayName("Personal Email")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string PersonalEmail { get; set; }
         [DefaultValue(FLAG.Email)]
+        [Required]
         [DisplayName("Academic Email")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Enter a valid email address")]
         public string AcademicEmail { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
+        [DataType(DataType.MultilineText)]
+        [Required]
         [DisplayName("Physical Address")]
         public string PhysicalAddress { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
+        [DataType(DataType.MultilineText)]
+        [Required]
         [DisplayName("Postal Address")]
         public string PostalAddress { get; set; }
         [DisplayName("Status")]

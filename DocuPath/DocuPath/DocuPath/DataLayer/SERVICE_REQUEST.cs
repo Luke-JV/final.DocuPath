@@ -35,6 +35,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
         [DefaultValue(FLAG.Text)]
+        [DataType(DataType.MultilineText)]
         [DisplayName("Request Note")]
         public string RequestNote { get; set; }
         [DisplayName("Status")]
