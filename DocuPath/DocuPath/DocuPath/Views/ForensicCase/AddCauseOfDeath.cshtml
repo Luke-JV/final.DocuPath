@@ -22,7 +22,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("AddCauseOfDeath","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -82,7 +82,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input id="btnPOST" type="submit" class="hidden" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -158,6 +158,8 @@
                             </div>
                         </li>
                         @* PRIMARY ESTIMATION *@
+                        @Html.HiddenFor(model => model.primaryCODEst.ForensicCaseID)
+                        @Html.HiddenFor(model => model.primaryCODEst.ProminenceID)
                         <li class="single-left-timeline-inverted" style="margin-bottom: 0px">
                             <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-one single-left-timeline-badge-mdl2icon"></i></div>
                             <div class="single-left-timeline-panel">
@@ -179,7 +181,7 @@
                                                 <div class="panel-body">
                                                     <div class="form-group">
                                                         @Html.Label("Estimated Primary Cause Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
-                                                        <div class="col-md-12 autocomplete-wrapper">
+                                                        <div class="col-md-12 autocomplete-wrapper">                                                            
                                                             @Html.AutocompleteFor(model => model.primaryCODEst.CONTENT_TAG.ContentTagText, model => model.primaryCODEst.ContentTagID, "GetTags", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
                                                             @Html.ValidationMessageFor(model => model.primaryCODEst.CONTENT_TAG.ContentTagText, "", new { @class = "validation-text text-danger" })
                                                             @*<input type="text" data-role="tagsinput" style="width: 100%" value="A00.0 - Cholera due to Vibrio cholerae 01, biovar cholerae" />*@
@@ -217,6 +219,8 @@
                             </div>
                         </li>
                         @* SECONDARY ESTIMATION *@
+                        @Html.HiddenFor(model => model.secondaryCODEst.ForensicCaseID)
+                        @Html.HiddenFor(model => model.secondaryCODEst.ProminenceID)
                         <li class="single-left-timeline-inverted" id="2ndCOD" style="margin-bottom: 0px">
                             <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-two single-left-timeline-badge-mdl2icon"></i></div>
                             <div class="single-left-timeline-panel">
@@ -285,6 +289,8 @@
                             </div>
                         </li>
                         @* TERTIARY ESTIMATION *@
+                        @Html.HiddenFor(model => model.tertiaryCODEst.ForensicCaseID)
+                        @Html.HiddenFor(model => model.tertiaryCODEst.ProminenceID)
                         <li id="3rdCOD" class="single-left-timeline-inverted" style="margin-bottom: 0px">
                             <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-three single-left-timeline-badge-mdl2icon"></i></div>
                             <div class="single-left-timeline-panel">
@@ -353,6 +359,8 @@
                             </div>
                         </li>
                         @* QUATERNARY ESTIMATION *@
+                        @Html.HiddenFor(model => model.quaternaryCODEst.ForensicCaseID)
+                        @Html.HiddenFor(model => model.quaternaryCODEst.ProminenceID)
                         <li class="single-left-timeline-inverted" id="4thCOD" style="margin-bottom: 0px">
                             <div class="single-left-timeline-badge"><i class="mdl2icon mdl2-four single-left-timeline-badge-mdl2icon"></i></div>
                             <div class="single-left-timeline-panel">
@@ -445,6 +453,11 @@
                     if ($('#tertiarytoggle').prop("checked") == true) { $('#3rdCOD').show('slow'), $('#quaternarytoggle').bootstrapToggle('enable'), $('#secondarytoggle').bootstrapToggle('disable') } else { $('#3rdCOD').hide('slow'), $('#4thCOD').hide('slow'), $('#quaternarytoggle').bootstrapToggle('disable'), $('#secondarytoggle').bootstrapToggle('enable') };
                     if ($('#quaternarytoggle').prop("checked") == true) { $('#4thCOD').show('slow'), $('#secondarytoggle').bootstrapToggle('disable'), $('#tertiarytoggle').bootstrapToggle('disable') } else { $('#4thCOD').hide('slow') };
                 });
+            })
+    </script>
+    <script>
+            $("#btnNext").click(function () {
+                document.getElementById("btnPOST").click();
             })
     </script>
 }

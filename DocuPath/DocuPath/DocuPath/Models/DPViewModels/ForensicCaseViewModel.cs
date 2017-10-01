@@ -156,6 +156,7 @@ namespace DocuPath.Models.DPViewModels
 
     public class CODViewModel
     {
+        
         public CASE_COD_ESTIMATION primaryCODEst { get; set; }
         public CASE_COD_ESTIMATION secondaryCODEst { get; set; }
         public CASE_COD_ESTIMATION tertiaryCODEst { get; set; }
