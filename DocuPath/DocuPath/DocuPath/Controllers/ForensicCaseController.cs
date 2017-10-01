@@ -14,7 +14,7 @@ namespace DocuPath.Controllers
 {
     [Authorize]
     [HandleError]
-   // [LogAction]
+    // [LogAction]
     public class ForensicCaseController : Controller
     {
         string controllerName = "ForensicCase";
@@ -33,7 +33,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-//----------------------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------------------//
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         public ActionResult Add()
@@ -93,7 +93,7 @@ namespace DocuPath.Controllers
                     newKVP.isSelected = false;
                     model.selectedSamplesInvestigations.Add(newKVP);
                 }
-                
+
                 model.selectedMedicalTreatments = new List<multiselectKVP>();
                 foreach (var item in model.medTreatments)
                 {
@@ -215,12 +215,12 @@ namespace DocuPath.Controllers
                 }
                 catch (Exception)
                 {
-                    inCase.ForensicCaseID = 1;                    
+                    inCase.ForensicCaseID = 1;
                 }
 
                 inCase.StatusID = model.forensicCase.StatusID;
                 inCase.SessionID = model.forensicCase.SessionID;
-                inCase.AutopsyAreaID = model.forensicCase.AutopsyAreaID;                
+                inCase.AutopsyAreaID = model.forensicCase.AutopsyAreaID;
                 inCase.ForensicDRNumber = model.forensicCase.ForensicDRNumber;
                 inCase.FCBriefDescription = model.forensicCase.FCBriefDescription;
                 inCase.DateAdded = model.forensicCase.DateAdded;
@@ -263,12 +263,12 @@ namespace DocuPath.Controllers
                 inCase.SERVICE_REQUEST = model.serviceRequests;
                 //404inCase.SESSION.DateID = model.sessionSelector.FirstOrDefault().
                 inCase.USER = VERTEBRAE.getCurrentUser();
-                inCase.ADDITIONAL_EVIDENCE= new List<ADDITIONAL_EVIDENCE>();
-                inCase.SERVICE_REQUEST= new List<SERVICE_REQUEST>();
-                inCase.MEDIA= new List<MEDIA>();
+                inCase.ADDITIONAL_EVIDENCE = new List<ADDITIONAL_EVIDENCE>();
+                inCase.SERVICE_REQUEST = new List<SERVICE_REQUEST>();
+                inCase.MEDIA = new List<MEDIA>();
                 inCase.STATUS = db.STATUS.Where(x => x.StatusID == inCase.StatusID).FirstOrDefault();
                 inCase.AUTOPSY_AREA = new AUTOPSY_AREA();
-                
+
                 //AE
                 //AA
                 //MEDIA
@@ -289,7 +289,7 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, "ForensicCase", "Add"));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Core Data Section")]
         public ActionResult AddCoreData()
@@ -316,7 +316,7 @@ namespace DocuPath.Controllers
                     newSesh.sessionDesc = item.SLOT.Description + " at " + item.SLOT.StartTime.ToString("HH:mm") + " on " + item.DateID.ToString("dd MMM yyyy");
                     model.sessionSelector.Add(newSesh);
                 }
-                
+
                 model.forensicCase.DateAdded = DateTime.Now;
                 #endregion
                 return View(model);
@@ -350,8 +350,8 @@ namespace DocuPath.Controllers
             {
                 FORENSIC_CASE inCase = default(FORENSIC_CASE);
                 inCase = model.forensicCase;
-                
-                
+
+
                 try
                 {
                     inCase.ForensicCaseID = db.FORENSIC_CASE.Max(x => x.ForensicCaseID) + 1;
@@ -360,8 +360,8 @@ namespace DocuPath.Controllers
                 {
                     inCase.ForensicCaseID = 1;
                 }
-                
-                inCase.STATUS = db.STATUS.Where(x => x.StatusID == db.STATUS.Where(y => y.StatusValue == "Active").FirstOrDefault().StatusID).FirstOrDefault();               
+
+                inCase.STATUS = db.STATUS.Where(x => x.StatusID == db.STATUS.Where(y => y.StatusValue == "Active").FirstOrDefault().StatusID).FirstOrDefault();
                 inCase.UserID = VERTEBRAE.getCurrentUser().UserID;
                 inCase.assignFlagsAndKey(inCase.ForensicCaseID);
 
@@ -371,7 +371,7 @@ namespace DocuPath.Controllers
                 inCase.CHEST_OBSERVATION.Add(new CHEST_OBSERVATION(db.CHEST_OBSERVATION.Max(x => x.ObsChestID) + 1, inCase.ForensicCaseID));
                 inCase.HEAD_NECK_OBSERVATION.Add(new HEAD_NECK_OBSERVATION(db.HEAD_NECK_OBSERVATION.Max(x => x.ObsHeadNeckID) + 1, inCase.ForensicCaseID));
                 inCase.SPINE_OBSERVATION.Add(new SPINE_OBSERVATION(db.SPINE_OBSERVATION.Max(x => x.ObsSpineID) + 1, inCase.ForensicCaseID));
-                
+
 
 
 
@@ -381,7 +381,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Core Data");
                 #endregion
-                return RedirectToAction("AddObservations",new {id=inCase.ForensicCaseID });
+                return RedirectToAction("AddObservations", new { id = inCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -392,7 +392,7 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Observations Section")]
         public ActionResult AddObservations(int id)
@@ -405,12 +405,12 @@ namespace DocuPath.Controllers
                 #endregion
                 #region PREPARE MODEL
                 ObservationsViewModel model = new ObservationsViewModel();
-                
+
                 model.genObservation = new GENERAL_OBSERVATION();
                 var gen = db.GENERAL_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
                 model.genObservation.ForensicCaseID = gen.ForensicCaseID;
                 model.genObservation.ObsGeneralID = gen.ObsGeneralID;
-                
+
                 model.abdObservation = new ABDOMEN_OBSERVATION();
                 var abd = db.ABDOMEN_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
                 model.abdObservation.ForensicCaseID = abd.ForensicCaseID;
@@ -492,7 +492,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("SelectMediaItems", new { id=upCase.ForensicCaseID });
+                return RedirectToAction("SelectAdditionalEvidenceItems", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -503,7 +503,7 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>        
+        //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
         public ActionResult AddServiceRequests()
@@ -578,7 +578,7 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>        
+        //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
         public ActionResult SelectMediaItems(int id)
@@ -716,7 +716,7 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>        
+        //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
         public ActionResult CaptureMediaItemDetails(int id)
@@ -818,10 +818,10 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>        
+        //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Additional Evidence Section")]
-        public ActionResult SelectAdditionalEvidenceItems()
+        public ActionResult SelectAdditionalEvidenceItems(int id)
         {
             string actionName = "SelectAdditionalEvidenceItems";
             try
@@ -829,7 +829,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case -Additional Evidence");
                 #endregion
-
+                ViewBag.FCID = id;
                 return View();
             }
             catch (Exception x)
@@ -846,7 +846,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Additional Evidence Section")]
-        public ActionResult UploadAdditionalEvidenceItems()
+        public ActionResult UploadAdditionalEvidenceItems(int id)
         {
             string actionName = "UploadAdditionalEvidenceItems";
 
@@ -915,8 +915,8 @@ namespace DocuPath.Controllers
                         AE.ContactPersonNameSurname = "PENDING";
                         AE.EvidenceDescription = "PENDING";
                         AE.EvidenceSerialNumber = "";
-                        // CHECK THIS FCID PLEASE, NOT SURE I BRAINED IT CORRECTLY - NOT SIMPLY THE LAST FCID IN FORENSIC_CASE, BUT THE LAST FCID ADDED BY THE CURRENT USER!
-                        AE.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uId).Max(fc => fc.ForensicCaseID);
+
+                        AE.ForensicCaseID = id;
 
                         AEID++;
 
@@ -944,10 +944,10 @@ namespace DocuPath.Controllers
                 return Json("No files selected.");
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>        
+        //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Additional Evidence Section")]
-        public ActionResult CaptureAdditionalEvidenceDetails()
+        public ActionResult CaptureAdditionalEvidenceDetails(int id)
         {
             string actionName = "CaptureAdditionalEvidenceDetails";
             try
@@ -958,8 +958,8 @@ namespace DocuPath.Controllers
                 #region PREPARE MODEL
                 AdditionalEvidenceViewModel model = new AdditionalEvidenceViewModel();
 
-                int id = VERTEBRAE.getCurrentUser().UserID;
-                model.additionalEvidence = db.ADDITIONAL_EVIDENCE.Where(ae => ae.FORENSIC_CASE.UserID == id && ae.EvidenceDescription.ToUpper() == "PENDING").ToList();
+                int uID = VERTEBRAE.getCurrentUser().UserID;
+                model.additionalEvidence = db.ADDITIONAL_EVIDENCE.Where(ae => ae.FORENSIC_CASE.UserID == uID && ae.EvidenceDescription.ToUpper() == "PENDING" && ae.ForensicCaseID == id).ToList();
                 if (model.additionalEvidence.Count < 1)
                 {
                     //Response.
@@ -968,7 +968,7 @@ namespace DocuPath.Controllers
                 foreach (var item in model.additionalEvidence)
                 {
                     item.EvidenceDescription = "";
-                    item.ContactPersonNameSurname = "";                    
+                    item.ContactPersonNameSurname = "";
                 }
                 //var week = DateTime.Today.Date.AddDays(-7);
                 //var cases = from fc in db.FORENSIC_CASE.Where(x => x.UserID == id)
@@ -1039,10 +1039,10 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Cause Of Death Section")]
-        public ActionResult AddCauseOfDeath()
+        public ActionResult AddCauseOfDeath(int id)
         {
             string actionName = "AddCauseOfDeath";
             try
@@ -1057,19 +1057,20 @@ namespace DocuPath.Controllers
                 int uId = VERTEBRAE.getCurrentUser().UserID;
 
                 model.primaryCODEst = new CASE_COD_ESTIMATION();
-                model.primaryCODEst.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uId).Max(fc => fc.ForensicCaseID);
+                model.primaryCODEst.ForensicCaseID = id;
                 model.primaryCODEst.ProminenceID = 1;
 
+
                 model.secondaryCODEst = new CASE_COD_ESTIMATION();
-                model.secondaryCODEst.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uId).Max(fc => fc.ForensicCaseID);
+                model.secondaryCODEst.ForensicCaseID = id;
                 model.secondaryCODEst.ProminenceID = 2;
 
                 model.tertiaryCODEst = new CASE_COD_ESTIMATION();
-                model.tertiaryCODEst.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uId).Max(fc => fc.ForensicCaseID);
+                model.tertiaryCODEst.ForensicCaseID = id;
                 model.tertiaryCODEst.ProminenceID = 3;
 
                 model.quaternaryCODEst = new CASE_COD_ESTIMATION();
-                model.quaternaryCODEst.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uId).Max(fc => fc.ForensicCaseID);
+                model.quaternaryCODEst.ForensicCaseID = id;
                 model.quaternaryCODEst.ProminenceID = 4;
 
                 #endregion
@@ -1088,6 +1089,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Cause Of Death Section")]
+        [ValidateInput(false)]
         public ActionResult AddCauseOfDeath(CODViewModel model)
         {
             string actionName = "AddCauseOfDeath";
@@ -1101,12 +1103,34 @@ namespace DocuPath.Controllers
 
             try
             {
-                //TODO: DB Logic
+                List<CASE_COD_ESTIMATION> COD = new List<CASE_COD_ESTIMATION>();
+                if (model.primaryCODEst.CONTENT_TAG.ContentTagText != null)
+                {                  
+                    COD.Add(model.primaryCODEst);
+                    if (model.secondaryCODEst.CONTENT_TAG.ContentTagText != null)
+                    {
+                        COD.Add(model.secondaryCODEst);
+                        if (model.tertiaryCODEst.CONTENT_TAG.ContentTagText != null)
+                        {
+                            COD.Add(model.tertiaryCODEst);
+                            if (model.quaternaryCODEst.CONTENT_TAG.ContentTagText != null)
+                            {
+                                COD.Add(model.quaternaryCODEst);
+                            }
+                        }
+                    }
+                }
+                if (!(COD.Count < 1))
+                {
+                    db.FORENSIC_CASE.Where(x => x.ForensicCaseID == COD.FirstOrDefault().ForensicCaseID).FirstOrDefault().CASE_COD_ESTIMATION = COD;
+                    db.SaveChanges();
+                }
+
                 //db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Cause Of Death");
                 #endregion
-                return RedirectToAction("AddStatistics");
+                return RedirectToAction("AddStatistics", new { id = model.primaryCODEst.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -1117,10 +1141,10 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Statistics Section")]
-        public ActionResult AddStatistics()
+        public ActionResult AddStatistics(int id)
         {
             string actionName = "AddStatistics";
             try
@@ -1271,14 +1295,14 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Statistics Section")]
         public ActionResult ForensicCaseAddedSuccess()
         {
             string actionName = "ForensicCaseAddedSuccess";
             try
-            {                
+            {
                 return View();
             }
             catch (Exception x)
@@ -1295,7 +1319,7 @@ namespace DocuPath.Controllers
         {
             try
             {
-                
+
 
                 //throw new Exception();
                 #region AUDIT_WRITE
@@ -1314,10 +1338,10 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO 404 - Propagate error handling logic
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error",new HandleErrorInfo(x, "ForensicCase", "All"));
+                return View("Error", new HandleErrorInfo(x, "ForensicCase", "All"));
             }
         }
-        
+
         [AuthorizeByAccessArea(AccessArea = "View Forensic Case - All Sections")]
         public ActionResult Details(int id)
         {
@@ -1338,7 +1362,7 @@ namespace DocuPath.Controllers
                 CASE_STATISTICS modelStats = new CASE_STATISTICS();
                 modelCase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault();
 
-                if (modelCase.CASE_STATISTICS.Count <1)
+                if (modelCase.CASE_STATISTICS.Count < 1)
                 {
                     modelStats = new CASE_STATISTICS();
                 }
@@ -1380,7 +1404,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-//----------------------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult Edit(int id)
@@ -1478,7 +1502,7 @@ namespace DocuPath.Controllers
                 return View();
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Statistics Section")]
         public ActionResult ForensicCaseUpdatedSuccess()
@@ -1548,7 +1572,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-//----------------------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
         public ActionResult GetSP(string query)
         {
@@ -1569,9 +1593,9 @@ namespace DocuPath.Controllers
             try
             {
                 var spResults = (from sp in db.SERVICE_PROVIDER
-                                  where sp.CompanyName.Contains(query)
-                                  orderby sp.CompanyName
-                                  select sp).ToList();
+                                 where sp.CompanyName.Contains(query)
+                                 orderby sp.CompanyName
+                                 select sp).ToList();
 
                 foreach (var result in spResults)
                 {
