@@ -398,7 +398,7 @@ img {
 
 .img-thumbnail {
   display: table-cell;
-  /*margin: 0 !important;*/
+  /*margin: 5px 0 0 0 !important;*/
   height: auto;
   width: auto;
   max-width: 100%;
@@ -688,6 +688,10 @@ dd {
     font-size: 75%;
     font-weight: bold;
     font-family: 'Segoe UI'
+}
+
+.tageditcustom{
+    border: 1px solid red;
 }
 
 /*.details-tag:nth-child(even) {
@@ -14265,5 +14269,24 @@ ctrl {
     letter-spacing: normal;
     text-align: right;
 }
+
+/*#endregion */
+
+/*#region FC MEDIA ADD: */
+
+.fc-media-add-grid{
+    /*grid-gap: 5px;*/
+    /*grid-auto-rows: 260px;*/
+    grid-template-columns: 1fr;
+    padding: 0;
+}
+
+.fc-media-add-subgrid{
+    grid-gap: 5px;
+    grid-template-columns: 1fr;
+    grid-template-areas:    "preview    details";
+    transition: 1s all;
+}
+
 
 /*#endregion */

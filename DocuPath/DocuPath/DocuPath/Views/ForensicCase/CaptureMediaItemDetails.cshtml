@@ -100,7 +100,7 @@
         <input type="hidden" id="count" value="@Html.Raw(Model.mediaList.Count)" />
         <input type="hidden" id="btnSubmit" />
         @*AUTOTAGGER INDEXER& SUBMITTER*@
-        <div class="form-horizontal border-generic form-generic" @*style="display: none"*@>
+        <div class="grid fc-media-add-grid">
             @for (int i = 0; i < Model.mediaList.Count; i++)
             {
                 @Html.HiddenFor(m => m.mediaList[i].MediaID);
@@ -111,97 +111,83 @@
                 //@Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
                 //@Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
                 //@Html.HiddenFor(m => m.mediaList[i].DateAdded);
+                    
+                <hr class="dp-separator-hr" />
+                <div class="fc-media-add-subgrid">
+                    <div class="panel panel-default" style="margin-bottom: 0px">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                    <span>MEDIA ITEM DETAILS</span>
+                                </div>
 
-                <div class="row" style="margin-left: 0px">
-                    <div class="col-md-3" style="padding: 0px">
-                        <div class="panel panel-default" style="margin-bottom: 0px">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-upload panel-mdl2icon"></span>
-                                <span>PREVIEW</span>
+                                <div class="col-md-9">
+                                    <div class="col-md-11 text-right" style="padding-right: 0px"><p class="media-filename">@Path.GetFileName(Model.mediaList[i].MediaLocation)</p></div>
+                                    <div class="col-md-1 text-center" style="padding: 0px"><span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span></div>
+                                </div>
                             </div>
-                            <div class="panel-body apad5 text-center" style="height: 221.2px; max-height: 221.2px; width: auto">
-                                <div class="imgPreview" style="height: 210px; width: 270px; padding: 0px; display: grid; justify-content: center; margin: auto">
-                                    @if (VERTEBRAE.Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(Model.mediaList[i].MediaLocation).ToUpper()))
-                                    {
-                                        <img class="img-thumbnail" src="~/@VERTEBRAE.GetThumbUrl(Model.mediaList[i].MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: cover">
-                                    }
-                                    else
-                                    {
-                                        // TODO: Brain ReturnForeignThumb() and provide relevant assets:
-                                        //VERTEBRAE.ReturnForeignThumb(Path.GetExtension(Model.mediaList[i].MediaLocation));
-                                        <img class="img-thumbnail" src="~/Content/Resources/NoPreviewMiscMedia.png" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain">
-                                    }
+                        </div>
+                        <div class="panel-body">
+                            <div class="row" style="padding: 0 15px 0 15px">
+                                <div class="col-md-10 col-nopad">
+                                    <div class="form-group">
+                                        @Html.Label("Media Item Caption", htmlAttributes: new { @class = "control-label col-md-2 label-nopad" })
+                                        <div class="col-md-10 col-nopad">
+                                            @Html.EditorFor(model => model.mediaList[i].MediaCaption, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaCaption, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.mediaList[i].IsPubliclyAccessible, htmlAttributes: new { @class = "control-label col-md-2 label-nopad" })
+                                        <div class="col-md-10 col-nopad">
+                                            <div class="checkbox" style="padding-left: 0px; padding-bottom: 5px">
+                                                @Html.CheckBoxFor(model => model.mediaList[i].IsPubliclyAccessible, new { id = "tglWarning" + i, type = "checkbox", data_toggle = "toggle", data_on = "Public", data_off = "Private", data_onstyle = "danger", data_offstyle = "success", data_size = "mini", data_style = "ios", data_width = "70", onchange = "toggleWarning()" })
+
+                                                @*<input id="tglWarning1" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private" data-onstyle="danger" data-offstyle="success" data-size="mini" data-style="ios" data-width="70" onchange="toggleWarning()">*@
+                                                <label id="lblWarning-@i" class="media-warning-label">warning - visible to public!</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0px">
+                                        @Html.Label("Media Item Description", htmlAttributes: new { @class = "control-label label-nopad col-md-2" })
+                                        <div class="col-md-10 col-nopad">
+                                            @Html.TextAreaFor(model => model.mediaList[i].MediaDescription, new {  @class = "form-control", @style = "width: 100%; margin-bottom: 0"  })
+                                            @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "validation-text text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 nopad" style="height: 100%">
+                                    <div class="imgPreview" style="padding: 0px; display: grid; justify-content: center; margin: 7.5px 7.5px 0 0 !important">
+                                        @if (VERTEBRAE.Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(Model.mediaList[i].MediaLocation).ToUpper()))
+                                        {
+                                            <img class="img-thumbnail" src="~/@VERTEBRAE.GetThumbUrl(Model.mediaList[i].MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: cover">
+                                        }
+                                        else
+                                        {
+                                            // TODO: Brain ReturnForeignThumb() and provide relevant assets:
+                                            //VERTEBRAE.ReturnForeignThumb(Path.GetExtension(Model.mediaList[i].MediaLocation));
+                                            <img class="img-thumbnail" src="~/Content/Resources/NoPreviewMiscMedia.png" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain">
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding: 0 15px 0 15px">
+                                <div class="form-group">
+                                    @Html.Label("Media Item Tags", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; padding-top: 0px" })
+                                    <div class="col-md-12">
+                                        @* AUTOTAGGER *@
+                                        <input type="hidden" id="key-@Html.Raw(i)" value="@Html.Raw(Model.mediaList[i].MediaID)" />
+                                        <input type="text" style="height: 63px !important" id="tag-@Html.Raw(i)" />
+                                        <input type="hidden" id="hfTag-@Html.Raw(i)" />
+                                        @* AUTOTAGGER *@
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9" style="padding-left: 5px; padding-right: 15px">
-                        <div class="panel panel-default" style="margin-bottom: 0px">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
-                                        <span>MEDIA ITEM DETAILS</span>
-                                    </div>
 
-                                    <div class="col-md-8">
-                                        <div class="col-md-11 text-right" style="padding-right: 0px"><p class="media-filename">@Path.GetFileName(Model.mediaList[i].MediaLocation)</p></div>
-                                        <div class="col-md-1 text-center" style="padding: 0px"><span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-body" @*style="min-height: 169.2px; max-height: 169.2px;"*@>                                
-                                <div class="row">
-                                   <div class="col-md-6">
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.mediaList[i].MediaCaption, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
-                                            <div class="col-md-9 col-nopad">
-                                                @Html.EditorFor(model => model.mediaList[i].MediaCaption, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
-                                                @Html.ValidationMessageFor(model => model.mediaList[i].MediaCaption, "", new { @class = "validation-text text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.mediaList[i].IsPubliclyAccessible, htmlAttributes: new { @class = "control-label col-md-3 label-nopad" })
-                                            <div class="col-md-9 col-nopad">
-                                                <div class="checkbox" style="padding-left: 0px; padding-bottom: 5px">
-                                                    @Html.CheckBoxFor(model => model.mediaList[i].IsPubliclyAccessible, new { id = "tglWarning" + i, type = "checkbox", data_toggle = "toggle", data_on = "Public", data_off = "Private", data_onstyle = "danger", data_offstyle = "success", data_size = "mini", data_style = "ios", data_width = "70", onchange = "toggleWarning()" })
 
-                                                    @*<input id="tglWarning1" type="checkbox" data-toggle="toggle" data-on="Public" data-off="Private" data-onstyle="danger" data-offstyle="success" data-size="mini" data-style="ios" data-width="70" onchange="toggleWarning()">*@
-                                                    <label id="lblWarning-@i" class="media-warning-label">warning - visible to public!</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <div class="row" style="margin-left: 0px;">
-                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-                                        <div class="form-group" style="margin-bottom: 0px">
-                                            @Html.LabelFor(model => model.mediaList[i].MediaDescription, htmlAttributes: new { @class = "control-label col-md-12" })
-                                            <div class="col-md-12 col-nopad">
-                                                @Html.EditorFor(model => model.mediaList[i].MediaDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%;" } })
-                                                @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "validation-text text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-left: 0px;">
-                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-                                        <div class="form-group">
-                                            @Html.Label("Media Item Tags", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; padding-top: 0px" })
-                                            <div class="col-md-12">
-                                                @* AUTOTAGGER *@
-                                                <input type="hidden" id="key-@Html.Raw(i)" value="@Html.Raw(Model.mediaList[i].MediaID)" />
-                                                <input type="text" id="tag-@Html.Raw(i)" />
-                                                <input type="hidden" id="hfTag-@Html.Raw(i)" />
-                                                @* AUTOTAGGER *@
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                <hr class="dp-separator-hr" @*style="display: none"*@ />
                 </div>
             }
         </div>
