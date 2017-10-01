@@ -50,5 +50,68 @@ namespace DocuPath.DataLayer
         public string LargeBloodVessels { get; set; }
     
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
+
+        public CHEST_OBSERVATION()
+        {
+        }
+
+        public CHEST_OBSERVATION(int key, int fcKey)
+        {
+            this.ObsChestID = key;
+
+            this.ForensicCaseID = fcKey;
+
+            setFlags();
+        }
+        public void setFlags()
+        {
+
+            //public string ThoracicCageDiaphragm { get; set; }
+            if (ThoracicCageDiaphragm == null)
+            {
+                ThoracicCageDiaphragm = FLAG.Text;
+            }
+            //public string MediastinumOesophagus { get; set; }
+            if (MediastinumOesophagus == null)
+            {
+                MediastinumOesophagus = FLAG.Text;
+            }
+            //public string TracheaBronchi { get; set; }
+            if (TracheaBronchi == null)
+            {
+                TracheaBronchi = FLAG.Text;
+            }
+            //public string PleuraLungs { get; set; }
+            if (PleuraLungs == null)
+            {
+                PleuraLungs = FLAG.Text;
+            }
+            //public decimal LeftLungMassKg { get; set; }
+            if (LeftLungMassKg == default(decimal))
+            {
+                LeftLungMassKg = FLAG.Decimal_Three;
+            }
+            //public decimal RightLungMassKg { get; set; }
+            if (RightLungMassKg == default(decimal))
+            {
+                RightLungMassKg = FLAG.Decimal_Three;
+            }
+            //public string HeartPericardium { get; set; }
+            if (HeartPericardium == null)
+            {
+                HeartPericardium = FLAG.Text;
+            }
+            //public decimal HeartMassKg { get; set; }
+            if (HeartMassKg == default(decimal))
+            {
+                HeartMassKg = FLAG.Decimal_Three;
+            }
+            //public string LargeBloodVessels { get; set; }
+            if (LargeBloodVessels == null)
+            {
+                LargeBloodVessels = FLAG.Text;
+            }
+
+        }
     }
 }

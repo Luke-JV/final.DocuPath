@@ -27,7 +27,34 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Spinal Cord")]
         public string SpinalCord { get; set; }
-    
+
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
+
+        public SPINE_OBSERVATION()
+        {
+        }
+        public SPINE_OBSERVATION(int key, int fcKey)
+        {
+            this.ObsSpineID = key;
+
+            this.ForensicCaseID = fcKey;
+
+            setFlags();
+        }
+        public void setFlags()
+        {          
+
+            //public string SpinalColumn { get; set; }
+            if (SpinalColumn == null)
+            {
+                SpinalColumn = FLAG.Text;
+            }
+
+            //public string SpinalCord { get; set; }
+            if (SpinalCord == null)
+            {
+                SpinalCord = FLAG.Text;
+            }
+        }
     }
 }
