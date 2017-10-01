@@ -627,6 +627,7 @@
     <Content Include="Content\Resources\DP_INSIGHT_FINALLOGO_TRANSPARENTBG.png" />
     <Content Include="Content\Resources\DR.png" />
     <Content Include="Content\Resources\ERCCoverLetterPreview.png" />
+    <Content Include="Content\Resources\evidence.jpg" />
     <Content Include="Content\Resources\icoError.png" />
     <Content Include="Content\Resources\icoFail.png" />
     <Content Include="Content\Resources\icoInfo.png" />
@@ -634,6 +635,9 @@
     <Content Include="Content\Resources\icoWarn.png" />
     <Content Include="Content\Resources\LV.png" />
     <Content Include="Content\Resources\MH.png" />
+    <Content Include="Content\Resources\microscope-mercury.jpg" />
+    <Content Include="Content\Resources\microscope-slate.jpg" />
+    <Content Include="Content\Resources\microscope.jpg" />
     <Content Include="Content\Resources\NoERCCaseReport.png" />
     <Content Include="Content\Resources\NoERCCoverLetter.png" />
     <Content Include="Content\Resources\NoFunctionGroupsActive.png" />
@@ -646,7 +650,6 @@
     <Content Include="Content\Resources\QR Code to Video.jpg" />
     <Content Include="Content\Resources\ReportPreview.png" />
     <Content Include="Content\Resources\RP.png" />
-    <Content Include="Content\Resources\Screen Layouts\1.7A - Search Forensic Case.png" />
     <Content Include="Content\Resources\SlantedDivider.png" />
     <Content Include="Content\Resources\static_qr_code_without_logo.jpg" />
     <Content Include="Content\Resources\_BottomActionButtonsBanner.png" />
@@ -1243,6 +1246,8 @@
     <Content Include="Views\ForensicCase\ForensicCaseAddedSuccess.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseUpdatedSuccess.cshtml" />
     <Content Include="Views\Test\bindTest.cshtml" />
+    <Content Include="Views\ForensicCase\ForensicCaseServiceRequests.cshtml" />
+    <Content Include="Views\ForensicCase\ForensicCaseUpdateHub.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

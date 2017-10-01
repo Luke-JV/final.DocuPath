@@ -369,48 +369,48 @@
                 $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
             });
  
-            function clear_form_elements(tId) {
-                console.log('clear fx launched');
-                jQuery("#" + tId).find(':input').each(function () {
-                    switch (this.type) {
-                        case 'password':
-                        case 'text':
-                        case 'textarea':
-                        case 'file':
-                        case 'select-one':
-                        case 'select-multiple':
-                        case 'date':
-                        case 'number':
-                        case 'tel':
-                        case 'email':
-                            jQuery(this).val('');
-                            break;
-                        case 'checkbox':
-                        case 'radio':
-                            this.checked = false;
-                            break;
-                    }
-                });
+            //function clear_form_elements(tId) {
+            //    console.log('clear fx launched');
+            //    jQuery("#" + tId).find(':input').each(function () {
+            //        switch (this.type) {
+            //            case 'password':
+            //            case 'text':
+            //            case 'textarea':
+            //            case 'file':
+            //            case 'select-one':
+            //            case 'select-multiple':
+            //            case 'date':
+            //            case 'number':
+            //            case 'tel':
+            //            case 'email':
+            //                jQuery(this).val('');
+            //                break;
+            //            case 'checkbox':
+            //            case 'radio':
+            //                this.checked = false;
+            //                break;
+            //        }
+            //    });
 
-            $('#btnRemoveSR_0').on('click', function(e){
-                e.preventDefault();
-                console.log('delete 0 clicked');
-                var tId = document.querySelector('#frmgrp_0').id;
-                console.log(tId);
-                clear_form_elements(tId);
-            });
+            //$('#btnRemoveSR_0').on('click', function(e){
+            //    e.preventDefault();
+            //    console.log('delete 0 clicked');
+            //    var tId = document.querySelector('#frmgrp_0').id;
+            //    console.log(tId);
+            //    clear_form_elements(tId);
+            //});
 
-                var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
-                var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
+            //    var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
+            //    var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
 
-                if (invisibleSRPanels.length >= 1) {
-                    invisibleSRPanels[0].classList.add('hidden');
-                    invisibleSeparators[0].classList.add('hidden');
-                } else if (invisibleSRPanels.length == 0) {
-                    document.querySelector('#divMaxLimitWarning').classList = "modal-background";
-                }
+            //    if (invisibleSRPanels.length >= 1) {
+            //        invisibleSRPanels[0].classList.add('hidden');
+            //        invisibleSeparators[0].classList.add('hidden');
+            //    } else if (invisibleSRPanels.length == 0) {
+            //        document.querySelector('#divMaxLimitWarning').classList = "modal-background";
+            //    }
 
-                $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
+            //    $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
 
                 //var targetPanel = document.queryselector('frmgrp_0');
                 //var targetSeparator = document.queryselector('sep_0');

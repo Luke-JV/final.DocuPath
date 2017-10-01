@@ -43,6 +43,7 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [Required]
         [DataType(DataType.MultilineText)]
+        [StringLength(235)]
         [DisplayName("Description")]
         public string MediaDescription { get; set; }
         [DisplayName("Accessibility")]
