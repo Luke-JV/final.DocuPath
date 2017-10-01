@@ -27,7 +27,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/SystemParameters/Maintain" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
@@ -56,7 +56,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    <input type="submit" class="hidden" id="btnPOST" />
     <div class="form-horizontal border-generic form-generic" style="min-height: 300px; height: auto">
         @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
         
@@ -197,16 +197,17 @@
 
                                                     <tr class="slotRow">
                                                         <td class="table-large-identifier text-center">
-                                                            @Html.DisplayFor(model => model.dutySlots[i].SlotID, new { htmlAttributes = new { @id = "slotId" } })
+                                                            <div class="slotID">@Html.DisplayFor(model => model.dutySlots[i].SlotID)</div>
+                                                            @Html.HiddenFor(model => model.dutySlots[i].SlotID,new {  @class = "slotIDval"  })
                                                         </td>
                                                         <td>
-                                                            @Html.EditorFor(model => model.dutySlots[i].Description, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                            @Html.EditorFor(model => model.dutySlots[i].Description, new { htmlAttributes = new {  @class = "slotDescription form-control frmctrl-small", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                         </td>
                                                         <td>
-                                                            @Html.EditorFor(model => model.dutySlots[i].StartTime, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].StartTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                            @Html.EditorFor(model => model.dutySlots[i].StartTime, new { htmlAttributes = new { @id = "slotStart", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].StartTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                         </td>
                                                         <td>
-                                                            @Html.EditorFor(model => model.dutySlots[i].EndTime, new { htmlAttributes = new { @id = "x", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].EndTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                                            @Html.EditorFor(model => model.dutySlots[i].EndTime, new { htmlAttributes = new { @id = "slotEnd", @class = "form-control frmctrl-small", @type = "time", @Value = Model.dutySlots[i].EndTime.ToString("HH:mm"), @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                                         </td>
                                                         <td>
                                                             <a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
@@ -878,6 +879,14 @@
 
 @section Scripts {
     <script type="text/javascript">
+
+        $('#btnSave').click(function () {
+            var btnPost = document.getElementById('btnPOST');
+            
+            btnPost.click();
+           
+        });
+
         $.fn.extend({
             treed: function (o) {
 
@@ -981,7 +990,7 @@
                 var rowCount = $('.slotRow').length;
                 
                 //todo
-                $(".slotList").append('<tr class="slotRow"><td class="table-large-identifier text-center">' + (rowCount+1) + '</td><td><input class="form-control frmctrl-small text-box single-line" name="dutySlots[' + rowCount + '].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[' + rowCount + '].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[' + rowCount + '].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+                $(".slotList").append('<tr class="slotRow"><td class="table-large-identifier text-center"><div class="slotID">' + (rowCount + 1) + '</div><input class="slotIDval" data-val="true" data-val-number="The field SlotID must be a number." data-val-required="The SlotID field is required." id="slotId" type="hidden"></td><td><input class="form-control frmctrl-small text-box single-line" name="dutySlots[' + rowCount + '].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[' + rowCount + '].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[' + rowCount + '].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
                 //<tr>
                 //<td class="table-large-identifier text-center">6</td><td><input class="form-control frmctrl-small text-box single-line" id="dutySlots_5__Description" name="dutySlots[5].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value="CALL"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[5].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[5].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>
             });
@@ -990,15 +999,21 @@
 
                 $(this).closest('.slotRow').remove();
                
-                $('#slotId').each(function (index) {
-                    $(this).attr('name', 'dutySlots[' + index + '].SlotID');
+                $('.slotID').each(function (index) {                  
+                    $(this).html(index + 1);
+                   
+                });            
+                
+                $('.slotIDval').each(function (index) {
+                    $(this).attr('value', index+1);
+                    $(this).attr('name', 'dutySlots[' + (index+1) + '].SlotID');
                 });
-
-                $('#slotDescription').each(function (index) {
+                $('.slotDescription').each(function (index) {                    
                     $(this).attr('name', 'dutySlots[' + index + '].Description');
                 });
 
                 $('#slotStart').each(function (index) {
+
                     $(this).attr('name', 'dutySlots[' + index + '].StartTime');
                 });
 

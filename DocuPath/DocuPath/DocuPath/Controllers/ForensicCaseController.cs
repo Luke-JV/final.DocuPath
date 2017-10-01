@@ -334,25 +334,54 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Core Data Section")]
+        [ValidateInput(false)]
         public ActionResult AddCoreData(CoreDataViewModel model)
         {
             string actionName = "AddCoreData";
-            if (!ModelState.IsValid)
-            {
-                #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Core Data");
-                #endregion
-                //return View(model);
-            }
+            //if (!ModelState.IsValid) //todo: rebrain this
+            //{
+            //    #region AUDIT_WRITE
+            //    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Core Data");
+            //    #endregion
+            //    //return View(model);
+            //}
 
             try
             {
-                //TODO: DB Logic
-                //db.SaveChanges();
+                FORENSIC_CASE inCase = default(FORENSIC_CASE);
+                inCase = model.forensicCase;
+                
+                
+                try
+                {
+                    inCase.ForensicCaseID = db.FORENSIC_CASE.Max(x => x.ForensicCaseID) + 1;
+                }
+                catch (Exception)
+                {
+                    inCase.ForensicCaseID = 1;
+                }
+                
+                inCase.STATUS = db.STATUS.Where(x => x.StatusID == db.STATUS.Where(y => y.StatusValue == "Active").FirstOrDefault().StatusID).FirstOrDefault();               
+                inCase.UserID = VERTEBRAE.getCurrentUser().UserID;
+                inCase.assignFlagsAndKey(inCase.ForensicCaseID);
+
+                //OBSERVATIONS INIT
+                inCase.GENERAL_OBSERVATION.Add(new GENERAL_OBSERVATION(db.GENERAL_OBSERVATION.Max(x => x.ObsGeneralID) + 1, inCase.ForensicCaseID));
+                inCase.ABDOMEN_OBSERVATION.Add(new ABDOMEN_OBSERVATION(db.ABDOMEN_OBSERVATION.Max(x => x.ObsAbdomenID) + 1, inCase.ForensicCaseID));
+                inCase.CHEST_OBSERVATION.Add(new CHEST_OBSERVATION(db.CHEST_OBSERVATION.Max(x => x.ObsChestID) + 1, inCase.ForensicCaseID));
+                inCase.HEAD_NECK_OBSERVATION.Add(new HEAD_NECK_OBSERVATION(db.HEAD_NECK_OBSERVATION.Max(x => x.ObsHeadNeckID) + 1, inCase.ForensicCaseID));
+                inCase.SPINE_OBSERVATION.Add(new SPINE_OBSERVATION(db.SPINE_OBSERVATION.Max(x => x.ObsSpineID) + 1, inCase.ForensicCaseID));
+                
+
+
+
+                //todo: validate DR number for duplicate
+                db.FORENSIC_CASE.Add(inCase);
+                db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Core Data");
                 #endregion
-                return RedirectToAction("AddObservations");
+                return RedirectToAction("AddObservations",new {id=inCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -366,7 +395,7 @@ namespace DocuPath.Controllers
     //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Observations Section")]
-        public ActionResult AddObservations()
+        public ActionResult AddObservations(int id)
         {
             string actionName = "AddObservations";
             try
@@ -376,12 +405,32 @@ namespace DocuPath.Controllers
                 #endregion
                 #region PREPARE MODEL
                 ObservationsViewModel model = new ObservationsViewModel();
-
+                
                 model.genObservation = new GENERAL_OBSERVATION();
+                var gen = db.GENERAL_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                model.genObservation.ForensicCaseID = gen.ForensicCaseID;
+                model.genObservation.ObsGeneralID = gen.ObsGeneralID;
+                
                 model.abdObservation = new ABDOMEN_OBSERVATION();
+                var abd = db.ABDOMEN_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                model.abdObservation.ForensicCaseID = abd.ForensicCaseID;
+                model.abdObservation.ObsAbdomenID = abd.ObsAbdomenID;
+
                 model.chestObservation = new CHEST_OBSERVATION();
+                var chest = db.CHEST_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                model.chestObservation.ForensicCaseID = chest.ForensicCaseID;
+                model.chestObservation.ObsChestID = chest.ObsChestID;
+
                 model.headNeckObservation = new HEAD_NECK_OBSERVATION();
+                var headneck = db.HEAD_NECK_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                model.headNeckObservation.ForensicCaseID = headneck.ForensicCaseID;
+                model.headNeckObservation.ObsHeadNeckID = headneck.ObsHeadNeckID;
+
                 model.spineObservation = new SPINE_OBSERVATION();
+                var spine = db.SPINE_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                model.spineObservation.ForensicCaseID = spine.ForensicCaseID;
+                model.spineObservation.ObsSpineID = spine.ObsSpineID;
+
                 #endregion
                 return View(model);
             }
@@ -398,6 +447,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Observations Section")]
+        [ValidateInput(false)]
         public ActionResult AddObservations(ObservationsViewModel model)
         {
             string actionName = "AddObservations";
@@ -411,12 +461,38 @@ namespace DocuPath.Controllers
 
             try
             {
-                //TODO: DB Logic
+                FORENSIC_CASE upCase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == model.abdObservation.ForensicCaseID).FirstOrDefault();
+
+                upCase.GENERAL_OBSERVATION.Clear();
+                upCase.GENERAL_OBSERVATION.Add(model.genObservation);
+                upCase.GENERAL_OBSERVATION.FirstOrDefault().setFlags();
+
+                upCase.ABDOMEN_OBSERVATION.Clear();
+                upCase.ABDOMEN_OBSERVATION.Add(model.abdObservation);
+                upCase.ABDOMEN_OBSERVATION.FirstOrDefault().setFlags();
+
+                upCase.HEAD_NECK_OBSERVATION.Clear();
+                upCase.HEAD_NECK_OBSERVATION.Add(model.headNeckObservation);
+                upCase.HEAD_NECK_OBSERVATION.FirstOrDefault().setFlags();
+
+                upCase.SPINE_OBSERVATION.Clear();
+                upCase.SPINE_OBSERVATION.Add(model.spineObservation);
+                upCase.SPINE_OBSERVATION.FirstOrDefault().setFlags();
+
+                upCase.CHEST_OBSERVATION.Clear();
+                upCase.CHEST_OBSERVATION.Add(model.chestObservation);
+                upCase.CHEST_OBSERVATION.FirstOrDefault().setFlags();
+
+                db.FORENSIC_CASE.Attach(upCase);
+                db.Entry(upCase).State = EntityState.Modified;
+                db.SaveChanges();
+
                 //db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
-                return RedirectToAction("AddServiceRequests");
+                //return RedirectToAction("AddServiceRequests");
+                return RedirectToAction("SelectMediaItems", new { id=upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -505,7 +581,7 @@ namespace DocuPath.Controllers
     //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
-        public ActionResult SelectMediaItems()
+        public ActionResult SelectMediaItems(int id)
         {
             string actionName = "SelectMediaItems";
             try
@@ -513,7 +589,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Media Items");
                 #endregion
-                
+                ViewBag.FCID = id;
                 return View();
             }
             catch (Exception x)
@@ -529,7 +605,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
-        public ActionResult UploadMediaItems()
+        public ActionResult UploadMediaItems(int id)
         {
             string actionName = "UploadMediaItems";
             try
@@ -597,6 +673,7 @@ namespace DocuPath.Controllers
                         foreach (var M in mediaItems)
                         {
                             M.MediaID = MediaID;
+                            M.ForensicCaseID = id;
                             M.IsPubliclyAccessible = false;
                             M.DateAdded = DateTime.Now;
                             M.MediaCaption = "PENDING";
@@ -615,7 +692,7 @@ namespace DocuPath.Controllers
                         AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Media");
                         #endregion
                         // Returns message that successfully uploaded  
-                        return Json("File Uploaded Successfully!");
+                        return Json("File(s) Uploaded Successfully!");
                     }
                     catch (Exception ex)
                     {
@@ -642,7 +719,7 @@ namespace DocuPath.Controllers
     //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
-        public ActionResult CaptureMediaItemDetails()
+        public ActionResult CaptureMediaItemDetails(int id)
         {
             string actionName = "CaptureMediaItemDetails";
             try
@@ -653,8 +730,8 @@ namespace DocuPath.Controllers
                 #region PREPARE MODEL
                 CaseMediaViewModel model = new CaseMediaViewModel();
 
-                int id = VERTEBRAE.getCurrentUser().UserID;
-                model.mediaList = db.MEDIA.Where(x => x.UserID == id && x.MediaCaption.ToUpper() == "PENDING").ToList();
+                int uID = VERTEBRAE.getCurrentUser().UserID;
+                model.mediaList = db.MEDIA.Where(x => x.UserID == uID && x.MediaCaption.ToUpper() == "PENDING" && x.ForensicCaseID == id).ToList();
                 if (model.mediaList.Count < 1)
                 {
                     //Response.
@@ -665,7 +742,7 @@ namespace DocuPath.Controllers
                     item.MediaCaption = "";
                     item.MediaDescription = "";
                     //item.ForensicCaseID = 0;
-                    item.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == id).Max(fc => fc.ForensicCaseID);
+                    item.ForensicCaseID = db.FORENSIC_CASE.Where(fc => fc.UserID == uID).Max(fc => fc.ForensicCaseID);
                     item.MediaPurposeID = db.MEDIA_PURPOSE.Where(p => p.MediaPurposeValue == "Case Related").FirstOrDefault().MediaPurposeID;
                 }
                 //var week = DateTime.Today.Date.AddDays(-7);
@@ -1257,7 +1334,15 @@ namespace DocuPath.Controllers
                 FORENSIC_CASE modelCase = new FORENSIC_CASE();
                 CASE_STATISTICS modelStats = new CASE_STATISTICS();
                 modelCase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault();
-                modelStats = modelCase.CASE_STATISTICS.FirstOrDefault();
+
+                if (modelCase.CASE_STATISTICS.Count <1)
+                {
+                    modelStats = new CASE_STATISTICS();
+                }
+                else
+                {
+                    modelStats = modelCase.CASE_STATISTICS.FirstOrDefault();
+                }
 
                 model.forensicCase = modelCase;
                 model.genObservation = modelCase.GENERAL_OBSERVATION.FirstOrDefault();

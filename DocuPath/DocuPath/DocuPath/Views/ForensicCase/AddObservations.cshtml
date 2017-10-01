@@ -21,7 +21,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("AddObservations","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)"  style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -81,7 +81,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input type="submit" class="hidden" id="btnPOST" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -97,6 +97,8 @@
                 <article id="timeline">
                     <ul class="timeline" id="bSTime">
                         @* GENOBS *@
+                        @Html.HiddenFor(model => model.genObservation.ForensicCaseID)
+                        @Html.HiddenFor(model => model.genObservation.ObsGeneralID)
                         <li style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -201,6 +203,8 @@
                             </div>
                         </li>
                         @* HNOBS *@
+                        @Html.HiddenFor(model => model.headNeckObservation.ForensicCaseID)
+                        @Html.HiddenFor(model => model.headNeckObservation.ObsHeadNeckID)
                         <li class="timeline-inverted" style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -287,6 +291,8 @@
                             </div>
                         </li>
                         @* CHESTOBS *@
+                        @Html.HiddenFor(model => model.chestObservation.ForensicCaseID)
+                        @Html.HiddenFor(model => model.chestObservation.ObsChestID)
                         <li style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -400,6 +406,8 @@
                             </div>
                         </li>
                         @* ABDOMENOBS *@
+                        @Html.HiddenFor(model => model.abdObservation.ForensicCaseID)
+                        @Html.HiddenFor(model => model.abdObservation.ObsAbdomenID)
                         <li class="timeline-inverted" style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -576,6 +584,8 @@
                             </div>
                         </li>
                         @* SPINEOBS *@
+                        @Html.HiddenFor(model => model.spineObservation.ForensicCaseID)
+                        @Html.HiddenFor(model => model.spineObservation.ObsSpineID)
                         <li style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-observations timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -673,4 +683,10 @@
             else $('#rightkidneymeasurement').prop("disabled", false)
         });
     </script>
+<script>
+         $('#btnNext').click(function () {
+             var btnPost = document.getElementById('btnPOST');
+             btnPost.click();
+         });
+</script>
 }

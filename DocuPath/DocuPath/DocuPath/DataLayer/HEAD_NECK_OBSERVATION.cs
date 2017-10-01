@@ -27,7 +27,7 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Intracranial Contents")]
         public string IntracranialContents { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        // [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Brain Mass (kg)")]
         public decimal BrainMassKg { get; set; }
         [DefaultValue(FLAG.Text)]
@@ -39,7 +39,54 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Neck Structures")]
         public string NeckStructures { get; set; }
-    
+
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
+
+        public HEAD_NECK_OBSERVATION()
+        {
+        }
+        public HEAD_NECK_OBSERVATION(int key, int fcKey)
+        {
+            this.ObsHeadNeckID = key;
+
+            this.ForensicCaseID = fcKey;
+
+            setFlags();
+        }
+        public void setFlags()
+        {
+
+            //public string ScalpSkull { get; set; }
+            if (ScalpSkull == null)
+            {
+                ScalpSkull = FLAG.Text;
+            }
+            //public string IntracranialContents { get; set; }
+            if (IntracranialContents == null)
+            {
+                IntracranialContents = FLAG.Text;
+            }
+            //public decimal BrainMassKg { get; set; }
+            if (BrainMassKg == default(decimal))
+            {
+                BrainMassKg = FLAG.Decimal_Three;
+            }
+            //public string OrbitalNasalAuralCavities { get; set; }
+            if (OrbitalNasalAuralCavities == null)
+            {
+                OrbitalNasalAuralCavities = FLAG.Text;
+            }
+            //public string MouthTonguePharynx { get; set; }
+            if (MouthTonguePharynx == null)
+            {
+                MouthTonguePharynx = FLAG.Text;
+            }
+            //public string NeckStructures { get; set; }
+            if (NeckStructures == null)
+            {
+                NeckStructures = FLAG.Text;
+            }
+
+        }
     }
 }

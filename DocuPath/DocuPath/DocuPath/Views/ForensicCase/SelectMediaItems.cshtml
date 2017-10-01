@@ -25,7 +25,7 @@
                 </form>
             </div>*@
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("UploadFiles","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)"  style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -37,7 +37,11 @@
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
-            <div></div>
+            <div>
+                <form class="minimalform" action="@Url.Action("CaptureMediaItemDetails","ForensicCase",new { id = ViewBag.FCID})" method="get" style="margin-top: 2px">
+                    <input id="btnPOST" type="submit" class="hidden" />
+                </form>
+            </div>
             <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
         </div>
     </div>
@@ -94,7 +98,7 @@
 
     <p class="alert-bar alert-bar-info fullwidth" style="margin: 7.5px 0 7.5px 0">Media items are graphical, image, audio or video evidence items directly related to a Forensic Case.</p>
 
-    <form action="~/ForensicCase/SelectMediaItems"><input id="btnPOST" class="hidden" type="submit" /></form>
+    
     <div class="panel panel-default">
         <div class="panel-heading">
             <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
@@ -124,7 +128,7 @@
 
             $("#MediaItems").fileinput({
                 theme: "fa",
-                uploadUrl: "/ForensicCase/SelectMediaItems",
+                uploadUrl: "/ForensicCase/UploadMediaItems",
                 fileActionSettings: {
                     showUpload: false
                 },
@@ -161,14 +165,17 @@
                     //fileData.append('LCDR', document.getElementById("drnum").value);
 
                     $.ajax({
-                        url: '/ForensicCase/UploadMediaFiles',
+                        url: '/ForensicCase/UploadMediaItems/@Html.Raw(ViewBag.FCID)',
                         type: "POST",
                         contentType: false, // Not to set any content header
                         processData: false, // Not to process data
                         data: fileData,
                         success: function (result) {
                             alert(result); //Throw Success Modal 404
-                            document.getElementById("btnPOST").click();
+                            if (result == 'File(s) Uploaded Successfully!') {
+
+                                document.getElementById("btnPOST").click();
+                            }
                         },
                         error: function (err) {
                             alert(err.statusText);

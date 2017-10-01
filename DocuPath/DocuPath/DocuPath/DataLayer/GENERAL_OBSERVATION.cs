@@ -24,10 +24,10 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("General Description")]
         public string GeneralDescription { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        //[DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Height (m)")]
         public decimal HeightMeters { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        //[DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Mass (kg)")]
         public decimal MassKg { get; set; }
         [DefaultValue(FLAG.Text)]
@@ -45,7 +45,71 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("External Appearance & Limb Condition")]
         public string ExtAppearanceLimbCondition { get; set; }
-    
+
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
+
+        public GENERAL_OBSERVATION()
+        {
+        }
+
+        public GENERAL_OBSERVATION(int key, int fcKey)
+        {
+            this.ObsGeneralID = key;
+
+            this.ForensicCaseID = fcKey;
+
+            setFlags();
+
+        }
+        public void setFlags()
+        {
+            //public string GeneralDescription { get; set; }
+            if (GeneralDescription == null)
+            {
+                GeneralDescription = FLAG.Text;
+            }
+
+            //public decimal HeightMeters { get; set; }
+            if (HeightMeters == default(decimal))
+            {
+                HeightMeters = FLAG.Decimal_Three;
+            }
+
+            //public decimal MassKg { get; set; }
+            if (MassKg == default(decimal))
+            {
+                MassKg = FLAG.Decimal_Three;
+            }
+
+            //public string Physique { get; set; }
+            if (Physique == null)
+            {
+                Physique = FLAG.Text;
+            }
+
+            //public string Nutrition { get; set; }
+            if (Nutrition == null)
+            {
+                Nutrition = FLAG.Text;
+            }
+
+            //public string SpecialIdentifyingFeatures { get; set; }
+            if (SpecialIdentifyingFeatures == null)
+            {
+                SpecialIdentifyingFeatures = FLAG.Text;
+            }
+
+            //public string SecondaryPostMortemChanges { get; set; }
+            if (SecondaryPostMortemChanges == null)
+            {
+                SecondaryPostMortemChanges = FLAG.Text;
+            }
+
+            //public string ExtAppearanceLimbCondition { get; set; }
+            if (ExtAppearanceLimbCondition == null)
+            {
+                ExtAppearanceLimbCondition = FLAG.Text;
+            }
+        }
     }
 }

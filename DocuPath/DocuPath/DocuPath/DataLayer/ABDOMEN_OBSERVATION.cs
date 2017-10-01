@@ -14,12 +14,12 @@ namespace DocuPath.DataLayer
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    
-        
+
+
     public partial class ABDOMEN_OBSERVATION
     {
-        
-        [DisplayName("Abdomen Observation ID")]        
+
+        [DisplayName("Abdomen Observation ID")]
         public int ObsAbdomenID { get; set; }
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
@@ -35,7 +35,7 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Liver, Gallbladder & Biliary Passages")]
         public string LiverGallbladderBilliaryPassages { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        //[DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Liver Mass (kg)")]
         public decimal LiverMassKg { get; set; }
         [DefaultValue(FLAG.Text)]
@@ -44,7 +44,7 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Spleen")]
         public string Spleen { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        // [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Splenic Mass (kg)")]
         public Nullable<decimal> SplenicMassKg { get; set; }
         [DefaultValue(FLAG.Text)]
@@ -53,10 +53,10 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DisplayName("Kidneys & Ureters")]
         public string KidneysUreters { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        //[DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Left Kidney Mass (kg)")]
         public Nullable<decimal> LeftKidneyMassKg { get; set; }
-        [DefaultValue(FLAG.Decimal_Three)]
+        //  [DefaultValue(FLAG.Decimal_Three)]
         [DisplayName("Right Kidney Mass (kg)")]
         public Nullable<decimal> RightKidneyMassKg { get; set; }
         [DefaultValue(FLAG.Text)]
@@ -70,5 +70,110 @@ namespace DocuPath.DataLayer
         public string GenitalOrgans { get; set; }
 
         public virtual FORENSIC_CASE FORENSIC_CASE { get; set; }
+
+        public ABDOMEN_OBSERVATION()
+        {
+        }
+        public ABDOMEN_OBSERVATION(int key, int fcKey)
+        {
+            this.ObsAbdomenID = key;
+
+            this.ForensicCaseID = fcKey;
+
+            setFlags();
+        }
+        public void setFlags()
+        {
+            //public string PeritonealCavity { get; set; }
+            if (PeritonealCavity == null)
+            {
+                PeritonealCavity = FLAG.Text;
+            }
+
+            //public string StomachContents { get; set; }
+            if (StomachContents == null)
+            {
+                StomachContents = FLAG.Text;
+            }
+
+            //public string IntestinesMesentery { get; set; }
+            if (IntestinesMesentery == null)
+            {
+                IntestinesMesentery = FLAG.Text;
+            }
+
+            //public string LiverGallbladderBilliaryPassages { get; set; }
+            if (LiverGallbladderBilliaryPassages == null)
+            {
+                LiverGallbladderBilliaryPassages = FLAG.Text;
+            }
+
+            //public decimal LiverMassKg { get; set; }
+            if (LiverMassKg == default(decimal))
+            {
+                LiverMassKg = FLAG.Decimal_Three;
+            }
+
+            //public string Pancreas { get; set; }
+            if (Pancreas == null)
+            {
+                Pancreas = FLAG.Text;
+            }
+
+            //public string Spleen { get; set; }
+            if (Spleen == null)
+            {
+                Spleen = FLAG.Text;
+            }
+
+            //public Nullable<decimal> SplenicMassKg { get; set; }
+            if (SplenicMassKg == default(decimal))
+            {
+                SplenicMassKg = FLAG.Decimal_Three;
+            }
+
+            //public string Adrenals { get; set; }
+            if (Adrenals == null)
+            {
+                Adrenals = FLAG.Text;
+            }
+
+            //public string KidneysUreters { get; set; }
+            if (KidneysUreters == null)
+            {
+                KidneysUreters = FLAG.Text;
+            }
+
+            //public Nullable<decimal> LeftKidneyMassKg { get; set; }
+            if (LeftKidneyMassKg == default(decimal))
+            {
+                LeftKidneyMassKg = FLAG.Decimal_Three;
+            }
+
+            //public Nullable<decimal> RightKidneyMassKg { get; set; }
+            if (RightKidneyMassKg == default(decimal))
+            {
+                RightKidneyMassKg = FLAG.Decimal_Three;
+            }
+
+            //public string UrinaryBladderUrethra { get; set; }
+            if (UrinaryBladderUrethra == null)
+            {
+                UrinaryBladderUrethra = FLAG.Text;
+            }
+
+            //public string PelvicWalls { get; set; }
+            if (PelvicWalls == null)
+            {
+                PelvicWalls = FLAG.Text;
+            }
+
+            //public string GenitalOrgans { get; set; }
+            if (GenitalOrgans == null)
+            {
+                GenitalOrgans = FLAG.Text;
+            }
+
+        }
     }
 }

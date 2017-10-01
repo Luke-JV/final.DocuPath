@@ -856,9 +856,9 @@ namespace DocuPath.Models
     #region FLAG DEFAULTS
     public static class FLAG
     {
-        public const double Decimal_One = 0.0;
-        public const double Decimal_Two = 0.0;
-        public const double Decimal_Three = 0.0;
+        public const decimal Decimal_One = 0.0m;
+        public const decimal Decimal_Two = 0.00m;
+        public const decimal Decimal_Three = 0.000m;
         public const string Time = "00:00:00";
         //public const DateTime Date = Convert.ToDateTime("1/1/9999");
         public const string AcademicID = "99999999";

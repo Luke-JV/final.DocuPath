@@ -99,5 +99,23 @@ namespace DocuPath.DataLayer
         public virtual ICollection<SPINE_OBSERVATION> SPINE_OBSERVATION { get; set; }
         public virtual SESSION SESSION { get; set; }
         public virtual USER USER { get; set; }
+
+
+        public void assignFlagsAndKey(int key)
+        {
+            this.ForensicCaseID = key;
+            
+            if (DateClosed == null)
+            {
+                DateClosed = DateClosed.GetValueOrDefault();
+            }
+
+            if (CauseOfDeathConclusion == null)
+            {
+                AttributeCollection attributes = TypeDescriptor.GetProperties(this)["CauseOfDeathConclusion"].Attributes;
+                DefaultValueAttribute myAttribute = (DefaultValueAttribute)attributes[typeof(DefaultValueAttribute)];
+                CauseOfDeathConclusion = myAttribute.Value.ToString();
+            }
+        }
     }
 }
