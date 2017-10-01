@@ -1210,17 +1210,15 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region READS:
 
         [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
         public ActionResult All()
         {
+            string actionName = "All";
             try
             {
-                
-
-                //throw new Exception();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Forensic Case");
                 #endregion
@@ -1235,9 +1233,8 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Forensic Case");
                 #endregion
-                // TODO 404 - Propagate error handling logic
                 VERTEBRAE.DumpErrorToTxt(x);
-                return View("Error",new HandleErrorInfo(x, "ForensicCase", "All"));
+                return View("Error",new HandleErrorInfo(x, controllerName, actionName));
             }
         }
         
@@ -1321,7 +1318,41 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "Migrate Forensic Case")]
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        public ActionResult Edit(int id, FORENSIC_CASE updatedFC)
+        {
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
+                #endregion
+                return View(updatedFC);
+            }
+
+            try
+            {
+                #region DB UPDATE MASSIVE 404!
+                db.FORENSIC_CASE.Attach(updatedFC);
+                db.Entry(updatedFC).State = EntityState.Modified;
+                db.SaveChanges();
+                #endregion
+                // TODO: Add update logic here
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Forensic Case");
+                #endregion
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
+                #endregion
+                return View();
+            }
+        }
+            [AuthorizeByAccessArea(AccessArea = "Migrate Forensic Case")]
+    //>>>>>>>>>>>>>>>>>>>>>>
         public ActionResult Migrate(int id)
         {
             try
@@ -1359,41 +1390,62 @@ namespace DocuPath.Controllers
             }
         }
 
+        // TOTO: Missing Migrate POST    
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        public ActionResult ForensicCaseUpdateHub(int id)
+        {
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.TargetBriefDesc = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().FCBriefDescription;
+            ViewBag.TargetID = id;
+            return View();
+        }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
-        public ActionResult Edit(int id, FORENSIC_CASE updatedFC)
+        public ActionResult ForensicCaseUpdateHub()
         {
-            if (!ModelState.IsValid)
-            {
-                #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
-                #endregion
-                return View(updatedFC);
-            }
-
-            try
-            {
-                #region DB UPDATE MASSIVE 404!
-                db.FORENSIC_CASE.Attach(updatedFC);
-                db.Entry(updatedFC).State = EntityState.Modified;
-                db.SaveChanges();
-                #endregion
-                // TODO: Add update logic here
-                #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "Forensic Case");
-                #endregion
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Forensic Case");
-                #endregion
-                return View();
-            }
+            return View();
         }
     //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Core Data Section")]
+        public ActionResult UpdateCoreData(int FCID)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Core Data Section")]
+        public ActionResult UpdateCoreData(CoreDataViewModel model)
+        {
+            return View();
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Observations Section")]
+        public ActionResult UpdateObservations(int FCID)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Observations Section")]
+        public ActionResult UpdateObservations(ObservationsViewModel model)
+        {
+            return View();
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
+        public ActionResult ForensicCaseServiceRequests(int FCID)
+        {
+            return View(db.SERVICE_REQUEST.Where(sr => sr.ForensicCaseID == FCID));
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Statistics Section")]
         public ActionResult ForensicCaseUpdatedSuccess()
@@ -1410,7 +1462,7 @@ namespace DocuPath.Controllers
         }
 
         #endregion
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region DELETES:
         [AuthorizeByAccessArea(AccessArea = "Delete Forensic Case")]
         public ActionResult Delete(int id)

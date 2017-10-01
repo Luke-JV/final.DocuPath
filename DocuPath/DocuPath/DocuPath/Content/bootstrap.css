@@ -8418,7 +8418,12 @@ td.visible-print {
 }
 
 .mdl2-saveas:before{
-    content: '\E792' !important;
+    content: '\E792';
+}
+
+.mdl2-hub:before{
+    content: '\EC26' !important;
+    margin-right: 4px;
 }
 
 .status-ok {
@@ -8457,7 +8462,7 @@ td.visible-print {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 1050 !important;
     height: 100vh;
     width: 100%;
     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8), rgba(204, 204, 204, 0.8));
@@ -8782,7 +8787,7 @@ td.visible-print {
     cursor: pointer;
     border-radius: 5px;
     text-align: left;
-    transition: all 0.25s;
+    transition: all 0.5s;
     padding: 2px;
     margin: 0px auto 0px auto;
 }
@@ -8791,6 +8796,7 @@ td.visible-print {
     border-radius: 0px;
     /*width: 370px;*/
     border: 1px solid black;
+    margin-left: 15px;
 }
 
 .homepage-tile-icon{
@@ -8799,7 +8805,7 @@ td.visible-print {
     color: #cccccc;
 }
 
-.homepage-tile-icon:hover{
+.homepage-tile-body:hover .homepage-tile-icon{
     color: #b94a48;
 }
 
@@ -11478,7 +11484,7 @@ a.cal-event-week {
 }
 
 .toast-subheading {
-    width: 50%;
+    width: 65%;
     margin: 0 auto 20px auto;
     text-wrap: normal;
     font-family: 'Segoe UI';
@@ -14102,12 +14108,162 @@ ctrl {
 
 /*#endregion */
 
-.pill:not(:first-child):not(:last-child):before{
-      font-family: 'Segoe MDL2 Assets';
-  /*content: "\EC61";*/
-  content: "\E73E";
-  padding-right: 5px;
-  font-size: 80%;
-  color: #468847;
+/*#region UPDATE HUB: */
 
+.hub-grid {
+    margin-top: 10px;
+    padding: 20px;
+    grid-gap: 10px;
+    grid-template-columns: 410px 17.5px;
+    grid-auto-rows: 75px;
+    justify-content: flex-start;
+    background-image: url(Resources/microscope-mercury.jpg);
+    background-size: 110%;
+    background-repeat: no-repeat;
+    background-origin: border-box;
+    border-radius: 10px;    
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.15);
 }
+
+.hub-tile:hover .hub-grid{
+    background-color: white;
+}
+
+.hub-subgrid {
+    grid-gap: 15px;
+    padding: 2.5px;
+    grid-template-columns: 60px 1fr;
+}
+
+.hub-tile {
+    padding: 7.5px 5px 5px 7.5px;
+    transition: 0.5s all;
+    border-radius: 5px;
+    background-color: rgba(174, 31, 31, 1);
+    cursor: pointer;
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.hub-go{
+    /*visibility: hidden;*/
+    margin: 2.5px 0;
+    /*height: 140px;*/
+    /*width: 25px;*/
+    display: grid;
+    align-content: center;
+    padding: 0;
+    font-family:'Segoe MDL2 Assets';
+    content: '\E970';
+    font-size: 10pt !important;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #666;
+    transition: 0.5s all;
+}
+
+.hub-go .mdl2icon{
+    padding: 0px;
+    color: #999 !important;
+}
+
+.hub-tile:hover {
+    border-top-left-radius: 37.5px;
+    border-bottom-left-radius: 37.5px;
+    margin-left: 5px;
+    background: #333333;
+    border: 1px solid white;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+}
+
+.hub-tile:hover .hub-tile-icon {
+    color: #fff;
+    border-right: 2px solid rgba(174, 31, 31, 1);
+    margin-top: -2px;
+    /*transition: 0.5s all;*/
+    /*background-color: rgba(255,220,220,1);
+    border-radius: 37.5px;*/
+}
+
+.hub-tile:hover .hub-tile-title {
+    text-align: right;
+    padding-right: 5px;
+}
+
+.hub-tile:hover .hub-tile-desc {
+    display: block;
+}
+
+@keyframes ico{
+    33% { color: #999; }
+    67% { color: #fff; }
+    100% { color: rgba(255,220,220,1);}
+}
+
+.hub-tile-icon {
+    display: grid;
+    align-content: center;
+    height: 60px;
+    padding-left: 2.5px;
+    text-align: center;
+    font-size: 25pt;
+    color: #cccccc;
+    transition: border-radius 0.25s ease-in;
+    font-weight: normal;
+
+    animation: ico 5s ease infinite alternate;
+    /*background-color: #cccccc;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;*/
+}
+
+.hub-tile-icon:nth-of-type(1){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(2){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(3){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(4){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(5){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(6){
+    animation-delay: 3s;
+}
+.hub-tile-icon:nth-of-type(7){
+    animation-delay: 3s;
+}
+
+.hub-tile-title {
+    font-family:'U.S. 101';
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 25pt;
+    line-height: 25px;
+    display: grid;
+    align-content: center;
+    color: #fff;
+}
+
+.hub-tile-desc {
+    display: none;
+    font-family: 'Segoe UI';
+    font-size: 9pt;
+    margin: 2.5px 0 0 0;
+    padding: 2.5px 0 0 0;
+    line-height: 13px;
+    font-weight: 500;
+    font-style: italic;
+    color: rgba(255,220,220,1);
+    border-top: 1px solid #999;
+    text-transform: none !important;
+    letter-spacing: normal;
+    text-align: right;
+}
+
+/*#endregion */

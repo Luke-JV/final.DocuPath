@@ -164,10 +164,10 @@
                 "commands": function (column, row) {
                     if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
                         return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"UNLOCK\" data-placement=\"right\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
                     } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
                         return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/ForensicCaseUpdateHub/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
@@ -175,7 +175,7 @@
                         return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
                     } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
                         return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/Edit/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
+                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/ForensicCaseUpdateHub/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
                     "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
