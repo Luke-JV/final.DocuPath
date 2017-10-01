@@ -1,0 +1,941 @@
+﻿@model DocuPath.Models.DPViewModels.StatisticsViewModel
+@using DocuPath.Models;
+@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+
+@* BREADCRUMB NAVIGATION: *@
+<ol class="breadcrumb">
+    <li>@Html.ActionLink("Home", "Index", "Home") </li>
+    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
+    <li class="active">@Html.ActionLink("Add Forensic Case (Statistics)", "AddStatistics") </li>
+</ol>
+@* PAGE HEADER & ACTION BUTTONS: *@
+<div class="grid hdr-grid">
+    <div class="page-hdr">
+        <div class="page-header-subgrid">
+            <div class="icon-circle mdl2icon mdl2-fc"></div>
+            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">STATISTICS</span></div>
+        </div>
+    </div>
+    <div class="page-btns">
+        <div class="page-buttons-subgrid buttons-three">
+            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+            <div></div>
+            <div grid-area="btn1">
+                <form class="minimalform" action="@Url.Action("ForensicCaseAddedSuccess","ForensicCase")" method="post" style="margin-top: 2px">
+                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & COMPLETE"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                </form>
+            </div>
+            <div></div>
+            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+        </div>
+    </div>
+</div>
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* PAGE CONTENT: *@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+
+    <div class="form-horizontal border-generic form-generic">
+        <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
+            <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
+        </ul>
+        <div id="STATS" class="tab-pane" style="padding-top: 5px">
+            <div class="container" id="timelinecontainer">
+                <article id="timeline">
+                    <ul class="timeline" id="bSTime">
+                        @* CORE STATISTICAL DATA *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-stats timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-stats timeline-mdl2icon"></span> Core Statistical Data</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#CORESTATSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="CORESTATSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.BodyCollectorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                        <div class="col-md-6">
+                                                            @Html.EditorFor(model => model.stats.BodyCollectorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.BodyCollectorSurname, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.EvisceratorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                        <div class="col-md-6">
+                                                            @Html.EditorFor(model => model.stats.EvisceratorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.EvisceratorSurname, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.OrganDissectorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                        <div class="col-md-6">
+                                                            @Html.EditorFor(model => model.stats.OrganDissectorSurname, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.OrganDissectorSurname, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* AUTOPSY STATISTICS *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-autopsysession timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-autopsysession timeline-mdl2icon"></span> Autopsy Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#AUTOPSYDETAILSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="AUTOPSYDETAILSPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.AutopsyTypeID, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.stats.AutopsyTypeID, new SelectList(Model.autopsyTypes, "AutopsyTypeID", "AutopsyTypeValue"), "Select an Autopsy Type...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessageFor(model => model.stats.AutopsyTypeID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmAutopsyOther">
+                                                        @Html.LabelFor(model => model.stats.AutopsyTypeOtherDescription, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.stats.AutopsyTypeOtherDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.AutopsyTypeOtherDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Select All Applicable Samples Taken & Investigations Requested", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @for (int i = 0; i < Model.sampleInvestigations.Count; i++)
+                                                            {
+                                                                @Html.HiddenFor(model => model.selectedSamplesInvestigations[i].valueID);
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.selectedSamplesInvestigations[i].isSelected, new { id = "SI_" + Model.selectedSamplesInvestigations[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSamplesInvestigations[i].valueName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                            @*@foreach (var item in ViewBag.SamplesInvestigations)
+                                                            {
+                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" onchange="toggleShowSIOther()" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" id="toggleSI_@item.Text"> @item.Text</label></div>
+                                                            }*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmSIOther">
+                                                        @Html.LabelFor(model => model.otherSamplesInvestigationsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.otherSamplesInvestigationsDescription, new { htmlAttributes = new { @id = "samplesother", @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.otherSamplesInvestigationsDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* DATE & TIME STATISTICS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-datetime timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-datetime timeline-mdl2icon"></span> Date &amp; Time Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#DATESAGESPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="DATESAGESPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Select a Discovery Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
+                                                        <div class="col-md-7" style="padding-right: 5px">
+                                                            @Html.EditorFor(model => model.stats.DiscoveryDate, new
+                                                           {
+                                                               htmlAttributes = new
+                                                               { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control",
+                                                                   @style = "width: 100%"
+                                                               }
+                                                           })
+                                                            @Html.ValidationMessageFor(model => model.stats.DiscoveryDate, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group date">
+                                                                <input type="text" class="form-control" id="DiscoveryDate" />
+                                                                <span class="input-group-addon" onclick="discoveryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Select an Injury Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
+                                                        <div class="col-md-7" style="padding-right: 5px">
+                                                            @Html.EditorFor(model => model.stats.EstimatedInjuryDate, new
+                                                           {
+                                                               htmlAttributes = new
+                                                               { @*@id = "InjuryDate", @onclick = "injuryDTP()",*@ @type = "date",
+                                                                   @class = "form-control",
+                                                                   @style = "width: 100%"
+                                                               }
+                                                           })
+                                                            @Html.ValidationMessageFor(model => model.stats.EstimatedInjuryDate, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group date">
+                                                                <input type="text" class="form-control" id="InjuryDate" />
+                                                                <span class="input-group-addon" onclick="injuryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Select a Death Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
+                                                        <div class="col-md-7" style="padding-right: 5px">
+                                                            @Html.EditorFor(model => model.stats.EstimatedDeathDate, new
+                                                           {
+                                                               htmlAttributes = new
+                                                               { @*@id = "DeathDate", @onclick = "deathDTP()",*@ @type = "date",
+                                                                   @class = "form-control",
+                                                                   @style = "width: 100%; margin-bottom: 0"
+                                                               }
+                                                           })
+                                                            @Html.ValidationMessageFor(model => model.stats.EstimatedDeathDate, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group date">
+                                                                <input type="text" class="form-control" id="DeathDate" />
+                                                                <span class="input-group-addon" onclick="deathDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                            </div>*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* DECEASED INDIVIDUAL STATISTICS *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-individual timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-individual timeline-mdl2icon"></span> Deceased Individual Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#DECEASEDINDIVIDUALPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="DECEASEDINDIVIDUALPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.IndividualRaceID, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.stats.IndividualRaceID, new SelectList(Model.races, "IndividualRaceID", "IndividualRaceValue"), "Select an Individual Race...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessageFor(model => model.stats.IndividualRaceID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmRaceOther">
+                                                        @Html.LabelFor(model => model.otherRaceDescription, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.otherRaceDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.otherRaceDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.IndividualGenderID, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.stats.IndividualGenderID, new SelectList(Model.genders, "IndividualGenderID", "IndividualGenderValue"), "Select an Individual Gender...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @Html.ValidationMessageFor(model => model.stats.IndividualGenderID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.IndividualEstimatedAge, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.stats.IndividualEstimatedAge, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.IndividualEstimatedAge, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* MEDICAL HISTORY STATISTICS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-history timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-history timeline-mdl2icon"></span> Medical History Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#MEDICALHISTORYPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="MEDICALHISTORYPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.MedicalHistory, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.TextAreaFor(model => model.stats.MedicalHistory, new { @class = "ckeditor" })
+                                                            @Html.ValidationMessageFor(model => model.stats.MedicalHistory, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.HospitalClinicID, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.DropDownListFor(model => model.stats.HospitalClinicID, new SelectList(Model.hospitalsClinics, "HospitalClinicID", "HospitalClinicName"), "Select a Hospital/Clinic...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%; margin-top: 5px" })
+                                                            @Html.ValidationMessageFor(model => model.stats.HospitalClinicID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmTreatmentFacilityOther">
+                                                        @Html.LabelFor(model => model.otherTreatmentFacilityDescription, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.otherTreatmentFacilityDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.otherTreatmentFacilityDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.TreatmentDuration, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.stats.TreatmentDuration, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                            @Html.ValidationMessageFor(model => model.stats.TreatmentDuration, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Select All Applicable Medical Treatments", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @for (int i = 0; i < Model.medTreatments.Count; i++)
+                                                            {
+                                                                @Html.HiddenFor(model => model.selectedMedicalTreatments[i].valueID);
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.selectedMedicalTreatments[i].isSelected, new { id = "MT_" + Model.selectedMedicalTreatments[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedMedicalTreatments[i].valueName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                            @*@foreach (var item in ViewBag.MedicalTreatments);
+                                                            {
+                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
+                                                            }*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmMedTreatOther">
+                                                        @Html.LabelFor(model => model.otherMedicalTreatmentsDescription, htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right" })
+                                                        <div class="col-md-7">
+                                                            @Html.EditorFor(model => model.otherMedicalTreatmentsDescription, new { htmlAttributes = new { @id = "treatments-other", @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.otherMedicalTreatmentsDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* GEOLOCATION STATISTICS *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-world timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-world timeline-mdl2icon"></span> Geolocation Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#GEOLOCATIONPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="GEOLOCATIONPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body" style="padding: 5px 5px 0 5px !important">
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-policecar timeline-mdl2icon"></span> Police Stations &amp; Roles</p>
+                                                    <div class="form-group">
+                                                        @Html.Label("Jurisdiction", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group">
+                                                                <input type="text" class="form-control" disabled value="Lyttelton Police Station" />
+                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                            </div>*@
+                                                            @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Processing", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group">
+                                                                <input type="text" class="form-control" disabled value="Brooklyn Police Station" />
+                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                            </div>*@
+                                                            @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Investigation", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
+                                                            @*<div class="input-group">
+                                                                <input type="text" class="form-control" disabled value="Clubview Police Station" />
+                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                            </div>*@
+                                                            @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="timeline-title"><span class="mdl2icon mdl2-tracking timeline-mdl2icon"></span> Events &amp; Provinces</p>
+                                                    <div class="form-group">
+                                                        @Html.Label("Death Occurrence", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.DropDownListFor(model => model.DeathProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @Html.ValidationMessageFor(model => model.DeathProvinceId, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmDeathOther">
+                                                        @Html.Label("Description ('Other')", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.otherDeathProvinceDesc, new { htmlAttributes = new { @class = "form-control", @style = "width: 307.375px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.otherDeathProvinceDesc, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Incident Occurrence", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.DropDownListFor(model => model.OccurrenceProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @Html.ValidationMessageFor(model => model.OccurrenceProvinceId, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmIncidentOccurrenceOther">
+                                                        @Html.Label("Description ('Other')", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.otherOccurrenceProvinceDesc, new { htmlAttributes = new { @class = "form-control", @style = "width: 307.375px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.otherOccurrenceProvinceDesc, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Incident Report", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.DropDownListFor(model => model.ReportProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @Html.ValidationMessageFor(model => model.ReportProvinceId, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmIncidentReportOther">
+                                                        @Html.Label("Description ('Other')", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.otherReportProvinceDesc, new { htmlAttributes = new { @class = "form-control", @style = "width: 307.375px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.otherReportProvinceDesc, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Incident Processing", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.DropDownListFor(model => model.ProcessingProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @Html.ValidationMessageFor(model => model.ProcessingProvinceId, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmIncidentProcessingOther">
+                                                        @Html.Label("Description ('Other')", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.otherProcessingProvinceDesc, new { htmlAttributes = new { @class = "form-control", @style = "width: 307.375px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.otherProcessingProvinceDesc, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Medical Treatment", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.DropDownListFor(model => model.TreatmentProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @Html.ValidationMessageFor(model => model.ReportProvinceId, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmMedicalTreatmentOther">
+                                                        @Html.Label("Description ('Other')", htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.otherTreatmentProvinceDesc, new { htmlAttributes = new { @class = "form-control", @style = "width: 307.375px !important" } })
+                                                            @Html.ValidationMessageFor(model => model.otherTreatmentProvinceDesc, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* INCIDENT STATISTICS *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-warning timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-warning timeline-mdl2icon"></span> Incident Statistics</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#INCIDENTPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="INCIDENTPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.PrimaryCauseID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownListFor(model => model.stats.PrimaryCauseID, new SelectList(Model.primaryCauses, "PrimaryCauseID", "PrimaryCauseDescription"), "Select a Primary Cause Of Death Description...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
+                                                            @Html.ValidationMessageFor(model => model.stats.PrimaryCauseID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmCODOther">
+                                                        @Html.LabelFor(model => model.otherPrimaryCauseDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.otherPrimaryCauseDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                            @Html.ValidationMessageFor(model => model.otherPrimaryCauseDeathDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.stats.ApparentMannerID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.DropDownListFor(model => model.stats.ApparentMannerID, new SelectList(Model.apparentManners, "ApparentMannerID", "ApparentMannerDescription"), "Select an Apparent Manner Of Death Description...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 476.08px" })
+                                                            @Html.ValidationMessageFor(model => model.stats.ApparentMannerID, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmMOIOther">
+                                                        @Html.LabelFor(model => model.otherApparentMannerDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.otherApparentMannerDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                            @Html.ValidationMessageFor(model => model.otherApparentMannerDeathDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        @Html.Label("Select All Applicable Scenes Of Injury", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @for (int i = 0; i < Model.injuryScenes.Count; i++)
+                                                            {
+                                                                @Html.HiddenFor(model => model.selectedInjuryScenes[i].valueID);
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.selectedInjuryScenes[i].isSelected, new { id = "SS_" + Model.selectedInjuryScenes[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedInjuryScenes[i].valueName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                            @*@foreach (var item in ViewBag.SceneOfInjury)
+                                                            {
+                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSOI_@item.Text"> @item.Text</label></div>
+                                                            }*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmSOIOther">
+                                                        @Html.LabelFor(model => model.otherInjurySceneDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @id = "scenes-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.otherInjurySceneDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* EXTERNAL CAUSES *@
+                        <li class="timeline-inverted" style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-event timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-event timeline-mdl2icon"></span> External Causes</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#EXTCAUSEPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="EXTCAUSEPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Select All Applicable External Causes Of Death", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @for (int i = 0; i < Model.externalCause.Count; i++)
+                                                            {
+                                                                @Html.HiddenFor(model => model.selectedExternalCauses[i].valueID);
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.selectedExternalCauses[i].isSelected, new { id = "EC_" + Model.selectedExternalCauses[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedExternalCauses[i].valueName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                            @*@foreach (var item in ViewBag.ExternalCause)
+                                                            {
+                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleExtCause_@item.Text"> @item.Text</label></div>
+                                                            }*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmExtCauseOther">
+                                                        @Html.LabelFor(model => model.otherExternalCauseDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @id = "extcauses-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.otherExternalCauseDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        @* SPECIAL CATEGORIES *@
+                        <li style="margin-bottom: 0px">
+                            <div class="timeline-badge"><i class="mdl2icon mdl2-special timeline-badge-mdl2icon"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4 class="timeline-title"><span class="mdl2icon mdl2-special timeline-mdl2icon"></span> Special Categories</h4>
+                                        </div>
+                                    </div>
+                                    @*<p><small class="text-muted"><i class="mdl2icon mdl2-info inline-mdl2icon"></i> Used to capture general observations relating to the deceased individual.</small></p>*@
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#SPECIALCATPANEL"><i class="mdl2icon mdl2-more"></i></h4>
+                                            </div>
+                                            <div id="SPECIALCATPANEL" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        @Html.Label("Select All Applicable Special Categories", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @for (int i = 0; i < Model.specialCategory.Count; i++)
+                                                            {
+                                                                @Html.HiddenFor(model => model.selectedSpecialCategories[i].valueID);
+                                                                <div class="checkbox">
+                                                                    <label>
+                                                                        @Html.CheckBoxFor(model => model.selectedSpecialCategories[i].isSelected, new { id = "SC_" + Model.selectedSpecialCategories[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSpecialCategories[i].valueName
+                                                                    </label>
+                                                                </div>
+                                                            }
+                                                            @*@foreach (var item in ViewBag.SpecialCategories)
+                                                            {
+                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSpecCat_@item.Text"> @item.Text</label></div>
+                                                            }*@
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group" id="frmSpecCatOther">
+                                                        @Html.LabelFor(model => model.otherSpecialCategoryDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                                        <div class="col-md-12">
+                                                            @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @id = "specialcat-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.ValidationMessageFor(model => model.otherSpecialCategoryDescription, "", new { @class = "validation-text text-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*<div class="panel-footer"></div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    @*<div class="row text-center">
+                        <button class="btn btn-default btn-generic" data-toggle="tab" data-target="#OBS" style="width:auto;margin-top:0px;">
+                            <i class="mdl2icon mdl2-forwardnext"></i>
+                            Proceed To Observations
+                        </button>
+                    </div>*@
+                </article>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toggle")
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#frmAutopsyOther").hide(),
+            $("#frmRaceOther").hide(),
+            $("#frmTreatmentFacilityOther").hide(),
+            $("#frmDeathOther").hide(),
+            $("#frmIncidentOccurrenceOther").hide(),
+            $("#frmIncidentReportOther").hide(),
+            $("#frmIncidentProcessingOther").hide(),
+            $("#frmMedicalTreatmentOther").hide(),
+            $("#frmSIOther").hide(),
+            $("#frmCODOther").hide(),
+            $("#frmMOIOther").hide(),
+            $("#frmSOIOther").hide(),
+            $("#frmExtCauseOther").hide(),
+            $("#frmSpecCatOther").hide()
+            $("#frmMedTreatOther").hide()
+        });
+    </script>
+    <script>
+            $("#stats_IndividualRaceID").change(function () {
+                if ($("#stats_IndividualRaceID option:selected").text() == "Other") {
+                    $("#frmRaceOther").show("slow")
+                } else {
+                    $("#frmRaceOther").hide("slow")
+                }
+            });
+            $("#stats_HospitalClinicID").change(function () {
+                if ($("#stats_HospitalClinicID option:selected").text() == "Other") {
+                    $("#frmTreatmentFacilityOther").show("slow")
+                } else {
+                    $("#frmTreatmentFacilityOther").hide("slow")
+                }
+            });
+            $("#DeathProvinceId").change(function () {
+                if ($("#DeathProvinceId option:selected").text() == "Other/International") {
+                    $("#frmDeathOther").show("slow")
+                } else {
+                    $("#frmDeathOther").hide("slow")
+                }
+            });
+            $("#OccurrenceProvinceId").change(function () {
+                if ($("#OccurrenceProvinceId option:selected").text() == "Other/International") {
+                    $("#frmIncidentOccurrenceOther").show("slow")
+                } else {
+                    $("#frmIncidentOccurrenceOther").hide("slow")
+                }
+            });
+            $("#ReportProvinceId").change(function () {
+                if ($("#ReportProvinceId option:selected").text() == "Other/International") {
+                    $("#frmIncidentReportOther").show("slow")
+                } else {
+                    $("#frmIncidentReportOther").hide("slow")
+                }
+            });
+            $("#ProcessingProvinceId").change(function () {
+                if ($("#ProcessingProvinceId option:selected").text() == "Other/International") {
+                    $("#frmIncidentProcessingOther").show("slow")
+                } else {
+                    $("#frmIncidentProcessingOther").hide("slow")
+                }
+            });
+            $("#TreatmentProvinceId").change(function () {
+                if ($("#TreatmentProvinceId option:selected").text() == "Other/International") {
+                    $("#frmMedicalTreatmentOther").show("slow")
+                } else {
+                    $("#frmMedicalTreatmentOther").hide("slow")
+                }
+            });
+            $("#stats_PrimaryCauseID").change(function () {
+                if ($("#stats_PrimaryCauseID option:selected").text() == "Other") {
+                    $("#frmCODOther").show("slow")
+                } else {
+                    $("#frmCODOther").hide("slow")
+                }
+            });
+            $("#stats_ApparentMannerID").change(function () {
+                if ($("#stats_ApparentMannerID option:selected").text() == "Other") {
+                    $("#frmMOIOther").show("slow")
+                } else {
+                    $("#frmMOIOther").hide("slow")
+                }
+            });
+            $("#stats_AutopsyTypeID").change(function () {
+                if ($("#stats_AutopsyTypeID option:selected").text() == "Other") {
+                    $("#frmAutopsyOther").show("slow")
+                } else {
+                    $("#frmAutopsyOther").hide("slow")
+                }
+            });
+    </script>
+    <script>
+        $('#SI_Other').change(function () {
+
+            var toggle = document.getElementById("SI_Other").checked
+            if (toggle) {
+
+                $("#frmSIOther").show("slow")
+            } else {
+                $("#frmSIOther").hide("slow")
+            }
+        });
+        $('#SS_Other').change(function () {
+            var toggle = document.getElementById("SS_Other").checked
+            if (toggle) {
+                $("#frmSOIOther").show("slow")
+            } else {
+                $("#frmSOIOther").hide("slow")
+            }
+        });
+        $('#EC_Other').change(function () {
+            var toggle = document.getElementById("EC_Other").checked
+            if (toggle) {
+                $('#frmExtCauseOther').show("slow")
+            }
+            else $('#frmExtCauseOther').hide("slow")
+        });
+        $('#SC_Other').change(function () {
+            var toggle = document.getElementById("SC_Other").checked
+            if (toggle) {
+                $('#frmSpecCatOther').show("slow")
+            }
+            else $('#frmSpecCatOther').hide("slow")
+        });
+        $('#MT_Other').change(function () {
+            var toggle = document.getElementById("MT_Other").checked
+            if (toggle) {
+                $('#frmMedTreatOther').show("slow")
+            }
+            else $('#frmMedTreatOther').hide("slow")
+        });
+    </script>
+}

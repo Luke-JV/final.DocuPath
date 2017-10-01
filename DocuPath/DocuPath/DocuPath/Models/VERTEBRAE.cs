@@ -72,7 +72,7 @@ namespace DocuPath.Models
         //----------------------------------------------------------------------------------------------//
         #region CONSTANTS:
             #region NON-DATABASE SYSTEM PARAMETERS:
-                public const int lockoutDelayMinutes = 10;
+                public const int lockoutDelayMinutes = 15;
                 public const int maxSRPerFCAddUpdate = 10;
                 public const int maxAEPerFCAddUpdate = 10;
             #endregion

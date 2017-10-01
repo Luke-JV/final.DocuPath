@@ -146,7 +146,7 @@ namespace DocuPath.Models.DPViewModels
 
     public class CaseMediaViewModel
     {
-        public List<MEDIA> media { get; set; }
+        public List<MEDIA> mediaList { get; set; }
     }
 
     public class AdditionalEvidenceViewModel

@@ -42,9 +42,9 @@ namespace DocuPath.DataLayer
         public string MediaCaption { get; set; }
         [DefaultValue(FLAG.Text)]
         [Required]
+        [DataType(DataType.MultilineText)]
         [DisplayName("Description")]
         public string MediaDescription { get; set; }
-
         [DisplayName("Accessibility")]
         public bool IsPubliclyAccessible { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]

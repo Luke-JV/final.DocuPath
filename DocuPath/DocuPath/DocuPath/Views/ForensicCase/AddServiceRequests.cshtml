@@ -36,7 +36,8 @@
             </div>
             <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                    <button id="btnMaxLimit" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="$('#divMaxLimitWarning').removeClass('hidden');" data-toggle="tooltip" title="HELP"></button>
+                    @*<button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>*@
                 </form>
             </div>
             <div></div>
@@ -128,7 +129,7 @@
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
             <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
-            <li><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading" href="@Url.Action("SelectMediaItems","ForensicCase")" style="margin-left: 5px">Media Items</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
@@ -358,32 +359,67 @@
                 var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
                 var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
 
-                if (invisibleSRPanels.length <= 10) {
+                if (invisibleSRPanels.length >= 1) {
                     invisibleSRPanels[0].classList.remove('hidden');
                     invisibleSeparators[0].classList.remove('hidden');
-                } else if (invisibleSRPanels.length == 10) {
-                    $('#divMaxLimitWarning').removeClass("hidden");
+                } else if (invisibleSRPanels.length == 0) {
+                    document.querySelector('#divMaxLimitWarning').classList = "modal-background";
+                }
+
+                $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
+            });
+ 
+            function clear_form_elements(tId) {
+                console.log('clear fx launched');
+                jQuery("#" + tId).find(':input').each(function () {
+                    switch (this.type) {
+                        case 'password':
+                        case 'text':
+                        case 'textarea':
+                        case 'file':
+                        case 'select-one':
+                        case 'select-multiple':
+                        case 'date':
+                        case 'number':
+                        case 'tel':
+                        case 'email':
+                            jQuery(this).val('');
+                            break;
+                        case 'checkbox':
+                        case 'radio':
+                            this.checked = false;
+                            break;
+                    }
+                });
+
+            $('#btnRemoveSR_0').on('click', function(e){
+                e.preventDefault();
+                console.log('delete 0 clicked');
+                var tId = document.querySelector('#frmgrp_0').id;
+                console.log(tId);
+                clear_form_elements(tId);
+            });
+
+                var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
+                var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
+
+                if (invisibleSRPanels.length >= 1) {
+                    invisibleSRPanels[0].classList.add('hidden');
+                    invisibleSeparators[0].classList.add('hidden');
+                } else if (invisibleSRPanels.length == 0) {
+                    document.querySelector('#divMaxLimitWarning').classList = "modal-background";
                 }
 
                 $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
 
-
-                @*for (var sr = @Model.serviceRequests.Count; sr > 0 ; sr--) {
-                var tId = "frmgrp_"+sr;
-                $().
-            }*@
-            });
- 
-            $('#btnRemoveSR_0').click(function(e){
-                e.preventDefault();
-                var targetPanel = document.queryselector('frmgrp_0');
-                var targetSeparator = document.queryselector('sep_0');
+                //var targetPanel = document.queryselector('frmgrp_0');
+                //var targetSeparator = document.queryselector('sep_0');
                 
-                alert(targetPanel.length);
-                alert(targetSeparator.length);
+                //alert(targetPanel.length);
+                //alert(targetSeparator.length);
 
-                targetpanel.addClass('hidden');
-                targetSeparator.addClass('hidden');
+                //targetpanel.addClass('hidden');
+                //targetSeparator.addClass('hidden');
             });
         });
     </script>
