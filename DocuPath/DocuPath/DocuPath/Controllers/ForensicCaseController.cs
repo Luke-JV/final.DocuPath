@@ -968,7 +968,8 @@ namespace DocuPath.Controllers
                 foreach (var item in model.additionalEvidence)
                 {
                     item.EvidenceDescription = "";
-                    item.ContactPersonNameSurname = "";                    
+                    item.ContactPersonNameSurname = "";
+                    item.ContactPersonContactNum = "";
                 }
                 //var week = DateTime.Today.Date.AddDays(-7);
                 //var cases = from fc in db.FORENSIC_CASE.Where(x => x.UserID == id)

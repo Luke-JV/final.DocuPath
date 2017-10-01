@@ -344,12 +344,12 @@ namespace DocuPath.Models
                 visionMetrics.Add(vmAgedNonAgedFCRatio);
                 // FC Additions:
                 #region FC Additions:
-                var FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded == dtToday).Count();
+                var FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded >= dtToday).Count();
                 var FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSeven).Count();
                 var FCAddedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastThirty).Count();
                 var FCAddedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSixty).Count();
                 var FCAddedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastNinety).Count();
-                var FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed == dtToday).Count();
+                var FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed >= dtToday).Count();
                 var FCClosedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSeven).Count();
                 var FCClosedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastThirty).Count();
                 var FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSixty).Count();
@@ -395,7 +395,7 @@ namespace DocuPath.Models
                 visionMetrics.Add(vmAgedNonAgedLCRatio);
                 // LC Additions:
                 #region LC Additions:
-                var LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded == dtToday).Count();
+                var LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded >= dtToday).Count();
                 var LCAddedPastSevenDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSeven).Count();
                 var LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastThirty).Count();
                 var LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSixty).Count();
