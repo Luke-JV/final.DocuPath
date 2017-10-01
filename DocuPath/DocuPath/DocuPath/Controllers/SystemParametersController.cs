@@ -131,10 +131,182 @@ namespace DocuPath.Controllers
             try
             {
                 #region DB UPDATE
-                // 404 for params update logic
-                //db.USER.Attach(updatedUser);
+                //model.allocationstatus
+                //foreach (var item in model.allocationStatuses)
+                //{
+                //    if (!db.ALLOCATION_STATUS.Contains(item))
+                //    {
+                //        db.ALLOCATION_STATUS.Add(item);
+                //    }
+                
+                //}
+
+                //model.apparentMOD
+                List<APPARENT_MANNER_DEATH> temp = db.APPARENT_MANNER_DEATH.ToList();
+                foreach (var item in model.apparentMOD)
+                {
+                    if (!temp.Contains(item))
+                    {
+                        db.APPARENT_MANNER_DEATH.Add(item);
+                    }
+                }
+                //model.autopsyAreas
+                foreach (var item in model.autopsyAreas)
+                {
+                    if (!db.AUTOPSY_AREA.Contains(item))
+                    {
+                        db.AUTOPSY_AREA.Add(item);
+                    }
+
+                }
+                //model.autopsyTypes
+                foreach (var item in model.autopsyTypes)
+                {
+                    if (!db.AUTOPSY_TYPE.Contains(item))
+                    {
+                        db.AUTOPSY_TYPE.Add(item);
+                    }
+
+                }
+                //model.dutySlots
+                foreach (var item in model.dutySlots)
+                {
+                    if (!db.SLOT.Contains(item))
+                    {
+                        db.SLOT.Add(item);
+                    }
+
+                }
+                //model.externalCauses
+                foreach (var item in model.externalCauses)
+                {
+                    if (!db.EXTERNAL_CAUSE.Contains(item))
+                    {
+                        db.EXTERNAL_CAUSE.Add(item);
+                    }
+
+                }
+                //model.genders
+                foreach (var item in model.genders)
+                {
+                    if (!db.INDIVIDUAL_GENDER.Contains(item))
+                    {
+                        db.INDIVIDUAL_GENDER.Add(item);
+                    }
+
+                }
+                //                model.hospitalsClinics
+                foreach (var item in model.hospitalsClinics)
+                {
+                    if (!db.HOSPITAL_CLINIC.Contains(item))
+                    {
+                        db.HOSPITAL_CLINIC.Add(item);
+                    }
+
+                }
+                //model.mediaPurposes
+                foreach (var item in model.mediaPurposes)
+                {
+                    if (!db.MEDIA_PURPOSE.Contains(item))
+                    {
+                        db.MEDIA_PURPOSE.Add(item);
+                    }
+
+                }
+                //model.medicalTreatments
+                foreach (var item in model.medicalTreatments)
+                {
+                    if (!db.MEDICAL_TREATMENTS.Contains(item))
+                    {
+                        db.MEDICAL_TREATMENTS.Add(item);
+                    }
+
+                }
+                //model.primaryCOD
+                foreach (var item in model.primaryCOD)
+                {
+                    if (!db.PRIMARY_CAUSE_DEATH.Contains(item))
+                    {
+                        db.PRIMARY_CAUSE_DEATH.Add(item);
+                    }
+
+                }
+                //model.provinces
+                foreach (var item in model.provinces)
+                {
+                    if (!db.PROVINCE.Contains(item))
+                    {
+                        db.PROVINCE.Add(item);
+                    }
+
+                }
+                //model.races
+                foreach (var item in model.races)
+                {
+                    if (!db.INDIVIDUAL_RACE.Contains(item))
+                    {
+                        db.INDIVIDUAL_RACE.Add(item);
+                    }
+
+                }
+                //model.requestTypes
+                foreach (var item in model.requestTypes)
+                {
+                    if (!db.REQUEST_TYPE.Contains(item))
+                    {
+                        db.REQUEST_TYPE.Add(item);
+                    }
+
+                }
+                //model.samplesInvestigations
+                foreach (var item in model.samplesInvestigations)
+                {
+                    if (!db.SAMPLE_INVESTIGATION.Contains(item))
+                    {
+                        db.SAMPLE_INVESTIGATION.Add(item);
+                    }
+
+                }
+                //model.scenesOfInjury
+                foreach (var item in model.scenesOfInjury)
+                {
+                    if (!db.SCENE_OF_INJURY.Contains(item))
+                    {
+                        db.SCENE_OF_INJURY.Add(item);
+                    }
+
+                }
+                //model.specialCategories
+                foreach (var item in model.specialCategories)
+                {
+                    if (!db.SPECIAL_CATEGORY.Contains(item))
+                    {
+                        db.SPECIAL_CATEGORY.Add(item);
+                    }
+
+                }
+                ////model.statuses
+                //foreach (var item in model.statuses)
+                //{
+                //    if (!db.STATUS.Contains(item))
+                //    {
+                //        db.STATUS.Add(item);
+                //    }
+
+                //}
+                //model.titles
+                foreach (var item in model.titles)
+                {
+                    if (!db.TITLE.Contains(item))
+                    {
+                        db.TITLE.Add(item);
+                    }
+
+                }
+
+
                 //db.Entry(updatedUser).State = EntityState.Modified;
-                //db.SaveChanges();
+                db.SaveChanges();
                 #endregion
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "System Parameters");
