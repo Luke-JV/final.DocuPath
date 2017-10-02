@@ -22,7 +22,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("AddServiceRequests","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="@Url.Action("AddServiceRequests", "ForensicCase")" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -76,7 +76,7 @@
             <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
             <div class="col-md-3 modal-btn-col"></div>
             <div class="col-md-3 modal-btn-col">
-                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ForensicCase"))" />
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All", "ForensicCase"))" />
                 <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic" />
             </div>
         </div>
@@ -129,14 +129,14 @@
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
             <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
-            <li><a class="dynamic-tab-heading" href="@Url.Action("SelectMediaItems","ForensicCase")" style="margin-left: 5px">Media Items</a></li>
+            <li><a class="dynamic-tab-heading" href="@Url.Action("SelectMediaItems", "ForensicCase")" style="margin-left: 5px">Media Items</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
         </ul>
 
         <div class="grid sr-add-grid">
-            @for (int sr = 0; sr < Model.serviceRequests.Count; sr++)
+            @*@for (int sr = 0; sr < Model.serviceRequests.Count; sr++)
             {
                 if (sr == 0)
                 {
@@ -336,13 +336,143 @@
                         </div>
                     </div>
                 }
-            }
+            }*@
+            @{int sr = 0;}
+            <div class="wrapper">
+                <hr class="dp-separator-hr" id="sep_@sr" />
+                <div class="grid sr-add-subgrid" id="frmgrp_@sr">
+                    <div grid-area="request">
+                        <div class="panel panel-default" style="margin-bottom: 0px">
+                            <div class="panel-heading params-panel-heading-grid">
+                                <span class="mdl2icon mdl2-servicerequest panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                                <span grid-area="parm_hdr_txt">SERVICE REQUEST DETAILS</span>
+                                <button id="btnRemoveSR_@sr" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-delete btn-mdl2icon" data-toggle="tooltip" title="DELETE" data-placement="left" grid-area="parm_hdr_btn"></button>
+                            </div>
+                            <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.serviceRequests[sr].ServiceProviderID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(model => model.serviceRequests[sr].ServiceProviderID, new SelectList(Model.activeSP, "ServiceProviderID", "CompanyName"), "Select a Service Provider...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                        @Html.ValidationMessageFor(model => model.serviceRequests[sr].ServiceProviderID, "", new { @class = "validation-text text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.serviceRequests[sr].RequestTypeID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                            <div class="col-md-12">
+                                                @Html.DropDownListFor(model => model.serviceRequests[sr].RequestTypeID, new SelectList(Model.requestTypes, "RequestTypeID", "RequestTypeValue"), "Select a Type...", htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestTypeID, "", new { @class = "validation-text text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.serviceRequests[sr].DateAdded, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.serviceRequests[sr].DateAdded, new { htmlAttributes = new { @class = "form-control", @readonly = true, @style = "width: 100%", @Value = DateTime.Now.ToString("dd MMM yyyy - HH:mm") } })
+                                                @Html.ValidationMessageFor(model => model.serviceRequests[sr].DateAdded, "", new { @class = "validation-text text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.serviceRequests[sr].RequestNote, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.serviceRequests[sr].RequestNote, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessageFor(model => model.serviceRequests[sr].RequestNote, "", new { @class = "validation-text text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div grid-area="specimen">
+                        <div class="panel panel-default" style="margin-bottom: 0px">
+                            <div class="panel-heading">
+                                <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                                <span>SPECIMEN DETAILS</span>
+                            </div>
+                            <div class="panel-body" style="padding: 5px 5px 0 5px">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.specimens[sr].InvestigationRequired, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.specimens[sr].InvestigationRequired, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessageFor(model => model.specimens[sr].InvestigationRequired, "", new { @class = "validation-text text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.specimens[sr].SpecimenNature, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.specimens[sr].SpecimenNature, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenNature, "", new { @class = "validation-text text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.specimens[sr].SpecimenSerialNumber, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.specimens[sr].SpecimenSerialNumber, new { htmlAttributes = new { @class = "form-control large-identifier", @style = "width: 100%" } })
+                                                @Html.ValidationMessageFor(model => model.specimens[sr].SpecimenSerialNumber, "", new { @class = "validation-text text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.specimens[sr].DisposalMechanism, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
+                                            <div class="col-md-12">
+                                                @Html.EditorFor(model => model.specimens[sr].DisposalMechanism, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                                @Html.ValidationMessageFor(model => model.specimens[sr].DisposalMechanism, "", new { @class = "validation-text text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    <div class="reqList">
+                        <div class="reqRow">
+                            
+                        </div>
+                    </div>
         </div>
     </div>
 }
+@{
+    @*
+    <p>@Html.Raw(ddl)</p>
+    ddl = ddl.Replace('\n', ' ');*@
 
+
+}
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
+@{
+    string ddl = Html.Raw("").ToHtmlString();
+
+    string lineSeparator = ((char)0x2028).ToString();
+    string paragraphSeparator = ((char)0x2029).ToString();
+
+    ddl = ddl.Replace("\r\n", string.Empty).Replace("\n", string.Empty).Replace("\r", string.Empty).Replace(lineSeparator, string.Empty).Replace(paragraphSeparator, string.Empty);
+  
+}
+
+
+
+<script>
+    $("#btnAdd").click(function () {
+        var index = 0;
+          //  $(".reqList").append('<div class=\"wrapper\"><hr class=\"dp-separator-hr\" id=\"sep_0\"><div class=\"grid sr-add-subgrid\" id=\"frmgrp_0\"><div grid-area=\"request\"><div class=\"panel panel-default\" style=\"margin-bottom: 0px\"><div class=\"panel-heading params-panel-heading-grid\"><span class=\"mdl2icon mdl2-servicerequest panel-mdl2icon\" grid-area=\"parm_hdr_ico\"></span><span grid-area=\"parm_hdr_txt\">SERVICE REQUEST DETAILS</span><button id=\"btnRemoveSR_0\" class=\"btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-delete btn-mdl2icon\" data-toggle=\"tooltip\" title=\"\" data-placement=\"left\" grid-area=\"parm_hdr_btn\" data-original-title=\"DELETE\"></button></div><div class=\"panel-body\" style=\"padding: 5px 5px 0 5px\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__ServiceProviderID\" style=\"text-align: left\">Service Provider</label><div class=\"col-md-12\"><select class=\"form-control\" data-val=\"true\" data-val-number=\"The field Service Provider must be a number.\" data-val-required=\"The Service Provider field is required.\" id=\"serviceRequests_' + index + '__ServiceProviderID\" name=\"serviceRequests[' + index + '].ServiceProviderID\" style=\"padding-left: 0px; width: 100%\"><option value=\"\">Select a Service Provider...</option><option value=\"1\">LANCET Laboratories (Pty) Ltd.</option><option value=\"2\">AMPATH Laboratories (Pty) Ltd.</option><option value=\"3\">Vermaak &amp; Vennote (Pty) Ltd.</option><option value=\"4\">NHLS</option><option value=\"7\">Clubview Police Station</option><option value=\"8\">CLDRM</option></select><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[0].ServiceProviderID\" data-valmsg-replace=\"true\"></span></div></div><div class=\"row\"><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__RequestTypeID\" style=\"text-align: left\">Request Type</label><div class=\"col-md-12\"><select class=\"form-control\" data-val=\"true\" data-val-number=\"The field Request Type must be a number.\" data-val-required=\"The Request Type field is required.\" id=\"serviceRequests_' + index + '__RequestTypeID\" name=\"serviceRequests[' + index + '].RequestTypeID\" style=\"padding-left: 0px; width: 100%\"><option value=\"\">Select a Type...</option><option value=\"1\">Histology</option><option value=\"2\">Hematology</option><option value=\"3\">Toxicology</option></select><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].RequestTypeID\" data-valmsg-replace=\"true\"></span></div></div></div><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__DateAdded\" style=\"text-align: left\">Date Added</label><div class=\"col-md-12\"><input value=\"02 Oct 2017 - 01:12\" class=\"form-control text-box single-line\" data-val=\"true\" data-val-date=\"The field Date Added must be a date.\" data-val-required=\"The Date Added field is required.\" id=\"serviceRequests_' + index + '__DateAdded\" name=\"serviceRequests[' + index + '].DateAdded\" readonly=\"True\" style=\"width: 100%\" type=\"datetime\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].DateAdded\" data-valmsg-replace=\"true\"></span></div></div></div></div><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__RequestNote\" style=\"text-align: left\">Request Note</label><div class=\"col-md-12\"><textarea class=\"form-control text-box multi-line\" id=\"serviceRequests_' + index + '__RequestNote\" name=\"serviceRequests[' + index + '].RequestNote\" style=\"width: 100%\"></textarea><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].RequestNote\" data-valmsg-replace=\"true\"></span></div></div></div></div></div><div grid-area=\"specimen\"><div class=\"panel panel-default\" style=\"margin-bottom: 0px\"><div class=\"panel-heading\"><span class=\"mdl2icon mdl2-specimen panel-mdl2icon\"></span><span>SPECIMEN DETAILS</span></div><div class=\"panel-body\" style=\"padding: 5px 5px 0 5px\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__InvestigationRequired\" style=\"text-align: left\">Investigation Required</label><div class=\"col-md-12\"><textarea class=\"form-control text-box multi-line\" id=\"specimens_' + index + '__InvestigationRequired\" name=\"specimens[' + index + '].InvestigationRequired\" style=\"width: 100%\"></textarea><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].InvestigationRequired\" data-valmsg-replace=\"true\"></span></div></div><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__SpecimenNature\" style=\"text-align: left\">Specimen Nature/Description</label><div class=\"col-md-12\"><input class=\"form-control text-box single-line\" id=\"specimens_' + index + '__SpecimenNature\" name=\"specimens[' + index + '].SpecimenNature\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].SpecimenNature\" data-valmsg-replace=\"true\"></span></div></div><div class=\"row\"><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__SpecimenSerialNumber\" style=\"text-align: left\">Serial/Seal Number</label><div class=\"col-md-12\"><input class=\"form-control large-identifier text-box single-line\" id=\"specimens_' + index + '__SpecimenSerialNumber\" name=\"specimens[' + index + '].SpecimenSerialNumber\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].SpecimenSerialNumber\" data-valmsg-replace=\"true\"></span></div></div></div><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__DisposalMechanism\" style=\"text-align: left\">Chain Of Custody</label><div class=\"col-md-12\"><input class=\"form-control text-box single-line\" id=\"specimens_' + index + '__DisposalMechanism\" name=\"specimens[' + index + '].DisposalMechanism\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].DisposalMechanism\" data-valmsg-replace=\"true\"></span></div></div></div></div></div></div></div></div></div>')
+            $(".reqList").append('<div class=\"wrapper\"><hr class=\"dp-separator-hr\" id=\"sep_0\"><div class=\"grid sr-add-subgrid\" id=\"frmgrp_0\"><div grid-area=\"request\"><div class=\"panel panel-default\" style=\"margin-bottom: 0px\"><div class=\"panel-heading params-panel-heading-grid\"><span class=\"mdl2icon mdl2-servicerequest panel-mdl2icon\" grid-area=\"parm_hdr_ico\"></span><span grid-area=\"parm_hdr_txt\"> SERVICE REQUEST DETAILS</span><button id=\"btnRemoveSR_0\" class=\"btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-delete btn-mdl2icon\" data-toggle=\"tooltip\" title=\"\" data-placement=\"left\" grid-area=\"parm_hdr_btn\" data-original-title=\"DELETE\"></button></div><div class=\"panel-body\" style=\"padding: 5px 5px 0 5px\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__ServiceProviderID\" style=\"text-align: left\">Service Provider</label><div class=\"col-md-12\"><select class=\"form-control\" data-val=\"true\" data-val-number=\"The field Service Provider must be a number.\" data-val-required=\"The Service Provider field is required.\" id=\"serviceRequests_' + index + '__ServiceProviderID\" name=\"serviceRequests[' + index + '].ServiceProviderID\" style=\"padding-left: 0px; width: 100%\"><option value=\"\">Select a Service Provider...</option><option value=\"1\">LANCET Laboratories (Pty) Ltd.</option><option value=\"2\">AMPATH Laboratories (Pty) Ltd.</option><option value=\"3\">Vermaak &amp; Vennote (Pty) Ltd.</option><option value=\"4\">NHLS</option><option value=\"7\">Clubview Police Station</option><option value=\"8\">CLDRM</option></select><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].ServiceProviderID\" data-valmsg-replace=\"true\"></span></div></div><div class=\"row\"><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__RequestTypeID\" style=\"text-align: left\">Request Type</label><div class=\"col-md-12\"><select class=\"form-control\" data-val=\"true\" data-val-number=\"The field Request Type must be a number.\" data-val-required=\"The Request Type field is required.\" id=\"serviceRequests_' + index + '__RequestTypeID\" name=\"serviceRequests[' + index + '].RequestTypeID\" style=\"padding-left: 0px; width: 100%\"><option value=\"\">Select a Type...</option><option value=\"1\">Histology</option><option value=\"2\">Hematology</option><option value=\"3\">Toxicology</option></select><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].RequestTypeID\" data-valmsg-replace=\"true\"></span></div></div></div><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__DateAdded\" style=\"text-align: left\">Date Added</label><div class=\"col-md-12\"><input value=\"02 Oct 2017 - 01:12\" class=\"form-control text-box single-line\" data-val=\"true\" data-val-date=\"The field Date Added must be a date.\" data-val-required=\"The Date Added field is required.\" id=\"serviceRequests_' + index + '__DateAdded\" name=\"serviceRequests[' + index + '].DateAdded\" readonly=\"True\" style=\"width: 100%\" type=\"datetime\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].DateAdded\" data-valmsg-replace=\"true\"></span></div></div></div></div><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"serviceRequests_' + index + '__RequestNote\" style=\"text-align: left\">Request Note</label><div class=\"col-md-12\"><textarea class=\"form-control text-box multi-line\" id=\"serviceRequests_' + index + '__RequestNote\" name=\"serviceRequests[' + index + '].RequestNote\" style=\"width: 100%\"></textarea><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"serviceRequests[' + index + '].RequestNote\" data-valmsg-replace=\"true\"></span></div></div></div></div></div><div grid-area=\"specimen\"><div class=\"panel panel-default\" style=\"margin-bottom: 0px\"><div class=\"panel-heading\"><span class=\"mdl2icon mdl2-specimen panel-mdl2icon\"></span><span> SPECIMEN DETAILS</span></div><div class=\"panel-body\" style=\"padding: 5px 5px 0 5px\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__InvestigationRequired\" style=\"text-align: left\">Investigation Required</label><div class=\"col-md-12\"><textarea class=\"form-control text-box multi-line\" id=\"specimens_' + index + '__InvestigationRequired\" name=\"specimens[' + index + '].InvestigationRequired\" style=\"width: 100%\"></textarea><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].InvestigationRequired\" data-valmsg-replace=\"true\"></span></div></div><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__SpecimenNature\" style=\"text-align: left\">Specimen Nature/Description</label><div class=\"col-md-12\"><input class=\"form-control text-box single-line\" id=\"specimens_' + index + '__SpecimenNature\" name=\"specimens[' + index + '].SpecimenNature\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].SpecimenNature\" data-valmsg-replace=\"true\"></span></div></div><div class=\"row\"><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__SpecimenSerialNumber\" style=\"text-align: left\">Serial/Seal Number</label><div class=\"col-md-12\"><input class=\"form-control large-identifier text-box single-line\" id=\"specimens_' + index + '__SpecimenSerialNumber\" name=\"specimens[' + index + '].SpecimenSerialNumber\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].SpecimenSerialNumber\" data-valmsg-replace=\"true\"></span></div></div></div><div class=\"col-md-6\"><div class=\"form-group\"><label class=\"control-label col-md-12\" for=\"specimens_' + index + '__DisposalMechanism\" style=\"text-align: left\">Chain Of Custody</label><div class=\"col-md-12\"><input class=\"form-control text-box single-line\" id=\"specimens_' + index + '__DisposalMechanism\" name=\"specimens[' + index + '].DisposalMechanism\" style=\"width: 100%\" type=\"text\" value=\"\"><span class=\"field-validation-valid validation-text text-danger\" data-valmsg-for=\"specimens[' + index + '].DisposalMechanism\" data-valmsg-replace=\"true\"></span></div></div></div></div></div></div></div></div></div>')
+        })
+</script>
+
 
     <script name="warningscript" type="text/javascript">
         // FORT:
@@ -356,19 +486,19 @@
             $('#btnAdd').click(function (event) {
                 event.preventDefault();
 
-                var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
-                var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
+            var invisibleSRPanels = document.querySelectorAll('.sr-add-subgrid.hidden');
+            var invisibleSeparators = document.querySelectorAll('.dp-separator-hr.hidden');
 
-                if (invisibleSRPanels.length >= 1) {
-                    invisibleSRPanels[0].classList.remove('hidden');
-                    invisibleSeparators[0].classList.remove('hidden');
-                } else if (invisibleSRPanels.length == 0) {
-                    document.querySelector('#divMaxLimitWarning').classList = "modal-background";
-                }
+            if (invisibleSRPanels.length >= 1) {
+                invisibleSRPanels[0].classList.remove('hidden');
+                invisibleSeparators[0].classList.remove('hidden');
+            } else if (invisibleSRPanels.length == 0) {
+                document.querySelector('#divMaxLimitWarning').classList = "modal-background";
+            }
 
                 $('#btnLimitOK').click(function () { $('#divMaxLimitWarning').addClass("hidden"); });
-            });
- 
+        });
+
             //function clear_form_elements(tId) {
             //    console.log('clear fx launched');
             //    jQuery("#" + tId).find(':input').each(function () {
@@ -414,7 +544,7 @@
 
                 //var targetPanel = document.queryselector('frmgrp_0');
                 //var targetSeparator = document.queryselector('sep_0');
-                
+
                 //alert(targetPanel.length);
                 //alert(targetSeparator.length);
 

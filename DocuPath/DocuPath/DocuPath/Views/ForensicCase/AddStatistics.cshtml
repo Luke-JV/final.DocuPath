@@ -22,7 +22,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("ForensicCaseAddedSuccess","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" type="submit" data-toggle="tooltip" title="SAVE & COMPLETE"></button>
                 </form>
             </div>
@@ -34,7 +34,9 @@
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
-            <div></div>
+            <div>
+                
+            </div>
             <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
         </div>
     </div>
@@ -82,7 +84,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input id="btnPOST" type="submit" class="hidden" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -98,6 +100,7 @@
                 <article id="timeline">
                     <ul class="timeline" id="bSTime">
                         @* CORE STATISTICAL DATA *@
+                        @Html.HiddenFor(m=>m.stats.ForensicCaseID)
                         <li style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-stats timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -190,6 +193,7 @@
                                                             @for (int i = 0; i < Model.sampleInvestigations.Count; i++)
                                                             {
                                                                 @Html.HiddenFor(model => model.selectedSamplesInvestigations[i].valueID);
+                                                                @Html.HiddenFor(model => model.selectedSamplesInvestigations[i].valueName);
                                                                 <div class="checkbox">
                                                                     <label>
                                                                         @Html.CheckBoxFor(model => model.selectedSamplesInvestigations[i].isSelected, new { id = "SI_" + Model.selectedSamplesInvestigations[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSamplesInvestigations[i].valueName
@@ -418,6 +422,7 @@
                                                             @for (int i = 0; i < Model.medTreatments.Count; i++)
                                                             {
                                                                 @Html.HiddenFor(model => model.selectedMedicalTreatments[i].valueID);
+                                                                @Html.HiddenFor(model => model.selectedMedicalTreatments[i].valueName);
                                                                 <div class="checkbox">
                                                                     <label>
                                                                         @Html.CheckBoxFor(model => model.selectedMedicalTreatments[i].isSelected, new { id = "MT_" + Model.selectedMedicalTreatments[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedMedicalTreatments[i].valueName
@@ -653,6 +658,7 @@
                                                             @for (int i = 0; i < Model.injuryScenes.Count; i++)
                                                             {
                                                                 @Html.HiddenFor(model => model.selectedInjuryScenes[i].valueID);
+                                                                @Html.HiddenFor(model => model.selectedInjuryScenes[i].valueName);
                                                                 <div class="checkbox">
                                                                     <label>
                                                                         @Html.CheckBoxFor(model => model.selectedInjuryScenes[i].isSelected, new { id = "SS_" + Model.selectedInjuryScenes[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedInjuryScenes[i].valueName
@@ -707,6 +713,7 @@
                                                             @for (int i = 0; i < Model.externalCause.Count; i++)
                                                             {
                                                                 @Html.HiddenFor(model => model.selectedExternalCauses[i].valueID);
+                                                                @Html.HiddenFor(model => model.selectedExternalCauses[i].valueName);
                                                                 <div class="checkbox">
                                                                     <label>
                                                                         @Html.CheckBoxFor(model => model.selectedExternalCauses[i].isSelected, new { id = "EC_" + Model.selectedExternalCauses[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedExternalCauses[i].valueName
@@ -761,6 +768,7 @@
                                                             @for (int i = 0; i < Model.specialCategory.Count; i++)
                                                             {
                                                                 @Html.HiddenFor(model => model.selectedSpecialCategories[i].valueID);
+                                                                @Html.HiddenFor(model => model.selectedSpecialCategories[i].valueName);
                                                                 <div class="checkbox">
                                                                     <label>
                                                                         @Html.CheckBoxFor(model => model.selectedSpecialCategories[i].isSelected, new { id = "SC_" + Model.selectedSpecialCategories[i].valueName, data_toggle = "toggle", data_size = "mini", data_on = "<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>", data_off = "<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>", data_onstyle = "success", data_offstyle = "default", data_width = "30px" }) @Model.selectedSpecialCategories[i].valueName
@@ -937,5 +945,10 @@
             }
             else $('#frmMedTreatOther').hide("slow")
         });
+    </script>
+    <script>
+        $("#btnNext").click(function () {
+            document.getElementById("btnPOST").click();
+        })
     </script>
 }
