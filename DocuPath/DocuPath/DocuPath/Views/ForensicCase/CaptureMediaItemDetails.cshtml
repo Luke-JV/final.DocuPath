@@ -22,7 +22,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("CaptureMediaItemDetails","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -109,9 +109,9 @@
                 @Html.HiddenFor(m => m.mediaList[i].UserID);
                 @Html.HiddenFor(m => m.mediaList[i].MediaLocation);
                 //@Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
-                //@Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
+                @Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);
                 //@Html.HiddenFor(m => m.mediaList[i].DateAdded);
-                    
+
                 <hr class="dp-separator-hr" />
                 <div class="fc-media-add-subgrid">
                     <div class="panel panel-default" style="margin-bottom: 0px">
@@ -152,7 +152,7 @@
                                     <div class="form-group" style="margin-bottom: 0px">
                                         @Html.Label("Media Item Description", htmlAttributes: new { @class = "control-label label-nopad col-md-2" })
                                         <div class="col-md-10 col-nopad">
-                                            @Html.TextAreaFor(model => model.mediaList[i].MediaDescription, new {  @class = "form-control", @style = "width: 100%; margin-bottom: 0"  })
+                                            @Html.TextAreaFor(model => model.mediaList[i].MediaDescription, new { @class = "form-control", @style = "width: 100%; margin-bottom: 0" })
                                             @Html.ValidationMessageFor(model => model.mediaList[i].MediaDescription, "", new { @class = "validation-text text-danger" })
                                         </div>
                                     </div>
@@ -193,8 +193,8 @@
         </div>
     </div>
 }
-            
-            
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/toggle")
@@ -210,54 +210,53 @@
     <script>
         var count = document.getElementById("count").value;
 
-                $(document).ready(function toggleFCLink() {
-                    for (var i = 0; i < count; i++) {
-                        $("#frmCaseLink_" + i).hide();
-                        $("#ddlPurpose_" + i + " option:selected").attr("selected", null);
-                        $("#ddlPurpose_" + i + " option[value=2]").attr("selected", "selected");
-                        $("#lblWarning-" + i).hide();
-                    }
-                })
+        $(document).ready(function toggleFCLink() {
+            for (var i = 0; i < count; i++) {
+                $("#frmCaseLink_" + i).hide();
+                $("#ddlPurpose_" + i + " option:selected").attr("selected", null);
+                $("#ddlPurpose_" + i + " option[value=2]").attr("selected", "selected");
+                $("#lblWarning-" + i).hide();
+            }
+        })
 
     </script>
     <script type="text/javascript">
-                $(function toggleWarning() {
-                    $('input[type=checkbox]').change(function () {
-                        for (var i = 0; i < count; i++) {
-                            if ($('#tglWarning'+i).prop("checked") == true) { $('#lblWarning-'+i).show('slow') } else { $('#lblWarning-'+i).hide() };
-                        }
-                    });
-                })
-    </script>
-    <script type="text/javascript">
-
-                //var i = 0;
-                //for (var i = 0; i < count; i++) {
-                //    $("#ddlPurpose_"+i).on("change",{id:i}, function (e) {
-                //        if (e.data.id == 0) {
-                //            alert("foo")
-                //        }
-                //    })
-                //}
-                //for (var i = 1; i <= count; i++) {
-                //    var selector = "#ddlPurpose_" + i;
-                //    $(selector).on("change", { id: i }, (function (e) {
-
-                //        alert(e.data.id)
-                //    }))
-                //}
-                for (var i = 0; i <= count; i++) {
-                    var selector = "#ddlPurpose_" + i;
-                    $(selector).on('change', { option: "#ddlPurpose_" + i + " option:selected", target: "#frmCaseLink_" + i  }, function (e) {
-                        //alert(e.data.id);
-                        if ($(e.data.option).text() == "Case Related")
-                        {
-                            //alert($(e.data.option).op)
-                            $(e.data.target).show();
-                        }
-                        else $(e.data.target).hide();
-                    });
+        $(function toggleWarning() {
+            $('input[type=checkbox]').change(function () {
+                for (var i = 0; i < count; i++) {
+                    if ($('#tglWarning' + i).prop("checked") == true) { $('#lblWarning-' + i).show('slow') } else { $('#lblWarning-' + i).hide() };
                 }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+
+        //var i = 0;
+        //for (var i = 0; i < count; i++) {
+        //    $("#ddlPurpose_"+i).on("change",{id:i}, function (e) {
+        //        if (e.data.id == 0) {
+        //            alert("foo")
+        //        }
+        //    })
+        //}
+        //for (var i = 1; i <= count; i++) {
+        //    var selector = "#ddlPurpose_" + i;
+        //    $(selector).on("change", { id: i }, (function (e) {
+
+        //        alert(e.data.id)
+        //    }))
+        //}
+        for (var i = 0; i <= count; i++) {
+            var selector = "#ddlPurpose_" + i;
+            $(selector).on('change', { option: "#ddlPurpose_" + i + " option:selected", target: "#frmCaseLink_" + i }, function (e) {
+                //alert(e.data.id);
+                if ($(e.data.option).text() == "Case Related") {
+                    //alert($(e.data.option).op)
+                    $(e.data.target).show();
+                }
+                else $(e.data.target).hide();
+            });
+        }
 
 
                 //    $("#ddlPurpose_" + i).change(function () {
@@ -274,85 +273,92 @@
 
     @Styles.Render("~/tags/css")
     @Scripts.Render("~/bundles/tags")
+
+    <script>
+        $('#btnNext').click(function () {
+            document.getElementById('btnPOST').click();
+        })
+    </script>
+
     <script>
         //OFFICIAL
-                var count = document.getElementById("count").value;
-                var selected = false;
-                for (var y = 0; y < count; y++) {
+        var count = document.getElementById("count").value;
+        var selected = false;
+        for (var y = 0; y < count; y++) {
 
-                    $('#tag-' + y).tagEditor({
-                        autocomplete: {
-                            autoFocus: true,
-                            source: function (request, response) {
-                                $.ajax({
-                                    url: '/Media/AutoTag/',
-                                    data: "{ 'prefix': '" + request.term.replace(/'|\\/gi, '') + "'}",
-                                    dataType: "json",
-                                    type: "POST",
-                                    contentType: "application/json; charset=utf-8",
-                                    success: function (data) {
-                                        response($.map(data, function (item) {
-                                            return item;
-                                        }))
-                                    },
-                                    error: function (response) {
-                                        alert(response.responseText);
-                                    },
-                                    failure: function (response) {
-                                        alert(response.responseText);
-                                    }
-                                });
+            $('#tag-' + y).tagEditor({
+                autocomplete: {
+                    autoFocus: true,
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '/Media/AutoTag/',
+                            data: "{ 'prefix': '" + request.term.replace(/'|\\/gi, '') + "'}",
+                            dataType: "json",
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                response($.map(data, function (item) {
+                                    return item;
+                                }))
                             },
-                            select: function (e, i) {
-                                $('#hfTag-' + y).val(i.item.val);
-                                selected = true;
+                            error: function (response) {
+                                alert(response.responseText);
                             },
-                            minLength: 1
-                        },
-                        beforeTagSave: function (field, editor, tags, tag, val) {
-                            if (!selected) {
-                                return false;
+                            failure: function (response) {
+                                alert(response.responseText);
                             }
-                            selected = false;
-                        },
-                        delimiter: "~",
-                        forceLowercase: false,
-                        placeholder: 'Start Tagging...'
-
-                    });
-                }
-                //$('#btnSave').click(function () {
-                //    document.getElementById("btnPOST").click();
-
-                //});
-                $("#btnSubmit").click(function (request) {
-
-                    var all = "";
-                    for (var z = 0; z < count; z++) {
-                        var mID = document.getElementById("key-"+z).value;
-                        var field = $('#tag-' + z).tagEditor('getTags')[0].field;
-                        all += mID + ":" + field.value + "|";
+                        });
+                    },
+                    select: function (e, i) {
+                        $('#hfTag-' + y).val(i.item.val);
+                        selected = true;
+                    },
+                    minLength: 1
+                },
+                beforeTagSave: function (field, editor, tags, tag, val) {
+                    if (!selected) {
+                        return false;
                     }
-                    all = all.replace(/'/gi, '`')
-                    $.ajax({
-                        url: '/Media/catchTags/',
-                        data: "{ 'tags': '" + all + "'}",
-                        dataType: "json",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return item;
-                            }))
-                        },
-                        error: function (response) {
-                            //alert(response.responseText);
-                        },
-                        failure: function (response) {
-                            //alert(response.responseText);
-                        }
-                    });
-                })
+                    selected = false;
+                },
+                delimiter: "~",
+                forceLowercase: false,
+                placeholder: 'Start Tagging...'
+
+            });
+        }
+        //$('#btnSave').click(function () {
+        //    document.getElementById("btnPOST").click();
+
+        //});
+        $("#btnSubmit").click(function (request) {
+
+            var all = "";
+            for (var z = 0; z < count; z++) {
+                var mID = document.getElementById("key-" + z).value;
+                var field = $('#tag-' + z).tagEditor('getTags')[0].field;
+                all += mID + ":" + field.value + "|";
+            }
+            all = all.replace(/'/gi, '`')
+            $.ajax({
+                url: '/Media/catchTags/',
+                data: "{ 'tags': '" + all + "'}",
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return item;
+                    }))
+                },
+                error: function (response) {
+                    //alert(response.responseText);
+                },
+                failure: function (response) {
+                    //alert(response.responseText);
+                }
+            });
+        })
         //OFFICIAL
 
         //DEBUG
@@ -431,8 +437,8 @@
         //DEBUG
     </script>
     <script>
-                $("button").click(function () {
-                    this.blur();
-                });
+        $("button").click(function () {
+            this.blur();
+        });
     </script>
 }

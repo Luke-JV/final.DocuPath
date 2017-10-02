@@ -22,7 +22,7 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="@Url.Action("CaptureAdditionalEvidenceDetails","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -82,7 +82,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input id="btnPOST" type="submit" class="hidden"/>
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -103,7 +103,7 @@
                 @*@Html.HiddenFor(m => m.additionalEvidence[i].UserID);*@
                 @Html.HiddenFor(m => m.additionalEvidence[i].AdditionalEvidenceLocation);
                 //@Html.HiddenFor(m => m.mediaList[i].IsPubliclyAccessible);//*
-                //@Html.HiddenFor(m => m.mediaList[i].ForensicCaseID);//*
+                @Html.HiddenFor(m => m.additionalEvidence[i].ForensicCaseID);
                 //@Html.HiddenFor(m => m.mediaList[i].DateAdded);
 
                 <hr class="dp-separator-hr" />
@@ -165,6 +165,12 @@
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $('#btnNext').click(function () {
+            document.getElementById('btnPOST').click();
+        })
+</script>
 
     <script name="warningscript" type="text/javascript">
         // FORT:

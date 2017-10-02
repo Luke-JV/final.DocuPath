@@ -35,7 +35,7 @@
                 </form>
             </div>
             <div>
-                
+
             </div>
             <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
         </div>
@@ -100,7 +100,7 @@
                 <article id="timeline">
                     <ul class="timeline" id="bSTime">
                         @* CORE STATISTICAL DATA *@
-                        @Html.HiddenFor(m=>m.stats.ForensicCaseID)
+                        @Html.HiddenFor(m => m.stats.ForensicCaseID)
                         <li style="margin-bottom: 0px">
                             <div class="timeline-badge"><i class="mdl2icon mdl2-stats timeline-badge-mdl2icon"></i></div>
                             <div class="timeline-panel">
@@ -174,7 +174,18 @@
                                                     <div class="form-group">
                                                         @Html.LabelFor(model => model.stats.AutopsyTypeID, htmlAttributes: new { @class = "control-label col-md-5" })
                                                         <div class="col-md-7">
-                                                            @Html.DropDownListFor(model => model.stats.AutopsyTypeID, new SelectList(Model.autopsyTypes, "AutopsyTypeID", "AutopsyTypeValue"), "Select an Autopsy Type...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                            @{
+                                                                if (Model.stats.AutopsyTypeID > 0)
+                                                                {
+
+                                                                    @Html.DropDownListFor(model => model.stats.AutopsyTypeID, new SelectList(Model.autopsyTypes, "AutopsyTypeID", "AutopsyTypeValue", Model.stats.AutopsyTypeID), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.stats.AutopsyTypeID, new SelectList(Model.autopsyTypes, "AutopsyTypeID", "AutopsyTypeValue"), "Select an Autopsy Type...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+
+                                                                }
+                                                            }
                                                             @Html.ValidationMessageFor(model => model.stats.AutopsyTypeID, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -201,9 +212,9 @@
                                                                 </div>
                                                             }
                                                             @*@foreach (var item in ViewBag.SamplesInvestigations)
-                                                            {
-                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" onchange="toggleShowSIOther()" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" id="toggleSI_@item.Text"> @item.Text</label></div>
-                                                            }*@
+                                                                {
+                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" onchange="toggleShowSIOther()" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" id="toggleSI_@item.Text"> @item.Text</label></div>
+                                                                }*@
                                                         </div>
                                                     </div>
 
@@ -246,17 +257,17 @@
                                                         @Html.Label("Select a Discovery Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                         <div class="col-md-7" style="padding-right: 5px">
                                                             @Html.EditorFor(model => model.stats.DiscoveryDate, new
-                                                           {
-                                                               htmlAttributes = new
-                                                               { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control",
-                                                                   @style = "width: 100%"
-                                                               }
-                                                           })
+                                                       {
+                                                           htmlAttributes = new
+                                                           { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control",
+                                                               @style = "width: 100%"
+                                                           }
+                                                       })
                                                             @Html.ValidationMessageFor(model => model.stats.DiscoveryDate, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group date">
-                                                                <input type="text" class="form-control" id="DiscoveryDate" />
-                                                                <span class="input-group-addon" onclick="discoveryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" id="DiscoveryDate" />
+                                                                    <span class="input-group-addon" onclick="discoveryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                                </div>*@
                                                         </div>
                                                     </div>
 
@@ -264,18 +275,18 @@
                                                         @Html.Label("Select an Injury Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                         <div class="col-md-7" style="padding-right: 5px">
                                                             @Html.EditorFor(model => model.stats.EstimatedInjuryDate, new
-                                                           {
-                                                               htmlAttributes = new
-                                                               { @*@id = "InjuryDate", @onclick = "injuryDTP()",*@ @type = "date",
-                                                                   @class = "form-control",
-                                                                   @style = "width: 100%"
-                                                               }
-                                                           })
+                                                       {
+                                                           htmlAttributes = new
+                                                           { @*@id = "InjuryDate", @onclick = "injuryDTP()",*@ @type = "date",
+                                                               @class = "form-control",
+                                                               @style = "width: 100%"
+                                                           }
+                                                       })
                                                             @Html.ValidationMessageFor(model => model.stats.EstimatedInjuryDate, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group date">
-                                                                <input type="text" class="form-control" id="InjuryDate" />
-                                                                <span class="input-group-addon" onclick="injuryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" id="InjuryDate" />
+                                                                    <span class="input-group-addon" onclick="injuryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                                </div>*@
                                                         </div>
                                                     </div>
 
@@ -283,18 +294,18 @@
                                                         @Html.Label("Select a Death Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                         <div class="col-md-7" style="padding-right: 5px">
                                                             @Html.EditorFor(model => model.stats.EstimatedDeathDate, new
-                                                           {
-                                                               htmlAttributes = new
-                                                               { @*@id = "DeathDate", @onclick = "deathDTP()",*@ @type = "date",
-                                                                   @class = "form-control",
-                                                                   @style = "width: 100%; margin-bottom: 0"
-                                                               }
-                                                           })
+                                                       {
+                                                           htmlAttributes = new
+                                                           { @*@id = "DeathDate", @onclick = "deathDTP()",*@ @type = "date",
+                                                               @class = "form-control",
+                                                               @style = "width: 100%; margin-bottom: 0"
+                                                           }
+                                                       })
                                                             @Html.ValidationMessageFor(model => model.stats.EstimatedDeathDate, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group date">
-                                                                <input type="text" class="form-control" id="DeathDate" />
-                                                                <span class="input-group-addon" onclick="deathDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" id="DeathDate" />
+                                                                    <span class="input-group-addon" onclick="deathDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
+                                                                </div>*@
                                                         </div>
                                                     </div>
                                                 </div>
@@ -430,9 +441,9 @@
                                                                 </div>
                                                             }
                                                             @*@foreach (var item in ViewBag.MedicalTreatments);
-                                                            {
-                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
-                                                            }*@
+                                                                {
+                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="" id="toggleMedTreat_@item.Text"> @item.Text</label></div>
+                                                                }*@
                                                         </div>
                                                     </div>
 
@@ -479,9 +490,9 @@
                                                             @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
-                                                                <input type="text" class="form-control" disabled value="Lyttelton Police Station" />
-                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" disabled value="Lyttelton Police Station" />
+                                                                    <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                                </div>*@
                                                             @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
                                                         </div>
                                                     </div>
@@ -492,9 +503,9 @@
                                                             @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
-                                                                <input type="text" class="form-control" disabled value="Brooklyn Police Station" />
-                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" disabled value="Brooklyn Police Station" />
+                                                                    <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                                </div>*@
                                                             @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
                                                         </div>
                                                     </div>
@@ -505,9 +516,9 @@
                                                             @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
-                                                                <input type="text" class="form-control" disabled value="Clubview Police Station" />
-                                                                <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
-                                                            </div>*@
+                                                                    <input type="text" class="form-control" disabled value="Clubview Police Station" />
+                                                                    <span class="input-group-addon"><span class="mdl2icon mdl2-search"></span></span>
+                                                                </div>*@
                                                             @*@Html.ValidationMessage("txtBodyCollectorSurname", "", new { @class = "validation-text text-danger" })*@
                                                         </div>
                                                     </div>
@@ -666,9 +677,9 @@
                                                                 </div>
                                                             }
                                                             @*@foreach (var item in ViewBag.SceneOfInjury)
-                                                            {
-                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSOI_@item.Text"> @item.Text</label></div>
-                                                            }*@
+                                                                {
+                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSOI_@item.Text"> @item.Text</label></div>
+                                                                }*@
                                                         </div>
                                                     </div>
 
@@ -721,9 +732,9 @@
                                                                 </div>
                                                             }
                                                             @*@foreach (var item in ViewBag.ExternalCause)
-                                                            {
-                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleExtCause_@item.Text"> @item.Text</label></div>
-                                                            }*@
+                                                                {
+                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleExtCause_@item.Text"> @item.Text</label></div>
+                                                                }*@
                                                         </div>
                                                     </div>
 
@@ -776,9 +787,9 @@
                                                                 </div>
                                                             }
                                                             @*@foreach (var item in ViewBag.SpecialCategories)
-                                                            {
-                                                                <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSpecCat_@item.Text"> @item.Text</label></div>
-                                                            }*@
+                                                                {
+                                                                    <div class="checkbox"><label><input type="checkbox" data-toggle="toggle" data-on="<i class='mdl2icon mdl2-done' style='padding-left: 0px'></i>" data-off="<i class='mdl2icon mdl2-cancel' style='padding-left: 0px; color: black'></i>" data-onstyle="success" data-offstyle="default" data-size="mini" data-width="30px" data-style="ios" onchange="toggleShowOther()" id="toggleSpecCat_@item.Text"> @item.Text</label></div>
+                                                                }*@
                                                         </div>
                                                     </div>
 
@@ -799,111 +810,111 @@
                         </li>
                     </ul>
                     @*<div class="row text-center">
-                        <button class="btn btn-default btn-generic" data-toggle="tab" data-target="#OBS" style="width:auto;margin-top:0px;">
-                            <i class="mdl2icon mdl2-forwardnext"></i>
-                            Proceed To Observations
-                        </button>
-                    </div>*@
+                            <button class="btn btn-default btn-generic" data-toggle="tab" data-target="#OBS" style="width:auto;margin-top:0px;">
+                                <i class="mdl2icon mdl2-forwardnext"></i>
+                                Proceed To Observations
+                            </button>
+                        </div>*@
                 </article>
             </div>
         </div>
     </div>
-}
+                                                                }
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/toggle")
-    
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#frmAutopsyOther").hide(),
-            $("#frmRaceOther").hide(),
-            $("#frmTreatmentFacilityOther").hide(),
-            $("#frmDeathOther").hide(),
-            $("#frmIncidentOccurrenceOther").hide(),
-            $("#frmIncidentReportOther").hide(),
-            $("#frmIncidentProcessingOther").hide(),
-            $("#frmMedicalTreatmentOther").hide(),
-            $("#frmSIOther").hide(),
-            $("#frmCODOther").hide(),
-            $("#frmMOIOther").hide(),
-            $("#frmSOIOther").hide(),
-            $("#frmExtCauseOther").hide(),
-            $("#frmSpecCatOther").hide()
+                $("#frmRaceOther").hide(),
+                $("#frmTreatmentFacilityOther").hide(),
+                $("#frmDeathOther").hide(),
+                $("#frmIncidentOccurrenceOther").hide(),
+                $("#frmIncidentReportOther").hide(),
+                $("#frmIncidentProcessingOther").hide(),
+                $("#frmMedicalTreatmentOther").hide(),
+                $("#frmSIOther").hide(),
+                $("#frmCODOther").hide(),
+                $("#frmMOIOther").hide(),
+                $("#frmSOIOther").hide(),
+                $("#frmExtCauseOther").hide(),
+                $("#frmSpecCatOther").hide()
             $("#frmMedTreatOther").hide()
         });
     </script>
     <script>
-            $("#stats_IndividualRaceID").change(function () {
-                if ($("#stats_IndividualRaceID option:selected").text() == "Other") {
-                    $("#frmRaceOther").show("slow")
-                } else {
-                    $("#frmRaceOther").hide("slow")
-                }
-            });
-            $("#stats_HospitalClinicID").change(function () {
-                if ($("#stats_HospitalClinicID option:selected").text() == "Other") {
-                    $("#frmTreatmentFacilityOther").show("slow")
-                } else {
-                    $("#frmTreatmentFacilityOther").hide("slow")
-                }
-            });
-            $("#DeathProvinceId").change(function () {
-                if ($("#DeathProvinceId option:selected").text() == "Other/International") {
-                    $("#frmDeathOther").show("slow")
-                } else {
-                    $("#frmDeathOther").hide("slow")
-                }
-            });
-            $("#OccurrenceProvinceId").change(function () {
-                if ($("#OccurrenceProvinceId option:selected").text() == "Other/International") {
-                    $("#frmIncidentOccurrenceOther").show("slow")
-                } else {
-                    $("#frmIncidentOccurrenceOther").hide("slow")
-                }
-            });
-            $("#ReportProvinceId").change(function () {
-                if ($("#ReportProvinceId option:selected").text() == "Other/International") {
-                    $("#frmIncidentReportOther").show("slow")
-                } else {
-                    $("#frmIncidentReportOther").hide("slow")
-                }
-            });
-            $("#ProcessingProvinceId").change(function () {
-                if ($("#ProcessingProvinceId option:selected").text() == "Other/International") {
-                    $("#frmIncidentProcessingOther").show("slow")
-                } else {
-                    $("#frmIncidentProcessingOther").hide("slow")
-                }
-            });
-            $("#TreatmentProvinceId").change(function () {
-                if ($("#TreatmentProvinceId option:selected").text() == "Other/International") {
-                    $("#frmMedicalTreatmentOther").show("slow")
-                } else {
-                    $("#frmMedicalTreatmentOther").hide("slow")
-                }
-            });
-            $("#stats_PrimaryCauseID").change(function () {
-                if ($("#stats_PrimaryCauseID option:selected").text() == "Other") {
-                    $("#frmCODOther").show("slow")
-                } else {
-                    $("#frmCODOther").hide("slow")
-                }
-            });
-            $("#stats_ApparentMannerID").change(function () {
-                if ($("#stats_ApparentMannerID option:selected").text() == "Other") {
-                    $("#frmMOIOther").show("slow")
-                } else {
-                    $("#frmMOIOther").hide("slow")
-                }
-            });
-            $("#stats_AutopsyTypeID").change(function () {
-                if ($("#stats_AutopsyTypeID option:selected").text() == "Other") {
-                    $("#frmAutopsyOther").show("slow")
-                } else {
-                    $("#frmAutopsyOther").hide("slow")
-                }
-            });
+        $("#stats_IndividualRaceID").change(function () {
+            if ($("#stats_IndividualRaceID option:selected").text() == "Other") {
+                $("#frmRaceOther").show("slow")
+            } else {
+                $("#frmRaceOther").hide("slow")
+            }
+        });
+        $("#stats_HospitalClinicID").change(function () {
+            if ($("#stats_HospitalClinicID option:selected").text() == "Other") {
+                $("#frmTreatmentFacilityOther").show("slow")
+            } else {
+                $("#frmTreatmentFacilityOther").hide("slow")
+            }
+        });
+        $("#DeathProvinceId").change(function () {
+            if ($("#DeathProvinceId option:selected").text() == "Other/International") {
+                $("#frmDeathOther").show("slow")
+            } else {
+                $("#frmDeathOther").hide("slow")
+            }
+        });
+        $("#OccurrenceProvinceId").change(function () {
+            if ($("#OccurrenceProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentOccurrenceOther").show("slow")
+            } else {
+                $("#frmIncidentOccurrenceOther").hide("slow")
+            }
+        });
+        $("#ReportProvinceId").change(function () {
+            if ($("#ReportProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentReportOther").show("slow")
+            } else {
+                $("#frmIncidentReportOther").hide("slow")
+            }
+        });
+        $("#ProcessingProvinceId").change(function () {
+            if ($("#ProcessingProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentProcessingOther").show("slow")
+            } else {
+                $("#frmIncidentProcessingOther").hide("slow")
+            }
+        });
+        $("#TreatmentProvinceId").change(function () {
+            if ($("#TreatmentProvinceId option:selected").text() == "Other/International") {
+                $("#frmMedicalTreatmentOther").show("slow")
+            } else {
+                $("#frmMedicalTreatmentOther").hide("slow")
+            }
+        });
+        $("#stats_PrimaryCauseID").change(function () {
+            if ($("#stats_PrimaryCauseID option:selected").text() == "Other") {
+                $("#frmCODOther").show("slow")
+            } else {
+                $("#frmCODOther").hide("slow")
+            }
+        });
+        $("#stats_ApparentMannerID").change(function () {
+            if ($("#stats_ApparentMannerID option:selected").text() == "Other") {
+                $("#frmMOIOther").show("slow")
+            } else {
+                $("#frmMOIOther").hide("slow")
+            }
+        });
+        $("#stats_AutopsyTypeID").change(function () {
+            if ($("#stats_AutopsyTypeID option:selected").text() == "Other") {
+                $("#frmAutopsyOther").show("slow")
+            } else {
+                $("#frmAutopsyOther").hide("slow")
+            }
+        });
     </script>
     <script>
         $('#SI_Other').change(function () {
@@ -950,5 +961,129 @@
         $("#btnNext").click(function () {
             document.getElementById("btnPOST").click();
         })
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            var toggle = document.getElementById("SI_Other").checked
+            if (toggle) {
+
+                $("#frmSIOther").show("slow")
+            } else {
+                $("#frmSIOther").hide("slow")
+            }
+        })
+
+        $(document).ready(function () {
+
+            var toggle = document.getElementById("SS_Other").checked
+            if (toggle) {
+                $("#frmSOIOther").show("slow")
+            } else {
+                $("#frmSOIOther").hide("slow")
+            }
+        })
+
+        $(document).ready(function () {
+
+            var toggle = document.getElementById("EC_Other").checked
+            if (toggle) {
+                $('#frmExtCauseOther').show("slow")
+            }
+            else $('#frmExtCauseOther').hide("slow")
+        })
+
+        $(document).ready(function () {
+
+            var toggle = document.getElementById("SC_Other").checked
+            if (toggle) {
+                $('#frmSpecCatOther').show("slow")
+            }
+            else $('#frmSpecCatOther').hide("slow")
+        })
+
+        $(document).ready(function () {
+
+            var toggle = document.getElementById("MT_Other").checked
+            if (toggle) {
+                $('#frmMedTreatOther').show("slow")
+            }
+            else $('#frmMedTreatOther').hide("slow")
+        })
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if ($("#stats_IndividualRaceID option:selected").text() == "Other") {
+                $("#frmRaceOther").show("slow")
+            } else {
+                $("#frmRaceOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#stats_HospitalClinicID option:selected").text() == "Other") {
+                $("#frmTreatmentFacilityOther").show("slow")
+            } else {
+                $("#frmTreatmentFacilityOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#DeathProvinceId option:selected").text() == "Other/International") {
+                $("#frmDeathOther").show("slow")
+            } else {
+                $("#frmDeathOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#OccurrenceProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentOccurrenceOther").show("slow")
+            } else {
+                $("#frmIncidentOccurrenceOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#ReportProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentReportOther").show("slow")
+            } else {
+                $("#frmIncidentReportOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#ProcessingProvinceId option:selected").text() == "Other/International") {
+                $("#frmIncidentProcessingOther").show("slow")
+            } else {
+                $("#frmIncidentProcessingOther").hide("slow")
+            }
+        });
+        $("#TreatmentProvinceId").change(function () {
+            if ($("#TreatmentProvinceId option:selected").text() == "Other/International") {
+                $("#frmMedicalTreatmentOther").show("slow")
+            } else {
+                $("#frmMedicalTreatmentOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#stats_PrimaryCauseID option:selected").text() == "Other") {
+                $("#frmCODOther").show("slow")
+            } else {
+                $("#frmCODOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#stats_ApparentMannerID option:selected").text() == "Other") {
+                $("#frmMOIOther").show("slow")
+            } else {
+                $("#frmMOIOther").hide("slow")
+            }
+        });
+        $(document).ready(function () {
+            if ($("#stats_AutopsyTypeID option:selected").text() == "Other") {
+                $("#frmAutopsyOther").show("slow")
+            } else {
+                $("#frmAutopsyOther").hide("slow")
+            }
+        });
     </script>
 }
