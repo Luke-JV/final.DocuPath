@@ -1248,6 +1248,8 @@
     <Content Include="Views\Test\bindTest.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseServiceRequests.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseUpdateHub.cshtml" />
+    <Content Include="Views\ForensicCase\ForensicCaseMediaItems.cshtml" />
+    <Content Include="Views\ForensicCase\ForensicCaseAdditionalEvidenceItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

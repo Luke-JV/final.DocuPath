@@ -1,11 +1,11 @@
 ﻿@model DocuPath.Models.DPViewModels.CoreDataViewModel
-@{ ViewBag.Title = "Update Hub"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+@{ ViewBag.Title = "Update Hub"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; string BreadcrumbText = "Update Forensic Case: " + ViewBag.TargetDR + " (Update Hub)"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Update Forensic Case (Update Hub)", "ForensicCaseUpdateHub") </li>
+    <li class="active">@Html.ActionLink(BreadcrumbText, "ForensicCaseUpdateHub") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
