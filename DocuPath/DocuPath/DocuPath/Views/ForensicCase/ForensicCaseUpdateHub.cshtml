@@ -1,11 +1,11 @@
 ﻿@model DocuPath.Models.DPViewModels.CoreDataViewModel
-@{ ViewBag.Title = "Update Hub"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+@{ ViewBag.Title = "Update Hub"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; string BreadcrumbText = "Update Forensic Case: " + ViewBag.TargetDR + " (Update Hub)"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Update Forensic Case (Update Hub)", "ForensicCaseUpdateHub") </li>
+    <li class="active">@Html.ActionLink(BreadcrumbText, "ForensicCaseUpdateHub") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -91,42 +91,42 @@
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="obs-tile" href="window.location.href = @Url.Action("UpdateObservations","ForensicCase", new { FCID = ViewBag.TargetID })">
+            <a class="hub-tile grid hub-subgrid" id="obs-tile" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-observations hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">OBSERVATIONS
                     <p class="hub-tile-desc" grid-area="desc">Maintain the set of observations and medical diagnoses made during the Forensic Case's autopsy session.</p>
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="sr-tile" href="window.location.href(@Url.Action("ForensicCaseServiceRequests","ForensicCase", new { FCID = ViewBag.TargetID }))">
+            <a class="hub-tile grid hub-subgrid" id="sr-tile" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-servicerequest hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">SERVICE REQUESTS
                     <p class="hub-tile-desc" grid-area="desc">Maintain the set of Service Requests issued to third-party Service Providers relating to the Forensic Case.</p>
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="media-tile" href="window.location.href(@Url.Action("ForensicCaseMediaItems","ForensicCase", new { FCID = ViewBag.TargetID }))">
+            <a class="hub-tile grid hub-subgrid" id="media-tile" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-media hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">MEDIA ITEMS
                     <p class="hub-tile-desc" grid-area="desc">Maintain the associated set of Media Items (audio, visual and graphical evidence) linked to the Forensic Case.</p>
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="ae-tile" href="window.location.href(@Url.Action("ForensicCaseAdditionalEvidence","ForensicCase", new { FCID = ViewBag.TargetID }))">
+            <a class="hub-tile grid hub-subgrid" id="ae-tile" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-additionalevidence hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">ADDITIONAL EVIDENCE
                     <p class="hub-tile-desc" grid-area="desc">Maintain the set of Additional Evidence items (documentation, forms, etc.) relating to the Forensic Case.</p>
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="cod-tile" href="window.location.href(@Url.Action("UpdateCauseOfDeath","ForensicCase", new { FCID = ViewBag.TargetID }))">
+            <a class="hub-tile grid hub-subgrid" id="cod-tile" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-cod hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">CAUSE OF DEATH
                     <p class="hub-tile-desc" grid-area="desc">Maintain the set of Cause Of Death estimations relating to the Forensic Case.</p>
                 </div>
             </a>
             <span class="hub-go"><span class="text-center"><i class="mdl2icon mdl2-right text-center" style="color: #fff"></i></span></span>
-            <a class="hub-tile grid hub-subgrid" id="stats-tile" href="window.location.href(@Url.Action("UpdateStatistics","ForensicCase", new { FCID = ViewBag.TargetID }))">
+            <a class="hub-tile grid hub-subgrid" id="stats-tile" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID">
                 <div class="mdl2icon mdl2-stats hub-tile-icon" grid-area="ico"></div>
                 <div class="hub-tile-title" grid-area="txt">STATISTICS
                     <p class="hub-tile-desc" grid-area="desc">Maintain the set of Forensic Case Statistics that are used for data analysis and topic modelling.</p>

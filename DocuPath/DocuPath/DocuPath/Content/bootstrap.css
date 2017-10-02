@@ -1844,6 +1844,10 @@ table th[class*="col-"] {
   border-color: #f8e5be;
 }
 
+.table-hover:not(.bootgrid-table) tr:hover th{
+    background-color: #fff8f8;
+}
+
 .mdr-datesizing {
     width: 5%;
     vertical-align: middle;
@@ -5684,6 +5688,29 @@ a.thumbnail:focus {
     color: #ffffff;
     background-color: #428bca;
     border-color: #3a87ad;
+}
+
+.alert-bar-neutral {
+    height: 30px !important;
+    line-height: 28px !important;
+    padding: 0 5px;
+    color: #fff;
+    background-color: #333333;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+.alert-bar-noitems {
+    font-family: 'U.S. 101';
+    font-size: 18pt;
+    font-weight: normal;
+    text-align: center;
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 0 5px;
+    color: #000;
+    /*margin: 15px 0;*/
+    background-color: #FFF8F8;
+    /*border-color: rgba(0, 0, 0, 0.15);*/
 }
 
 .alert h4 {
@@ -11062,6 +11089,7 @@ a.cal-event-week {
         text-overflow: inherit !important;
         white-space: inherit !important;
     }
+
 /*#endregion */
 
 /*#region DNA DECORATION: */
@@ -12884,6 +12912,17 @@ a.cal-event-week {
     	font-size: 9pt;
 	}
 
+    .table-large-identifier-alertbar {
+    	font-family: 'Consolas';
+    	font-weight: bold;
+    	font-size: 12pt;
+        color: rgba(255, 220, 220, 1);
+        padding: 0 3.5px;
+        border: 1px solid rgba(174, 31, 31, 1);
+        background-color: rgba(174, 31, 31, 1);
+        border-radius: 5px;
+	}
+
     .insight-mdl2icon {
 		font-family: 'Segoe MDL2 Assets';
 		font-size: 12pt;
@@ -13359,6 +13398,12 @@ ctrl {
 .highlight{
     color: #000;
     background-color: #ffff00;
+}
+
+mark {
+  background: #ffff00;
+  color: inherit;
+  padding: 0;
 }
 /*#endregion */
 
@@ -14071,10 +14116,10 @@ ctrl {
 /*#region AUDIT TRAIL: */
 
 .audit-trail-highlight {
-    background-color: rgba(255,220,220,1) !important;
+    background-color: #ffff00 !important;
     /*padding: 1px;*/
     font-weight: bold !important;
-    color: rgba(174,31,31,1) !important;
+    /*color: rgba(174,31,31,1) !important;*/
 }
 
 .tx-details {

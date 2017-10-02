@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<DocuPath.DataLayer.SERVICE_REQUEST>
 @using DocuPath.DataLayer
+@using DocuPath.Models;
 @{ ViewBag.Title = "All"; ViewBag.GenericHAPTICLocator = "AllGeneric"; ViewBag.SpecificHAPTICLocator = "AllSRSpecific"; ViewBag.PageInfoLocator = "AllSR"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -63,9 +64,13 @@
             <th data-column-id="requestType" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.RequestTypeID)
             </th>
-            <th data-column-id="requestNote" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.RequestNote)
+            <th data-column-id="serialNum" data-formatter="serial" class="colour-dpred">
+                @*@Html.DisplayNameFor(model => model.RequestNote)*@
+                @Html.DisplayName("Raw Serial/Seal Number")
             </th>
+            @*<th data-column-id="specimenID" class="colour-dpred">
+                @Html.DisplayName("Specimen Serial Number")
+            </th>*@
             <th data-column-id="dateAdded" data-converter="dpdate" data-order="desc" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.DateAdded)
             </th>
@@ -90,10 +95,21 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
+                        @*@Html.DisplayFor(modelItem => item.RequestNote)*@
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RequestNote)
+                        @*@Html.DisplayFor(modelItem => item.RequestNote)*@
+                        @*Specimen with serial number <kbd>@VERTEBRAE.ChunkString((item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber), 5, " ")</kbd> submitted with request note <kbd>@item.RequestNote</kbd>)*@
+                        @*<span>(@VERTEBRAE.ChunkString((item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber), 5, " "))<br />@item.RequestNote</span>*@
+                        @*@Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
+                        <br />
+                        @Html.DisplayFor(modelItem => item.RequestNote)*@
+                        @*@VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber,5," ")*@
+                        @Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
                     </td>
+                    @*<td>
+                        @Html.DisplayFor(modelitem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
@@ -113,10 +129,16 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)
+                        @*@Html.DisplayFor(modelItem => item.RequestNote)*@
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RequestNote)
+                        @*@Html.DisplayFor(modelItem => item.RequestNote)*@
+                        @*@VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")*@
+                        @Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
                     </td>
+                    @*<td>
+                        @Html.DisplayFor(modelitem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
+                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
@@ -152,8 +174,8 @@
                             "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link\" data-placement=\"right\" href=\"/ServiceRequest/LinkExternalReport/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
                     }
                  },
-                "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
+                "serial": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+                    return "<span class=\"table-large-identifier\">"+ row.serialNum + "</span>";
                 }
             }
         });

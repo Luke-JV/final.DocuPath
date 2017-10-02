@@ -33,7 +33,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region CREATES:
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         public ActionResult Add()
@@ -1402,7 +1402,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult Edit(int id)
@@ -1505,8 +1505,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult ForensicCaseUpdateHub(int id)
         {
-            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
-            ViewBag.TargetBriefDesc = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().FCBriefDescription;
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;            
             ViewBag.TargetID = id;
             return View();
         }
@@ -1547,15 +1546,34 @@ namespace DocuPath.Controllers
         {
             return View();
         }
-        //>>>>>>>>>>>>>>>>>>>>>>
+    //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
-        public ActionResult ForensicCaseServiceRequests(int FCID)
+        public ActionResult ForensicCaseServiceRequests(int id)
         {
-            return View(db.SERVICE_REQUEST.Where(sr => sr.ForensicCaseID == FCID));
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.TargetID = id;
+            return View(db.SERVICE_REQUEST.Where(sr => sr.ForensicCaseID == id));
         }
     //>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
+        public ActionResult ForensicCaseMediaItems(int id)
+        {
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.TargetID = id;
+            return View(db.MEDIA.Where(m => m.ForensicCaseID == id));
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
+        public ActionResult ForensicCaseAdditionalEvidenceItems(int id)
+        {
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.TargetID = id;
+            return View(db.ADDITIONAL_EVIDENCE.Where(ae => ae.ForensicCaseID == id));
+        }
+    //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Statistics Section")]
         public ActionResult ForensicCaseUpdatedSuccess()
@@ -1625,7 +1643,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region NON-CRUD ACTIONS:
         public ActionResult GetSP(string query)
         {

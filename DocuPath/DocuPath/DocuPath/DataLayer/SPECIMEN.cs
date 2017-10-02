@@ -33,7 +33,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Chain Of Custody")]
         public string DisposalMechanism { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
-        [DisplayName("Specimen Nature/Description")]
+        [DisplayName("Nature/Description")]
         public string SpecimenNature { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Serial/Seal Number")]

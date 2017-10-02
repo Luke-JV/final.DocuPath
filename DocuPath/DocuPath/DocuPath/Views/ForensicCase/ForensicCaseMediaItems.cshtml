@@ -1,12 +1,12 @@
-﻿@model IEnumerable<DocuPath.DataLayer.SERVICE_REQUEST>
+﻿@model IEnumerable<DocuPath.DataLayer.MEDIA>
 @using DocuPath.Models;
-@{ ViewBag.Title = "Update"; ViewBag.GenericHAPTICLocator = "UpdateGeneric"; ViewBag.SpecificHAPTICLocator = "UpdateFCSpecific"; ViewBag.PageInfoLocator = "UpdateFC"; string BreadcrumbText = "Update Forensic Case: " + ViewBag.TargetDR + " (Service Requests)"; }
+@{ ViewBag.Title = "Update"; ViewBag.GenericHAPTICLocator = "UpdateGeneric"; ViewBag.SpecificHAPTICLocator = "UpdateFCSpecific"; ViewBag.PageInfoLocator = "UpdateFC"; string BreadcrumbText = "Update Forensic Case: " + ViewBag.TargetDR + " (Media Items)"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink(BreadcrumbText, "ForensicCaseServiceRequests") </li>
+    <li class="active">@Html.ActionLink(BreadcrumbText, "ForensicCaseMediaItems") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -14,11 +14,11 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-fc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">UPDATE FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">SERVICE REQUESTS</span></div>
+            <div class="page-header-text">UPDATE FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">MEDIA ITEMS</span></div>
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-seven">
+        <div class="page-buttons-subgrid buttons-eight">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -28,7 +28,7 @@
             </div>
             <div grid-area="btn2">
                 <form id="backForm" class="minimalform" action="javascript:void(0))" style="margin-top: 2px">
-                    <button id="btnAdd" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD SERVICE REQUEST"></button>
+                    <button id="btnAdd" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD NEW MEDIA"></button>
                 </form>
             </div>
             <div grid-area="btn3">
@@ -45,11 +45,16 @@
                 </form>
             </div>
             <div grid-area="btn6">
-                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnThumbsizeToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-resize btn-mdl2icon" data-toggle="tooltip" title="TOGGLE THUMBNAIL SIZE"></button>
+                </form>
             </div>
             <div grid-area="btn7">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn8">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur();" data-toggle="tooltip" title="HELP"></button>
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
@@ -105,48 +110,44 @@
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCoreData/@ViewBag.TargetID">Core Data</a></li>
             <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID" style="margin-left: 5px">Observations</a></li>
-            <li class="active"> <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID" style="margin-left: 5px">Service Requests</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID" style="margin-left: 5px">Media Items</a></li>
+            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID" style="margin-left: 5px">Service Requests</a></li>
+            <li class="active"> <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID" style="margin-left: 5px">Media Items</a></li>
             <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID" style="margin-left: 5px">Additional Evidence</a></li>
             <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID" style="margin-left: 5px">Cause of Death</a></li>
             <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID" style="margin-left: 5px">Statistics</a></li>
         </ul>
 
-        <p class="alert-bar alert-bar-neutral fullwidth" style="margin: 5px 0 7.5px 0; text-align: left">Currently showing all <span class="table-large-identifier-alertbar">SERVICE REQUESTS</span> for <span class="table-large-identifier-alertbar">@ViewBag.TargetDR</span>:</p>
+        <p class="alert-bar alert-bar-neutral fullwidth" style="margin: 5px 0 7.5px 0; text-align: left">Currently showing all <span class="table-large-identifier-alertbar">MEDIA ITEMS</span> for <span class="table-large-identifier-alertbar">@ViewBag.TargetDR</span>:</p>
 
         <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
-            <input id="FCSRSearchBar" type="text" class="form-control" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase..." style="margin: 7.5px 0 15px 0">
+            <input id="FCMediaSearchBar" type="text" class="form-control" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase..." style="margin: 7.5px 0 15px 0">
         </form>
 
-        <table id="FCSR" class="table table-striped table-hover">
+        <table id="FCMedia" class="table table-striped table-hover">
             <tr id="headerRow" style="border-bottom: 1.5px solid #ae1f1f">
-                <th class="colour-dpred">Service Provider</th>
-                <th class="colour-dpred">Request Type</th>
-                <th class="colour-dpred">Raw Serial/Seal Number</th>
-                <th class="colour-dpred">Request Note</th>
-                <th class="colour-dpred">Date Added</th>
+                <th class="colour-dpred">Thumbnail</th>
+                <th class="colour-dpred">Caption</th>
+                <th class="colour-dpred">Description</th>
                 <th class="colour-dpred">Actions</th>
             </tr>
             @foreach (var item in Model.OrderByDescending(x => x.DateAdded))
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)</td>
-                    <td class="table-large-identifier">@Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</td>
-                    <td><p style="max-width: 350px !important; margin: 0 !important; text-align: justify">@item.RequestNote</p></td>
-                    <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
+                    <td class="text-center"><img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb" /></td>
+                    <td><strong>@Html.DisplayFor(modelItem => item.MediaCaption)</strong></td>
+                    <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
                     <td>
-                        <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SR_@item.ServiceRequestID"></a></span>
-                        <div class="modal fade" id="SR_@item.ServiceRequestID" role="dialog">
+                        <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#MEDIA_@item.MediaID"></a></span>
+                        <div class="modal fade" id="MEDIA_@item.MediaID" role="dialog">
                             <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <div class="grid hdr-grid">
                                             <div class="page-hdr">
                                                 <div class="page-header-subgrid">
-                                                    <div class="icon-circle mdl2icon mdl2-servicerequest"></div>
+                                                    <div class="icon-circle mdl2icon mdl2-media"></div>
                                                     <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-                                                    <div class="page-header-text">VIEW SERVICE REQUEST</div>
+                                                    <div class="page-header-text">VIEW MEDIA ITEM</div>
                                                 </div>
                                             </div>
                                             <div class="page-btns">
@@ -154,7 +155,7 @@
                                                     <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
                                                     <div></div>
                                                     <div grid-area="btn1">
-                                                        <form class="minimalform" action="javascript:void(0)">
+                                                        <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                                                             <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
                                                         </form>
                                                     </div>
@@ -163,54 +164,89 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @*<button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">VIEW SERVICE REQUEST</h4>*@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-horizontal border-generic form-generic nomarg">
                                             <div class="row" style="margin-left: 0px">
-                                                <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-                                                    <div class="panel-group">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
-                                                                <span>SERVICE REQUEST DETAILS</span>
+                                                <div class="col-md-5" style="padding-left: 0px; padding-right: 2.5px">
+                                                    <div class="panel panel-default" style="margin-bottom: 5px">
+                                                        <div class="panel-heading">
+                                                            <span class="mdl2icon mdl2-media panel-mdl2icon"></span>
+                                                            <span>MEDIA ITEM THUMBNAIL</span>
+                                                        </div>
+                                                        <div id="ThumbnailPanel" class="panel-collapse collapse in">
+                                                            <div class="panel-body apad5 text-center" style="height: 309.4px; max-height: 309.4px; width: auto">
+                                                                <div class="imgPreview" style="height: 300px; width: 410px; padding: 0px; display: grid; justify-content: center; margin: auto">
+                                                                    <img class="img-thumbnail" src="~/@VERTEBRAE.GetUrl(item.MediaLocation)" style="margin: auto; max-width: 100%; max-height: 100%; object-fit: contain" />
+                                                                </div>
                                                             </div>
-                                                            <div class="panel-body">
-                                                                <dl class="dl-horizontal-small">
-                                                                    <dt>
-                                                                        @Html.DisplayName("Company Name")
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7" style="padding-left: 2.5px; padding-right: 15px">
+                                                    <div class="panel panel-default" style="margin-bottom: 5px">
+                                                        <div class="panel-heading">
+                                                            <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                                            <span>MEDIA ITEM DETAILS</span>
+                                                        </div>
+                                                        <div id="DetailsPanel" class="panel-collapse collapse in">
+                                                            <div class="panel-body" style="min-height: 309.4px">
+                                                                <dl class="dl-horizontal-tiny">
+                                                                    <dt style="padding-top: 2.8px">
+                                                                        @Html.DisplayName("Caption")
                                                                     </dt>
 
-                                                                    <dd>
-                                                                        @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                    <dd class="table-large-identifier" style="font-weight: bold; text-transform: uppercase">
+                                                                        @Html.DisplayFor(model => item.MediaCaption)
                                                                     </dd>
 
-
-                                                                    <dt style="padding-top: 5.2px">
-                                                                        @Html.DisplayName("Related Case")
+                                                                    <dt>
+                                                                        @Html.DisplayName("Description")
                                                                     </dt>
 
-                                                                    <dd class="large-identifier">
-                                                                        @Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)
+                                                                    <dd style="text-align: justify; padding-right: 10px">
+                                                                        @Html.DisplayFor(model => item.MediaDescription)
                                                                     </dd>
                                                                     <hr class="details-hr" />
                                                                     <dt>
-                                                                        @Html.DisplayName("Request Type")
+                                                                        @Html.DisplayName("Accessibility")
                                                                     </dt>
 
-                                                                    <dd>
-                                                                        @Html.DisplayFor(model => item.REQUEST_TYPE.RequestTypeValue)
-                                                                    </dd>
+                                                                    @if (item.IsPubliclyAccessible == true)
+                                                                    {
+                                                                        <dd>
+                                                                            @Html.Raw(VERTEBRAE.StatusMarkup("Public", "status-danger"))
+                                                                        </dd>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <dd>
+                                                                            @Html.Raw(VERTEBRAE.StatusMarkup("Private", "status-ok"))
+                                                                        </dd>
+                                                                    }
 
                                                                     <dt>
-                                                                        @Html.DisplayName("Request Note")
+                                                                        @Html.DisplayName("Purpose")
                                                                     </dt>
 
                                                                     <dd>
-                                                                        @Html.DisplayFor(model => item.RequestNote)
+                                                                        @Html.DisplayFor(model => item.MEDIA_PURPOSE.MediaPurposeValue)
                                                                     </dd>
+
+                                                                    @if (item.MEDIA_PURPOSE.MediaPurposeValue == "Case Related")
+                                                                    {
+                                                                        <dt style="padding-top: 5.2px">@Html.DisplayName("DR Number")</dt>
+                                                                                            <dd class="large-identifier">@Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)</dd>
+                                                                    }
                                                                     <hr class="details-hr" />
+                                                                    <dt>
+                                                                        @Html.DisplayName("Added By")
+                                                                    </dt>
+
+                                                                    <dd>
+                                                                        @Html.DisplayFor(model => item.USER.FirstName) @Html.DisplayFor(model => item.USER.LastName)
+                                                                    </dd>
+
                                                                     <dt>
                                                                         @Html.DisplayName("Date Added")
                                                                     </dt>
@@ -222,55 +258,55 @@
                                                                     <dt>
                                                                         @Html.DisplayName("Status")
                                                                     </dt>
-                                                                    @if (item.IsCancelled == true)
+                                                                    @if (item.STATUS.StatusValue == "Active")
                                                                     {
-                                                                        <dd class="status-inactive">Cancelled</dd>
+                                                                        <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-ok"))</dd>
                                                                     }
-                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                                                                    else if (item.STATUS.StatusValue == "Pending")
                                                                     {
-                                                                        <dd class="status-danger">Active</dd>
+                                                                        <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-warning"))</dd>
                                                                     }
-                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                                                                    else
                                                                     {
-                                                                        <dd class="status-ok">Closed - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + item.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
+                                                                        <dd>@Html.Raw(VERTEBRAE.StatusMarkup(item.STATUS.StatusValue, "status-inactive"))</dd>
                                                                     }
-                                                                </dl>
-                                                            </div>
-                                                        </div>
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
-                                                                <span>SPECIMEN DETAILS</span>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <dl class="dl-horizontal-small">
-                                                                    <dt>@Html.DisplayName("Investigation Required")</dt>
-                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
-
-                                                                    <dt>@Html.DisplayName("Nature/Description")</dt>
-                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
-                                                                    <hr class="details-hr" />
-                                                                    <dt style="padding-top: 5.2px">@Html.DisplayName("Serial/Seal Number")</dt>
-                                                                    <dd class="large-identifier">
-                                                                        @VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
-                                                                        @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
-                                                                    </dd>
-
-                                                                    <dt>@Html.DisplayName("Chain Of Custody")</dt>
-                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
                                                                 </dl>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row" style="margin-left: 0px; padding-top: 0px">
+                                                <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
+                                                    <div class="panel panel-default" style="margin-bottom: 0px">
+                                                        <div class="panel-heading">
+                                                            <span class="mdl2icon mdl2-tag panel-mdl2icon"></span>
+                                                            <span>Media Item Tags</span>
+                                                        </div>
+                                                        <div id="TagPanel" class="panel-collapse collapse in">
+                                                            <div class="panel-body apad5">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        @foreach (var tag in item.MEDIA_TAG.Where(x => x.MediaID == item.MediaID))
+                                                                        {
+                                                                            @Html.Label(tag.CONTENT_TAG.ContentTagText, new { @class = "details-tag", @data_toggle = "tooltip", @title = tag.CONTENT_TAG.ContentTagCode })
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                         @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)"></iframe>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </td>
+
                 </tr>
             }
         </table>
@@ -279,10 +315,10 @@
 }
 
 @section Scripts{
-@Scripts.Render("~/bundles/bootgrid")
-@Scripts.Render("~/bundles/moment")
-@Scripts.Render("~/bundles/mark")
-@Scripts.Render("~/bundles/materialdatetime")
+    @Scripts.Render("~/bundles/bootgrid")
+    @Scripts.Render("~/bundles/moment")
+    @Scripts.Render("~/bundles/mark")
+    @Scripts.Render("~/bundles/materialdatetime")
 
     <script type="text/javascript">
         //var grid = $("#allSR").bootgrid({
@@ -311,32 +347,44 @@
         //});
     </script>
     <script id="onDomReady" type="text/javascript">
-            // Enable tooltips:
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
+        // Enable tooltips:
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
 
-            // Toggle Table Density:
-            $("#btnDensityToggle").click(function () {
-                var $target = $("#allSR");
-                var $condensed = "table-condensed";
-                var $minimal = "table-minimal"
-                if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
-                else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
-                else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
-                $("#btnDensityToggle").blur()
-            });
+        // Toggle Table Density:
+        $("#btnDensityToggle").click(function () {
+            var $target = $("#FCMedia");
+            var $condensed = "table-condensed";
+            var $minimal = "table-minimal"
+            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+            $("#btnDensityToggle").blur()
+        });
 
-            // FILTER ON TYPING:
-            var $rows = $('#FCSR tr:not(#headerRow)');
-            $('#FCSRSearchBar').keyup(function() {
-                var query = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
-                    reg = RegExp(query, 'i'),
-                    text;
-                $rows.show().filter(function() {
-                    text = $(this).text().replace(/\s+/g, ' ');
-                    return !reg.test(text);
-                }).hide();
-            });
+        // FILTER ON TYPING:
+        var $rows = $('#FCMedia tr:not(#headerRow)');
+        $('#FCMediaSearchBar').keyup(function () {
+            var query = '^(?=.*\\b' + $.trim($(this).val()).split(/\s+/).join('\\b)(?=.*\\b') + ').*$',
+                reg = RegExp(query, 'i'),
+                text;
+            $rows.show().filter(function () {
+                text = $(this).text().replace(/\s+/g, ' ');
+                return !reg.test(text);
+            }).hide();
+        });
+
+        // Toggle Thumbnail Sizes:
+        $("#btnThumbsizeToggle").click(function () {
+            var $target = $(".media-thumb");
+            var $large = "thumbsize-expanded";
+            if ($target.hasClass($large)) {
+                $target.removeClass($large);
+            } else {
+                $target.addClass($large);
+            }
+            $("#btnThumbsizeToggle").blur()
+        });
     </script>
 }
