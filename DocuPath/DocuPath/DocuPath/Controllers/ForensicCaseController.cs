@@ -508,9 +508,92 @@ namespace DocuPath.Controllers
         //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
-        public ActionResult AddServiceRequests()
+        public ActionResult ProvideSpecimens(/*int id*/)
         {
-            string actionName = "AddServiceRequests";
+            string actionName = "ProvideSpecimens";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Service Requests");
+                #endregion
+                #region PREPARE MODEL
+                SPECIMEN model = new SPECIMEN();
+                model.SpecimenID = db.SPECIMEN.Max(sc => sc.SpecimenID) + 1;
+                model.ServiceRequestID = -1;
+                model.ServiceRequestID = -1;
+                model.InvestigationRequired = "";
+                model.SpecimenNature = "";
+                model.SpecimenSerialNumber = "";
+                model.ExternalReportID = -1;
+                //FCServiceRequestViewModel model = new FCServiceRequestViewModel();
+                //List<SERVICE_REQUEST> srList = new List<SERVICE_REQUEST>();
+                //List<SPECIMEN> specimenList = new List<SPECIMEN>();
+
+                //for (int i = 0; i < VERTEBRAE.maxSRPerFCAddUpdate; i++)
+                //{
+                //    SERVICE_REQUEST newSR = new SERVICE_REQUEST();
+                //    srList.Add(newSR);
+                //    SPECIMEN newSpecimen = new SPECIMEN();
+                //    specimenList.Add(newSpecimen);
+                //}
+
+
+                //model.serviceRequests = srList;
+                //model.specimens = specimenList;
+                //model.activeSP = db.SERVICE_PROVIDER.Where(sp => sp.IsDeactivated == false).ToList();
+                //model.requestTypes = db.REQUEST_TYPE.ToList();
+
+                #endregion
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Service Requests");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
+        public ActionResult ProvideSpecimens(FCServiceRequestViewModel model)
+        {
+            string actionName = "ProvideSpecimens";
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Service Requests");
+                #endregion
+                //return View(model);
+            }
+
+            try
+            {
+                //TODO: DB Logic
+                //db.SaveChanges();
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Service Requests");
+                #endregion
+                return RedirectToAction("SelectMediaItems");
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Service Requests");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+        //>>>>>>>>>>>>>>>>>>>>>>        
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
+        public ActionResult CaptureServiceRequestDetails()
+        {
+            string actionName = "CaptureServiceRequestDetails";
             try
             {
                 #region AUDIT_WRITE
@@ -528,7 +611,6 @@ namespace DocuPath.Controllers
                     SPECIMEN newSpecimen = new SPECIMEN();
                     specimenList.Add(newSpecimen);
                 }
-
 
                 model.serviceRequests = srList;
                 model.specimens = specimenList;
@@ -551,9 +633,9 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
-        public ActionResult AddServiceRequests(FCServiceRequestViewModel model)
+        public ActionResult CaptureServiceRequestDetails(FCServiceRequestViewModel model)
         {
-            string actionName = "AddServiceRequests";
+            string actionName = "CaptureServiceRequestDetails";
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
