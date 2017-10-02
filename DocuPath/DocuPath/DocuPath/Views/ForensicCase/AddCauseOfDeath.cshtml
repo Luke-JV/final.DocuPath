@@ -460,4 +460,25 @@
                 document.getElementById("btnPOST").click();
             })
     </script>
+
+    <script>
+            $(document).ready(function () {
+                var instr = '@Html.Raw(ViewBag.Instruction)'
+                    if (instr == 'UPDATE') {
+                        $('#secondarytoggle').bootstrapToggle('on');                       
+                    }
+            })
+            $(document).ready(function () {
+                        var instr = '@Html.Raw(ViewBag.Instruction)'
+                        if (instr == 'UPDATE') {
+                            $("#tertiarytoggle").bootstrapToggle('on');
+                        }
+                })
+            $(document).ready(function () {
+                        var instr = '@Html.Raw(ViewBag.Instruction)'
+                        if (instr == 'UPDATE') {
+                            $("#quaternarytoggle").bootstrapToggle('on');
+                        }
+                })
+    </script>
 }

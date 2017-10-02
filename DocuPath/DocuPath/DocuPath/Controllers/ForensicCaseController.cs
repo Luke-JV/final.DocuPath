@@ -609,6 +609,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Media Items Section")]
         public ActionResult UploadMediaItems(int id)
         {
+
             string actionName = "UploadMediaItems";
             try
             {
@@ -726,6 +727,12 @@ namespace DocuPath.Controllers
             string actionName = "CaptureMediaItemDetails";
             try
             {
+                if (id < 0)
+                {
+                    Session["UPDATE"] = id;
+                    id = Math.Abs(id);
+                    ViewBag.Instruction = "UPDATE";
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Media Items");
                 #endregion
@@ -791,6 +798,16 @@ namespace DocuPath.Controllers
 
             try
             {
+                int update = 0;
+                try
+                {
+                    update = (int)Session["UPDATE"];
+                    Session["UPDATE"] = "";
+                }
+                catch (Exception)
+                {
+
+                }
 
                 foreach (var item in model.mediaList)
                 {
@@ -811,7 +828,14 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Media");
                 #endregion
-                return RedirectToAction("SelectAdditionalEvidenceItems", new { id = model.mediaList.FirstOrDefault().ForensicCaseID });
+                if (update < 0)
+                {
+                    return RedirectToAction("ForensicCaseMediaItems", new { id = Math.Abs(update) });
+                }
+                else
+                {
+                    return RedirectToAction("SelectAdditionalEvidenceItems", new { id = model.mediaList.FirstOrDefault().ForensicCaseID });
+                }
             }
             catch (Exception x)
             {
@@ -1826,7 +1850,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("UpdateStatistics", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("UpdateCauseOfDeath", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -2324,7 +2348,110 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")] //todo
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Statistics Section")] //todo
+        public ActionResult UpdateCauseOfDeath(int id)
+        {
+            CODViewModel model = new CODViewModel();
+
+            model.primaryCODEst = db.CASE_COD_ESTIMATION.Where(x => x.ForensicCaseID == id && x.COD_PROMINENCE.ProminenceValue == "Primary").FirstOrDefault();
+            model.secondaryCODEst = db.CASE_COD_ESTIMATION.Where(x => x.ForensicCaseID == id && x.COD_PROMINENCE.ProminenceValue == "Secondary").FirstOrDefault();
+            model.tertiaryCODEst = db.CASE_COD_ESTIMATION.Where(x => x.ForensicCaseID == id && x.COD_PROMINENCE.ProminenceValue == "Tertiary").FirstOrDefault();
+            model.quaternaryCODEst = db.CASE_COD_ESTIMATION.Where(x => x.ForensicCaseID == id && x.COD_PROMINENCE.ProminenceValue == "Quaternary").FirstOrDefault();
+            ViewBag.Instruction = "UPDATE";
+
+            return View("AddCauseOfDeath",model);
+        }
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Statistics Section")]
+        [ValidateInput(false)]
+        public ActionResult UpdateCauseOfDeath(CODViewModel model)
+        {
+
+            string actionName = "AddCauseOfDeath";
+            if (!ModelState.IsValid)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Cause Of Death");
+                #endregion
+                //return View(model);
+            }
+
+            try
+            {
+                List<CASE_COD_ESTIMATION> COD = new List<CASE_COD_ESTIMATION>();
+                string temp = "";
+
+
+                if (model.primaryCODEst.CONTENT_TAG.ContentTagText != null)
+                {
+                    temp = model.primaryCODEst.CONTENT_TAG.ContentTagText.Substring(model.primaryCODEst.CONTENT_TAG.ContentTagText.IndexOf(')') + 2);
+                    model.primaryCODEst.CONTENT_TAG = db.CONTENT_TAG.Where(x => x.ContentTagText == temp).FirstOrDefault();
+                    model.primaryCODEst.ProminenceID = db.COD_PROMINENCE.Where(x => x.ProminenceValue == "Primary").FirstOrDefault().ProminenceID;
+                    COD.Add(model.primaryCODEst);
+
+                    if (model.secondaryCODEst.CONTENT_TAG.ContentTagText != null)
+                    {
+                        temp = model.secondaryCODEst.CONTENT_TAG.ContentTagText.Substring(model.secondaryCODEst.CONTENT_TAG.ContentTagText.IndexOf(')') + 2);
+                        model.secondaryCODEst.CONTENT_TAG = db.CONTENT_TAG.Where(x => x.ContentTagText == temp).FirstOrDefault();
+                        model.secondaryCODEst.ProminenceID = db.COD_PROMINENCE.Where(x => x.ProminenceValue == "Secondary").FirstOrDefault().ProminenceID;
+                        COD.Add(model.secondaryCODEst);
+
+                        if (model.tertiaryCODEst.CONTENT_TAG.ContentTagText != null)
+                        {
+                            temp = model.tertiaryCODEst.CONTENT_TAG.ContentTagText.Substring(model.tertiaryCODEst.CONTENT_TAG.ContentTagText.IndexOf(')') + 2);
+                            model.tertiaryCODEst.CONTENT_TAG = db.CONTENT_TAG.Where(x => x.ContentTagText == temp).FirstOrDefault();
+                            model.tertiaryCODEst.ProminenceID = db.COD_PROMINENCE.Where(x => x.ProminenceValue == "Tertiary").FirstOrDefault().ProminenceID;
+                            COD.Add(model.tertiaryCODEst);
+                            if (model.quaternaryCODEst.CONTENT_TAG.ContentTagText != null)
+                            {
+                                temp = model.quaternaryCODEst.CONTENT_TAG.ContentTagText.Substring(model.quaternaryCODEst.CONTENT_TAG.ContentTagText.IndexOf(')') + 2);
+                                model.quaternaryCODEst.CONTENT_TAG = db.CONTENT_TAG.Where(x => x.ContentTagText == temp).FirstOrDefault();
+                                model.quaternaryCODEst.ProminenceID = db.COD_PROMINENCE.Where(x => x.ProminenceValue == "Quaternary").FirstOrDefault().ProminenceID;
+                                COD.Add(model.quaternaryCODEst);
+                            }
+                        }
+                    }
+                }
+                if (!(COD.Count < 1))
+                {
+                    //   
+                    FORENSIC_CASE FC = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == model.primaryCODEst.ForensicCaseID).FirstOrDefault();
+                    try
+                    {
+
+                        FC.CASE_COD_ESTIMATION.Clear();
+                        FC.CASE_COD_ESTIMATION = COD;
+                        db.FORENSIC_CASE.Attach(FC);
+                        db.Entry(FC).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    catch (Exception)
+                    {
+
+                        
+                    }
+                    
+                }
+
+                //db.SaveChanges();
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Cause Of Death");
+                #endregion
+                return RedirectToAction("UpdateStatistics", new { id = model.primaryCODEst.ForensicCaseID });
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Cause Of Death");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
         public ActionResult ForensicCaseServiceRequests(int id)
@@ -2342,7 +2469,20 @@ namespace DocuPath.Controllers
             ViewBag.TargetID = id;
             return View(db.MEDIA.Where(m => m.ForensicCaseID == id));
         }
-    //>>>>>>>>>>>>>>>>>>>>>>
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
+        public ActionResult SelectNewMediaItems(int id)
+        {
+            ViewBag.FCID = id;
+            ViewBag.Instruction = "UPDATE";
+            return View("SelectMediaItems");
+        }
+        public ActionResult CaptureNewMediaItems(int id)
+        {
+            id = id * (-1);
+            return RedirectToAction("CaptureMediaItemDetails",new { id = id});
+        }
+        //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
         public ActionResult ForensicCaseAdditionalEvidenceItems(int id)
