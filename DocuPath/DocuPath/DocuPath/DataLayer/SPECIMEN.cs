@@ -33,6 +33,8 @@ namespace DocuPath.DataLayer
         [DisplayName("Chain Of Custody")]
         public string DisposalMechanism { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
+        [StringLength(255)]
+        //[DataType(DataType.MultilineText)]
         [DisplayName("Nature/Description")]
         public string SpecimenNature { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]

@@ -82,41 +82,6 @@
         </div>
     </div>
 </div>
-<div id="divMaxLimitWarning" class="modal-background hidden">
-    <div class="modalbox">
-        @* TITLE *@
-        <div class="modalbox-title-info"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoInfo.png" />INFORMATION</div>
-        @* MESSAGE *@
-        <div class="modalbox-message-text">
-            Maximum Service Request limit reached.
-        </div>
-        @* HELP/INFO *@
-        <div class="panel-group" id="maxlimithelpaccordion">
-            <div class="modal-help-panel">
-                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#maxlimithelpbody" data-parent="#maxlimithelpaccordion">More Information</div>
-                <div id="maxlimithelpbody" class="panel-collapse collapse modalbox-help-panel-text">
-                    <p style="margin-bottom: 0px; font-weight: bold">Code: I001</p>
-                    <hr class="modal-help-hr-warning" />
-                    <ul class="haptic-ul">
-                        <li>The maximum number of Service Requests that can be added during the Forensic Case add or update process is maintained in a system parameter.</li>
-                        <li>The current value of this parameter is <kbd>@VERTEBRAE.maxSRPerFCAddUpdate</kbd> Service Requests.</li>
-                        <li>As the current page already contains @VERTEBRAE.maxSRPerFCAddUpdate Service Requests, no additional Service Request containers have been added.</li>
-                        <li>To dismiss this notification, click the <kbd>OK</kbd> button.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        @* BUTTONS *@
-        <div class="modalbox-button-bar">
-            <div class="col-md-3 modal-btn-col"></div>
-            <div class="col-md-3 modal-btn-col"></div>
-            <div class="col-md-3 modal-btn-col"></div>
-            <div class="col-md-3 modal-btn-col">
-                <input type="button" id="btnLimitOK" value="OK" class="btn btn-modal-generic" />
-            </div>
-        </div>
-    </div>
-</div>
 
 @* PAGE CONTENT: *@
 @using (Html.BeginForm())

@@ -73,41 +73,27 @@
                         <span class="mdl2icon mdl2-fc panel-mdl2icon"></span>
                         <span>CORE DATA</span>
                     </div>
-                    <div id="CorePanel" class="panel-collapse collapse">
+                    <div id="CorePanel" class="panel-collapse collapse">                        
                         <div class="panel-body">
                             <dl class="dl-horizontal">
+                                <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.forensicCase.ForensicDRNumber)</dt>
+                                <dd class="large-identifier">@Html.DisplayFor(model => model.forensicCase.ForensicDRNumber)</dd>
 
-                                <dt style="padding-top: 5.2px">
-                                    @Html.DisplayNameFor(model => model.forensicCase.ForensicDRNumber)
-                                </dt>
-
-                                <dd class="large-identifier">
-                                    @Html.DisplayFor(model => model.forensicCase.ForensicDRNumber)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.forensicCase.FCBriefDescription)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.FCBriefDescription)
-                                </dd>
+                                <dt>@Html.DisplayNameFor(model => model.forensicCase.FCBriefDescription)</dt>
+                                <dd>@Html.DisplayFor(model => model.forensicCase.FCBriefDescription)</dd>
                                 <hr class="details-hr" />
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.forensicCase.UserID)
-                                </dt>
+                                <dt>@Html.DisplayNameFor(model => model.forensicCase.UserID)</dt>
 
-                                <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.USER.FirstName) @Html.DisplayFor(model => model.forensicCase.USER.LastName)
-                                </dd>
+                                <dd>@Html.DisplayFor(model => model.forensicCase.USER.FirstName) @Html.DisplayFor(model => model.forensicCase.USER.LastName)</dd>
 
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.forensicCase.DateAdded)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.DateAdded)
-                                </dd>
+                                <dt>@Html.DisplayNameFor(model => model.forensicCase.DateAdded)</dt>
+                            @if (Model.forensicCase.DateClosed.Value.Year != 9999)
+	                        {
+                                <dd>@Html.DisplayFor(model => model.forensicCase.DateAdded)</dd>
+                            } else
+                            {
+                                <dd class="status-inactive">@Html.Display("Active Case")</dd>
+                            }
 
                                 <dt>
                                     @Html.DisplayNameFor(model => model.forensicCase.DateClosed)
