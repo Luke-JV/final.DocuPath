@@ -492,7 +492,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("SelectAdditionalEvidenceItems", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("SelectMediaItems", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -807,7 +807,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Media");
                 #endregion
-                return RedirectToAction("Index");
+                return RedirectToAction("SelectAdditionalEvidenceItems", new { id = model.mediaList.FirstOrDefault().ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -1028,7 +1028,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Additional Evidence");
                 #endregion
-                return RedirectToAction("Index");
+                return RedirectToAction("AddCauseOfDeath", new { id = model.additionalEvidence.FirstOrDefault().ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -1158,6 +1158,7 @@ namespace DocuPath.Controllers
                 int uId = VERTEBRAE.getCurrentUser().UserID;
 
                 model.stats = new CASE_STATISTICS();
+                model.stats.ForensicCaseID = id;
                 model.provinces = db.PROVINCE.ToList();
                 model.events = db.EVENT.ToList();
                 model.sampleInvestigations = db.SAMPLE_INVESTIGATION.ToList();
@@ -1266,6 +1267,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Statistics Section")]
+        [ValidateInput(false)]
         public ActionResult AddStatistics(StatisticsViewModel model)
         {
             string actionName = "AddStatistics";
@@ -1279,8 +1281,109 @@ namespace DocuPath.Controllers
 
             try
             {
-                //TODO: DB Logic
-                //db.SaveChanges();
+                CASE_STATISTICS stats = new CASE_STATISTICS();
+                stats = model.stats;
+                
+                foreach (var item in model.selectedExternalCauses.Where(m=>m.isSelected))
+                {
+                    STATS_EXTERNAL_CAUSE cause = new STATS_EXTERNAL_CAUSE();
+                    cause.CaseStatsID = model.stats.CaseStatsID;
+                    cause.ExternalCauseID = db.EXTERNAL_CAUSE.Where(m => m.ExternalCauseDescription == item.valueName).FirstOrDefault().ExternalCauseID;
+                    cause.OtherExternalCauseDescription = "NULL";
+                    stats.STATS_EXTERNAL_CAUSE.Add(cause);
+                }
+                foreach (var item in model.selectedInjuryScenes.Where(m => m.isSelected))
+                {
+                    STATS_INJURY_SCENE scene = new STATS_INJURY_SCENE();
+                    scene.CaseStatsID = model.stats.CaseStatsID;
+                    scene.InjurySceneID = db.SCENE_OF_INJURY.Where(m => m.InjurySceneDescription == item.valueName).FirstOrDefault().InjurySceneID;
+                    scene.OtherSceneDescription = "NULL";
+                    stats.STATS_INJURY_SCENE.Add(scene);
+                }
+                foreach (var item in model.selectedMedicalTreatments.Where(m => m.isSelected))
+                {
+                    STATS_TREATMENTS med = new STATS_TREATMENTS();
+                    med.CaseStatsID = model.stats.CaseStatsID;
+                    med.MedicalTreatmentID = db.MEDICAL_TREATMENTS.Where(m => m.MedicalTreatmentDescription == item.valueName).FirstOrDefault().MedicalTreatmentID;
+                    med.OtherTreatmentDescription = "NULL";
+                    stats.STATS_TREATMENTS.Add(med);
+                }
+                foreach (var item in model.selectedSamplesInvestigations.Where(m => m.isSelected))
+                {
+                    STATS_SAMPLES_INVESTIGATION sample = new STATS_SAMPLES_INVESTIGATION();
+                    sample.CaseStatsID = model.stats.CaseStatsID;
+                    sample.SampleInvestigationID = db.SAMPLE_INVESTIGATION.Where(m => m.SampleInvestigationDescription == item.valueName).FirstOrDefault().SampleInvestigationID;
+                    sample.SampleInvestigationOtherDescription = "NULL";
+                    stats.STATS_SAMPLES_INVESTIGATION.Add(sample);
+                }
+                foreach (var item in model.selectedSpecialCategories.Where(m => m.isSelected))
+                {
+                    STATS_SPECIAL_CATEGORY special = new STATS_SPECIAL_CATEGORY();
+                    special.CaseStatsID = model.stats.CaseStatsID;
+                    special.SpecialCategoryID = db.SPECIAL_CATEGORY.Where(m => m.SpecialCategoryDescription == item.valueName).FirstOrDefault().SpecialCategoryID;
+                    special.OtherSpecialCategoryDescription = "NULL";
+                    stats.STATS_SPECIAL_CATEGORY.Add(special);
+                }
+                
+                STATS_PROVINCE_EVENT Death = new STATS_PROVINCE_EVENT();
+                Death.CaseStatsID = stats.CaseStatsID;
+                Death.ProvinceID = model.DeathProvinceId;
+                Death.EventID = db.EVENT.Where(m => m.EventDescription == "Death Occurrence").FirstOrDefault().EventID;
+                Death.ProvinceOtherDescription = "NULL";
+                stats.STATS_PROVINCE_EVENT.Add(Death);
+
+                STATS_PROVINCE_EVENT Occurrence = new STATS_PROVINCE_EVENT();
+                Occurrence.CaseStatsID = stats.CaseStatsID;
+                Occurrence.ProvinceID = model.OccurrenceProvinceId;
+                Occurrence.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Occurrence").FirstOrDefault().EventID;
+                Occurrence.ProvinceOtherDescription = "NULL";
+                stats.STATS_PROVINCE_EVENT.Add(Occurrence);
+
+                STATS_PROVINCE_EVENT Reporting = new STATS_PROVINCE_EVENT();
+                Reporting.CaseStatsID = stats.CaseStatsID;
+                Reporting.ProvinceID = model.ReportProvinceId;
+                Reporting.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Report").FirstOrDefault().EventID;
+                Reporting.ProvinceOtherDescription = "NULL";
+                stats.STATS_PROVINCE_EVENT.Add(Reporting);
+
+                STATS_PROVINCE_EVENT Processing = new STATS_PROVINCE_EVENT();
+                Processing.CaseStatsID = stats.CaseStatsID;
+                Processing.ProvinceID = model.ProcessingProvinceId;
+                Processing.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Processing").FirstOrDefault().EventID;
+                Processing.ProvinceOtherDescription = "NULL";
+                stats.STATS_PROVINCE_EVENT.Add(Processing);
+
+                STATS_PROVINCE_EVENT Treatment = new STATS_PROVINCE_EVENT();
+                Treatment.CaseStatsID = stats.CaseStatsID;
+                Treatment.ProvinceID = model.TreatmentProvinceId;
+                Treatment.EventID = db.EVENT.Where(m => m.EventDescription == "Medical Treatment").FirstOrDefault().EventID;
+                Treatment.ProvinceOtherDescription = "NULL";
+                stats.STATS_PROVINCE_EVENT.Add(Treatment);
+
+                STATS_POLICE_STATION Jurisdiction = new STATS_POLICE_STATION();
+                Jurisdiction.CaseStatsID = stats.CaseStatsID;
+                Jurisdiction.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.JurisdictionStationName).FirstOrDefault().ServiceProviderID;
+                Jurisdiction.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Jurisdiction").FirstOrDefault().StationRoleID;
+                
+                stats.STATS_POLICE_STATION.Add(Jurisdiction);
+
+                STATS_POLICE_STATION ProcessingStation = new STATS_POLICE_STATION();
+                ProcessingStation.CaseStatsID = stats.CaseStatsID;
+                ProcessingStation.ServiceProviderID = model.ProcessingStationID;
+                ProcessingStation.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.ProcessingStationName).FirstOrDefault().ServiceProviderID;
+                ProcessingStation.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Processing").FirstOrDefault().StationRoleID;
+                stats.STATS_POLICE_STATION.Add(ProcessingStation);
+
+                STATS_POLICE_STATION Investigating = new STATS_POLICE_STATION();
+                Investigating.CaseStatsID = stats.CaseStatsID;
+                Investigating.ServiceProviderID = model.InvestigationStationID;
+                Investigating.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.InvestigationStationName).FirstOrDefault().ServiceProviderID;
+                Investigating.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Investigation").FirstOrDefault().StationRoleID;
+                stats.STATS_POLICE_STATION.Add(Investigating);
+
+                
+                db.FORENSIC_CASE.Where(m => m.ForensicCaseID == stats.ForensicCaseID).FirstOrDefault().CASE_STATISTICS.Add(stats);
+                db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Statistics");
                 #endregion
@@ -1320,12 +1423,11 @@ namespace DocuPath.Controllers
             string actionName = "All";
             try
             {
-<<<<<<< HEAD
+
 
 
                 //throw new Exception();
-=======
->>>>>>> cd30b2d1e5f9844259efb505c267fa06339404a2
+
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Forensic Case");
                 #endregion
@@ -1341,11 +1443,10 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Forensic Case");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
-<<<<<<< HEAD
-                return View("Error", new HandleErrorInfo(x, "ForensicCase", "All"));
-=======
+                //return View("Error", new HandleErrorInfo(x, "ForensicCase", "All"));
+
                 return View("Error",new HandleErrorInfo(x, controllerName, actionName));
->>>>>>> cd30b2d1e5f9844259efb505c267fa06339404a2
+
             }
         }
 
@@ -1489,7 +1590,7 @@ namespace DocuPath.Controllers
                 ViewBag.AuthorSince = "5 Jan 2017 00:00:00";
                 ViewBag.MigrationMessage = "Still waiting for XYZ from ABC, contact John Smith.";
 
-                return View();
+                //return View();
 
 
                 #region VALIDATE_ACCESS
