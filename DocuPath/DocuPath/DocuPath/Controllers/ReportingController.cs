@@ -47,7 +47,7 @@ namespace DocuPath.Controllers
                 ViewBag.FCByStatusChartData = metrics.Where(m => m.MetricName == "Forensic Cases By Status").FirstOrDefault().MetricValue;
 
                 var fcaddedmetricvalue = metrics.Where(m => m.MetricName == "Forensic Cases Added & Closed").FirstOrDefault().MetricValue;
-                ViewBag.FCAddedChartData = fcaddedmetricvalue.Substring(0, fcaddedmetricvalue.IndexOf('|') - 1);
+                ViewBag.FCAddedChartData = fcaddedmetricvalue.Substring(0, fcaddedmetricvalue.IndexOf('|'));
                 ViewBag.FCClosedChartData = fcaddedmetricvalue.Substring(fcaddedmetricvalue.IndexOf('|') + 1);
 
                 ViewBag.LCByStatusChartData = metrics.Where(m => m.MetricName == "Legacy Cases By Status").FirstOrDefault().MetricValue;

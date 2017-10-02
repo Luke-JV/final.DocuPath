@@ -22,6 +22,8 @@ namespace DocuPath.DataLayer
         [DisplayName("Forensic Case ID")]
         public int ForensicCaseID { get; set; }
         [DefaultValue(FLAG.Text)]
+        [DataType(DataType.MultilineText)]
+        [StringLength(235)]
         [DisplayName("Item Description")]
         public string EvidenceDescription { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
@@ -31,6 +33,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Contact Person")]
         public string ContactPersonNameSurname { get; set; }
         [DefaultValue(FLAG.ContactNumber)]
+        [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         [DisplayName("Contact Number")]
         public string ContactPersonContactNum { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
