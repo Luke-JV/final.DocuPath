@@ -256,14 +256,10 @@
                                                     <div class="form-group">
                                                         @Html.Label("Select a Discovery Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                         <div class="col-md-7" style="padding-right: 5px">
-                                                            @Html.EditorFor(model => model.stats.DiscoveryDate, new
-                                                       {
-                                                           htmlAttributes = new
-                                                           { @*@id = "DiscoveryDate",*@ @type = "date", @*@onclick = "discoveryDTP()",*@ @class = "form-control",
-                                                               @style = "width: 100%"
-                                                           }
-                                                       })
+                                                            
+                                                            @Html.EditorFor(model => model.stats.DiscoveryDate, new {  htmlAttributes = new {@value="2010-01-01", @id = "DiscoveryDate", @type = "date", @*@onclick = "discoveryDTP()",*@  @class = "form-control", @style = "width: 100%"} })
                                                             @Html.ValidationMessageFor(model => model.stats.DiscoveryDate, "", new { @class = "validation-text text-danger" })
+                                                                
                                                             @*<div class="input-group date">
                                                                     <input type="text" class="form-control" id="DiscoveryDate" />
                                                                     <span class="input-group-addon" onclick="discoveryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
@@ -487,7 +483,7 @@
                                                     <div class="form-group">
                                                         @Html.Label("Jurisdiction", htmlAttributes: new { @class = "control-label col-md-4" })
                                                         <div class="col-md-8">
-                                                            @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.AutocompleteFor(model => model.JurisdictionStationName, model => model.JurisdictionStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important", @value = "\"" + Model.JurisdictionStationName + "\"" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Lyttelton Police Station" />
@@ -500,7 +496,7 @@
                                                     <div class="form-group">
                                                         @Html.Label("Processing", htmlAttributes: new { @class = "control-label col-md-4" })
                                                         <div class="col-md-8">
-                                                            @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.AutocompleteFor(model => model.ProcessingStationName, model => model.ProcessingStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important", @value = "\"" + Model.ProcessingStationName + "\"" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Brooklyn Police Station" />
@@ -513,7 +509,7 @@
                                                     <div class="form-group">
                                                         @Html.Label("Investigation", htmlAttributes: new { @class = "control-label col-md-4" })
                                                         <div class="col-md-8">
-                                                            @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important" } })
+                                                            @Html.AutocompleteFor(model => model.InvestigationStationName, model => model.InvestigationStationID, "GetSP", "ForensicCase", false, new { htmlAttributes = new { @class = "form-control fullwidth", @style = "width: 307.375px !important; margin-bottom: 5px; padding: 0 5px 0 5px !important", @value = "\"" + Model.InvestigationStationName + "\"" } })
                                                             @Html.ValidationMessageFor(model => model.JurisdictionStationName, "", new { @class = "validation-text text-danger" })
                                                             @*<div class="input-group">
                                                                     <input type="text" class="form-control" disabled value="Clubview Police Station" />
@@ -527,7 +523,16 @@
                                                     <div class="form-group">
                                                         @Html.Label("Death Occurrence", htmlAttributes: new { @class = "control-label col-md-4" })
                                                         <div class="col-md-8">
-                                                            @Html.DropDownListFor(model => model.DeathProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                            @{
+                                                                if (Model.DeathProvinceId > 0)
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.DeathProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName", Model.DeathProvinceId), htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                                }
+                                                                else
+                                                                {
+                                                                    @Html.DropDownListFor(model => model.DeathProvinceId, new SelectList(Model.provinces, "ProvinceID", "ProvinceName"), "Select a Province...", htmlAttributes: new { onchange = "check()", @class = "form-control", @style = "padding-left: 0px; width: 307.375px !important" })
+                                                                }
+                                                            }
                                                             @Html.ValidationMessageFor(model => model.DeathProvinceId, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -1085,5 +1090,7 @@
                 $("#frmAutopsyOther").hide("slow")
             }
         });
+
+        
     </script>
 }

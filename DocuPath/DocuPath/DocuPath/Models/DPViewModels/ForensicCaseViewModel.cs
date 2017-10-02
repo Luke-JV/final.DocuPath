@@ -232,6 +232,33 @@ namespace DocuPath.Models.DPViewModels
         public string ProcessingStationName { get; set; }
         public int InvestigationStationID { get; set; }
         public string InvestigationStationName { get; set; }
+
+        public CASE_STATISTICS buildStats()
+        {
+            CASE_STATISTICS outStats = new CASE_STATISTICS();
+
+            outStats.CaseStatsID = this.stats.CaseStatsID;
+
+
+
+            //public string otherSamplesInvestigationsDescription { get; set; }
+            //public string otherRaceDescription { get; set; }
+            //public string otherTreatmentFacilityDescription { get; set; }
+            //public string otherMedicalTreatmentsDescription { get; set; }
+            //public string otherPrimaryCauseDeathDescription { get; set; }
+            //public string otherApparentMannerDeathDescription { get; set; }
+            //public string otherInjurySceneDescription { get; set; }
+            //public string otherExternalCauseDescription { get; set; }
+            //public string otherSpecialCategoryDescription { get; set; }
+            //public string otherDeathProvinceDesc { get; set; }
+            //public string otherOccurrenceProvinceDesc { get; set; }
+            //public string otherReportProvinceDesc { get; set; }
+            //public string otherProcessingProvinceDesc { get; set; }
+            //public string otherTreatmentProvinceDesc { get; set; }
+
+
+            return outStats;
+        }
     }
 
     public class sessionKVP

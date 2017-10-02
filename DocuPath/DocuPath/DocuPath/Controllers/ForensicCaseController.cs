@@ -1309,12 +1309,18 @@ namespace DocuPath.Controllers
                 CASE_STATISTICS stats = new CASE_STATISTICS();
                 stats = model.stats;
 
+
+
                 foreach (var item in model.selectedExternalCauses.Where(m => m.isSelected))
                 {
                     STATS_EXTERNAL_CAUSE cause = new STATS_EXTERNAL_CAUSE();
                     cause.CaseStatsID = model.stats.CaseStatsID;
                     cause.ExternalCauseID = db.EXTERNAL_CAUSE.Where(m => m.ExternalCauseDescription == item.valueName).FirstOrDefault().ExternalCauseID;
-                    cause.OtherExternalCauseDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        cause.OtherExternalCauseDescription = model.otherExternalCauseDescription;
+                    }
+                    else cause.OtherExternalCauseDescription = "N/A";
                     stats.STATS_EXTERNAL_CAUSE.Add(cause);
                 }
                 foreach (var item in model.selectedInjuryScenes.Where(m => m.isSelected))
@@ -1322,7 +1328,11 @@ namespace DocuPath.Controllers
                     STATS_INJURY_SCENE scene = new STATS_INJURY_SCENE();
                     scene.CaseStatsID = model.stats.CaseStatsID;
                     scene.InjurySceneID = db.SCENE_OF_INJURY.Where(m => m.InjurySceneDescription == item.valueName).FirstOrDefault().InjurySceneID;
-                    scene.OtherSceneDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        scene.OtherSceneDescription = model.otherInjurySceneDescription;
+                    }
+                    else scene.OtherSceneDescription = "N/A";
                     stats.STATS_INJURY_SCENE.Add(scene);
                 }
                 foreach (var item in model.selectedMedicalTreatments.Where(m => m.isSelected))
@@ -1330,15 +1340,23 @@ namespace DocuPath.Controllers
                     STATS_TREATMENTS med = new STATS_TREATMENTS();
                     med.CaseStatsID = model.stats.CaseStatsID;
                     med.MedicalTreatmentID = db.MEDICAL_TREATMENTS.Where(m => m.MedicalTreatmentDescription == item.valueName).FirstOrDefault().MedicalTreatmentID;
-                    med.OtherTreatmentDescription = "NULL";
-                    stats.STATS_TREATMENTS.Add(med);
+                    if (item.valueName == "Other")
+                    {
+                        med.OtherTreatmentDescription = model.otherMedicalTreatmentsDescription;
+                    }
+                    else med.OtherTreatmentDescription = "N/A";
+                   stats.STATS_TREATMENTS.Add(med);
                 }
                 foreach (var item in model.selectedSamplesInvestigations.Where(m => m.isSelected))
                 {
                     STATS_SAMPLES_INVESTIGATION sample = new STATS_SAMPLES_INVESTIGATION();
                     sample.CaseStatsID = model.stats.CaseStatsID;
                     sample.SampleInvestigationID = db.SAMPLE_INVESTIGATION.Where(m => m.SampleInvestigationDescription == item.valueName).FirstOrDefault().SampleInvestigationID;
-                    sample.SampleInvestigationOtherDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        sample.SampleInvestigationOtherDescription = model.otherSamplesInvestigationsDescription;
+                    }
+                    else sample.SampleInvestigationOtherDescription = "N/A";
                     stats.STATS_SAMPLES_INVESTIGATION.Add(sample);
                 }
                 foreach (var item in model.selectedSpecialCategories.Where(m => m.isSelected))
@@ -1346,7 +1364,11 @@ namespace DocuPath.Controllers
                     STATS_SPECIAL_CATEGORY special = new STATS_SPECIAL_CATEGORY();
                     special.CaseStatsID = model.stats.CaseStatsID;
                     special.SpecialCategoryID = db.SPECIAL_CATEGORY.Where(m => m.SpecialCategoryDescription == item.valueName).FirstOrDefault().SpecialCategoryID;
-                    special.OtherSpecialCategoryDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        special.OtherSpecialCategoryDescription = model.otherSpecialCategoryDescription;
+                    }
+                    else special.OtherSpecialCategoryDescription = "N/A";
                     stats.STATS_SPECIAL_CATEGORY.Add(special);
                 }
 
@@ -1354,35 +1376,35 @@ namespace DocuPath.Controllers
                 Death.CaseStatsID = stats.CaseStatsID;
                 Death.ProvinceID = model.DeathProvinceId;
                 Death.EventID = db.EVENT.Where(m => m.EventDescription == "Death Occurrence").FirstOrDefault().EventID;
-                Death.ProvinceOtherDescription = "NULL";
+                Death.ProvinceOtherDescription = model.otherDeathProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Death);
 
                 STATS_PROVINCE_EVENT Occurrence = new STATS_PROVINCE_EVENT();
                 Occurrence.CaseStatsID = stats.CaseStatsID;
                 Occurrence.ProvinceID = model.OccurrenceProvinceId;
                 Occurrence.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Occurrence").FirstOrDefault().EventID;
-                Occurrence.ProvinceOtherDescription = "NULL";
+                Occurrence.ProvinceOtherDescription = model.otherOccurrenceProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Occurrence);
 
                 STATS_PROVINCE_EVENT Reporting = new STATS_PROVINCE_EVENT();
                 Reporting.CaseStatsID = stats.CaseStatsID;
                 Reporting.ProvinceID = model.ReportProvinceId;
                 Reporting.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Report").FirstOrDefault().EventID;
-                Reporting.ProvinceOtherDescription = "NULL";
+                Reporting.ProvinceOtherDescription = model.otherReportProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Reporting);
 
                 STATS_PROVINCE_EVENT Processing = new STATS_PROVINCE_EVENT();
                 Processing.CaseStatsID = stats.CaseStatsID;
                 Processing.ProvinceID = model.ProcessingProvinceId;
                 Processing.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Processing").FirstOrDefault().EventID;
-                Processing.ProvinceOtherDescription = "NULL";
+                Processing.ProvinceOtherDescription = model.otherProcessingProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Processing);
 
                 STATS_PROVINCE_EVENT Treatment = new STATS_PROVINCE_EVENT();
                 Treatment.CaseStatsID = stats.CaseStatsID;
                 Treatment.ProvinceID = model.TreatmentProvinceId;
                 Treatment.EventID = db.EVENT.Where(m => m.EventDescription == "Medical Treatment").FirstOrDefault().EventID;
-                Treatment.ProvinceOtherDescription = "NULL";
+                Treatment.ProvinceOtherDescription = model.otherTreatmentProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Treatment);
 
                 STATS_POLICE_STATION Jurisdiction = new STATS_POLICE_STATION();
@@ -1405,6 +1427,14 @@ namespace DocuPath.Controllers
                 Investigating.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.InvestigationStationName).FirstOrDefault().ServiceProviderID;
                 Investigating.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Investigation").FirstOrDefault().StationRoleID;
                 stats.STATS_POLICE_STATION.Add(Investigating);
+
+                stats.IndividualRaceOtherDescription = model.otherRaceDescription;
+                stats.HospitalClinicOtherDescription = model.otherTreatmentFacilityDescription;
+                stats.OtherApparentMannerDescription = model.otherApparentMannerDeathDescription;
+                stats.OtherPrimaryCauseDescription = model.otherPrimaryCauseDeathDescription;
+
+
+
 
 
                 db.FORENSIC_CASE.Where(m => m.ForensicCaseID == stats.ForensicCaseID).FirstOrDefault().CASE_STATISTICS.Add(stats);
@@ -1849,6 +1879,10 @@ namespace DocuPath.Controllers
                         if (item.SampleInvestigationDescription  == sample.SAMPLE_INVESTIGATION.SampleInvestigationDescription)
                         {
                             newKVP.isSelected = true;
+                            if (item.SampleInvestigationDescription == "Other")
+                            {
+                                model.otherSamplesInvestigationsDescription = sample.SampleInvestigationOtherDescription;
+                            }
                         }
                     }
                     model.selectedSamplesInvestigations.Add(newKVP);
@@ -1866,6 +1900,10 @@ namespace DocuPath.Controllers
                         if (item.MedicalTreatmentDescription == sample.MEDICAL_TREATMENTS.MedicalTreatmentDescription)
                         {
                             newKVP.isSelected = true;
+                            if (item.MedicalTreatmentDescription == "Other")
+                            {
+                                model.otherMedicalTreatmentsDescription = sample.OtherTreatmentDescription;
+                            }
                         }
                     }
                     model.selectedMedicalTreatments.Add(newKVP);
@@ -1883,6 +1921,10 @@ namespace DocuPath.Controllers
                         if (item.InjurySceneDescription == sample.SCENE_OF_INJURY.InjurySceneDescription)
                         {
                             newKVP.isSelected = true;
+                            if (item.InjurySceneDescription == "Other")
+                            {
+                                model.otherInjurySceneDescription = sample.OtherSceneDescription;
+                            }
                         }
                     }
                     model.selectedInjuryScenes.Add(newKVP);
@@ -1900,6 +1942,10 @@ namespace DocuPath.Controllers
                         if (item.ExternalCauseDescription == sample.EXTERNAL_CAUSE.ExternalCauseDescription)
                         {
                             newKVP.isSelected = true;
+                            if (item.ExternalCauseDescription == "Other")
+                            {
+                                model.otherExternalCauseDescription = sample.OtherExternalCauseDescription;
+                            }
                         }
                     }
                     model.selectedExternalCauses.Add(newKVP);
@@ -1917,39 +1963,47 @@ namespace DocuPath.Controllers
                         if (item.SpecialCategoryDescription == sample.SPECIAL_CATEGORY.SpecialCategoryDescription)
                         {
                             newKVP.isSelected = true;
+                            if (item.SpecialCategoryDescription == "Other")
+                            {
+                                model.otherSpecialCategoryDescription = sample.OtherSpecialCategoryDescription;
+                            }
                         }
                     }
                     model.selectedSpecialCategories.Add(newKVP);
                 }
 
-                model.otherSamplesInvestigationsDescription = "";
-                model.otherRaceDescription = "";
+                //model.otherSamplesInvestigationsDescription = model.stats.STATS_SAMPLES_INVESTIGATION.FirstOrDefault().SampleInvestigationOtherDescription;
+                model.otherRaceDescription = model.stats.IndividualRaceOtherDescription;
                 model.otherTreatmentFacilityDescription = model.stats.HospitalClinicOtherDescription;
-                model.otherMedicalTreatmentsDescription = "";
-                model.otherPrimaryCauseDeathDescription = model.stats.OtherPrimaryCauseDescription;
+                //model.otherMedicalTreatmentsDescription  = model.stats.STATS_TREATMENTS.FirstOrDefault().OtherTreatmentDescription;
+                model.otherPrimaryCauseDeathDescription = model.stats.OtherPrimaryCauseDescription; //
                 model.otherApparentMannerDeathDescription = model.stats.OtherApparentMannerDescription;
                 model.stats.AutopsyTypeOtherDescription = model.stats.AutopsyTypeOtherDescription;
-                model.otherInjurySceneDescription = "";
-                model.otherExternalCauseDescription = "";
-                model.otherSpecialCategoryDescription = "";
+               // model.otherInjurySceneDescription = model.stats.STATS_INJURY_SCENE.FirstOrDefault().OtherSceneDescription;
+                //model.otherExternalCauseDescription = model.stats.STATS_EXTERNAL_CAUSE.FirstOrDefault().OtherExternalCauseDescription;
+                //model.otherSpecialCategoryDescription  = model.stats.STATS_SPECIAL_CATEGORY.FirstOrDefault().OtherSpecialCategoryDescription;
 
-                //model.DeathProvinceId = 1;
-                model.otherDeathProvinceDesc = "";
-                //model.ProcessingProvinceId = 1;
-                model.otherProcessingProvinceDesc = "";
-                //model.OccurrenceProvinceId = 1;
-                model.otherOccurrenceProvinceDesc = "";
-                //model.TreatmentProvinceId = 1;
-                model.otherTreatmentProvinceDesc = "";
-                //model.ReportProvinceId = 1;
-                model.otherReportProvinceDesc = "";
+                model.DeathProvinceId = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Death Occurrence").FirstOrDefault().ProvinceID;
+                model.otherDeathProvinceDesc = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Death Occurrence").FirstOrDefault().ProvinceOtherDescription;
+                model.ProcessingProvinceId = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Processing").FirstOrDefault().ProvinceID;
+                model.otherProcessingProvinceDesc = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Processing").FirstOrDefault().ProvinceOtherDescription;
+                model.OccurrenceProvinceId = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Occurrence").FirstOrDefault().ProvinceID;
+                model.otherOccurrenceProvinceDesc = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Occurrence").FirstOrDefault().ProvinceOtherDescription;
+                model.TreatmentProvinceId = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Medical Treatment").FirstOrDefault().ProvinceID;
+                model.otherTreatmentProvinceDesc = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Medical Treatment").FirstOrDefault().ProvinceOtherDescription;
+                model.ReportProvinceId = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Report").FirstOrDefault().ProvinceID;
+                model.otherReportProvinceDesc = model.stats.STATS_PROVINCE_EVENT.Where(x => x.EVENT.EventDescription == "Incident Report").FirstOrDefault().ProvinceOtherDescription;
 
                 //model.JurisdictionStationID = 0;
-                model.JurisdictionStationName = "";
+                model.JurisdictionStationName = model.stats.STATS_POLICE_STATION.Where(x=>x.STATION_ROLE.StationRoleDescription == "Jurisdiction").FirstOrDefault().SERVICE_PROVIDER.CompanyName;
                 //model.ProcessingStationID = 0;
-                model.ProcessingStationName = "";
+                model.ProcessingStationName = model.stats.STATS_POLICE_STATION.Where(x => x.STATION_ROLE.StationRoleDescription == "Processing").FirstOrDefault().SERVICE_PROVIDER.CompanyName;
                 //model.InvestigationStationID = 0;
-                model.InvestigationStationName = "";
+                model.InvestigationStationName = model.stats.STATS_POLICE_STATION.Where(x => x.STATION_ROLE.StationRoleDescription == "Investigation").FirstOrDefault().SERVICE_PROVIDER.CompanyName;
+
+                model.stats.DiscoveryDate =Convert.ToDateTime(Convert.ToDateTime(model.stats.DiscoveryDate).ToString("yyyy-MM-dd"));
+
+               
                 #endregion
                 return View("AddStatistics",model);
             }
@@ -1969,6 +2023,133 @@ namespace DocuPath.Controllers
         [ValidateInput(false)]
         public ActionResult UpdateStatistics(StatisticsViewModel model)
         {
+            //string actionName = "AddStatistics";
+            //if (!ModelState.IsValid)
+            //{
+            //    #region AUDIT_WRITE
+            //    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Statistics");
+            //    #endregion
+            //    //return View(model);
+            //}
+
+            //try
+            //{
+            //    CASE_STATISTICS stats = new CASE_STATISTICS();
+            //    stats = model.stats;
+
+            //    foreach (var item in model.selectedExternalCauses.Where(m => m.isSelected))
+            //    {
+            //        STATS_EXTERNAL_CAUSE cause = new STATS_EXTERNAL_CAUSE();
+            //        cause.CaseStatsID = model.stats.CaseStatsID;
+            //        cause.ExternalCauseID = db.EXTERNAL_CAUSE.Where(m => m.ExternalCauseDescription == item.valueName).FirstOrDefault().ExternalCauseID;
+            //        cause.OtherExternalCauseDescription = "NULL";
+            //        stats.STATS_EXTERNAL_CAUSE.Add(cause);
+            //    }
+            //    foreach (var item in model.selectedInjuryScenes.Where(m => m.isSelected))
+            //    {
+            //        STATS_INJURY_SCENE scene = new STATS_INJURY_SCENE();
+            //        scene.CaseStatsID = model.stats.CaseStatsID;
+            //        scene.InjurySceneID = db.SCENE_OF_INJURY.Where(m => m.InjurySceneDescription == item.valueName).FirstOrDefault().InjurySceneID;
+            //        scene.OtherSceneDescription = "NULL";
+            //        stats.STATS_INJURY_SCENE.Add(scene);
+            //    }
+            //    foreach (var item in model.selectedMedicalTreatments.Where(m => m.isSelected))
+            //    {
+            //        STATS_TREATMENTS med = new STATS_TREATMENTS();
+            //        med.CaseStatsID = model.stats.CaseStatsID;
+            //        med.MedicalTreatmentID = db.MEDICAL_TREATMENTS.Where(m => m.MedicalTreatmentDescription == item.valueName).FirstOrDefault().MedicalTreatmentID;
+            //        med.OtherTreatmentDescription = "NULL";
+            //        stats.STATS_TREATMENTS.Add(med);
+            //    }
+            //    foreach (var item in model.selectedSamplesInvestigations.Where(m => m.isSelected))
+            //    {
+            //        STATS_SAMPLES_INVESTIGATION sample = new STATS_SAMPLES_INVESTIGATION();
+            //        sample.CaseStatsID = model.stats.CaseStatsID;
+            //        sample.SampleInvestigationID = db.SAMPLE_INVESTIGATION.Where(m => m.SampleInvestigationDescription == item.valueName).FirstOrDefault().SampleInvestigationID;
+            //        sample.SampleInvestigationOtherDescription = "NULL";
+            //        stats.STATS_SAMPLES_INVESTIGATION.Add(sample);
+            //    }
+            //    foreach (var item in model.selectedSpecialCategories.Where(m => m.isSelected))
+            //    {
+            //        STATS_SPECIAL_CATEGORY special = new STATS_SPECIAL_CATEGORY();
+            //        special.CaseStatsID = model.stats.CaseStatsID;
+            //        special.SpecialCategoryID = db.SPECIAL_CATEGORY.Where(m => m.SpecialCategoryDescription == item.valueName).FirstOrDefault().SpecialCategoryID;
+            //        special.OtherSpecialCategoryDescription = "NULL";
+            //        stats.STATS_SPECIAL_CATEGORY.Add(special);
+            //    }
+
+            //    STATS_PROVINCE_EVENT Death = new STATS_PROVINCE_EVENT();
+            //    Death.CaseStatsID = stats.CaseStatsID;
+            //    Death.ProvinceID = model.DeathProvinceId;
+            //    Death.EventID = db.EVENT.Where(m => m.EventDescription == "Death Occurrence").FirstOrDefault().EventID;
+            //    Death.ProvinceOtherDescription = "NULL";
+            //    stats.STATS_PROVINCE_EVENT.Add(Death);
+
+            //    STATS_PROVINCE_EVENT Occurrence = new STATS_PROVINCE_EVENT();
+            //    Occurrence.CaseStatsID = stats.CaseStatsID;
+            //    Occurrence.ProvinceID = model.OccurrenceProvinceId;
+            //    Occurrence.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Occurrence").FirstOrDefault().EventID;
+            //    Occurrence.ProvinceOtherDescription = "NULL";
+            //    stats.STATS_PROVINCE_EVENT.Add(Occurrence);
+
+            //    STATS_PROVINCE_EVENT Reporting = new STATS_PROVINCE_EVENT();
+            //    Reporting.CaseStatsID = stats.CaseStatsID;
+            //    Reporting.ProvinceID = model.ReportProvinceId;
+            //    Reporting.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Report").FirstOrDefault().EventID;
+            //    Reporting.ProvinceOtherDescription = "NULL";
+            //    stats.STATS_PROVINCE_EVENT.Add(Reporting);
+
+            //    STATS_PROVINCE_EVENT Processing = new STATS_PROVINCE_EVENT();
+            //    Processing.CaseStatsID = stats.CaseStatsID;
+            //    Processing.ProvinceID = model.ProcessingProvinceId;
+            //    Processing.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Processing").FirstOrDefault().EventID;
+            //    Processing.ProvinceOtherDescription = "NULL";
+            //    stats.STATS_PROVINCE_EVENT.Add(Processing);
+
+            //    STATS_PROVINCE_EVENT Treatment = new STATS_PROVINCE_EVENT();
+            //    Treatment.CaseStatsID = stats.CaseStatsID;
+            //    Treatment.ProvinceID = model.TreatmentProvinceId;
+            //    Treatment.EventID = db.EVENT.Where(m => m.EventDescription == "Medical Treatment").FirstOrDefault().EventID;
+            //    Treatment.ProvinceOtherDescription = "NULL";
+            //    stats.STATS_PROVINCE_EVENT.Add(Treatment);
+
+            //    STATS_POLICE_STATION Jurisdiction = new STATS_POLICE_STATION();
+            //    Jurisdiction.CaseStatsID = stats.CaseStatsID;
+            //    Jurisdiction.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.JurisdictionStationName).FirstOrDefault().ServiceProviderID;
+            //    Jurisdiction.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Jurisdiction").FirstOrDefault().StationRoleID;
+
+            //    stats.STATS_POLICE_STATION.Add(Jurisdiction);
+
+            //    STATS_POLICE_STATION ProcessingStation = new STATS_POLICE_STATION();
+            //    ProcessingStation.CaseStatsID = stats.CaseStatsID;
+            //    ProcessingStation.ServiceProviderID = model.ProcessingStationID;
+            //    ProcessingStation.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.ProcessingStationName).FirstOrDefault().ServiceProviderID;
+            //    ProcessingStation.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Processing").FirstOrDefault().StationRoleID;
+            //    stats.STATS_POLICE_STATION.Add(ProcessingStation);
+
+            //    STATS_POLICE_STATION Investigating = new STATS_POLICE_STATION();
+            //    Investigating.CaseStatsID = stats.CaseStatsID;
+            //    Investigating.ServiceProviderID = model.InvestigationStationID;
+            //    Investigating.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.InvestigationStationName).FirstOrDefault().ServiceProviderID;
+            //    Investigating.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Investigation").FirstOrDefault().StationRoleID;
+            //    stats.STATS_POLICE_STATION.Add(Investigating);
+
+
+            //    db.FORENSIC_CASE.Where(m => m.ForensicCaseID == stats.ForensicCaseID).FirstOrDefault().CASE_STATISTICS.Add(stats);
+            //    db.SaveChanges();
+            //    #region AUDIT_WRITE
+            //    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Statistics");
+            //    #endregion
+            //    return RedirectToAction("ForensicCaseAddedSuccess");
+            //}
+            //catch (Exception x)
+            //{
+            //    #region AUDIT_WRITE
+            //    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Statistics");
+            //    #endregion
+            //    VERTEBRAE.DumpErrorToTxt(x);
+            //    return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            //}
             string actionName = "AddStatistics";
             if (!ModelState.IsValid)
             {
@@ -1983,84 +2164,117 @@ namespace DocuPath.Controllers
                 CASE_STATISTICS stats = new CASE_STATISTICS();
                 stats = model.stats;
 
+
+
                 foreach (var item in model.selectedExternalCauses.Where(m => m.isSelected))
                 {
                     STATS_EXTERNAL_CAUSE cause = new STATS_EXTERNAL_CAUSE();
                     cause.CaseStatsID = model.stats.CaseStatsID;
+                    cause.ForensicCaseID = model.stats.ForensicCaseID;
                     cause.ExternalCauseID = db.EXTERNAL_CAUSE.Where(m => m.ExternalCauseDescription == item.valueName).FirstOrDefault().ExternalCauseID;
-                    cause.OtherExternalCauseDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        cause.OtherExternalCauseDescription = model.otherExternalCauseDescription;
+                    }
+                    else cause.OtherExternalCauseDescription = "N/A";
                     stats.STATS_EXTERNAL_CAUSE.Add(cause);
                 }
                 foreach (var item in model.selectedInjuryScenes.Where(m => m.isSelected))
                 {
                     STATS_INJURY_SCENE scene = new STATS_INJURY_SCENE();
                     scene.CaseStatsID = model.stats.CaseStatsID;
+                    scene.ForensicCaseID = model.stats.ForensicCaseID;
                     scene.InjurySceneID = db.SCENE_OF_INJURY.Where(m => m.InjurySceneDescription == item.valueName).FirstOrDefault().InjurySceneID;
-                    scene.OtherSceneDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        scene.OtherSceneDescription = model.otherInjurySceneDescription;
+                    }
+                    else scene.OtherSceneDescription = "N/A";
                     stats.STATS_INJURY_SCENE.Add(scene);
                 }
                 foreach (var item in model.selectedMedicalTreatments.Where(m => m.isSelected))
                 {
                     STATS_TREATMENTS med = new STATS_TREATMENTS();
                     med.CaseStatsID = model.stats.CaseStatsID;
+                    med.ForensicCaseID = model.stats.ForensicCaseID;
                     med.MedicalTreatmentID = db.MEDICAL_TREATMENTS.Where(m => m.MedicalTreatmentDescription == item.valueName).FirstOrDefault().MedicalTreatmentID;
-                    med.OtherTreatmentDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        med.OtherTreatmentDescription = model.otherMedicalTreatmentsDescription;
+                    }
+                    else med.OtherTreatmentDescription = "N/A";
                     stats.STATS_TREATMENTS.Add(med);
                 }
                 foreach (var item in model.selectedSamplesInvestigations.Where(m => m.isSelected))
                 {
                     STATS_SAMPLES_INVESTIGATION sample = new STATS_SAMPLES_INVESTIGATION();
                     sample.CaseStatsID = model.stats.CaseStatsID;
+                    sample.ForensicCaseID = model.stats.ForensicCaseID;
                     sample.SampleInvestigationID = db.SAMPLE_INVESTIGATION.Where(m => m.SampleInvestigationDescription == item.valueName).FirstOrDefault().SampleInvestigationID;
-                    sample.SampleInvestigationOtherDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        sample.SampleInvestigationOtherDescription = model.otherSamplesInvestigationsDescription;
+                    }
+                    else sample.SampleInvestigationOtherDescription = "N/A";
                     stats.STATS_SAMPLES_INVESTIGATION.Add(sample);
                 }
                 foreach (var item in model.selectedSpecialCategories.Where(m => m.isSelected))
                 {
                     STATS_SPECIAL_CATEGORY special = new STATS_SPECIAL_CATEGORY();
                     special.CaseStatsID = model.stats.CaseStatsID;
+                    special.ForensicCaseID = model.stats.ForensicCaseID;
                     special.SpecialCategoryID = db.SPECIAL_CATEGORY.Where(m => m.SpecialCategoryDescription == item.valueName).FirstOrDefault().SpecialCategoryID;
-                    special.OtherSpecialCategoryDescription = "NULL";
+                    if (item.valueName == "Other")
+                    {
+                        special.OtherSpecialCategoryDescription = model.otherSpecialCategoryDescription;
+                    }
+                    else special.OtherSpecialCategoryDescription = "N/A";
                     stats.STATS_SPECIAL_CATEGORY.Add(special);
                 }
 
                 STATS_PROVINCE_EVENT Death = new STATS_PROVINCE_EVENT();
                 Death.CaseStatsID = stats.CaseStatsID;
+                Death.ForensicCaseID = model.stats.ForensicCaseID;
                 Death.ProvinceID = model.DeathProvinceId;
                 Death.EventID = db.EVENT.Where(m => m.EventDescription == "Death Occurrence").FirstOrDefault().EventID;
-                Death.ProvinceOtherDescription = "NULL";
+                Death.ProvinceOtherDescription = model.otherDeathProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Death);
 
                 STATS_PROVINCE_EVENT Occurrence = new STATS_PROVINCE_EVENT();
                 Occurrence.CaseStatsID = stats.CaseStatsID;
+                Occurrence.ForensicCaseID = model.stats.ForensicCaseID;
                 Occurrence.ProvinceID = model.OccurrenceProvinceId;
                 Occurrence.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Occurrence").FirstOrDefault().EventID;
-                Occurrence.ProvinceOtherDescription = "NULL";
+                Occurrence.ProvinceOtherDescription = model.otherOccurrenceProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Occurrence);
 
                 STATS_PROVINCE_EVENT Reporting = new STATS_PROVINCE_EVENT();
                 Reporting.CaseStatsID = stats.CaseStatsID;
+                Reporting.ForensicCaseID = model.stats.ForensicCaseID;
                 Reporting.ProvinceID = model.ReportProvinceId;
                 Reporting.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Report").FirstOrDefault().EventID;
-                Reporting.ProvinceOtherDescription = "NULL";
+                Reporting.ProvinceOtherDescription = model.otherReportProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Reporting);
 
                 STATS_PROVINCE_EVENT Processing = new STATS_PROVINCE_EVENT();
                 Processing.CaseStatsID = stats.CaseStatsID;
+                Processing.ForensicCaseID = model.stats.ForensicCaseID;
                 Processing.ProvinceID = model.ProcessingProvinceId;
                 Processing.EventID = db.EVENT.Where(m => m.EventDescription == "Incident Processing").FirstOrDefault().EventID;
-                Processing.ProvinceOtherDescription = "NULL";
+                Processing.ProvinceOtherDescription = model.otherProcessingProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Processing);
 
                 STATS_PROVINCE_EVENT Treatment = new STATS_PROVINCE_EVENT();
                 Treatment.CaseStatsID = stats.CaseStatsID;
+                Treatment.ForensicCaseID = model.stats.ForensicCaseID;
                 Treatment.ProvinceID = model.TreatmentProvinceId;
                 Treatment.EventID = db.EVENT.Where(m => m.EventDescription == "Medical Treatment").FirstOrDefault().EventID;
-                Treatment.ProvinceOtherDescription = "NULL";
+                Treatment.ProvinceOtherDescription = model.otherTreatmentProvinceDesc;
                 stats.STATS_PROVINCE_EVENT.Add(Treatment);
 
                 STATS_POLICE_STATION Jurisdiction = new STATS_POLICE_STATION();
                 Jurisdiction.CaseStatsID = stats.CaseStatsID;
+                Jurisdiction.ForensicCaseID = model.stats.ForensicCaseID;
                 Jurisdiction.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.JurisdictionStationName).FirstOrDefault().ServiceProviderID;
                 Jurisdiction.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Jurisdiction").FirstOrDefault().StationRoleID;
 
@@ -2068,6 +2282,7 @@ namespace DocuPath.Controllers
 
                 STATS_POLICE_STATION ProcessingStation = new STATS_POLICE_STATION();
                 ProcessingStation.CaseStatsID = stats.CaseStatsID;
+                ProcessingStation.ForensicCaseID = model.stats.ForensicCaseID;
                 ProcessingStation.ServiceProviderID = model.ProcessingStationID;
                 ProcessingStation.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.ProcessingStationName).FirstOrDefault().ServiceProviderID;
                 ProcessingStation.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Processing").FirstOrDefault().StationRoleID;
@@ -2075,18 +2290,28 @@ namespace DocuPath.Controllers
 
                 STATS_POLICE_STATION Investigating = new STATS_POLICE_STATION();
                 Investigating.CaseStatsID = stats.CaseStatsID;
+                Investigating.ForensicCaseID = model.stats.ForensicCaseID;
                 Investigating.ServiceProviderID = model.InvestigationStationID;
                 Investigating.ServiceProviderID = db.SERVICE_PROVIDER.Where(m => m.CompanyName == model.InvestigationStationName).FirstOrDefault().ServiceProviderID;
                 Investigating.StationRoleID = db.STATION_ROLE.Where(m => m.StationRoleDescription == "Investigation").FirstOrDefault().StationRoleID;
                 stats.STATS_POLICE_STATION.Add(Investigating);
 
+                stats.IndividualRaceOtherDescription = model.otherRaceDescription;
+                stats.HospitalClinicOtherDescription = model.otherTreatmentFacilityDescription;
+                stats.OtherApparentMannerDescription = model.otherApparentMannerDeathDescription;
+                stats.OtherPrimaryCauseDescription = model.otherPrimaryCauseDeathDescription;
 
-                db.FORENSIC_CASE.Where(m => m.ForensicCaseID == stats.ForensicCaseID).FirstOrDefault().CASE_STATISTICS.Add(stats);
+
+
+
+
+                db.CASE_STATISTICS.Attach(stats);
+                db.Entry(stats).State = EntityState.Modified;
                 db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Statistics");
                 #endregion
-                return RedirectToAction("ForensicCaseAddedSuccess");
+                return RedirectToAction("ForensicCaseUpdatedSuccess");
             }
             catch (Exception x)
             {

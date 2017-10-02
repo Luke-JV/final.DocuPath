@@ -55,12 +55,15 @@ namespace DocuPath.DataLayer
         [DisplayName("Surname of Organ Dissector")]
         public string OrganDissectorSurname { get; set; }
         //TODO: DATE DEFAULT
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Estimated Date of Injury")]
         public Nullable<System.DateTime> EstimatedInjuryDate { get; set; }
         //TODO: DATE DEFAULT
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date of Discovery")]
         public Nullable<System.DateTime> DiscoveryDate { get; set; }
         //TODO: DATE DEFAULT
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Estimated Date of Death")]
         public Nullable<System.DateTime> EstimatedDeathDate { get; set; }
         [DefaultValue(FLAG.Integer)]
