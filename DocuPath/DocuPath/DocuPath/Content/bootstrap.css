@@ -654,7 +654,7 @@ dd {
     border-color: transparent;
     border-radius: 3px;
     height: 30px;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     margin-bottom: 10px;
     /*background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5),#333333);*/
     background-color: #cccccc;
@@ -769,6 +769,40 @@ dd {
   .dl-horizontal dd:after {
     clear: both;
   }
+
+/* DL-HORIZONTAL-MEDIUM: */
+  .dl-horizontal-medium dt {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    /*white-space: nowrap;*/
+    /*white-space: normal;*/
+  }
+  .dl-horizontal-medium dd {
+    margin-left: 210px;
+    padding-left: 10px;
+    border-left: 1px solid #999;
+  }
+  .dl-horizontal-medium dd:before,
+  .dl-horizontal-medium dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-medium dd:after {
+    clear: both;
+  }
+  .dl-horizontal-medium dd:before,
+  .dl-horizontal-medium dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-medium dd:after {
+    clear: both;
+  }
+}
 
 /* DL-HORIZONTAL-SMALLL: */
   .dl-horizontal-small dt {
@@ -6162,7 +6196,7 @@ a.list-group-item:focus {
 }
 
 .well-sm {
-  padding: 7.5px !important;
+  padding: 7.5px 7.5px 0 7.5px !important;
   border-radius: 5px;
   margin-bottom: 5px !important;
 }
@@ -14340,5 +14374,71 @@ mark {
     transition: 1s all;
 }
 
+/*#endregion */
+
+/*#region VIEW FC STATISTICS GRID: */
+
+.stats-grid{
+    grid-gap: 10px;
+    padding: 10px;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(6, auto));
+    /*grid-template-areas:    "core autopsy"
+                            "date deceasedindiv"
+                            "medhist medhist"
+                            "geoloc geoloc2"
+                            "incident extcause"
+                            "specialcat specialcat";*/
+    grid-template-areas:    "1234"
+                            "medhist"
+                            "geo12"
+                            "incident"
+                            "extcause"
+                            "specialcat";
+}
+
+.stats-grid:before{
+    display: none;
+    content:'';
+}
+
+.stats-grid:after{
+    display: none;
+    content:'';
+}
+
+.stats-1234-subgrid{
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:    "core autopsy"
+                            "date deceasedindiv";
+}
+
+.stats-1234-subgrid:before{
+    display: none;
+    content:'';
+}
+
+.stats-1234-subgrid:after{
+    display: none;
+    content:'';
+}
+
+.stats-geo12-subgrid{
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:    "geoloc1 geoloc2";
+
+}
+
+.stats-geo12-subgrid:before{
+    display: none;
+    content:'';
+}
+
+.stats-geo12-subgrid:after{
+    display: none;
+    content:'';
+}
 
 /*#endregion */

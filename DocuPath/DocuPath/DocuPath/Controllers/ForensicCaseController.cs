@@ -302,14 +302,16 @@ namespace DocuPath.Controllers
                 #endregion
                 #region PREPARE MODEL
                 CoreDataViewModel model = new CoreDataViewModel();
-                var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
+                DateTime sevenDaysAgo = DateTime.Today.AddDays(-7);
+                //DateTime today = DateTime.Today.AddDays(-1).AddHours(22).AddMinutes(59).AddMilliseconds(99999);
+                DateTime today = DateTime.Today.AddDays(1).AddMilliseconds(-1);
 
                 model.forensicCase = new FORENSIC_CASE();
                 model.autopsyAreas = db.AUTOPSY_AREA.ToList();
                 model.forensicCase.SESSION = new SESSION();
                 model.forensicCase.SessionID = 0;
                 model.sessionSelector = new List<sessionKVP>();
-                foreach (var item in db.SESSION.Where(x => x.DateID > sevenDaysAgo))
+                foreach (var item in db.SESSION.Where(x => x.DateID <= today && x.DateID >= sevenDaysAgo).OrderByDescending(x => x.DateID))
                 {
                     sessionKVP newSesh = new sessionKVP();
                     newSesh.sessionID = item.SessionID;
@@ -1469,7 +1471,7 @@ namespace DocuPath.Controllers
             }
         }
         #endregion
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         #region READS:
 
         [AuthorizeByAccessArea(AccessArea = "Search Forensic Case")]
