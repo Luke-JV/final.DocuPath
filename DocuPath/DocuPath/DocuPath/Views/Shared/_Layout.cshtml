@@ -634,6 +634,8 @@
         shortcut.add("2", function () { document.getElementById('CORNEAheading').click(); });
         shortcut.add("3", function () { document.getElementById('PULSEheading').click(); });
         shortcut.add("F5", function (e) { e.preventDefault(); });
+        shortcut.add("Esc", function (e) { e.preventDefault(); document.elementFromPoint(1, 1).click(); });
+
 
         shortcut.add("Ctrl+Home", function () { if (document.title.indexOf('Home',0) != 0) { $('#divHomeNavWarning').removeClass("hidden"); } });
         $('#btnHomeYes').click(function (target) { window.location.href = "@Url.Action("Index", "Home")"; });

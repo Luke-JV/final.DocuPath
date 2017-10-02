@@ -55,6 +55,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }   
         [DisplayName("Notice Of Death")]
+        [StringLength(15)]
         [Required]
         public string DHANoticeDeathID { get; set; }
         [DefaultValue(FLAG.Text)]

@@ -294,14 +294,15 @@ namespace DocuPath.Models
                 #region Parameters, Extracted Constants & Values:
                 List<METRIC> visionMetrics = new List<METRIC>();
                 DateTime dtToday = DateTime.Today;
+                DateTime dtTodayMidnight = dtToday.AddDays(1).AddMilliseconds(-1);
                 DateTime dtDateToday = DateTime.Today.Date;
                 DateTime dtTimeNow = DateTime.Now;
                 DateTime dtDateNow = DateTime.Now.Date;
                 double targetAge = TimeSpan.FromDays(365 * 11).TotalDays;
-                var pastSeven = dtToday.AddDays(-7);
-                var pastThirty = dtToday.AddDays(-30);
-                var pastSixty = dtToday.AddDays(-60);
-                var pastNinety = dtToday.AddDays(-90);
+                var pastSeven = dtTodayMidnight.AddDays(-7);
+                var pastThirty = dtTodayMidnight.AddDays(-30);
+                var pastSixty = dtTodayMidnight.AddDays(-60);
+                var pastNinety = dtTodayMidnight.AddDays(-90);
                 #endregion
 
                 // ======= FORENSIC CASES (GROUP ID: 1) =======

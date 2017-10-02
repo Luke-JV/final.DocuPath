@@ -118,7 +118,7 @@
                                             <div class="panel-heading">
                                                 <h4 class="panel-title text-center" data-toggle="collapse" data-parent="#timelinecontainer" href="#CORESTATSPANEL"><i class="mdl2icon mdl2-more"></i></h4>
                                             </div>
-                                            <div id="CORESTATSPANEL" class="panel-collapse collapse">
+                                            <div id="CORESTATSPANEL" class="panel-collapse collapse in">
                                                 <div class="panel-body">
                                                     <div class="form-group">
                                                         @Html.LabelFor(model => model.stats.BodyCollectorSurname, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -642,7 +642,7 @@
                                                     <div class="form-group" id="frmCODOther">
                                                         @Html.LabelFor(model => model.otherPrimaryCauseDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                         <div class="col-md-12">
-                                                            @Html.EditorFor(model => model.otherPrimaryCauseDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                            @Html.EditorFor(model => model.otherPrimaryCauseDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
                                                             @Html.ValidationMessageFor(model => model.otherPrimaryCauseDeathDescription, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -658,7 +658,7 @@
                                                     <div class="form-group" id="frmMOIOther">
                                                         @Html.LabelFor(model => model.otherApparentMannerDeathDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                         <div class="col-md-12">
-                                                            @Html.EditorFor(model => model.otherApparentMannerDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "padding-left: 0px; width: 476.08px" } })
+                                                            @Html.EditorFor(model => model.otherApparentMannerDeathDescription, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
                                                             @Html.ValidationMessageFor(model => model.otherApparentMannerDeathDescription, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -686,7 +686,7 @@
                                                     <div class="form-group" id="frmSOIOther">
                                                         @Html.LabelFor(model => model.otherInjurySceneDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                         <div class="col-md-12">
-                                                            @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @id = "scenes-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.EditorFor(model => model.otherInjurySceneDescription, new { htmlAttributes = new { @id = "scenes-other", @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
                                                             @Html.ValidationMessageFor(model => model.otherInjurySceneDescription, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -741,7 +741,7 @@
                                                     <div class="form-group" id="frmExtCauseOther">
                                                         @Html.LabelFor(model => model.otherExternalCauseDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                         <div class="col-md-12">
-                                                            @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @id = "extcauses-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.EditorFor(model => model.otherExternalCauseDescription, new { htmlAttributes = new { @id = "extcauses-other", @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
                                                             @Html.ValidationMessageFor(model => model.otherExternalCauseDescription, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>
@@ -796,7 +796,7 @@
                                                     <div class="form-group" id="frmSpecCatOther">
                                                         @Html.LabelFor(model => model.otherSpecialCategoryDescription, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                                         <div class="col-md-12">
-                                                            @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @id = "specialcat-other", @class = "form-control", @style = "padding-left: 0px; margin-bottom: 0" } })
+                                                            @Html.EditorFor(model => model.otherSpecialCategoryDescription, new { htmlAttributes = new { @id = "specialcat-other", @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
                                                             @Html.ValidationMessageFor(model => model.otherSpecialCategoryDescription, "", new { @class = "validation-text text-danger" })
                                                         </div>
                                                     </div>

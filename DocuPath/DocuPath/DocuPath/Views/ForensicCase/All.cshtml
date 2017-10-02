@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<DocuPath.DataLayer.FORENSIC_CASE>
+@using DocuPath.DataLayer
+@{ DocuPathEntities db = new DocuPathEntities(); }
+@using DocuPath.Models
 @{ ViewBag.Title = "All"; ViewBag.GenericHAPTICLocator = "AllGeneric"; ViewBag.SpecificHAPTICLocator = "AllFCSpecific"; ViewBag.PageInfoLocator = "AllFC"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -97,9 +100,16 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateClosed)
-                    </td>
+                    @if (Convert.ToDateTime(item.DateClosed).Year == 9999)
+                    {
+                        @Html.Raw("<td>Active Case</td>")
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateClosed)
+                        </td>                            
+                    }
                 </tr>
             }
         }
@@ -156,7 +166,8 @@
             converters: {
                 dpdate: {
                     from: function (value) { return moment(value); },
-                    to: function (value) { return value.format("ddd D MMM YYYY"); }
+                    to: function (value) { return value.format("ddd D MMM YYYY");
+                    }
                 }
             },
             formatters: {

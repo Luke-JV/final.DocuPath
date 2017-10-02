@@ -446,7 +446,7 @@ function longDateFormat (key) {
     return this._longDateFormat[key];
 }
 
-var defaultInvalidDate = 'Invalid date';
+var defaultInvalidDate = 'Active Case';
 
 function invalidDate () {
     return this._invalidDate;
