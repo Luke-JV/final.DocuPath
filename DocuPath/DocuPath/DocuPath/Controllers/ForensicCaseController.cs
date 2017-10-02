@@ -1427,10 +1427,9 @@ namespace DocuPath.Controllers
 
 
 
-                //throw new Exception();
 
-=======
->>>>>>> 0e46da8079943178e9c97e3e0f0828b611a316b2
+                //throw new Exception();
+                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Forensic Case");
                 #endregion
@@ -1446,14 +1445,11 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchFail, "Forensic Case");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
-<<<<<<< HEAD
                 //return View("Error", new HandleErrorInfo(x, "ForensicCase", "All"));
 
                 return View("Error",new HandleErrorInfo(x, controllerName, actionName));
-
-=======
-                return View("Error",new HandleErrorInfo(x, controllerName, actionName));
->>>>>>> 0e46da8079943178e9c97e3e0f0828b611a316b2
+                
+                
             }
         }
         
