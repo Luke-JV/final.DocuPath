@@ -87,21 +87,16 @@
                                 <dd>@Html.DisplayFor(model => model.forensicCase.USER.FirstName) @Html.DisplayFor(model => model.forensicCase.USER.LastName)</dd>
 
                                 <dt>@Html.DisplayNameFor(model => model.forensicCase.DateAdded)</dt>
+                                <dd>@Html.DisplayFor(model => model.forensicCase.DateAdded)</dd>
+
+                                <dt>@Html.DisplayNameFor(model => model.forensicCase.DateClosed)</dt>
                             @if (Model.forensicCase.DateClosed.Value.Year != 9999)
 	                        {
-                                <dd>@Html.DisplayFor(model => model.forensicCase.DateAdded)</dd>
+                                <dd>@Html.DisplayFor(model => model.forensicCase.DateClosed)</dd>
                             } else
                             {
-                                <dd class="status-inactive">@Html.Display("Active Case")</dd>
+                                <dd class="status-inactive">Active Case</dd>
                             }
-
-                                <dt>
-                                    @Html.DisplayNameFor(model => model.forensicCase.DateClosed)
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model.forensicCase.DateClosed)
-                                </dd>
 
                                 <dt>
                                     @Html.DisplayNameFor(model => model.forensicCase.STATUS.StatusValue)
@@ -902,11 +897,11 @@
                         <div class="panel-body" style="padding: 25px">
                             <table id="FC_AE" class="table table-striped">
                                 <tr>
-                                    <th class="colour-dpred">Serial Number</th>
+                                    <th class="colour-dpred" style="width: 300px">Serial Number</th>
                                     <th class="colour-dpred">Description</th>
-                                    <th class="colour-dpred">Contact Person</th>
-                                    <th class="colour-dpred">Contact Number</th>
-                                    <th class="colour-dpred">Actions</th>
+                                    <th class="colour-dpred" style="width: 150px">Contact Person</th>
+                                    <th class="colour-dpred" style="width: 130px">Contact Number</th>
+                                    <th class="colour-dpred" style="width: 80px">Actions</th>
                                 </tr>
                                 @foreach (var item in Model.additionalEvidence.OrderBy(x => x.EvidenceDescription))
                                 {
@@ -967,7 +962,7 @@
                         <div class="panel-body" style="padding: 25px">
                             <table class="table table-striped">
                                 <tr>
-                                    <th class="colour-dpred">Prominence</th>
+                                    <th class="colour-dpred" style="width: 120px">Prominence</th>
                                     <th class="colour-dpred">Cause Of Death</th>
                                     <th class="colour-dpred">Motivation</th>
                                 </tr>

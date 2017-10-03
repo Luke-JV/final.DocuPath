@@ -128,7 +128,7 @@
                 <th class="colour-dpred">Thumbnail</th>
                 <th class="colour-dpred">Caption</th>
                 <th class="colour-dpred">Description</th>
-                <th class="colour-dpred">Actions</th>
+                <th class="colour-dpred" style="width: 80px !important">Actions</th>
             </tr>
             @foreach (var item in Model.OrderByDescending(x => x.DateAdded))
             {
@@ -138,6 +138,8 @@
                     <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
                     <td>
                         <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#MEDIA_@item.MediaID"></a></span>
+                        <span data-toggle="tooltip" title="MAINTAIN TAGS" data-placement="right"><a class="mdl2icon mdl2-edit colour-dpblack" href="javascript:void(0)" onclick="this.blur()" ></a></span>
+                        <span data-toggle="tooltip" title="DELETE" data-placement="right"><a class="mdl2icon mdl2-delete colour-dpblack" href="javascript:void(0)" onclick="this.blur()"></a></span>
                         <div class="modal fade" id="MEDIA_@item.MediaID" role="dialog">
                             <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
                                 <div class="modal-content">
