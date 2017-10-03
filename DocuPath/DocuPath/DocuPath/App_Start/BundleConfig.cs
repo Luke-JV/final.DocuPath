@@ -66,8 +66,9 @@ namespace DocuPath
                       "~/Content/site.css",
                       "~/Content/jquery.tag-editor.css",
                       "~/Content/jquery-ui.css",
-                      "~/Content/jquery-ui.structure.css"
-                      , "~/Content/bootstrap-tagsinput.css"));
+                      "~/Content/jquery-ui.structure.css",
+                      "~/Content/bootstrap-tagsinput.css",
+                      "~/Content/calendar/calendar.css"));
             #endregion
 
             #region Default MVC Bundles:

@@ -9474,6 +9474,10 @@ td > span > a:hover {
 
 /* BOOTSTRAP CALENDAR: */
 
+.cal-context div, span, button, btn{
+    transition: 0.75s all;
+}
+
 [class*="cal-cell"] {
   float: left;
   margin-left: 0;
@@ -9639,6 +9643,15 @@ td > span > a:hover {
 .cal-year-box #cal-day-tick {
   margin-right: -7px;
 }
+
+.cal-year-box {
+    font-family: 'U.S. 101';
+}
+
+.cal-year-box .cal-event-list{
+    font-family: 'Segoe UI';
+    font-size: 10pt;
+}
 #cal-slide-box {
   position: relative;
 }
@@ -9780,32 +9793,32 @@ td > span > a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#cal-day-box .day-highlight.dh-event-important {
+#cal-day-box .day-highlight.dh-event-general {
   border: 1px solid rgba(174, 31, 31, 1);
 }
-#cal-day-box .day-highlight.dh-event-warning {
+#cal-day-box .day-highlight.dh-event-pending {
   border: 1px solid #c09853;
 }
 #cal-day-box .day-highlight.dh-event-info {
   border: 1px solid #3a87ad;
 }
-#cal-day-box .day-highlight.dh-event-inverse {
+#cal-day-box .day-highlight.dh-event-rejected {
   border: 1px solid #1b1b1b;
 }
-#cal-day-box .day-highlight.dh-event-success {
+#cal-day-box .day-highlight.dh-event-accepted {
   border: 1px solid #468847;
 }
-#cal-day-box .day-highlight.dh-event-special {
+#cal-day-box .day-highlight.dh-event-finalized {
   background-color: #ffe6ff;
   border: 1px solid #800080;
 }
 .event {
   display: block;
   background-color: #c3c3c3;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   margin-right: 2px;
-  margin-bottom: 2px;
+  margin-bottom: 5px !important;
   -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
   border-radius: 8px;
@@ -9820,50 +9833,54 @@ td > span > a:hover {
 .cal-event-list .event.pull-left {
   margin-top: 3px;
 }
-.event-important {
-  background-color: #ae1f1f;
+.cal-event-list:hover{
+    background-color: #333 !important;
+}
+.event-general {
+  background-color: #333333 !important;
 }
 .event-info {
-  background-color: #1e90ff;
+  background-color: #428bca !important;
 }
-.event-warning {
-  background-color: #e3bc08;
+.event-pending {
+  /*background-color: #e3bc08;*/
+  background-color: #c09853 !important;
 }
-.event-inverse {
-  background-color: #1b1b1b;
+.event-rejected {
+  background-color: rgba(174, 31, 31, 1) !important;
 }
-.event-success {
-  background-color: #006400;
+.event-accepted {
+  background-color: #468847 !important;
 }
-.event-special {
-  background-color: #800080;
+.event-finalized {
+  background-color: #800080 !important;
 }
 .day-highlight:hover,
 .day-highlight {
   background-color: #dddddd;
 }
-.day-highlight.dh-event-important:hover,
-.day-highlight.dh-event-important {
+.day-highlight.dh-event-general:hover,
+.day-highlight.dh-event-general {
   background-color: rgba(255,220,220,1);
 }
-.day-highlight.dh-event-warning:hover,
-.day-highlight.dh-event-warning {
+.day-highlight.dh-event-pending:hover,
+.day-highlight.dh-event-pending {
   background-color: #fdf1ba;
 }
 .day-highlight.dh-event-info:hover,
 .day-highlight.dh-event-info {
   background-color: #d1e8ff;
 }
-.day-highlight.dh-event-inverse:hover,
-.day-highlight.dh-event-inverse {
+.day-highlight.dh-event-rejected:hover,
+.day-highlight.dh-event-rejected {
   background-color: #c1c1c1;
 }
-.day-highlight.dh-event-success:hover,
-.day-highlight.dh-event-success {
+.day-highlight.dh-event-accepted:hover,
+.day-highlight.dh-event-accepted {
   background-color: #caffca;
 }
-.day-highlight.dh-event-special:hover,
-.day-highlight.dh-event-special {
+.day-highlight.dh-event-finalized:hover,
+.day-highlight.dh-event-finalized {
   background-color: #ffe6ff;
 }
 .cal-row-head [class*="cal-cell"]:first-child,
@@ -9893,7 +9910,12 @@ td > span > a:hover {
   position: relative;
 }
 .cal-year-box [class*="span"] {
-  min-height: 60px;
+  min-height: 150px !important;
+  font-size: 30pt;
+  transition: 0.5s all;
+}
+.cal-year-box .cal-cell span{
+    color: #000 !important;
 }
 .cal-year-box .row-fluid [class*="span"]:last-child,
 .cal-month-box .cal-row-fluid [class*="cal-cell"]:last-child {
@@ -9966,12 +9988,13 @@ span[data-cal-date]:hover {
   border-radius: 0 0 5px 5px;
   background-color: #ededed;
   text-align: center;
+  font-size: 12pt;
 }
 #cal-slide-box {
   border-top: 0px solid #8c8c8c;
 }
 #cal-slide-content {
-  padding: 20px;
+  padding: 10px !important;
   color: #ffffff;
   background-color: #5a5a5a;
   /*background-image: url("../Content/CalendarTemplates/dark_wood.png?2");*/
@@ -10001,33 +10024,65 @@ a.cal-event-week {
   color: #151515;
 }
 .badge-important {
-  background-color: #b94a48;
+  background-color: rgba(174, 31, 31, 1) !important;
+  font-family: 'Segoe UI' !important;
+}
+
+.calendar-panel-heading-grid {
+    text-align: right;
+    /*grid-gap: 5px;*/
+    grid-template-columns: 20px 1fr auto auto auto;
+    grid-template-areas: "cal_hdr_ico cal_hdr_txt cal_hdr_nav cal_hdr_sep cal_hdr_view";
+}
+
+.calendar-panel-heading-grid .btn-group .btn{
+    /*background: red;*/
+    /*height: 100%;*/
+    margin: 6px 0 0 0 !important;
+}
+
+.calendar-panel-heading-grid div{
+    padding: 0 6px;
 }
 
 .btn-paneltoolbar{    
     font-family:'Segoe UI';
-    font-size:16px;
+    font-size:14px;
+    font-weight: 500;
+    text-transform: uppercase;
     color: #fff;
     background-color: #5a5a5a;
     border-color: #cccccc;
     height: 30px;
     padding: 0px;
 }
-
 .btn-paneltoolbar:hover{    
-    font-family:'Segoe UI';
-    font-size:16px;
-    color: #000;
-    background-color: #fff;
+    color: #fff;
+    background-color: #999;
+    border-color: none !important;
+    border-bottom-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+.btn-paneltoolbar-mdl2icon{    
+    font-family:'Segoe MDL2 Assets';
+    font-size:18px;
+    color: #fff;
+    background-color: #5a5a5a;
     border-color: #cccccc;
+    height: 30px;
+    padding: 0px;
+}
+.btn-paneltoolbar-mdl2icon:hover{    
+    background-color: #ae1f1f;
+    color: #999;
 }
 
-.btn-paneltoolbar:active{    
-    font-family:'Segoe UI';
-    font-size:16px;
-    color: #000;
-    background-color: rgba(174, 31, 31, 1);
-    border-color: #cccccc;
+
+.panel-toolbar-btn-active{    
+    color: #fff !important;
+    background-color: rgba(174, 31, 31, 1) !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
 }
 
 /* CUSTOM ACCORDION CSS: */
@@ -10385,7 +10440,7 @@ a.cal-event-week {
 .indented{
     list-style-type: square;
     margin-left: 20px;
-    font-size: 80%;
+    font-size: 90%;
 }
 
 /* LARGE (DESKTOP/LAPTOP) SCREENS: */
