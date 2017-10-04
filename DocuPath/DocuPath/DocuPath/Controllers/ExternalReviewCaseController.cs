@@ -173,7 +173,8 @@ namespace DocuPath.Controllers
             string actionName = "Edit";
             try
             {
-
+                EXTERNAL_REVIEW_CASE model = new EXTERNAL_REVIEW_CASE();
+                model = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault();
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
@@ -181,7 +182,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "External Review Case");
                 #endregion
-                return View();
+                return View(model);
             }
             catch (Exception x)
             {

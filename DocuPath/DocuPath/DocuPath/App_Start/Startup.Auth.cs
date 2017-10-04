@@ -25,6 +25,7 @@ namespace DocuPath
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+                
                 LoginPath = new PathString("/Account/Login"),
                 ExpireTimeSpan = TimeSpan.FromMinutes(15),
                 Provider = new CookieAuthenticationProvider
@@ -38,6 +39,7 @@ namespace DocuPath
                         user.GenerateUserIdentityAsync(manager),
                     getUserIdCallback: (id) => (id.GetUserId<int>()))
                 }
+                
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

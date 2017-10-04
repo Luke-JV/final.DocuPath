@@ -312,16 +312,17 @@ namespace DocuPath.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return RedirectToAction("Home","Index");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                 VERTEBRAE.sendMail(model.Email, "Please reset your password by clicking: " + callbackUrl ,"RESET PASSWORD");
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
@@ -341,10 +342,16 @@ namespace DocuPath.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        [ValidateInput(false)]
+        public ActionResult ResetPassword(int userId, string code)
         {
+
             //return code == null ? View("Error") : View();
-            return View();
+            ResetPasswordViewModel model = new ResetPasswordViewModel();
+            var user = UserManager.FindById(userId);
+            model.Email = user.AcademicEmail;
+            model.Code = model.Code;
+            return View(model);
         }
 
         //

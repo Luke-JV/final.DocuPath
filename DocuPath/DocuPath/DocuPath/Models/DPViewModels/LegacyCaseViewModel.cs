@@ -11,4 +11,10 @@ namespace DocuPath.Models.DPViewModels
         public LEGACY_CASE legacyCase {get;set;}
         public List<LEGACY_DOCUMENT> legacyDocs {get;set;}
 }
+    public class UpdateLegacyCaseViewModel
+    {
+        public LEGACY_CASE legacyCase { get; set; }
+        public List<LEGACY_DOCUMENT> legacyDocs { get; set; }
+        public List<STATUS> statuses { get; set; }
+    }
 }

@@ -299,7 +299,15 @@ namespace DocuPath.Models
 
         public Task UpdateAsync(DPUser user)
         {
-            throw new NotImplementedException();
+            
+            USER_LOGIN inLogin = db.USER_LOGIN.Where(x => x.Username == user.AcademicEmail).FirstOrDefault();
+
+            inLogin.Password = user.PasswordHash;
+            db.USER_LOGIN.Attach(inLogin);
+            db.Entry(inLogin).State = System.Data.Entity.EntityState.Modified;
+           // db.Entry(inLogin).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Task.FromResult<DPUser>(null);
         }
 
         #region IDisposable Support
@@ -438,6 +446,7 @@ namespace DocuPath.Models
                 throw new ArgumentNullException("user");
             }
             user.PasswordHash = passwordHash;
+
             return Task.FromResult<int>(0);
         }
 

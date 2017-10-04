@@ -36,9 +36,11 @@ namespace DocuPath.DataLayer
         [DisplayName("Brief Description")]
         public string LCBriefDescription { get; set; }
         //todo [DefaultValue(FLAG.Text)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
         //todo [DefaultValue(FLAG.Text)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
     

@@ -33,6 +33,7 @@ namespace DocuPath.DataLayer
         [DisplayName("Date Added")]
         public System.DateTime DateAdded { get; set; }
         //todo time 
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Date Closed")]
         public Nullable<System.DateTime> DateClosed { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]

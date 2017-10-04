@@ -231,7 +231,11 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Legacy Case");
                 #endregion
-                return View();
+                UpdateLegacyCaseViewModel model = new UpdateLegacyCaseViewModel();
+                model.legacyCase = db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault();
+                model.statuses = db.STATUS.ToList();
+                model.legacyDocs = model.legacyCase.LEGACY_DOCUMENT.ToList();
+                return View(model);
             }
             catch (Exception)
             {
