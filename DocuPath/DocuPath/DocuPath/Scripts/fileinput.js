@@ -3949,7 +3949,7 @@
             uploadBatch: 'batch file upload',
             uploadExtra: 'form data upload'
         },
-        dropZoneTitle: 'DRAG & DROP FILES HERE',
+        dropZoneTitle: 'DRAG & DROP FILE(S) HERE',
         dropZoneClickTitle: '<br>(or click to select {files})',
         previewZoomButtonTitles: {
             prev: 'View previous file',

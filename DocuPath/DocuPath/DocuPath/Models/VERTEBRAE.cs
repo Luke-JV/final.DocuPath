@@ -714,6 +714,88 @@ namespace DocuPath.Models
             }
             return markup;
         }
+        public static string GetFileTypeThumbnail(string inFiletype, bool inContainerNeeded)
+        {
+            var markup = "";
+            if (inContainerNeeded)
+            {
+                markup += "<div class=\"grid ico-container\">";
+                switch (inFiletype.ToUpper())
+                {
+                    case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
+                    case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
+                    case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
+                    case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
+                    case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
+                    case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
+                    case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
+                    case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
+                    case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
+                    case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
+                    case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
+                    case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
+                    case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
+                    case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
+                    case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
+                    case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
+                    case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
+                    case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
+                    case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
+                    case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
+                    case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
+                    case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
+                    case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
+                    case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
+                    case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
+                    case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
+                    case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
+                    case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
+                    case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
+                    case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
+                    default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                }
+                markup += "</div>";
+            }
+            else
+            {
+                switch (inFiletype.ToUpper())
+                {
+                    case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
+                    case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
+                    case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
+                    case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
+                    case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
+                    case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
+                    case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
+                    case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
+                    case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
+                    case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
+                    case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
+                    case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
+                    case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
+                    case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
+                    case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
+                    case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
+                    case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
+                    case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
+                    case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
+                    case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
+                    case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
+                    case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
+                    case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
+                    case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
+                    case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
+                    case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
+                    case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
+                    case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
+                    case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
+                    case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
+                    default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                }
+            }
+            return markup;
+        }
+
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FORMATTING & MARKUP:

@@ -64,8 +64,8 @@
         </ul>
         <div class="tab-content">
             @* DETAILS *@
-            <div id="DETAILS" class="tab-pane fade in active nomarg" style="padding: 5px 0; height: 264px">
-                <div class="panel panel-default">
+            <div id="DETAILS" class="tab-pane fade in active nomarg" style="padding: 5px 0">
+                <div class="panel panel-default nomarg">
                     <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDetailsPanel" style="cursor: pointer">
                         <span class="mdl2icon mdl2-lc panel-mdl2icon"></span>
                         <span>LEGACY CASE DETAILS</span>
@@ -236,72 +236,72 @@
 @section Scripts
 {
 
-@Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/bundles/fileinput")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
 
-<script>
-        $(document).ready(function () {
-            $("#LCDocs").fileinput({
-                theme: "fa",
-                uploadUrl: "/ForensicCase/UploadAdditionalEvidenceItems/", // TODO: URL HERE
-                fileActionSettings: {
-                    showUpload: false
-                },
-                previewZoomButtonIcons: {
-                    close: ''
-                },
-                previewZoomButtonClasses: {
-                    prev: 'btn btn-navigate',
-                    next: 'btn btn-navigate',
-                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
-                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
-                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
-                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
-                },
-                allowedFileExtensions: ['doc', 'dot', 'docx', 'dotx', 'xls', 'xlt', 'xlsx', 'xltx', 'ppt', 'pot', 'pptx', 'potx', 'pdf', 'txt'],
-                maxFileCount: 10 // TODO: Select max upload quantity
-            });
+    <script>
+            $(document).ready(function () {
+                $("#LCDocs").fileinput({
+                    theme: "fa",
+                    uploadUrl: "/ForensicCase/UploadAdditionalEvidenceItems/", // TODO: URL HERE
+                    fileActionSettings: {
+                        showUpload: false
+                    },
+                    previewZoomButtonIcons: {
+                        close: ''
+                    },
+                    previewZoomButtonClasses: {
+                        prev: 'btn btn-navigate',
+                        next: 'btn btn-navigate',
+                        toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                        fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                        borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                        close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                    },
+                    allowedFileExtensions: ['doc', 'dot', 'docx', 'dotx', 'xls', 'xlt', 'xlsx', 'xltx', 'ppt', 'pot', 'pptx', 'potx', 'pdf', 'txt'],
+                    maxFileCount: 10 // TODO: Select max upload quantity
+                });
 
-            //$('[title][title!=]').tooltip();
+                //$('[title][title!=]').tooltip();
 
-            $('#btnSave').click(function () {
-                // Checking whether FormData is available in browser
-                if (window.FormData !== undefined) {
-                    var files = $("#AEItems").fileinput('getFileStack');
+                $('#btnSave').click(function () {
+                    // Checking whether FormData is available in browser
+                    if (window.FormData !== undefined) {
+                        var files = $("#AEItems").fileinput('getFileStack');
 
-                    // Create FormData object
-                    var fileData = new FormData();
+                        // Create FormData object
+                        var fileData = new FormData();
 
-                    // Looping over all files and add it to FormData object
-                    for (var i = 0; i < files.length; i++) {
-                        fileData.append(files[i].name, files[i]);
-                    }
-                    gdata = fileData;
-
-                    // Adding one more key to FormData object
-                    // none needed here
-                    //fileData.append('LCDR', document.getElementById("drnum").value);
-
-                    $.ajax({
-                        url: '/ForensicCase/UploadAdditionalEvidenceItems/@Html.Raw(ViewBag.FCID)',
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
-                        success: function (result) {
-                            alert(result); //Throw Success Modal 404
-                            document.getElementById("btnPOST").click();
-                        },
-                        error: function (err) {
-                            alert(err.statusText);
+                        // Looping over all files and add it to FormData object
+                        for (var i = 0; i < files.length; i++) {
+                            fileData.append(files[i].name, files[i]);
                         }
-                    });
-                } else {
-                    alert("FormData is not supported.");
-                }
+                        gdata = fileData;
+
+                        // Adding one more key to FormData object
+                        // none needed here
+                        //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                        $.ajax({
+                            url: '/ForensicCase/UploadAdditionalEvidenceItems/@Html.Raw(ViewBag.FCID)',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (result) {
+                                alert(result); //Throw Success Modal 404
+                                document.getElementById("btnPOST").click();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    } else {
+                        alert("FormData is not supported.");
+                    }
+                });
             });
-        });
-</script>
+    </script>
     <script>
         $("#btnAddLCDoc").click(function () {
             $('#pnlFile').removeClass('hidden');
