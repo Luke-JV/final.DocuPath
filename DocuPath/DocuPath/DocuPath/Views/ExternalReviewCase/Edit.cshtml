@@ -1,12 +1,12 @@
 ﻿@model DocuPath.DataLayer.EXTERNAL_REVIEW_CASE
 @using DocuPath.Models
-@{ ViewBag.Title = "Details"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "ViewERCSpecific"; ViewBag.PageInfoLocator = "ViewERC"; }
+@{ ViewBag.Title = "Update"; ViewBag.GenericHAPTICLocator = "UpdateGeneric"; ViewBag.SpecificHAPTICLocator = "UpdateERCSpecific"; ViewBag.PageInfoLocator = "UpdateERC"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase") </li>
-    <li class="active">@Html.ActionLink("Update External Review Case", "Details") </li>
+    <li class="active">@Html.ActionLink("Update External Review Case", "Edit") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -44,112 +44,265 @@
     </div>
 </div>
 @* DETAILS OF SELECTED EXTERNAL REVIEW CASE: *@
-<div class="form-horizontal border-generic form-generic grid erc-view-grid">
-    <div class="panel panel-default nomarg" grid-area="details">
-        <div class="panel-heading">
-            <span class="mdl2icon mdl2-erc panel-mdl2icon"></span>
-            <span>EXTERNAL REVIEW CASE DETAILS</span>
-        </div>
-        <div id="ERCPanel" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <dl class="dl-horizontal-small">
-                    <dt style="padding-top: 5.2px">
-                        @Html.DisplayNameFor(model => model.ExternalDRNumber)
-                    </dt>
+<div class="form-horizontal border-generic form-generic">
+    <ul class="nav nav-tabs">
+        <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#DETAILS">EXTERNAL REVIEW CASE DETAILS</a></li>
+        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#DOCS" style="margin-left: 5px">EXTERNAL REVIEW CASE DOCUMENTS</a></li>
+    </ul>
+    <div class="tab-content">
+        @* DETAILS *@
+        <div id="DETAILS" class="tab-pane fade in active nomarg" style="padding-top: 5px">
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDetailsPanel" style="cursor: pointer"*@>
+                    <span class="mdl2icon mdl2-erc panel-mdl2icon"></span>
+                    <span>EXTERNAL REVIEW CASE DETAILS</span>
+                </div>
+                <div id="ERCDetailsPanel" class="panel-default">
+                    @*@Html.HiddenFor(m => m.legacyCase.LegacyCaseID)*@
+                    <div class="panel-body">
+                        <dl class="dl-horizontal-small">
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.ExternalDRNumber)
+                            </dt>
 
-                    <dd class="large-identifier">
-                        @Html.EditorFor(model => model.ExternalDRNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
+                            <dd>
+                                @Html.EditorFor(model => model.ExternalDRNumber, new { htmlAttributes = new { @class = "form-control large-identifier" } })
+                            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ERCBriefDescription)
-                    </dt>
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.ERCBriefDescription)
+                            </dt>
 
-                    <dd>
-                        @Html.EditorFor(model => model.ERCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
-                    </dd>
-                    <hr class="details-hr" />
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UserID)
-                    </dt>
+                            <dd>
+                                @Html.EditorFor(model => model.ERCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UserID)
+                            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.USER.FirstName) @Html.DisplayFor(model => model.USER.LastName)
-                    </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.USER.FirstName) @Html.DisplayFor(model => model.USER.LastName)
+                            </dd>
+                            <hr class="details-hr" />
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DateAdded)
-                    </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DateAdded)
+                            </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.DateAdded)
-                    </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.DateAdded)
+                            </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.DateClosed)
-                    </dt>
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.DateClosed)
+                            </dt>
 
-                    <dd>
-                        @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                    </dd>
+                            <dd>
+                                @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.STATUS.StatusValue)
+                            </dt>
 
-                    @*<dt>
-                            @Html.DisplayNameFor(model => model.CoverLetterLocation)
-                        </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.STATUS.StatusValue)
+                            </dd>
+                        </dl>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.CoverLetterLocation)
-                        </dd>
-
-                        <dt>
-                            @Html.DisplayNameFor(model => model.ExtCaseReportLocation)
-                        </dt>
-
-                        <dd>
-                            @Html.DisplayFor(model => model.ExtCaseReportLocation)
-                        </dd>*@
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.STATUS.StatusValue)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.STATUS.StatusValue)
-                    </dd>
-                </dl>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default nomarg" grid-area="cover">
-        <div class="panel-heading">
-            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-            <span>Cover Letter</span>
-        </div>
-        <div id="CoverLetterPanel" class="panel-collapse collapse in">
-            <div class="panel-body text-center apad5">
-                <img src="@VERTEBRAE.GetThumbUrl(Model.CoverLetterLocation)" class='media-thumb thumbsize-normal' />
-                @*<img src="~/Content/Resources/ERCCoverLetterPreview.png" style="max-width: 57%" />*@
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default nomarg" grid-area="report">
-        <div class="panel-heading">
-            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-            <span>Case Report</span>
-        </div>
-        <div id="ERCReportPanel" class="panel-collapse collapse in">
-            <div class="panel-body text-center apad5">
-                <img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />
+        @* DOCS *@
+        <div id="DOCS" class="tab-pane fade" style="padding-top: 5px">
+            @* POST FORM *@
+            <form action="~/ForensicCase/UploadAdditionalEvidenceItems"><input id="btnPOST" class="hidden" type="submit" /></form>
+            <div class="grid erc-view-grid">
+                @* COVER PREVIEW *@
+                <div class="panel panel-default nomarg" grid-area="cover">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>COVER LETTER</span>
+                    </div>
+                    <div id="CoverLetterPanel" class="panel-collapse collapse in">
+                        <div class="panel-body text-center apad5">
+                            @if (Model.CoverLetterLocation == null)
+                            {
+                                @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail("",false))
+                                <p class="filetype-thumbnail-filename">NO FILE UPLOADED</p>
+                            }
+                            else if (Model.CoverLetterLocation != null)
+                            {
+                                @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.CoverLetterLocation).Replace(".",""), false))
+                                <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.CoverLetterLocation)</p>
+                            }
+
+                            @*<img src="@VERTEBRAE.GetThumbUrl(Model.CoverLetterLocation)" class='media-thumb thumbsize-normal' />*@
+                            @*<img src="~/Content/Resources/ERCCoverLetterPreview.png" style="max-width: 57%" />*@
+                        </div>
+                    </div>
+                </div>
+                @* COVER FILEUPLOAD *@
+                <div class="panel panel-default nomarg" id="pnlCoverFile" grid-area="coverUpload">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>SELECT COVER LETTER TO UPLOAD</span>
+                    </div>
+                    <div class="panel-body apad5">
+                        <div class="row">
+                            @*@Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })*@
+                            <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                                <input id="ercCover" name="ercCover" type="file" @*class="file-loading"*@ />
+                                @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
+                                @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* REPORT PREVIEW *@
+                <div class="panel panel-default nomarg" grid-area="report">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>Case Report</span>
+                    </div>
+                    <div id="ERCReportPanel" class="panel-collapse collapse in">
+                        <div class="panel-body text-center apad5">
+                            @if (Model.CoverLetterLocation == null)
+                            {
+                                @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail("", false))
+                                <p class="filetype-thumbnail-filename">NO FILE UPLOADED</p>
+                            }
+                            else if (Model.CoverLetterLocation != null)
+                            {
+                                @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.ExtCaseReportLocation).Replace(".", ""), false))
+                                <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.ExtCaseReportLocation)</p>
+                            }
+
+                            @*<img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />*@
+                        </div>
+                    </div>
+                </div>
+                @* REPORT UPLOAD *@
+                <div class="panel panel-default nomarg" id="pnlReportFile" grid-area="reportUpload">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>SELECT REPORT TO UPLOAD</span>
+                    </div>
+                    <div class="panel-body apad5">
+                        <div class="row">
+                            @*@Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })*@
+                            <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                                <input id="ercReport" name="ercReport" type="file" @*class="file-loading"*@ />
+                                @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
+                                @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script id="onDomReady" type="text/javascript">
-        // Enable tooltips:
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+
+    <script>
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
+            // ERC Cover FileUpload:
+            $("#ercCover").fileinput({
+                theme: "fa",
+                uploadUrl: "/ForensicCase/UploadAdditionalEvidenceItems/", // TODO: URL HERE
+                fileActionSettings: {
+                    showUpload: false
+                },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['doc', 'dot', 'docx', 'dotx', 'xls', 'xlt', 'xlsx', 'xltx', 'ppt', 'pot', 'pptx', 'potx', 'pdf', 'txt'],
+                maxFileCount: 1
+            });
+
+            // ERC Report FileUpload:
+            $("#ercReport").fileinput({
+                theme: "fa",
+                uploadUrl: "/ForensicCase/UploadAdditionalEvidenceItems/", // TODO: URL HERE
+                fileActionSettings: {
+                    showUpload: false
+                },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['doc', 'dot', 'docx', 'dotx', 'xls', 'xlt', 'xlsx', 'xltx', 'ppt', 'pot', 'pptx', 'potx', 'pdf', 'txt'],
+                maxFileCount: 1
+            });
+
+
+            $('#btnSave').click(function () {
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+                    var files = $("#ercCover").fileinput('getFileStack');
+
+
+                    //  ============     .========.     ||==.        .========. 
+                    //       ||         ||        ||    ||   \\     ||        ||
+                    //       ||         ||        ||    ||    ||    ||        ||    O
+                    //       ||         ||        ||    ||    ||    ||        ||    O
+                    //       ||         ||        ||    ||   //     ||        ||
+                    //       ||          '========'     ||=='        '========'
+
+                    // HANDLE MULTIPLE FILEUPLOADS IN A SINGLE AJAX CALL! =D
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    gdata = fileData;
+
+                    // Adding one more key to FormData object
+                    // none needed here
+                    //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                    $.ajax({
+                        url: '/ForensicCase/UploadAdditionalEvidenceItems/@Html.Raw(ViewBag.FCID)',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            alert(result); //Throw Success Modal 404
+                            document.getElementById("btnPOST").click();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            });
         });
     </script>
 }
