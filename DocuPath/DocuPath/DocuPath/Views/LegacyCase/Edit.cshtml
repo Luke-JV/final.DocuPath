@@ -1,12 +1,12 @@
 ﻿@model DocuPath.Models.DPViewModels.UpdateLegacyCaseViewModel
 @using DocuPath.Models;
-@{ ViewBag.Title = "Details"; ViewBag.GenericHAPTICLocator = "ViewGeneric"; ViewBag.SpecificHAPTICLocator = "ViewLCSpecific"; ViewBag.PageInfoLocator = "ViewLC"; }
+@{ ViewBag.Title = "Edit"; ViewBag.GenericHAPTICLocator = "UpdateGeneric"; ViewBag.SpecificHAPTICLocator = "UpdateLCSpecific"; ViewBag.PageInfoLocator = "UpdateLC"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase") </li>
-    <li class="active">@Html.ActionLink("View Legacy Case", "Details") </li>
+    <li class="active">@Html.ActionLink("Update Legacy Case", "Edit") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -14,11 +14,11 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-lc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">VIEW LEGACY CASE</div>
+            <div class="page-header-text">UPDATE LEGACY CASE</div>
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-seven">
+        <div class="page-buttons-subgrid buttons-six">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -28,26 +28,21 @@
             </div>
             <div grid-area="btn2">
                 <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
-            </div>
+            </div>            
             <div grid-area="btn3">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnExpandCollapse" accordion-id="#LCDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
-                </form>
-            </div>
-            <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
-            <div grid-area="btn5">
+            <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnSave" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
-            <div grid-area="btn6">
+            <div grid-area="btn5">
                 <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
             </div>
-            <div grid-area="btn7">
+            <div grid-area="btn6">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
@@ -62,152 +57,159 @@
     @Html.AntiForgeryToken();
     <input type="submit" id="btnPOST" class="hidden" />
     @* DETAILS OF SELECTED LEGACY CASE: *@
-    <div class="form-horizontal border-generic form-generic">
-        <div class="panel-group" id="LCDetailsAccordion">
-            <div class="row" style="margin-left: 0px">
-                <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDetailsPanel" style="cursor: pointer">
-                            <span class="mdl2icon mdl2-lc panel-mdl2icon"></span>
-                            <span>Legacy Case Details</span>
+    <div class="form-horizontal border-generic form-generic" style="padding-bottom: 0">
+        <ul class="nav nav-tabs">
+            <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#DETAILS">Legacy Case Details</a></li>
+            <li><a class="dynamic-tab-heading" data-toggle="tab" href="#DOCS" style="margin-left: 5px">Legacy Case Documents</a></li>
+        </ul>
+        <div class="tab-content">
+            @* DETAILS *@
+            <div id="DETAILS" class="tab-pane fade in active nomarg" style="padding: 5px 0; height: 264px">
+                <div class="panel panel-default">
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDetailsPanel" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-lc panel-mdl2icon"></span>
+                        <span>LEGACY CASE DETAILS</span>
+                    </div>
+                    <div id="LCDetailsPanel" class="panel-collapse collapse in">
+                        @Html.HiddenFor(m => m.legacyCase.LegacyCaseID)
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.legacyCase.LegacyDRNumber)
+                                </dt>
+
+                                <dd>
+                                    @Html.EditorFor(model => model.legacyCase.LegacyDRNumber, new { htmlAttributes = new { @class = "form-control large-identifier" } })
+                                </dd>
+
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.legacyCase.LCBriefDescription)
+                                </dt>
+
+                                <dd>
+                                    @Html.EditorFor(model => model.legacyCase.LCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.legacyCase.UserID)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.USER.FirstName) @Html.DisplayFor(model => model.legacyCase.USER.LastName)
+                                </dd>
+
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.legacyCase.DateAdded)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.legacyCase.DateAdded, new { @class = "form-control" })
+                                </dd>
+                                <hr class="details-hr" />
+                                <dt style="padding-top: 5.2px">
+                                    @Html.DisplayNameFor(model => model.legacyCase.DateClosed)
+                                </dt>
+
+                                <dd>
+                                    @Html.EditorFor(model => model.legacyCase.DateClosed, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                                </dd>
+                            </dl>
+
                         </div>
-                        <div id="LCDetailsPanel" class="panel-collapse collapse in">
-                            @Html.HiddenFor(m => m.legacyCase.LegacyCaseID)
-                            <div class="panel-body">
-                                <dl class="dl-horizontal">
-                                    @*<dt>
-                                            @Html.DisplayNameFor(model => model.legacyCase.LegacyCaseID)
-                                        </dt>
-
-                                        <dd>
-                                            @Html.DisplayFor(model => model.legacyCase.LegacyCaseID)
-                                        </dd>*@
-
-                                    <dt style="padding-top: 5.2px">
-                                        @Html.DisplayNameFor(model => model.legacyCase.LegacyDRNumber)
-                                    </dt>
-
-                                    <dd class="large-identifier">
-                                        @Html.EditorFor(model => model.legacyCase.LegacyDRNumber, new { htmlAttributes = new { @class = "form-control" } })
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.legacyCase.LCBriefDescription)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.EditorFor(model => model.legacyCase.LCBriefDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                    </dd>
-                                    <hr class="details-hr" />
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.legacyCase.UserID)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.legacyCase.USER.FirstName) @Html.DisplayFor(model => model.legacyCase.USER.LastName)
-                                    </dd>
-
-                                    @*<dt>
-                                            @Html.DisplayNameFor(model => model.legacyCase.STATUS.StatusValue)
-                                        </dt>
-
-                                        <dd>
-                                            @Html.DisplayFor(model => model.legacyCase.STATUS.StatusValue)
-                                        </dd>*@
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.legacyCase.DateAdded)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.DisplayFor(model => model.legacyCase.DateAdded, new { @class = "form-control" })
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.legacyCase.DateClosed)
-                                    </dt>
-
-                                    <dd>
-                                        @Html.EditorFor(model => model.legacyCase.DateClosed, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                                    </dd>
-                                </dl>
-
+                    </div>
+                </div>
+            </div>
+            @* DOCS *@
+            <div id="DOCS" class="tab-pane fade" style="padding: 5px 0">
+                @* POST FORM *@
+                <form action="~/ForensicCase/UploadAdditionalEvidenceItems"><input id="btnPOST" class="hidden" type="submit" /></form>
+                @* FILEUPLOAD *@
+                <div class="panel panel-default hidden" id="pnlFile" style="min-height: 250px; margin-bottom: 5px">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                        <span>SELECT LEGACY CASE DOCUMENTS TO UPLOAD</span>
+                    </div>
+                    <div class="panel-body apad5">
+                        <div class="row">
+                            @*@Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })*@
+                            <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                                <input id="LCDocs" name="LCDocs" type="file" multiple @*class="file-loading"*@ />
+                                @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
+                                @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12" style="padding-left: 0px; padding-right: 15px; margin-top: 5px">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer">
-                            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-                            <span>Legacy Case Documents</span>
-                        </div>
-                        <div id="LCDocsPanel" class="panel-collapse collapse in">
-                            <div class="panel-body apad5" style="padding: 25px">
-                                <table id="tblLegacyDocs" class="table table-striped">
+                @* CURRENT DOCUMENSTS LIST *@
+                <div class="panel panel-default nomarg">
+                    <div class="panel-heading params-panel-heading-grid" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer"*@>
+                        <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                        <span grid-area="parm_hdr_txt">LEGACY CASE DOCUMENTS</span>
+                        <button id="btnAddLCDoc" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-add btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="ADD" data-placement="left" grid-area="parm_hdr_btn"></button>
+                    </div>
+                    <div id="LCDocsPanel" class="panel-collapse collapse in">
+                        <div class="panel-body apad5" style="padding: 25px">
+                            <table id="tblLegacyDocs" class="table table-striped">
+                                <tr>
+                                    <th class="colour-dpred">Filename</th>
+                                    @*<th class="colour-dpred">Location</th>*@
+                                    <th class="colour-dpred" style="width: 75px">Actions</th>
+                                </tr>
+                                @foreach (var item in Model.legacyDocs)
+                                {
                                     <tr>
-                                        <th class="colour-dpred">Filename</th>
-                                        @*<th class="colour-dpred">Location</th>*@
-                                        <th class="colour-dpred" style="width: 75px">Actions</th>
-                                    </tr>
-                                    @foreach (var item in Model.legacyDocs)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.LegacyDocumentTitle)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.LegacyDocumentLocation)</td>*@
-                                            @* <td>@Html.ActionLink(" ", "ViewDoc", "LegacyCase", new { id = item.LegacyDocumentID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View"  })</td>*@
-                                            @*<td><a href="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" class = "mdl2icon mdl2-view colour-dpblack" datatoggle = "tooltip" title = "View"></a></td>*@
-                                            @*<td><a href="~/Content/DocuPathRepositories/LC_REPO/LENNY/30542017_015403_0.pdf" class="mdl2icon mdl2-view colour-dpblack" datatoggle="tooltip" title="View"></a></td>*@
-                                            <td>
-                                                <a href="" class="mdl2icon mdl2-view colour-dpblack" data-toggle="modal" datatoggle="tooltip" title="View" data-target="#@item.LegacyDocumentID">
-                                                </a>
-                                                <a href="#" class="mdl2icon mdl2-delete colour-dpblack" datatoggle="tooltip" title="Delete"></a>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="@item.LegacyDocumentID" role="dialog">
-                                                    <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <div class="grid hdr-grid">
-                                                                    <div class="page-hdr">
-                                                                        <div class="page-header-subgrid">
-                                                                            <div class="icon-circle mdl2icon mdl2-lc"></div>
-                                                                            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-                                                                            <div class="page-header-text">VIEW LEGACY DOCUMENT</div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="page-btns">
-                                                                        <div class="page-buttons-subgrid buttons-one">
-                                                                            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
-                                                                            <div></div>
-                                                                            <div grid-area="btn1">
-                                                                                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                                                                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
-                                                                                </form>
-                                                                            </div>
-                                                                            <div></div>
-                                                                            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
-                                                                        </div>
+                                        <td>@Html.DisplayFor(modelItem => item.LegacyDocumentTitle)</td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.LegacyDocumentLocation)</td>*@
+                                        @* <td>@Html.ActionLink(" ", "ViewDoc", "LegacyCase", new { id = item.LegacyDocumentID }, new { @class = "mdl2icon mdl2-view colour-dpblack", @datatoggle = "tooltip", @title = "View"  })</td>*@
+                                        @*<td><a href="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" class = "mdl2icon mdl2-view colour-dpblack" datatoggle = "tooltip" title = "View"></a></td>*@
+                                        @*<td><a href="~/Content/DocuPathRepositories/LC_REPO/LENNY/30542017_015403_0.pdf" class="mdl2icon mdl2-view colour-dpblack" datatoggle="tooltip" title="View"></a></td>*@
+                                        <td>
+                                            <a href="" class="mdl2icon mdl2-view colour-dpblack" data-toggle="modal" datatoggle="tooltip" title="View" data-target="#@item.LegacyDocumentID">
+                                            </a>
+                                            <a href="#" class="mdl2icon mdl2-delete colour-dpblack" datatoggle="tooltip" title="Delete"></a>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="@item.LegacyDocumentID" role="dialog">
+                                                <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="grid hdr-grid">
+                                                                <div class="page-hdr">
+                                                                    <div class="page-header-subgrid">
+                                                                        <div class="icon-circle mdl2icon mdl2-lc"></div>
+                                                                        <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                                                        <div class="page-header-text">VIEW LEGACY DOCUMENT</div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="page-btns">
+                                                                    <div class="page-buttons-subgrid buttons-one">
+                                                                        <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                                                        <div></div>
+                                                                        <div grid-area="btn1">
+                                                                            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                                                <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div></div>
+                                                                        <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                @*      <h4 class="modal-title">@item.LegacyDocumentTitle</h4>*@
-                                                                @*<embed src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" type="application/pdf" style="width: 100%; height: 100%; min-height: 480px;"/>*@
-                                                                <iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" style="width: 100%; height: 100%; min-height: 480px;"></iframe>
-                                                            </div>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            @*      <h4 class="modal-title">@item.LegacyDocumentTitle</h4>*@
+                                                            @*<embed src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" type="application/pdf" style="width: 100%; height: 100%; min-height: 480px;"/>*@
+                                                            <iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)" style="width: 100%; height: 100%; min-height: 480px;"></iframe>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-
-                                        </tr>
-                                    }
-                                </table>
-                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -233,12 +235,80 @@
 </style>
 @section Scripts
 {
-    @* EXPAND/COLLAPSE ALL *@
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/fileinput")
+
+<script>
+        $(document).ready(function () {
+            $("#LCDocs").fileinput({
+                theme: "fa",
+                uploadUrl: "/ForensicCase/UploadAdditionalEvidenceItems/", // TODO: URL HERE
+                fileActionSettings: {
+                    showUpload: false
+                },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['doc', 'dot', 'docx', 'dotx', 'xls', 'xlt', 'xlsx', 'xltx', 'ppt', 'pot', 'pptx', 'potx', 'pdf', 'txt'],
+                maxFileCount: 10 // TODO: Select max upload quantity
+            });
+
+            //$('[title][title!=]').tooltip();
+
+            $('#btnSave').click(function () {
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+                    var files = $("#AEItems").fileinput('getFileStack');
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    gdata = fileData;
+
+                    // Adding one more key to FormData object
+                    // none needed here
+                    //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                    $.ajax({
+                        url: '/ForensicCase/UploadAdditionalEvidenceItems/@Html.Raw(ViewBag.FCID)',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            alert(result); //Throw Success Modal 404
+                            document.getElementById("btnPOST").click();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            });
+        });
+</script>
     <script>
-        $("#btnSave").click(function () {
-            document.getElementById("btnPOST").click()
+        $("#btnAddLCDoc").click(function () {
+            $('#pnlFile').removeClass('hidden');
+            $('#btnAddLCDoc').addClass('hidden');
         })
     </script>
+    @* EXPAND/COLLAPSE ALL *@
     <script>
         $(document).ready(function () {
 
