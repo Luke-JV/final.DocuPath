@@ -5,8 +5,8 @@
 			<li>
 				<span class="pull-left event <%= event['class'] %>"></span>&nbsp;
 				<a data-toggle="modal" data-target="<%= event.url ? event.url : 'javascript:void(0)' %>" data-event-id="<%= event.id %>"
-					data-event-class="<%= event['class'] %>" class="event-item" href="javascript:void(0)">
-					<%= event.title %></a>
+					data-event-class="<%= event['class'] %>" class="event-item" href="<%= event.url ? event.url : 'javascript:void(0)' %>">
+					<%= event.title.substring(0, event.title.indexOf('~')) %></a>
 			</li>
 		<% }) %>
 	</ul>

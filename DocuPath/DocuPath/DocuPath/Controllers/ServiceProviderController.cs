@@ -84,8 +84,10 @@ namespace DocuPath.Controllers
                 }
                 db.SaveChanges();
                 // TODO: Add insert logic here
+
+                var txNew = Newtonsoft.Json.JsonConvert.SerializeObject(model.serviceProvider);
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Service Provider");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Service Provider", txNew);
                 #endregion
                 return RedirectToAction("Index");
             }

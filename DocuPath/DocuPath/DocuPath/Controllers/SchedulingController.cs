@@ -31,22 +31,6 @@ namespace DocuPath.Controllers
             }
         }
 //----------------------------------------------------------------------------------------------//
-        public ActionResult DisplayEvent(int id)
-        {
-            #region AUDIT_WRITE
-            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullInit, "Scheduling - View Event Details");
-            #endregion
-            
-            #region PREPARE VIEWMODEL
-            SESSION_USER model = new SESSION_USER();
-            model = db.SESSION_USER.Where(su => su.SessionID == id).FirstOrDefault();
-            #endregion
-
-            #region AUDIT_WRITE
-            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullSuccess, "Scheduling - View Event Details");
-            #endregion
-            return PartialView(model);
-        }
         [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
         public ActionResult Calendar()
         {
@@ -110,19 +94,24 @@ namespace DocuPath.Controllers
 
                     DateTime endUTC = new DateTime(entry.SESSION.DateID.Year, entry.SESSION.DateID.Month, entry.SESSION.DateID.Day, entry.SESSION.SLOT.EndTime.Hour, entry.SESSION.SLOT.EndTime.Minute, entry.SESSION.SLOT.EndTime.Second).ToUniversalTime();
                     string cssClass = "";
+                    string eventTitle = "";
                     switch (entry.ALLOCATION_STATUS.StatusValue.ToLower())
                     {
                         case "pending":
                             cssClass = "event-pending";
+                            eventTitle = "PENDING ALLOCATION (SLOT " + entry.SESSION.SLOT.Description.ToUpper() + " @ " + startUTC.ToString("HH:mm") + " ON "+startUTC.ToString("dd MMM yyyy").ToUpper()+")~" + entry.DateCreated.ToString("dd MMM yyyy HH:mm") + "|" + entry.DateStatusChanged.ToString("dd MMM yyyy HH:mm") + "^" + entry.ALLOCATION_STATUS.StatusValue;
                             break;
                         case "accepted":
                             cssClass = "event-accepted";
+                            eventTitle = "ACCEPTED ALLOCATION (SLOT " + entry.SESSION.SLOT.Description.ToUpper() + " @ " + startUTC.ToString("HH:mm") + " ON " + startUTC.ToString("dd MMM yyyy").ToUpper() + ")~" + entry.DateCreated.ToString("dd MMM yyyy HH:mm") + "|" + entry.DateStatusChanged.ToString("dd MMM yyyy HH:mm") + "^" + entry.ALLOCATION_STATUS.StatusValue;
                             break;
                         case "rejected":
                             cssClass = "event-rejected";
+                            eventTitle = "REJECTED ALLOCATION (SLOT " + entry.SESSION.SLOT.Description.ToUpper() + " @ " + startUTC.ToString("HH:mm") + " ON " + startUTC.ToString("dd MMM yyyy").ToUpper() + ")~" + entry.DateCreated.ToString("dd MMM yyyy HH:mm") + "|" + entry.DateStatusChanged.ToString("dd MMM yyyy HH:mm") + "^" + entry.ALLOCATION_STATUS.StatusValue;
                             break;
                         case "finalized":
                             cssClass = "event-finalized";
+                            eventTitle = "ON DUTY (SLOT " + entry.SESSION.SLOT.Description.ToUpper() + " @ " + startUTC.ToString("HH:mm") + " ON " + startUTC.ToString("dd MMM yyyy").ToUpper() + ")~" +entry.DateCreated.ToString("dd MMM yyyy HH:mm")+"|"+ entry.DateStatusChanged.ToString("dd MMM yyyy HH:mm") + "^" + entry.ALLOCATION_STATUS.StatusValue;
                             break;
                         default:
                             cssClass = "event-general";
@@ -132,7 +121,7 @@ namespace DocuPath.Controllers
 
                     CALENDAR_APPOINTMENT apt = new CALENDAR_APPOINTMENT();
                     apt.id = entry.SessionID;
-                    apt.title = ("On Duty (Slot " + entry.SESSION.SLOT.Description + " @ " + startUTC.ToString("HH:mm") + ")").ToUpper();
+                    apt.title = eventTitle;
                     //apt.url = entry.SessionID.ToString();
                     apt.url = "#sesh-" + entry.SessionID;
                     apt._lass = cssClass;
@@ -159,7 +148,24 @@ namespace DocuPath.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(aptList);
         }
 
-        //----------------------------------------------------------------------------------------------//
+        [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
+        public ActionResult DisplayEvent(int id)
+        {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullInit, "Scheduling - View Event Details");
+            #endregion
+            
+            #region PREPARE VIEWMODEL
+            SESSION_USER model = new SESSION_USER();
+            model = db.SESSION_USER.Where(su => su.SessionID == id).FirstOrDefault();
+            #endregion
+
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPullSuccess, "Scheduling - View Event Details");
+            #endregion
+            return PartialView(model);
+        }
+//----------------------------------------------------------------------------------------------//
         [AuthorizeByAccessArea(AccessArea = "Compile Monthly Duty Roster")]
         public ActionResult MonthlyDutyRoster()
         {
@@ -222,7 +228,7 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home", new HandleErrorInfo(x, "Scheduling", "DailyAutopsySchedule"));
             }
         }
-        //----------------------------------------------------------------------------------------------//
+//----------------------------------------------------------------------------------------------//
         [AuthorizeByAccessArea(AccessArea = "Capture Daily Autopsy Schedule")]
         [AuthorizeByAccessArea(AccessArea = "Retrieve Daily Autopsy Schedule")]
         public ActionResult DailyAutopsySchedule()

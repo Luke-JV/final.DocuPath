@@ -8509,6 +8509,11 @@ td.visible-print {
   color: #999;
 }
 
+.status-finalized {
+  font-weight: bold;
+  color: #800080;
+}
+
 /* MODAL CSS: */
 .modal-backdrop {
   position: fixed;
@@ -9751,6 +9756,9 @@ td > span > a:hover {
 #cal-day-box {
   text-wrap: none;
 }
+#cal-day-box .cal-cell{
+    text-align: center !important;
+}
 #cal-day-box .cal-day-hour-part {
   height: 30px;
   box-sizing: border-box;
@@ -9855,33 +9863,54 @@ td > span > a:hover {
 .event-finalized {
   background-color: #800080 !important;
 }
+
+.font-event-general {
+  color: #333333 !important;
+}
+.font-event-info {
+  color: #428bca !important;
+}
+.font-event-pending {
+  color: #c09853 !important;
+}
+.font-event-rejected {
+  color: rgba(174, 31, 31, 1) !important;
+}
+.font-event-accepted {
+  color: #468847 !important;
+}
+.font-event-finalized {
+  color: #800080 !important;
+}
+
+
 .day-highlight:hover,
 .day-highlight {
-  background-color: #dddddd;
+  background-color: #dddddd !important;
 }
 .day-highlight.dh-event-general:hover,
 .day-highlight.dh-event-general {
-  background-color: rgba(255,220,220,1);
+  background-color: rgba(255,220,220,1) !important;
 }
 .day-highlight.dh-event-pending:hover,
 .day-highlight.dh-event-pending {
-  background-color: #fdf1ba;
+  background-color: #fdf1ba !important;
 }
 .day-highlight.dh-event-info:hover,
 .day-highlight.dh-event-info {
-  background-color: #d1e8ff;
+  background-color: #d1e8ff !important;
 }
 .day-highlight.dh-event-rejected:hover,
 .day-highlight.dh-event-rejected {
-  background-color: #c1c1c1;
+  background-color: rgba(255, 220, 220, 1) !important;
 }
 .day-highlight.dh-event-accepted:hover,
 .day-highlight.dh-event-accepted {
-  background-color: #caffca;
+  background-color: #caffca !important;
 }
 .day-highlight.dh-event-finalized:hover,
 .day-highlight.dh-event-finalized {
-  background-color: #ffe6ff;
+  background-color: #ffe6ff !important;
 }
 .cal-row-head [class*="cal-cell"]:first-child,
 .cal-row-head [class*="cal-cell"] {
@@ -9910,7 +9939,7 @@ td > span > a:hover {
   position: relative;
 }
 .cal-year-box [class*="span"] {
-  min-height: 150px !important;
+  min-height: 191px !important;
   font-size: 30pt;
   transition: 0.5s all;
 }
@@ -9931,15 +9960,38 @@ td > span > a:hover {
 .cal-month-box .cal-row-fluid:last-child {
   border-bottom: 0px;
 }
-.cal-month-box,
-.cal-year-box,
-.cal-week-box {
+
+.cal-year-box {
   border-top: 1px solid #e1e1e1;
   border-bottom: 1px solid #e1e1e1;
   border-right: 1px solid #e1e1e1;
   border-left: 1px solid #e1e1e1;
   border-radius: 2px;
+  min-height: 570px !important;
 }
+
+.cal-month-box {
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+  border-left: 1px solid #e1e1e1;
+  border-radius: 2px;
+  /*min-height: 580px !important;*/
+}
+
+.cal-week-box{
+  border-top: 1px solid #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+  border-right: 1px solid #e1e1e1;
+  border-left: 1px solid #e1e1e1;
+  border-radius: 2px;
+  min-height: 637.4px !important;
+}
+
+.cal-row-fluid:not(.cal-row-head){
+    border-top: 1px solid #f1f1f1 !important;
+}
+
 span[data-cal-date] {
   font-size: 1.2em;
   font-weight: normal;
@@ -10009,8 +10061,12 @@ span[data-cal-date]:hover {
 }
 #cal-slide-content a.event-item {
   color: #ffffff;
-  font-weight: normal;
+  font-weight: 500 !important;
   line-height: 22px;
+}
+
+.panel-body a{
+    color: inherit !important;
 }
 .events-list {
   max-height: 47px;
