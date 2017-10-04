@@ -491,6 +491,7 @@
     <Compile Include="Models\AuditModel.cs" />
     <Compile Include="Models\AuthorizeByAccessArea.cs" />
     <Compile Include="Models\Autocomplete.cs" />
+    <Compile Include="Models\Custom Classes\CALENDAR_APPOINTMENT.cs" />
     <Compile Include="Models\Custom Classes\CONTACT_US.cs" />
     <Compile Include="Models\Custom Classes\GLIMPSE.cs" />
     <Compile Include="Models\Custom Classes\METRIC.cs" />
@@ -548,18 +549,19 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\BrokenDNA.css" />
-    <Content Include="Content\CalendarTemplates\dark_wood.png" />
-    <Content Include="Content\CalendarTemplates\day.html" />
-    <Content Include="Content\CalendarTemplates\events-list.html" />
-    <Content Include="Content\CalendarTemplates\modal.html" />
-    <Content Include="Content\CalendarTemplates\month-day.html" />
-    <Content Include="Content\CalendarTemplates\month.html" />
-    <Content Include="Content\CalendarTemplates\slide-bg.png" />
-    <Content Include="Content\CalendarTemplates\tick.png" />
-    <Content Include="Content\CalendarTemplates\week-days.html" />
-    <Content Include="Content\CalendarTemplates\week.html" />
-    <Content Include="Content\CalendarTemplates\year-month.html" />
-    <Content Include="Content\CalendarTemplates\year.html" />
+    <Content Include="Content\calendar\calendar.css" />
+    <Content Include="Content\calendar\dark_wood.png" />
+    <Content Include="Content\calendar\day.html" />
+    <Content Include="Content\calendar\events-list.html" />
+    <Content Include="Content\calendar\modal.html" />
+    <Content Include="Content\calendar\month-day.html" />
+    <Content Include="Content\calendar\month.html" />
+    <Content Include="Content\calendar\slide-bg.png" />
+    <Content Include="Content\calendar\tick.png" />
+    <Content Include="Content\calendar\week-days.html" />
+    <Content Include="Content\calendar\week.html" />
+    <Content Include="Content\calendar\year-month.html" />
+    <Content Include="Content\calendar\year.html" />
     <Content Include="Content\DNADecorationBroken.css" />
     <Content Include="Content\DocuPathRepositories\ERC_REPO\24092017_232623_cover.png" />
     <Content Include="Content\DocuPathRepositories\ERC_REPO\24092017_232623_cover_thumb.png" />
@@ -690,6 +692,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
     <Content Include="Scripts\ckeditor\config.js" />
@@ -1054,7 +1057,6 @@
     <Content Include="Scripts\bootstrap-toggle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\ckeditor\skins\office2013\images\arrow.png" />
     <Content Include="Scripts\ckeditor\skins\office2013\images\close.png" />
     <Content Include="Scripts\ckeditor\skins\office2013\images\hidpi\close.png" />
@@ -1251,6 +1253,7 @@
     <Content Include="Views\ForensicCase\ForensicCaseMediaItems.cshtml" />
     <Content Include="Views\ForensicCase\ForensicCaseAdditionalEvidenceItems.cshtml" />
     <Content Include="Views\ForensicCase\ProvideSpecimens.cshtml" />
+    <Content Include="Views\Scheduling\DisplayEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

@@ -8,17 +8,24 @@
     <title>@ViewBag.Title - DocuPath</title>
     @*<script type="text/javascript">CKEDITOR_BASEPATH = "@Url.Content("~/Content/ckeditor/")";</script>*@
     <script src="jquery.js" type="text/javascript"></script>
-    <style type="text/css"> .js #NEURONsidenav, #HAPTICsidenav { display: none; } </style>
+    <style type="text/css">
+        .js #NEURONsidenav, #HAPTICsidenav {
+            display: none;
+        }
+    </style>
     <script type="text/javascript"> document.documentElement.className = 'js'; </script>
     @if (Request.IsAuthenticated)
     {
         ViewBag.Neurons = VERTEBRAE.GetUnhandledNeurons();
         var currentUser = VERTEBRAE.getCurrentUser();
         // TODO: Reference proper light/dark CSS versions
-        if (currentUser.DarkUIPref == true) { @Styles.Render("~/Content/css") }
-        else { @Styles.Render("~/Content/css") }
+        if (currentUser.DarkUIPref == true)
+        { @Styles.Render("~/Content/css") }
+        else
+        { @Styles.Render("~/Content/css") }
     }
-    else { @Styles.Render("~/Content/css") }
+    else
+    { @Styles.Render("~/Content/css") }
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="grid main-page-grid">
@@ -87,87 +94,87 @@
 
     @* HAPTIC SIDENAV: *@
     @if (Request.IsAuthenticated)
-    {
+            {
         <div id="HAPTICsidenav" class="haptic-sidenav grid sidenav-grid" grid-area="haptic">
-        <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
-            <div class="align-vc-hc" grid-area="icon">
-                <span class="mdl2icon mdl2-help" style="font-size: 22px; color: #cccccc"></span>
+            <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
+                <div class="align-vc-hc" grid-area="icon">
+                    <span class="mdl2icon mdl2-help" style="font-size: 22px; color: #cccccc"></span>
+                </div>
+                <div class="align-vc-hc" grid-area="hdrtext">
+                    <p class="fullwidth" style="font-size: 29px; margin: 0; padding: 0 0 0 5px">HAPTIC HELP CENTRE</p>
+                </div>
+                <div class="align-vc-hc" grid-area="closebtn">
+                    <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeHapticNav()"></a>
+                </div>
             </div>
-            <div class="align-vc-hc" grid-area="hdrtext">
-                <p class="fullwidth" style="font-size: 29px; margin: 0; padding: 0 0 0 5px">HAPTIC HELP CENTRE</p>
-            </div>
-            <div class="align-vc-hc" grid-area="closebtn">
-                <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeHapticNav()"></a>
-            </div>
-        </div>
-        <div id="sidenavbody" class="haptic-sidenav-body" grid-area="neuron_body">
-            <div class="panel-group" id="HapticAccordionSidenav">
-                @* ON THIS PAGE *@
-                @if (ViewBag.PageInfoLocator != "HapticHelpCentre")
+            <div id="sidenavbody" class="haptic-sidenav-body" grid-area="neuron_body">
+                <div class="panel-group" id="HapticAccordionSidenav">
+                    @* ON THIS PAGE *@
+                    @if (ViewBag.PageInfoLocator != "HapticHelpCentre")
                 {
-                    <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#OnThisPageSidenav" style="cursor: pointer">
-                            <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
-                            <span>ON THIS PAGE</span>
-                        </div>
-                        <div id="OnThisPageSidenav" class="panel-collapse collapse">
-                            <div class="panel-body apad5">
-                                @Html.Raw(VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
-                                @Html.Raw(VERTEBRAE.GetAcceptedFileTypeMinis("powerpoint,word,image,text,compressed,audio", true))
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#OnThisPageSidenav" style="cursor: pointer">
+                                    <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                    <span>ON THIS PAGE</span>
+                                </div>
+                                <div id="OnThisPageSidenav" class="panel-collapse collapse">
+                                    <div class="panel-body apad5">
+                                        @Html.Raw(VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
+                                        @Html.Raw(VERTEBRAE.GetAcceptedFileTypeMinis("powerpoint,word,image,text,compressed,audio", true))
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                 }
                 else
                 {
-                    <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#OnThisPageSidenav" style="cursor: pointer">
-                            <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
-                            <span>ON THIS PAGE</span>
-                        </div>
-                        <div id="OnThisPageSidenav" class="panel-collapse collapse in">
-                            <div class="panel-body apad5">
-                                @Html.Raw(@VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#OnThisPageSidenav" style="cursor: pointer">
+                                    <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
+                                    <span>ON THIS PAGE</span>
+                                </div>
+                                <div id="OnThisPageSidenav" class="panel-collapse collapse in">
+                                    <div class="panel-body apad5">
+                                        @Html.Raw(@VERTEBRAE.GetOnThisPageInfo(@ViewBag.PageInfoLocator))
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                 }
-                @* FREQUENTLY ASKED QUESTIONS *@
-                @if (ViewBag.PageInfoLocator != "HapticHelpCentre")
+                    @* FREQUENTLY ASKED QUESTIONS *@
+                    @if (ViewBag.PageInfoLocator != "HapticHelpCentre")
                 {
-                    <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#FAQsSidenav" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-help panel-mdl2icon"></span>
-                        <span>FREQUENTLY ASKED QUESTIONS</span>
-                    </div>
-                    <div id="FAQsSidenav" class="panel-collapse collapse in">
-                        <div id="FAQBody" class="panel-body apad5">
-                            <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
-                                <input type="text" class="form-control nomarg haptic-query" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase...">
-                            </form>
-                            <label>I want to...</label>
-                                @Html.Raw(VERTEBRAE.GetHelp(ViewBag.GenericHapticLocator))
-                                @Html.Raw(VERTEBRAE.GetHelp(ViewBag.SpecificHAPTICLocator))
+                            <div class="panel panel-default">
+                                <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#FAQsSidenav" style="cursor: pointer">
+                                    <span class="mdl2icon mdl2-help panel-mdl2icon"></span>
+                                    <span>FREQUENTLY ASKED QUESTIONS</span>
+                                </div>
+                                <div id="FAQsSidenav" class="panel-collapse collapse in">
+                                    <div id="FAQBody" class="panel-body apad5">
+                                        <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                                            <input type="text" class="form-control nomarg haptic-query" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase...">
+                                        </form>
+                                        <label>I want to...</label>
+                                        @Html.Raw(VERTEBRAE.GetHelp(ViewBag.GenericHapticLocator))
+                                        @Html.Raw(VERTEBRAE.GetHelp(ViewBag.SpecificHAPTICLocator))
+                                    </div>
+                                </div>
+                            </div>
+                }
+                            @* TEMPORARY PLACEHOLDER *@
+                            @*<div class="panel panel-default" style="height: 100%">
+                                    <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#LayoutSidenav" style="cursor: pointer">
+                                        <span class="mdl2icon mdl2-layout panel-mdl2icon"></span>
+                                        <span>SCREEN LAYOUT</span>
+                                    </div>
+                                    <div id="LayoutSidenav" class="panel-collapse collapse">
+                                        <div class="panel-body apad5 text-center">
+                                            <p class="text-left">The layout of this screen is as follows:</p>
+                                            <img class="img-thumbnail" src="~/Content/Resources/Screen Layouts/1.7A - Search Forensic Case.png" style="margin: auto; height: 500px" />
+                                        </div>
+                                    </div>
+                                </div>*@
                         </div>
                     </div>
                 </div>
-                }                
-                @* TEMPORARY PLACEHOLDER *@
-                @*<div class="panel panel-default" style="height: 100%">
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#HapticAccordionSidenav" href="#LayoutSidenav" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-layout panel-mdl2icon"></span>
-                        <span>SCREEN LAYOUT</span>
-                    </div>
-                    <div id="LayoutSidenav" class="panel-collapse collapse">
-                        <div class="panel-body apad5 text-center">
-                            <p class="text-left">The layout of this screen is as follows:</p>
-                            <img class="img-thumbnail" src="~/Content/Resources/Screen Layouts/1.7A - Search Forensic Case.png" style="margin: auto; height: 500px" />
-                        </div>
-                    </div>
-                </div>*@
-            </div>
-        </div>
-    </div>
     }
     @* PAGE CONTENT: *@
     <div id="content" class="grid content-subgrid" grid-area="main">
@@ -184,9 +191,9 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a href='@Url.Action("Index", "Home")' data-toggle="tooltip" title="GO HOME" data-placement="left">
-                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo"/>
-                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo"/>
-                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider"/>
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
                         </a>
                     </div>
                     <div class="navbar-collapse collapse">
@@ -196,9 +203,9 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">CORTEX<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">Case Management</li>
-                                        <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("External Review Cases", "All", "ExternalReviewCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Legacy Cases", "All", "LegacyCase", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <!--CORNEA-->
@@ -206,10 +213,10 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">CORNEA<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">Media Management</li>
-                                        <li>@Html.ActionLink("Media Repository", "All", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Media Repository", "All", "Media", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">Reporting</li>
-                                        <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("VISION Dashboard", "VISION", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("INSIGHT Reporting", "INSIGHT", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("VISION Dashboard", "VISION", "Reporting", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <!--PULSE-->
@@ -217,38 +224,38 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">PULSE<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-header">External Interactions</li>
-                                        <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Service Providers", "All", "ServiceProvider", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Service Requests", "All", "ServiceRequest", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">Scheduling &amp; Calendar</li>
-                                        <li>@Html.ActionLink("Personal Google Calendar", "Calendar", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Personal Schedule", "Calendar", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Monthly Duty Roster", "MonthlyDutyRoster", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Daily Autopsy Schedule", "DailyAutopsySchedule", "Scheduling", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">System Management</li>
-                                        <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("System Parameters", "Maintain", "SystemParameters", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Content Tags", "All", "ContentTag", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("System Parameters", "Maintain", "SystemParameters", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">User Management</li>
-                                        <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                        <li>@Html.ActionLink("Access Levels", "All", "AccessLevel", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Users", "All", "User", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Access Levels", "All", "AccessLevel", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">Accountability Management</li>
-                                        <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Audit Trail", "All", "AuditTrail", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             @*<li href='@Url.Action("Index", "Home")'>
-                                <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
-                            </li>*@
+                                    <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
+                                </li>*@
                             <!--HAPTIC-->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">HAPTIC<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header">INTERACTIVE ASSISTANCE</li>
-                                        <li class="dropdown-toggle disabled text-center" style="font-size: 8pt">Scan this QR Code with the DocuPath Mobile App to access an interactive help tutorial!</li>
-                                        <li class="text-center"><img src="~/Content/Resources/QR Code to Video.jpg" style="height: 190px; width: 190px; margin: 5px 0 5px 0"/></li>
+                                    <li class="dropdown-toggle disabled text-center" style="font-size: 8pt">Scan this QR Code with the DocuPath Mobile App to access an interactive help tutorial!</li>
+                                    <li class="text-center"><img src="~/Content/Resources/QR Code to Video.jpg" style="height: 190px; width: 190px; margin: 5px 0 5px 0" /></li>
                                     <li class="dropdown-header">GET HELP ONLINE</li>
-                                        <li>@Html.ActionLink("HAPTIC Help Centre", "HapticHelp", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("HAPTIC Help Centre", "HapticHelp", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">INFORMATION</li>
-                                        <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                     <li class="dropdown-header">CONTACT US</li>
-                                        <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
                                 </ul>
                             </li>
                             <li>
@@ -272,28 +279,28 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a href='@Url.Action("Index", "Home")' data-toggle="tooltip" title="GO HOME" data-placement="left">
-                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo"/>
-                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo"/>
-                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider"/>
+                            <img src='@Url.Content("~/Content/Resources/DPCircularLogoWhiteBG.png")' class="navbar-circular-logo" />
+                            <img src='@Url.Content("~/Content/Resources/DPTextLogoLightGrey.png")' class="navbar-text-logo" />
+                            <img src='@Url.Content("~/Content/Resources/SlantedDivider.png")' class="navbar-divider" />
                         </a>
                     </div>
                     <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <!--ABOUT-->
                             <li class="dropdown">
-                                <a href="~/Home/About" class="dropdown-toggle">ABOUT THE DEVELOPERS</a>                                
+                                <a href="~/Home/About" class="dropdown-toggle">ABOUT THE DEVELOPERS</a>
                                 @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">ABOUT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                </ul>*@
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>@Html.ActionLink("About The Developers", "About", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    </ul>*@
                             </li>
                             <!--CONTACT-->
                             <li class="dropdown">
                                 <a href="~/Home/Contact" class="dropdown-toggle">CONTACT US</a>
                                 @*<a href="#" class="dropdown-toggle" data-toggle="dropdown">CONTACT<i class="mdl2icon mdl2-down inline-mdl2icon" style="padding-right: 0px"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
-                                </ul>*@
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>@Html.ActionLink("Contact Us", "Contact", "Home", null, new { @class = "dropdown-toggle", @datatoggle = "dropdown" })</li>
+                                    </ul>*@
                             </li>
                         </ul>
                         @Html.Partial("_LoginPartial")
@@ -333,84 +340,88 @@
     </div>
     @* NEURON SIDENAV: *@
     @if (Request.IsAuthenticated)
-    {
-        <div id="NEURONsidenav" class="neuron-sidenav grid sidenav-grid" grid-area="neuron">
-        <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
-            <div class="align-vc-hc" grid-area="icon">
-                <span id="noNotificationsToggle" class="mdl2icon mdl2-neuronnew" style="font-size: 22px; color: #cccccc"></span>
-            </div>
-            <div class="align-vc-hc" grid-area="hdrtext">
-                <p class="fullwidth" style="font-size: 29px; margin: 0; padding: 0 0 0 5px">NEURON NOTIFICATION CENTRE</p>
-            </div>
-            <div class="align-vc-hc" grid-area="closebtn">
-                <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeNav()"></a>
-            </div>
-        </div>
-        <div id="sidenavbody" class="neuron-sidenav-body" grid-area="neuron_body">
-            @* RSS BROADCAST BAR: *@
-            <form class="navbar-form" action="javascript:void(0)"  style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
-                <div class="input-group">
-                    <input type="text" class="form-control" onclick="this.select()" onfocus="this.select()" placeholder="Type Your RSS Broadcast Message Here..." name="srch-term" id="srch-term">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" id="rss" type="submit" data-toggle="tooltip" title="SEND" data-placement="bottom"><i class="mdl2icon mdl2-send"></i></button>
-                    </div>
-                </div>
-            </form>
-            <div id="noNotifications" class="sidenav-notification border-generic sidenav-nonotifications">
-                <p style="margin: auto">NO NEURON<br />NOTIFICATIONS</p>
-            </div>
-            @* NOTIFICATION CSS GRID LAYOUT: *@
-            @if (Request.IsAuthenticated)
             {
-                foreach (var neuron in ViewBag.Neurons)
+        <div id="NEURONsidenav" class="neuron-sidenav grid sidenav-grid" grid-area="neuron">
+            <div class="grid sidenav-hdr-subgrid sidenav-heading" grid-area="neuron_hdr">
+                <div class="align-vc-hc" grid-area="icon">
+                    <span id="noNotificationsToggle" class="mdl2icon mdl2-neuronnew" style="font-size: 22px; color: #cccccc"></span>
+                </div>
+                <div class="align-vc-hc" grid-area="hdrtext">
+                    <p class="fullwidth" style="font-size: 29px; margin: 0; padding: 0 0 0 5px">NEURON NOTIFICATION CENTRE</p>
+                </div>
+                <div class="align-vc-hc" grid-area="closebtn">
+                    <a href="javascript:void(0)" class="closebtn mdl2icon mdl2-cancel" data-toggle="tooltip" title="CLOSE" data-placement="bottom" onclick="closeNav()"></a>
+                </div>
+            </div>
+            <div id="sidenavbody" class="neuron-sidenav-body" grid-area="neuron_body">
+                @* RSS BROADCAST BAR: *@
+                <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
+                    <div class="input-group">
+                        <input type="text" class="form-control" onclick="this.select()" onfocus="this.select()" placeholder="Type Your RSS Broadcast Message Here..." name="srch-term" id="srch-term">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="rss" type="submit" data-toggle="tooltip" title="SEND" data-placement="bottom"><i class="mdl2icon mdl2-send"></i></button>
+                        </div>
+                    </div>
+                </form>
+                <div id="noNotifications" class="sidenav-notification border-generic sidenav-nonotifications">
+                    <p style="margin: auto">NO NEURON<br />NOTIFICATIONS</p>
+                </div>
+                @* NOTIFICATION CSS GRID LAYOUT: *@
+                @if (Request.IsAuthenticated)
                 {
-                    if (neuron.HandledDateTimeStamp == null && neuron.UserID == User.Identity.GetUserId<int>())
+                    foreach (var neuron in ViewBag.Neurons)
                     {
-                        <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
-                            <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
-                                @if (@neuron.NotificationTitle.ToLower().Contains("forensic")) { <div><span class="mdl2icon mdl2-fc neuron-mdl2icon"></span></div> }
-                                else if (@neuron.NotificationTitle.ToLower().Contains("roster")) { <div><span class="mdl2icon mdl2-datetime neuron-mdl2icon"></span></div> }
-                                else if (@neuron.NotificationTitle.ToLower().Contains("authorisation")) { <div><span class="mdl2icon mdl2-approvedeny neuron-mdl2icon"></span></div> }
-                                else if (@neuron.NotificationTitle.ToLower().Contains("auto-archive")) { <div><span class="mdl2icon mdl2-history neuron-mdl2icon"></span></div> }
+                        if (neuron.HandledDateTimeStamp == null && neuron.UserID == User.Identity.GetUserId<int>())
+                        {
+                            <div id="n_@neuron.NotificationID" class="grid sidenav-notification-grid sidenav-notification border-generic">
+                                <div grid-area="titlebar" class="grid sidenav-notification-title-subgrid">
+                                    @if (@neuron.NotificationTitle.ToLower().Contains("forensic"))
+                                    { <div><span class="mdl2icon mdl2-fc neuron-mdl2icon"></span></div> }
+                                    else if (@neuron.NotificationTitle.ToLower().Contains("roster"))
+                                    { <div><span class="mdl2icon mdl2-datetime neuron-mdl2icon"></span></div> }
+                                    else if (@neuron.NotificationTitle.ToLower().Contains("authorisation"))
+                                    { <div><span class="mdl2icon mdl2-approvedeny neuron-mdl2icon"></span></div> }
+                                    else if (@neuron.NotificationTitle.ToLower().Contains("auto-archive"))
+                                    { <div><span class="mdl2icon mdl2-history neuron-mdl2icon"></span></div> }
 
-                                <div grid-area="title" class="sidenav-notification-title">@neuron.NotificationTitle</div>
-                                <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.DateID.ToString("dd MMM HH:mm")</div>
-                            </div>
-                            <div grid-area="summary" class="sidenav-notification-summary">@neuron.NotificationSummary</div>
-                            <div grid-area="detail" class="panel-group" id="n_pnl_@neuron.NotificationID">
-                                <div class="modal-help-panel">
-                                    <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#n_detail_@neuron.NotificationID" data-parent="#n_pnl_@neuron.NotificationID">
-                                        View Details &amp; Actions
-                                    </div>
-                                    <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
-                                        <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@Html.Raw(@neuron.NotificationDetails)</p>
-                                        <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
-                                            <div class="sidenav-button-bar">
-                                                @if (neuron.NotificationTypeID == 1)
-                                                {
-                                                    <input type="submit" id="n_btnOK_@neuron.NotificationID" value="OK" class="btn btn-neuron btn-neuron-dark btn-xs pull-right" />
-                                                }
-                                                else if (neuron.NotificationTypeID == 2)
-                                                {
-                                                    <input type="submit" id="n_btnRjct_@neuron.NotificationID" value="Reject" class="btn btn-neuron btn-neuron-red btn-xs pull-right" />
-                                                    <input type="submit" id="n_btnAcpt_@neuron.NotificationID" value="Accept" class="btn btn-neuron btn-neuron-green btn-xs pull-right" />
-                                                }
-                                                else if (neuron.NotificationTypeID == 3)
-                                                {
-                                                    <input type="submit" id="n_btnDeny_@neuron.NotificationID" value="Deny" class="btn btn-neuron btn-neuron-red btn-xs pull-right" />
-                                                    <input type="submit" id="n_btnAprv_@neuron.NotificationID" value="Approve" class="btn btn-neuron btn-neuron-green btn-xs pull-right" />
-                                                }
+                                    <div grid-area="title" class="sidenav-notification-title">@neuron.NotificationTitle</div>
+                                    <div grid-area="timestamp" class="sidenav-notification-timestamp"><span class="mdl2icon mdl2-time" style="font-size: 8pt"></span>@neuron.DateID.ToString("dd MMM HH:mm")</div>
+                                </div>
+                                <div grid-area="summary" class="sidenav-notification-summary">@neuron.NotificationSummary</div>
+                                <div grid-area="detail" class="panel-group" id="n_pnl_@neuron.NotificationID">
+                                    <div class="modal-help-panel">
+                                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#n_detail_@neuron.NotificationID" data-parent="#n_pnl_@neuron.NotificationID">
+                                            View Details &amp; Actions
+                                        </div>
+                                        <div id="n_detail_@neuron.NotificationID" class="panel-collapse collapse sidenav-notification-detail">
+                                            <p style="margin-bottom: 0px; padding-left: 5px; padding-right: 5px; padding-bottom: 5px">@Html.Raw(@neuron.NotificationDetails)</p>
+                                            <div class="panel-footer" data-parent="#n_detail_@neuron.NotificationID">
+                                                <div class="sidenav-button-bar">
+                                                    @if (neuron.NotificationTypeID == 1)
+                                                    {
+                                                        <input type="submit" id="n_btnOK_@neuron.NotificationID" value="OK" class="btn btn-neuron btn-neuron-dark btn-xs pull-right" />
+                                                    }
+                                                    else if (neuron.NotificationTypeID == 2)
+                                                    {
+                                                        <input type="submit" id="n_btnRjct_@neuron.NotificationID" value="Reject" class="btn btn-neuron btn-neuron-red btn-xs pull-right" />
+                                                        <input type="submit" id="n_btnAcpt_@neuron.NotificationID" value="Accept" class="btn btn-neuron btn-neuron-green btn-xs pull-right" />
+                                                    }
+                                                    else if (neuron.NotificationTypeID == 3)
+                                                    {
+                                                        <input type="submit" id="n_btnDeny_@neuron.NotificationID" value="Deny" class="btn btn-neuron btn-neuron-red btn-xs pull-right" />
+                                                        <input type="submit" id="n_btnAprv_@neuron.NotificationID" value="Approve" class="btn btn-neuron btn-neuron-green btn-xs pull-right" />
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
-            }
+            </div>
         </div>
-    </div>
     }
 
     @Scripts.Render("~/bundles/jquery")
@@ -418,10 +429,10 @@
     @Scripts.Render("~/bundles/typeahead")
     @Scripts.Render("~/bundles/materialdatetime")
     @Scripts.Render("~/bundles/ckeditor")
-   
-    <script src="~/Scripts/typeahead.mvc.model.js" ></script>
+
+    <script src="~/Scripts/typeahead.mvc.model.js"></script>
     @RenderSection("scripts", required: false)
-    
+
     @* LOADING/NOTIFICATION MODALS: *@
     <script>
         $('input').on('focus', function () {
@@ -449,16 +460,16 @@
         });
     </script>
 
-    <script >
+    <script>
         // Toggle Table Density:
         $("#btnDensityToggle").click(function () {
-        var $target = $("table");
-        var $condensed = "table-condensed";
-        var $minimal = "table-minimal"
-        if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
-        else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
-        else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
-        $("#btnDensityToggle").blur()
+            var $target = $("table");
+            var $condensed = "table-condensed";
+            var $minimal = "table-minimal"
+            if ($target.hasClass($condensed) === false && $target.hasClass($minimal) === false) { $target.addClass($condensed); }
+            else if ($target.hasClass($condensed)) { $target.removeClass($condensed); $target.addClass($minimal); }
+            else if ($target.hasClass($minimal)) { $target.removeClass($minimal); }
+            $("#btnDensityToggle").blur()
         });
     </script>
 
@@ -519,7 +530,7 @@
 
         function closeNav() {
             document.getElementById("NEURONsidenav").style.width = "0";
-            document.getElementById("content").style.paddingRight= "0";
+            document.getElementById("content").style.paddingRight = "0";
             document.getElementById("topNav").style.paddingRight = "0";
             neuronOpen = false;
         }
@@ -544,90 +555,90 @@
                 $badge.show("slow")
             }
 
-        // TODO: jQuery to handle each individual notification, loop-style...
-        $("#noNotifications").hide();
-        $("#N1").show();
-        $("#N2").show();
-        $("#N3").show();
-        $("#N4").show();
-        //$("#N5").show();
-        //$("#N6").show();
-
-        $('#noNotificationsToggle').click(function () { $('#noNotifications').show("slow"); });
-
-        $('#repopulateNEURON').click(function () {
+            // TODO: jQuery to handle each individual notification, loop-style...
             $("#noNotifications").hide();
-            $("#neuronBadge").show();
-            $("#neuronBadge").text("4");
             $("#N1").show();
             $("#N2").show();
             $("#N3").show();
             $("#N4").show();
             //$("#N5").show();
             //$("#N6").show();
-            $("#neuronicon").removeClass("mdl2-neuron");
-            $("#neuronicon").addClass("mdl2-neuronnew");
+
+            $('#noNotificationsToggle').click(function () { $('#noNotifications').show("slow"); });
+
+            $('#repopulateNEURON').click(function () {
+                $("#noNotifications").hide();
+                $("#neuronBadge").show();
+                $("#neuronBadge").text("4");
+                $("#N1").show();
+                $("#N2").show();
+                $("#N3").show();
+                $("#N4").show();
+                //$("#N5").show();
+                //$("#N6").show();
+                $("#neuronicon").removeClass("mdl2-neuron");
+                $("#neuronicon").addClass("mdl2-neuronnew");
 
 
+            });
+
+            $('#noNotifications').click(function () { $('#noNotifications').hide("slow"); });
+            $('#n_btnOK_1').click(function () { $('#n_1').hide("slow") });
+            $('#n_btnAprv_3').click(function () { $('#n_3').hide("slow") });
+            $('#n_btnDeny_3').click(function () { $('#n_3').hide("slow") });
+            $('#n_btnAcpt_2').click(function () { $('#n_2').hide("slow"); });
+            $('#n_btnRjct_2').click(function () { $('#n_2').hide("slow") });
+            $('#n_btnOK_4').click(function () { $('#n_4').hide("slow") });
+            //$('#N5Approve').click(function () { $('#N5').hide("slow") });
+            //$('#N5Deny').click(function () { $('#N5').hide("slow") });
+            //$('#N6Approve').click(function () { $('#N6').hide("slow") });
+            //$('#N6Deny').click(function () { $('#N6').hide("slow") });
         });
-        
-        $('#noNotifications').click(function () { $('#noNotifications').hide("slow"); });
-        $('#n_btnOK_1').click(function () { $('#n_1').hide("slow") });
-        $('#n_btnAprv_3').click(function () { $('#n_3').hide("slow") });
-        $('#n_btnDeny_3').click(function () { $('#n_3').hide("slow") });
-        $('#n_btnAcpt_2').click(function () { $('#n_2').hide("slow"); });
-        $('#n_btnRjct_2').click(function () { $('#n_2').hide("slow") });
-        $('#n_btnOK_4').click(function () { $('#n_4').hide("slow") });
-        //$('#N5Approve').click(function () { $('#N5').hide("slow") });
-        //$('#N5Deny').click(function () { $('#N5').hide("slow") });
-        //$('#N6Approve').click(function () { $('#N6').hide("slow") });
-        //$('#N6Deny').click(function () { $('#N6').hide("slow") });
-    });
     </script>
 
     @* BADGE COUNTER HANDLING: *@
     <script type="text/javascript">
-    // TODO: jQuery to properly decrement NEURON badge counter on notification handled...
-    $(document).on("click", ".btn-neuron", function (e) {
-        e.preventDefault();
+        // TODO: jQuery to properly decrement NEURON badge counter on notification handled...
+        $(document).on("click", ".btn-neuron", function (e) {
+            e.preventDefault();
 
-        var $badge = $("#neuronBadge"),
-            count = parseInt($badge.text()),
-            active = $("#neuronBadge").hasClass('active');
+            var $badge = $("#neuronBadge"),
+                count = parseInt($badge.text()),
+                active = $("#neuronBadge").hasClass('active');
 
-        $badge.text(active ? count - 1 : count + 1);
-        if ($badge.text() == "0") {
-            $badge.hide("slow"),
-            $("#neuronicon").removeClass("mdl2-neuronnew"),
-            $("#neuronicon").addClass("mdl2-neuron")
-        } else {
-            $badge.show("slow")
-        }
-    });
+            $badge.text(active ? count - 1 : count + 1);
+            if ($badge.text() == "0") {
+                $badge.hide("slow"),
+                $("#neuronicon").removeClass("mdl2-neuronnew"),
+                $("#neuronicon").addClass("mdl2-neuron")
+            } else {
+                $badge.show("slow")
+            }
+        });
     </script>
 
     @* BACK TO TOP: *@
     <script>
-    jQuery(document).ready(function () {
-        //$('.back-to-top').css({ "display": "none" });
-        var offset = 250;
-        var duration = 300;
-        jQuery(window).scroll(function () {
-            if (jQuery(this).scrollTop() > offset) {
-                jQuery('.back-to-top').fadeIn(duration);
-            } else {
-                jQuery('.back-to-top').fadeOut(duration);
-            }
-        });
+        jQuery(document).ready(function () {
+            //$('.back-to-top').css({ "display": "none" });
+            var offset = 250;
+            var duration = 300;
+            jQuery(window).scroll(function () {
+                if (jQuery(this).scrollTop() > offset) {
+                    jQuery('.back-to-top').fadeIn(duration);
+                } else {
+                    jQuery('.back-to-top').fadeOut(duration);
+                }
+            });
 
-        jQuery('.back-to-top').click(function (event) {
-            event.preventDefault();
-            jQuery('html, body').animate({ scrollTop: 0 }, duration);
-            return false;
-        })
-    });
+            jQuery('.back-to-top').click(function (event) {
+                event.preventDefault();
+                jQuery('html, body').animate({ scrollTop: 0 }, duration);
+                return false;
+            })
+        });
     </script>
-    
+
     @* NAVIGATION: *@
     <script>
         shortcut.add("1", function () { document.getElementById('CORTEXheading').click(); });
@@ -637,14 +648,14 @@
         shortcut.add("Esc", function (e) { e.preventDefault(); document.elementFromPoint(1, 1).click(); });
 
 
-        shortcut.add("Ctrl+Home", function () { if (document.title.indexOf('Home',0) != 0) { $('#divHomeNavWarning').removeClass("hidden"); } });
+        shortcut.add("Ctrl+Home", function () { if (document.title.indexOf('Home', 0) != 0) { $('#divHomeNavWarning').removeClass("hidden"); } });
         $('#btnHomeYes').click(function (target) { window.location.href = "@Url.Action("Index", "Home")"; });
         $('#btnHomeNo').click(function () { $('#divHomeNavWarning').addClass("hidden"); });
     </script>
 
     @* RSS BLASTER: *@
     <script>
-        $('#rss').click(function (request,response) {
+        $('#rss').click(function (request, response) {
             var rssData = document.getElementById("srch-term").value
             $.ajax({
                 url: '/Home/SendRSS/',
@@ -654,7 +665,7 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (result) {
                     alert(result); //Throw Success Modal 404
-                    document.getElementById("srch-term").text() ="";
+                    document.getElementById("srch-term").text() = "";
                 },
             });
             rssData.value == "";
