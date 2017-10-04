@@ -248,21 +248,46 @@ namespace DocuPath.Controllers
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Legacy Case")]
-        public ActionResult Edit(int id, LEGACY_CASE updatedLC)
+        public ActionResult Edit(int id, UpdateLegacyCaseViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Legacy Case");
                 #endregion
-                return View(updatedLC);
+                return View(model);
             }
 
             try
             {
                 #region DB UPDATE
-                db.LEGACY_CASE.Attach(updatedLC);
-                db.Entry(updatedLC).State = EntityState.Modified;
+                LEGACY_CASE LC = new LEGACY_CASE();
+                LC = db.LEGACY_CASE.Where(x=>x.LegacyCaseID == id).FirstOrDefault();
+                LC.LCBriefDescription = model.legacyCase.LCBriefDescription;
+                LC.LegacyDRNumber = model.legacyCase.LegacyDRNumber;
+                LC.StatusID = model.legacyCase.StatusID;
+                LC.DateClosed = model.legacyCase.DateClosed;
+                bool delete = true;
+                foreach (var doc in db.LEGACY_DOCUMENT.Where(x=>x.LegacyCaseID == id))
+                {
+                    foreach (var indoc in model.legacyDocs)
+                    {
+                        if (doc.LegacyDocumentTitle == indoc.LegacyDocumentTitle || doc.LegacyDocumentTitle[0] == '*')
+                        {
+                            delete = false;
+                        }
+                    }
+                    if (delete)
+                    {
+                        db.LEGACY_DOCUMENT.Remove(doc);
+                    }
+                    if (doc.LegacyDocumentTitle[0]=='*')
+                    {
+                        doc.LegacyDocumentTitle = doc.LegacyDocumentTitle.Substring(1);
+                    }
+                    delete = true;
+                }
+
                 db.SaveChanges();
                 #endregion
 
@@ -438,10 +463,90 @@ namespace DocuPath.Controllers
             }
             else
             {
+                return null;
+            }
+        }
+        public ActionResult UpdateFiles()
+        {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            #endregion
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    List<LEGACY_DOCUMENT> docs = new List<LEGACY_DOCUMENT>();
+
+                    LEGACY_CASE LC = new LEGACY_CASE();
+                    string foldername = Request.Form.Get("LCDR");
+                    LC = db.LEGACY_CASE.Where(x => x.LegacyDRNumber == foldername).FirstOrDefault();
+                   
+                    string rootpath = VERTEBRAE.LC_REPORootPath;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        LEGACY_DOCUMENT doc = new LEGACY_DOCUMENT();
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {//404!?
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            doc.LegacyDocumentTitle = testfiles[testfiles.Length - 1];
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                        }
+                        else
+                        {
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            doc.LegacyDocumentTitle = "*"+file.FileName;
+
+                        }
+
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                        bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+                        doc.LegacyDocumentLocation = fname;
+                        docs.Add(doc);
+                        file.SaveAs(fname);
+                    }
+                    int docId = db.LEGACY_DOCUMENT.Max(x => x.LegacyDocumentID);
+
+                    foreach (var item in docs)
+                    {
+                        docId++;
+                        item.LegacyDocumentID = docId;
+                        item.LegacyCaseID = LC.LegacyCaseID;
+                        db.LEGACY_DOCUMENT.Add(item);
+                    }
+                    db.SaveChanges();
+                    // Returns message that successfully uploaded  
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Legacy Case");
+                    #endregion
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Legacy Case");
+                    #endregion
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
                 return Json("No files selected.");
             }
         }
-
         private string GetVirtualPath(string physicalPath)
         {
             try
