@@ -1,4 +1,4 @@
-﻿@model DocuPath.DataLayer.SPECIMEN
+﻿@model DocuPath.Models.DPViewModels.SpecimenViewModel
 @{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -26,7 +26,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="@Url.Action("AddCoreData","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
@@ -84,9 +84,10 @@
 @* PAGE CONTENT: *@
 @using (Html.BeginForm())
 {
+    @Html.HiddenFor(m=>m.fcID)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-
+    <input id="btnPOST" type="submit"class="hidden" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -120,14 +121,14 @@
                         <tbody id="tbody_specimens" class="specimenList">                            
                                 <tr class="specimenRow">
                                     <td class="table-large-identifier text-center">
-                                        <div class="specimenNum">1</div>
+                                        <div class="specID">1</div>
                                         @*@Html.HiddenFor(model => model.dutySlots[i].SlotID, new { @class = "slotIDval" })*@
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.SpecimenSerialNumber, new { htmlAttributes = new { @class = "specimenSerial form-control large-identifier nomarg textbox-multiline", @placeholder = "XXXXX XXXXX XXXXX XXXXX", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                        @Html.EditorFor(model => model.specimens[0].sealnumber, new { htmlAttributes = new { @class = "sealNum form-control large-identifier nomarg textbox-multiline", @placeholder = "XXXXX XXXXX XXXXX XXXXX", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.SpecimenNature, new { htmlAttributes = new { @id = "specimenNature", @class = "form-control nomarg", @placeholder = "Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                        @Html.EditorFor(model => model.specimens[0].description, new { htmlAttributes = new { @id = "specimenNature", @class = "specDescription form-control nomarg", @placeholder = "Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
                                     </td>                                    
                                     <td>
                                         <a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>
@@ -147,51 +148,37 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script name="warningscript" type="text/javascript">
-        // FORT:
-        @*Fort.solid('#ae1f1f', '#fortContainerCoreData');
-        // CANCEL WARNING:
-        $(document).ready(function () {
-            $('#btnCancel').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
-            $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "ForensicCase")"; });
-            $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
-        });*@
+        $("#btnNext").click(function () {
+            document.getElementById("btnPOST").click()
+        })
 
         $(document).ready(function () {
 
             $("#btnAddSpecimen").click(function () {
+                
                 var rowCount = $('.specimenRow').length;
 
                 //todo
-                $(".slotList").append('<tr class="slotRow"><td class="table-large-identifier text-center"><div class="slotID">' + (rowCount + 1) + '</div><input class="slotIDval" data-val="true" data-val-number="The field SlotID must be a number." data-val-required="The SlotID field is required." id="slotId" type="hidden"></td><td><input class="form-control frmctrl-small text-box single-line" name="dutySlots[' + rowCount + '].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value=""></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[' + rowCount + '].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[' + rowCount + '].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
-                //<tr>
-                //<td class="table-large-identifier text-center">6</td><td><input class="form-control frmctrl-small text-box single-line" id="dutySlots_5__Description" name="dutySlots[5].Description" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="text" value="CALL"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field StartTime must be a date." data-val-required="The StartTime field is required." id="dutySlots_5__StartTime" name="dutySlots[5].StartTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><input value="00:00" class="form-control frmctrl-small text-box single-line" data-val="true" data-val-date="The field EndTime must be a date." data-val-required="The EndTime field is required." id="dutySlots_5__EndTime" name="dutySlots[5].EndTime" onclick="this.select()" onfocus="this.select()" style="width: 100%" type="time"></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>
+                $(".specimenList").append('<tr class="specimenRow"><td class="table-large-identifier text-center"><div class="specID">'+(rowCount+1)+'</div></td><td><input class="sealNum form-control large-identifier nomarg textbox-multiline text-box single-line" id="specimens_' + rowCount + '__sealnumber" name="specimens[' + rowCount + '].sealnumber" onclick="this.select()" onfocus="this.select()" placeholder="XXXXX XXXXX XXXXX XXXXX" style="width: 100%" type="text"></td><td><input class="specDescription form-control nomarg text-box single-line" id="specimenNature" name="specimens[' + rowCount +'].description" onclick="this.select()" onfocus="this.select()" placeholder="Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)" style="width: 100%" type="text" value=""></td> <td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+                
             });
 
-            $(".slotList").on('click', '#remRow', function () {
+            $(".specimenList").on('click', '#remRow', function () {
 
-                $(this).closest('.slotRow').remove();
+                $(this).closest('.specimenRow').remove();
 
-                $('.slotID').each(function (index) {
+                $('.specID').each(function (index) {
                     $(this).html(index + 1);
 
                 });
 
-                $('.slotIDval').each(function (index) {
-                    $(this).attr('value', index + 1);
-                    $(this).attr('name', 'dutySlots[' + (index + 1) + '].SlotID');
+                $('.sealNum').each(function (index) {                    
+                    $(this).attr('name', 'specimens[' + (index + 1) + '].sealnumber');
                 });
-                $('.slotDescription').each(function (index) {
-                    $(this).attr('name', 'dutySlots[' + index + '].Description');
+                $('.specDescription').each(function (index) {
+                    $(this).attr('name', 'dutySlots[' + index + '].description');
                 });
-
-                $('#slotStart').each(function (index) {
-
-                    $(this).attr('name', 'dutySlots[' + index + '].StartTime');
-                });
-
-                $('#slotEnd').each(function (index) {
-                    $(this).attr('name', 'dutySlots[' + index + '].EndTime');
-                });
+                
             })
         });
     </script>

@@ -494,7 +494,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("SelectMediaItems", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("ProvideSpecimens", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -508,7 +508,7 @@ namespace DocuPath.Controllers
         //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
-        public ActionResult ProvideSpecimens(/*int id*/)
+        public ActionResult ProvideSpecimens(int id)
         {
             string actionName = "ProvideSpecimens";
             try
@@ -517,31 +517,12 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case - Service Requests");
                 #endregion
                 #region PREPARE MODEL
-                SPECIMEN model = new SPECIMEN();
-                model.SpecimenID = db.SPECIMEN.Max(sc => sc.SpecimenID) + 1;
-                model.ServiceRequestID = -1;
-                model.ServiceRequestID = -1;
-                model.InvestigationRequired = "";
-                model.SpecimenNature = "";
-                model.SpecimenSerialNumber = "";
-                model.ExternalReportID = -1;
-                //FCServiceRequestViewModel model = new FCServiceRequestViewModel();
-                //List<SERVICE_REQUEST> srList = new List<SERVICE_REQUEST>();
-                //List<SPECIMEN> specimenList = new List<SPECIMEN>();
-
-                //for (int i = 0; i < VERTEBRAE.maxSRPerFCAddUpdate; i++)
-                //{
-                //    SERVICE_REQUEST newSR = new SERVICE_REQUEST();
-                //    srList.Add(newSR);
-                //    SPECIMEN newSpecimen = new SPECIMEN();
-                //    specimenList.Add(newSpecimen);
-                //}
-
-
-                //model.serviceRequests = srList;
-                //model.specimens = specimenList;
-                //model.activeSP = db.SERVICE_PROVIDER.Where(sp => sp.IsDeactivated == false).ToList();
-                //model.requestTypes = db.REQUEST_TYPE.ToList();
+                
+                SpecimenViewModel model = new SpecimenViewModel();
+                model.fcID = id;
+                model.specimens = new List<specimen>();
+                model.specimens.Add(new specimen());
+                
 
                 #endregion
                 return View(model);
@@ -559,7 +540,7 @@ namespace DocuPath.Controllers
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
-        public ActionResult ProvideSpecimens(FCServiceRequestViewModel model)
+        public ActionResult ProvideSpecimens(SpecimenViewModel model)
         {
             string actionName = "ProvideSpecimens";
             if (!ModelState.IsValid)
@@ -572,12 +553,33 @@ namespace DocuPath.Controllers
 
             try
             {
-                //TODO: DB Logic
-                //db.SaveChanges();
+                FCServiceRequestViewModel newModel = new FCServiceRequestViewModel();
+                newModel.serviceRequests = new List<SERVICE_REQUEST>();
+                newModel.specimens = new List<SPECIMEN>();
+                newModel.activeSP = db.SERVICE_PROVIDER.Where(x => x.IsDeactivated == false).ToList();
+                newModel.requestTypes = db.REQUEST_TYPE.ToList();
+                foreach (var item in model.specimens)
+                {
+                SERVICE_REQUEST req = new SERVICE_REQUEST();
+                SPECIMEN spec = new SPECIMEN();
+                    req.IsCancelled = false;
+                    req.RequestNote = "";
+                    req.ServiceProviderID = 0;
+                    req.ForensicCaseID = model.fcID;
+                    req.DateAdded = DateTime.Now;
+                    spec.SpecimenNature = item.description;
+                    spec.SpecimenSerialNumber = item.sealnumber;
+                    spec.InvestigationRequired = "";
+                    spec.DisposalMechanism = "";                    
+                    req.SPECIMEN.Add(spec);
+                    newModel.serviceRequests.Add(req);
+                    newModel.specimens.Add(spec);
+                }
+                TempData["model"] = newModel;
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Service Requests");
                 #endregion
-                return RedirectToAction("SelectMediaItems");
+                return RedirectToAction("CaptureServiceRequestDetails",new{id=model.fcID});
             }
             catch (Exception x)
             {
@@ -591,8 +593,10 @@ namespace DocuPath.Controllers
         //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
-        public ActionResult CaptureServiceRequestDetails()
+        [HttpGet]
+        public ActionResult CaptureServiceRequestDetails(int id)
         {
+            
             string actionName = "CaptureServiceRequestDetails";
             try
             {
@@ -601,22 +605,7 @@ namespace DocuPath.Controllers
                 #endregion
                 #region PREPARE MODEL
                 FCServiceRequestViewModel model = new FCServiceRequestViewModel();
-                List<SERVICE_REQUEST> srList = new List<SERVICE_REQUEST>();
-                List<SPECIMEN> specimenList = new List<SPECIMEN>();
-
-                for (int i = 0; i < VERTEBRAE.maxSRPerFCAddUpdate; i++)
-                {
-                    SERVICE_REQUEST newSR = new SERVICE_REQUEST();
-                    srList.Add(newSR);
-                    SPECIMEN newSpecimen = new SPECIMEN();
-                    specimenList.Add(newSpecimen);
-                }
-
-                model.serviceRequests = srList;
-                model.specimens = specimenList;
-                model.activeSP = db.SERVICE_PROVIDER.Where(sp => sp.IsDeactivated == false).ToList();
-                model.requestTypes = db.REQUEST_TYPE.ToList();
-
+                model = (FCServiceRequestViewModel)TempData["model"];
                 #endregion
                 return View(model);
             }
@@ -646,12 +635,42 @@ namespace DocuPath.Controllers
 
             try
             {
-                //TODO: DB Logic
-                //db.SaveChanges();
+                int SRID = 0;
+                int SPID = 0;
+                try
+                {
+                     SRID = db.SERVICE_REQUEST.Max(x => x.ServiceRequestID);
+                     SPID = db.SPECIMEN.Max(x => x.SpecimenID);
+                }
+                catch (Exception)
+                {
+                    SRID = 1;
+                     SPID = 1;
+                }
+                for (int i = 0; i < model.serviceRequests.Count; i++)
+                {
+                    SERVICE_REQUEST req = new SERVICE_REQUEST();
+                    SPECIMEN spec = new SPECIMEN();
+                    SRID++;
+                    SPID++;
+                    req = model.serviceRequests[i];
+                    req.ServiceRequestID = SRID;                    
+                    spec = model.specimens[i];
+                    spec.SpecimenID = SPID;
+                    spec.ServiceRequestID = SRID;
+                    //req.SPECIMEN.Add(spec);
+                    //spec.SERVICE_REQUEST = req;
+                    db.SERVICE_REQUEST.Add(req);
+                    db.SaveChanges();
+                    req.SPECIMEN.Add(spec);
+                    db.SERVICE_REQUEST.Attach(req);
+                    db.Entry(req).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Service Requests");
                 #endregion
-                return RedirectToAction("SelectMediaItems");
+                return RedirectToAction("SelectMediaItems",new { id=model.serviceRequests.FirstOrDefault().ForensicCaseID});
             }
             catch (Exception x)
             {
