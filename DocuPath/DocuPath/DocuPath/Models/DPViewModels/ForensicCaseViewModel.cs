@@ -274,6 +274,18 @@ namespace DocuPath.Models.DPViewModels
         public bool isSelected { get; set; }
     }
 
+    public class SpecimenViewModel
+    {
+        public int fcID { get; set; }
+        public List<specimen> specimens { get; set; }
+    }
+    public struct specimen
+    {
+        public string sealnumber { get; set; }
+        public string description { get; set; }
+    }
+
+
     //public class SPE_KVP
     //{
     //    public int provinceID { get; set; }
