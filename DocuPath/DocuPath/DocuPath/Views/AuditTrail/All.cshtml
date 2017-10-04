@@ -112,7 +112,7 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.txCriticalData.toUpperCase().includes("UPDATE") == true ) { /* CHECK IF THE ENTRY WAS CREATED AS A RESULT OF AN UPDATE/EDIT OF INFORMATION, IF TRUE, THEN SHOW 'VIEW': */
+                    if (row.txCriticalData.toUpperCase().includes("UPDATE") == true || row.txCriticalData.toUpperCase().includes("ADD") == true) { /* CHECK IF THE ENTRY WAS CREATED AS A RESULT OF AN UPDATE/EDIT OF INFORMATION, IF TRUE, THEN SHOW 'VIEW': */
                             return "<a class=\"mdl2icon colour-dpblack\" href=\"/AuditTrail/Details/" + row.TXID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>";
                         } else { /* IN ALL OTHER CASES, SHOW ALL 'NONE' (FALLBACK): */
                             return "<span>None</span>";

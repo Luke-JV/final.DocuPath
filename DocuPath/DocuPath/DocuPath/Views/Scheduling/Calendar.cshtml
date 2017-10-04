@@ -1,11 +1,12 @@
-﻿@model  List <DocuPath.DataLayer.SESSION_USER>
+﻿@model  List<DocuPath.DataLayer.SESSION_USER>
+@using DocuPath.Models
 <style type="text/css" href="~/Content/calendar/calendar.css"></style>
-@{ ViewBag.Title = "Calendar"; ViewBag.GenericHAPTICLocator = "CalendarGeneric"; ViewBag.SpecificHAPTICLocator = "CalendarSpecific"; ViewBag.PageInfoLocator = "Calendar"; }
+@{ ViewBag.Title = "Personal Schedule"; ViewBag.GenericHAPTICLocator = "CalendarGeneric"; ViewBag.SpecificHAPTICLocator = "CalendarSpecific"; ViewBag.PageInfoLocator = "Calendar"; }
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
-    <li class="active">@Html.ActionLink("Personal Google Calendar", "Calendar") </li>
+    <li class="active">@Html.ActionLink("Personal Schedule", "Calendar") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -17,10 +18,18 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-one">
+        <div class="page-buttons-subgrid buttons-three">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
+                <form class="minimalform" action="~/Scheduling/Calendar" style="margin-top: 2px">
+                    <button id="btnReload" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-reset btn-mdl2icon" type="submit" data-toggle="tooltip" title="REFRESH"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
@@ -32,7 +41,7 @@
 </div>
 
 <div class="form-horizontal border-generic form-generic">
-    <div class="panel panel-default" style="margin-bottom: 0px; min-height: 692.4px">
+    <div class="panel panel-default" style="margin-bottom: 0px; min-height: 551px; transition: 1s all">
         <div class="panel-heading grid calendar-panel-heading-grid">
             <span class="mdl2icon mdl2-date panel-mdl2icon" grid-area="cal_hdr_ico"></span>
             <span id="title" grid-area="cal_hdr_txt" style="padding-left: 5px; text-align: left !important"></span>
@@ -55,131 +64,41 @@
     </div>
 </div>
 
-<a href="javascript:void(0)" data-toggle="modal" data-target="#sesh-660">PRESS MEEEEE MOFO</a>
-
-@for (int i = 0; i < Model.Count; i++)
-{
-    <div class="modal fade" id="sesh-@Model[i].SessionID" role="dialog" style="display: none">
-        <div class="modal-dialog" style="width:600px!important;height:500px!important;min-height:600px!important">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="grid hdr-grid">
-                        <div class="page-hdr">
-                            <div class="page-header-subgrid">
-                                <div class="icon-circle mdl2icon mdl2-date"></div>
-                                <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-                                <div class="page-header-text">VIEW EVENT DETAILS</div>
+<div class="modal fade" id="events-modal" aria-hidden="true" style="display: none">
+    <div class="modal-dialog" style="width:700px!important;height:500px!important;min-height:600px!important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="grid hdr-grid">
+                    <div class="page-hdr">
+                        <div class="page-header-subgrid">
+                            <div class="icon-circle mdl2icon mdl2-date"></div>
+                            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                            <div class="page-header-text">VIEW EVENT DETAILS</div>
+                        </div>
+                    </div>
+                    <div class="page-btns">
+                        <div class="page-buttons-subgrid buttons-one">
+                            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                            <div></div>
+                            <div grid-area="btn1">
+                                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                </form>
                             </div>
-                        </div>
-                        <div class="page-btns">
-                            <div class="page-buttons-subgrid buttons-one">
-                                <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
-                                <div></div>
-                                <div grid-area="btn1">
-                                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                                        <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
-                                    </form>
-                                </div>
-                                <div></div>
-                                <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
-                            </div>
+                            <div></div>
+                            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-body" style="height: 500px">
-                    <div class="panel panel-default" style="margin-bottom: 0px">
-                        <div class="panel-heading">
-                            <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
-                            <span style="padding-left: 5px; text-align: left !important">ALLOCATION DETAILS</span>
-                        </div>
-                        <div class="panel-body">
-                            <dl class="dl-horizontal-small">
-                                <dt>
-                                    @Html.DisplayName("Date Created")
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model[i].DateCreated)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayName("Last Status Change")
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model[i].DateStatusChanged)
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayName("Current Status")
-                                </dt>
-
-                                <dd>
-                                    @Html.DisplayFor(model => model[i].ALLOCATION_STATUS.StatusValue)
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="panel panel-default" style="margin-bottom: 0px">
-                        <div class="panel-heading">
-                            <span class="mdl2icon mdl2-event panel-mdl2icon"></span>
-                            <span style="padding-left: 5px; text-align: left !important">EVENT DETAILS</span>
-                        </div>
-                        <div class="panel-body">
-                            <dl class="dl-horizontal-small">
-                                <dt>
-                                    @Html.DisplayName("Title")
-                                </dt>
-
-                                <dd>
-                                    @Html.Display("On Duty (Session " + Model[i].SESSION.SLOT.Description + ")")
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayName("Start Time")
-                                </dt>
-
-                                <dd>
-                                    @Html.Display(Model[i].SESSION.SLOT.StartTime.ToString("HH:mm"))
-                                </dd>
-
-                                <dt>
-                                    @Html.DisplayName("End Time")
-                                </dt>
-
-                                <dd>
-                                    @Html.Display(Model[i].SESSION.SLOT.EndTime.ToString("HH:mm"))
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-
-                    @*<div class="modal-body" style="height: 400px"><iframe width="600" frameborder="0" src="http://www.example.com/" style="height: 370px;"></iframe></div>*@
-                    @*@RenderPage("DisplayEvent")*@
                 </div>
             </div>
+            <div class="modal-body"></div>
         </div>
     </div>
-
-}
-
-@*<div class="modal-background fade" id="events-modal" aria-hidden="true" style="display: none;">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3>Event</h3>
-    </div>
-    <div class="modal-body" style="height: 400px"><iframe width="600" frameborder="0" src="http://www.example.com/" style="height: 370px;"></iframe></div>
-    <div class="modal-footer">
-        <a href="#" data-dismiss="modal" class="btn">Close</a>
-    </div>
-</div>*@
-@*<div class="form-horizontal border-generic form-generic">
-    <iframe src="https://calendar.google.com/calendar/embed?title=Mr.%20John%20Doe&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23c0c0c0&amp;src=docupath.vector%40gmail.com&amp;color=%231B887A&amp;ctz=Africa%2FJohannesburg" style="border-width:0" width="1128" height="600" frameborder="0" scrolling="no"></iframe>
-</div>*@
+</div>
 
 @section Scripts{
-@Scripts.Render("~/bundles/jqueryval")
-@Scripts.Render("~/bundles/calendar")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/calendar")
 
     <script>
         (function ($) {
@@ -188,8 +107,8 @@
                 tmpl_path: "/Content/calendar/",
                 first_day: 1,
                 modal: "#events-modal",
-                //modal_type: "template",
-                events_source: function() { return @Html.Raw(ViewBag.json); },
+                modal_type: "template",
+                events_source: function () { return @Html.Raw(ViewBag.json); },
                 view: 'month',
                 tmpl_cache: false,
                 //day: '2013-03-12',
@@ -198,7 +117,7 @@
                         //alert('no events found');
                         return;
                     }
-                    
+
                     var list = $('#eventlist');
                     list.html('');
 
@@ -240,8 +159,8 @@
     <script>
 
         window.onhashchange(function () {
-                var target = window.location.href;
-                alert(target);
+            var target = window.location.href;
+            alert(target);
         });
 
     </script>

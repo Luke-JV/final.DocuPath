@@ -1,8 +1,50 @@
 <% 	event.date_start = new Date(parseInt(event.start));    
 	event.date_end = new Date(parseInt(event.end)); %>
-<div class="form-horizontal border-generic form-generic nomarg">
-    <div class="modal-body" style="height: 500px">
-        <iframe width="600" height="600" frameborder="0" src="<%= event.url %>"></iframe>
+<!--<div class="form-horizontal border-generic form-generic nomarg">-->
+    <div class="modal-body">
+        <!--<iframe width="600" height="600" frameborder="0" src="<%= event.url %>"></iframe>-->
+        <!--<p>test</p>-->
+        <div class="panel panel-default" style="margin-bottom: 10px">
+            <div class="panel-heading">
+                <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
+                <span style="padding-left: 5px; text-align: left !important">ALLOCATION DETAILS</span>
+            </div>
+            <div class="panel-body">
+                <dl class="dl-horizontal-small">
+                    <dt>Date Created</dt>
+                    <dd><%= event.title.substring(event.title.indexOf('~') + 1, event.title.indexOf('|')) %></dd>
+
+                    <dt>Last Status Change</dt>
+                    <dd><%= event.title.substring(event.title.indexOf('|') + 1, event.title.indexOf('^')) %></dd>
+
+                    <dt>Current Status</dt>
+                    <dd><strong class="font-<%= event['class']%>"><%= event.title.substring(event.title.indexOf('^') + 1) %></strong></dd>
+                </dl>
+            </div>
+        </div>
+        <div class="panel panel-default" style="margin-bottom: 0px">
+            <div class="panel-heading">
+                <span class="mdl2icon mdl2-event panel-mdl2icon"></span>
+                <span style="padding-left: 5px; text-align: left !important">EVENT DETAILS</span>
+            </div>
+            <div class="panel-body day-highlight dh-<%= event['class'] %>">
+                <dl class="dl-horizontal-small">
+                    <dt style="padding-top: 2.6px">Event Title</dt>
+                    <dd class="table-large-identifier"><%= event.title.substring(0, event.title.indexOf('\(')-1) %></dd>
+
+                    <dt style="padding-top: 2.6px">Target Session</dt>
+                    <dd class="table-large-identifier"><%= event.title.substring(event.title.indexOf('\(')+1, event.title.indexOf('\@')-1) %></dd>
+
+                    <dt>Start Time</dt>
+                    <dd><%= event.date_start.toString() %></dd>
+                    <!--<%= event.date_start.getDate() %> <%= calendar.locale["m" + event.date_start.getMonth()] %> <%= event.date_start.getFullYear() %> <%= event.date_start.getHours() %>:("0"<%= event.date_start.getMinutes() %>).slice(-2)-->
+
+                    <dt>End Time</dt>
+                    <dd><%= event.date_end.toString() %></dd>
+                    <!--<%= event.date_end.getDate() %> <%= calendar.locale["m" + event.date_end.getMonth()] %> <%= event.date_end.getFullYear() %> <%= event.date_end.getHours() %>:<%= event.date_end.getMinutes() %>-->
+                </dl>
+            </div>
+        </div>
     </div>
     <!--<div id="event-meta" class="pull-right">
         <span>Starts on <%= event.date_start.getDate() %> <%= calendar.locale["m" + event.date_start.getMonth()] %> <%= event.date_start.getFullYear() %>, at <%= event.date_start.getHours() %>:<%= event.date_start.getMinutes() %> <i class="icon-time"></i></span><br />
@@ -11,4 +53,4 @@
     <div style="margin: 10px 0">
         <a href="<%= event.url %>" class="btn btn-primary"><i class="icon-calendar"></i> More info</a>
     </div>-->
-</div>
+<!--</div>-->
