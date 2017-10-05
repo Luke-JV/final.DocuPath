@@ -1731,7 +1731,8 @@ namespace DocuPath.Controllers
                 Renderer.PrintOptions.Footer.FontFamily = "Arial";
                 Renderer.PrintOptions.Footer.FontSize = 10;
                 Renderer.PrintOptions.Footer.LeftText = "{date} {time}";
-                Renderer.PrintOptions.Footer.RightText = "{page} of {total-pages}";
+                Renderer.PrintOptions.Footer.RightText = "{page} of {total-pages}";
+
                 var file = Renderer.RenderHtmlAsPdf("<h1>Hello World<h1>”).SaveAs(“html-string.pdf");
 
                 return File(file.BinaryData, "application/pdf", "test.pdf");
@@ -1869,7 +1870,7 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Core Data Section")]
         public ActionResult UpdateCoreData(int id)
         {
-
+            ViewBag.Instruction = "UPDATE";
             #region PREPARE MODEL
             CoreDataViewModel model = new CoreDataViewModel();
             var sevenDaysAgo = DateTime.Today.Date.AddDays(-7);
@@ -1943,7 +1944,7 @@ namespace DocuPath.Controllers
         public ActionResult UpdateObservations(int id)
         {
             ObservationsViewModel model = new ObservationsViewModel();
-
+            ViewBag.Instruction = "UPDATE";
             model.genObservation = db.GENERAL_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
 
             model.abdObservation = db.ABDOMEN_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
@@ -2183,8 +2184,8 @@ namespace DocuPath.Controllers
                 model.InvestigationStationName = model.stats.STATS_POLICE_STATION.Where(x => x.STATION_ROLE.StationRoleDescription == "Investigation").FirstOrDefault().SERVICE_PROVIDER.CompanyName;
 
                 model.stats.DiscoveryDate =Convert.ToDateTime(Convert.ToDateTime(model.stats.DiscoveryDate).ToString("yyyy-MM-dd"));
+                ViewBag.Instruction = "UPDATE";
 
-               
                 #endregion
                 return View("AddStatistics",model);
             }
@@ -2613,6 +2614,7 @@ namespace DocuPath.Controllers
         {
             ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
             ViewBag.TargetID = id;
+            ViewBag.Instruction = "UPDATE";
             return View(db.SERVICE_REQUEST.Where(sr => sr.ForensicCaseID == id));
         }
     //>>>>>>>>>>>>>>>>>>>>>>
@@ -2622,6 +2624,7 @@ namespace DocuPath.Controllers
         {
             ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
             ViewBag.TargetID = id;
+            ViewBag.Instruction = "UPDATE";
             return View(db.MEDIA.Where(m => m.ForensicCaseID == id));
         }
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
@@ -2635,6 +2638,7 @@ namespace DocuPath.Controllers
         public ActionResult CaptureNewMediaItems(int id)
         {
             id = id * (-1);
+            ViewBag.Instruction = "UPDATE";
             return RedirectToAction("CaptureMediaItemDetails",new { id = id});
         }
         //>>>>>>>>>>>>>>>>>>>>>>
@@ -2644,6 +2648,7 @@ namespace DocuPath.Controllers
         {
             ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
             ViewBag.TargetID = id;
+            ViewBag.Instruction = "UPDATE";
             return View(db.ADDITIONAL_EVIDENCE.Where(ae => ae.ForensicCaseID == id));
         }
     //>>>>>>>>>>>>>>>>>>>>>>

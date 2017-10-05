@@ -4,7 +4,17 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    @if (ViewBag.Instruction == "UPDATE")
+            {
+                ViewBag.Title = "Update";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    }
+    else
+    {
+        ViewBag.Title = "Add";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    } 
+    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">

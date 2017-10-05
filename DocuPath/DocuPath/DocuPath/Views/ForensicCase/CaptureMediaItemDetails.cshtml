@@ -6,7 +6,18 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+    @{
+        if (ViewBag.Instruction == "UPDATE")
+        {
+            ViewBag.Title = "Update";
+            <li class="active">@Html.ActionLink("Update Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+        }
+        else
+        {
+            <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+        }
+    }
+    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">

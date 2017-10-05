@@ -5,7 +5,16 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Additional Evidence)", "SelectAdditionalEvidenceItems") </li>
+    @if (ViewBag.Instruction == "UPDATE")
+            {
+                ViewBag.Title = "Update";
+        <li class="active">@Html.ActionLink("Update Forensic Case (Additional Evidence)", "SelectAdditionalEvidenceItems") </li>
+    }
+    else
+    {
+        ViewBag.Title = "Add";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Additional Evidence)", "SelectAdditionalEvidenceItems") </li>
+    }    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -13,7 +22,15 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-fc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">ADDITIONAL EVIDENCE</span></div>
+            @if (ViewBag.Instruction == "UPDATE")
+            {                
+                <div class="page-header-text">UPDATE FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">ADDITIONAL EVIDENCE</span></div>
+            }
+            else
+            {                
+                <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">ADDITIONAL EVIDENCE</span></div>
+            }  
+            
         </div>
     </div>
     <div class="page-btns">
