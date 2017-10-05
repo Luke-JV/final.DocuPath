@@ -86,7 +86,7 @@
 {
     @Html.HiddenFor(m => m.forensicCase.ForensicCaseID)
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "Please ensure that all required information has been provided.", new { @class = "validation-text text-danger" })
+    
     <input type="submit" class="hidden" id="btnPOST" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">

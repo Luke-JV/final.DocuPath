@@ -96,6 +96,14 @@
             <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
         </ul>
         <div id="STATS" class="tab-pane" style="padding-top: 5px">
+            <div class="row" style="margin-top: 10px;padding:0 45px;">
+                <div class="col-md-6 text-left">
+
+                    <p> @Html.ValidationSummary(false, "", new { @class = "validation-text text-danger" })</p>
+
+
+                </div>
+            </div>
             <div class="container" id="timelinecontainer">
                 <article id="timeline">
                     <ul class="timeline" id="bSTime">
