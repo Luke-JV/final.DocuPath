@@ -49,10 +49,39 @@
     </div>
 </div>
 @* ASPTABLE WITH ALL FORENSIC CASES: *@
+@*<a href="javascript:void(0)" id="example" rel="popover" data-content="" data-html="true" data-original-title=""></a>
+
+<div style="height: 150px!important; width: 350px!important; border: 1px solid red">
+    <div class="popoverbox">
+        <div class="popoverbox-title-warning"><img class="popoverbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        <div class="popoverbox-message-text">
+            Are you sure you want to delete this item? This action cannot be reverted.
+        </div>
+        <div class="popoverbox-button-bar">
+            <div class="col-md-12 popover-btn-col">
+                <input type="submit" id="btnWarningYes" value="Yes" class="btn btn-modal-generic" />
+                <input type="submit" id="btnWarningNo" value="No" class="btn btn-modal-generic" />
+            </div>
+        </div>
+    </div>
+</div>*@
+        @* HELP/INFO *@
+        @*<div class="panel-group" id="warninghelpaccordion">
+                <div class="modal-help-panel">
+                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                    </div>
+                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                        <hr class="modal-help-hr-warning" />
+                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                    </div>
+                </div>
+            </div>*@
 <table id="allFC" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="FCID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="FCID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ForensicCaseID)
             </th>
             <th data-column-id="addedBy" class="colour-dpred">
@@ -116,49 +145,42 @@
     </tbody>
 </table>
 @* NOTIFICATION/WARNING MODALS: *@
-<div id="divDelete" class="modal-background hidden">
-    <div class="modalbox">
-        <div id="targetItem" class="hidden"></div>
-        @* TITLE *@
-        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
-        @* MESSAGE *@
-        <div class="modalbox-message-text">
-            Are you sure you want to delete this item? This action cannot be reverted.
-        </div>
-        @* HELP/INFO *@
-        @*<div class="panel-group" id="warninghelpaccordion">
-                <div class="modal-help-panel">
-                    <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
-                    More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+@foreach (var fc in Model)
+{
+    <div id="del-modal-@fc.ForensicCaseID" class="modal-background hidden">
+        <div class="modalbox">
+            <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+            <div class="modalbox-message-text">
+                Are you sure you want to <kbd>DELETE</kbd> Forensic Case <kbd>@fc.ForensicDRNumber</kbd>? <br />This action cannot be reverted.
+            </div>
+            @* HELP/INFO *@
+            @*<div class="panel-group" id="warninghelpaccordion">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">
+                        More Information <span class="mdl2icon mdl2-down" style="font-size: 80%"></span>
+                        </div>
+                        <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
+                            <hr class="modal-help-hr-warning" />
+                            <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
+                        </div>
                     </div>
-                    <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
-                        <p style="margin-bottom: 0px; font-weight: bold">Error Code: W001</p>
-                        <hr class="modal-help-hr-warning" />
-                        <p style="margin-bottom: 0px">Certain fields on this page require information to be provided before any operations can continue. Please ensure that all fields have been populated before retrying this action.</p>
-                    </div>
-                </div>
-            </div>*@
-        @* BUTTONS *@
-        <div class="modalbox-button-bar">
-            <div class="col-md-3 modal-btn-col">
-            </div>
-            <div class="col-md-3 modal-btn-col">
-            </div>
-            <div class="col-md-3 modal-btn-col">
-            </div>
-            <div class="col-md-3 modal-btn-col">
-                <input type="submit" id="btnWarningYes" value="Yes" class="btn btn-modal-generic" />
-                <input type="submit" id="btnWarningNo" value="No" class="btn btn-modal-generic" />
+                </div>*@
+            @* BUTTONS *@
+            <div class="modalbox-button-bar col-md-12 modal-btn-col">                
+                @*<div class="">*@
+                    <input type="button" id="del-yes-@fc.ForensicCaseID" href="~/ForensicCase/Delete/@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="del-no-@fc.ForensicCaseID" onclick="$('#del-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                @*</div>*@
             </div>
         </div>
     </div>
-</div>
+}
 
 @section Scripts {
 @Scripts.Render("~/bundles/bootgrid")
 @Scripts.Render("~/bundles/moment")
 @Scripts.Render("~/bundles/materialdatetime")
-
 
 <script id="loadBootgrid" type="text/javascript">
         var grid = $("#allFC").bootgrid({
@@ -171,32 +193,49 @@
                 }
             },
             formatters: {
-                // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"UNLOCK\" data-placement=\"right\" href=\"/ForensicCase/Unlock/" + row.FCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/ForensicCaseUpdateHub/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ForensicCase/Details/" + row.FCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ForensicCase/ForensicCaseUpdateHub/" + row.FCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"right\" href=\"/ForensicCase/Lock/" + row.FCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"MIGRATE\" data-placement=\"right\" href=\"/ForensicCase/Migrate/" + row.FCID.trim() + "\"><i class=\"mdl2-migrate\" style=\"font-style: normal\"></i></a>";
+                    if (row.status.trim() == "Locked") { return
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\"><span class=\"mdl2icon mdl2-view\"></span></button>"+
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-unlock\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-unlock\"></span></button>";
+                    } else if (row.status.trim() == "Active") { return
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" data-target=\"#del-modal-" + row.FCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-lock\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-migrate\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-migrate\"></span></button>";
+                    } else if (row.status.trim() == "Pending") { return
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\"><span class=\"mdl2icon mdl2-view\"></span></button>";    
                     }
+                    /*if (row.status.trim() === "Locked") { return
+                    } else if (row.status.trim().toLowerCase() === "active") { return
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\"><span class=\"mdl2icon mdl2-view\"></span></button>"+
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" data-target=\"#del-modal-" + row.FCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-lock\"></span></button>"+
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-migrate\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-migrate\"></span></button>";
+                    } else if (row.status.trim().toLowerCase() === "pending") { return
+                    } else { return
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\"><span class=\"mdl2icon mdl2-view\"></span></button>"+
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.FCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" data-target=\"#del-modal-" + row.FCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-lock\"></span></button>"+
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-migrate\" data-row-id=\"" + row.FCID + "\"><span class=\"mdl2icon mdl2-migrate\"></span></button>";
+                    }*/
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                     return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".command-delete").on("click", function (e) {
+                //alert("You pressed delete on row: " + $(this).data("row-id"));
+                $('#del-modal-' + $(this).data("row-id")).removeClass('hidden');
+            }).end().find(".command-edit").on("click", function (e) {
+                window.location.href = "/ForensicCase/Edit/" + $(this).data("row-id");
+            });
         });
+
+        //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ForensicCase/Delete/" + row.FCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
 </script>
 
 <script id="onDomReady" type="text/javascript">

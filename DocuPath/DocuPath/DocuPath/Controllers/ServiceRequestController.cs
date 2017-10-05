@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using DocuPath.Models.DPViewModels;
+using System.IO;
 
 namespace DocuPath.Controllers
 {
@@ -169,23 +171,45 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Service Request");
                 #endregion
 
-                List<SelectListItem> selectExistingReports = new List<SelectListItem>();
+                EXTERNAL_REPORT report = new EXTERNAL_REPORT();
 
-                selectExistingReports.Add(new SelectListItem { Value = "0", Text = "Select an Existing External Report..." });
-                selectExistingReports.Add(new SelectListItem { Value = "1", Text = "'NHLSreport.PDF' added by 'John Smith' on 29 Mar 2017 09:39:14" });
-                selectExistingReports.Add(new SelectListItem { Value = "2", Text = "'AmpathReport.PDF' added by 'Jane Smith' on 2 Apr 2017 08:35:54" });
-                selectExistingReports.Add(new SelectListItem { Value = "3", Text = "'LancetReport.PDF' added by 'Jeff Peters' on 10 Apr 2017 10:29:19" });
-                selectExistingReports.Add(new SelectListItem { Value = "4", Text = "'Vermaak&VennoteReport.PDF' added by 'Peter Jefferson' on 11 Apr 2017 12:32:11" });
-                selectExistingReports.Add(new SelectListItem { Value = "5", Text = "'AmpathReport.PDF' added by 'Sam Brown' on 15 Apr 2017 06:52:11" });
-                selectExistingReports.Add(new SelectListItem { Value = "6", Text = "'NHLSReport.PDF' added by 'Bronwyn Samuel' on 18 Apr 2017 09:42:24" });
-                selectExistingReports.Add(new SelectListItem { Value = "7", Text = "'Vermaak&VennoteReport.PDF' added by 'Felicia Bye' on 21 Apr 2017 14:21:16" });
+                report.DateCaptured = DateTime.Now;
+                report.DateReceived = DateTime.Now;
+                report.ExternalReportID = db.EXTERNAL_REPORT.Max(er => er.ExternalReportID) + 1;
+                report.ExternalReportLocation = "";
 
-                ViewBag.ExistingReports = selectExistingReports;
-                ViewBag.DateReceivedDefault = "20 Apr 2017 09:25:36";
-                ViewBag.DateCapturedDefault = System.DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
+                List<ReportKVP> existingReports = new List<ReportKVP>();
+                foreach (var existingReport in db.EXTERNAL_REPORT.Take(30))
+                {
+                    ReportKVP existingReportEntry = new ReportKVP();
+                    existingReportEntry.reportID = existingReport.ExternalReportID;
+                    existingReportEntry.reportPhrase = "\"" + Path.GetFileName(existingReport.ExternalReportLocation) + "\" added on " + existingReport.DateCaptured.ToString("dd MMM yyyy") + " at "+ existingReport.DateCaptured.ToString("HH:mm:ss");
+
+                    existingReports.Add(existingReportEntry);
+                }
+                
+                LinkERToSRViewModel model = new LinkERToSRViewModel();
+                model.targetSR = db.SERVICE_REQUEST.Where(sr => sr.ServiceRequestID == id).FirstOrDefault();
+                model.targetER = report;
+                model.existingERList = existingReports;
+
+                //List<SelectListItem> selectExistingReports = new List<SelectListItem>();
+
+                //selectExistingReports.Add(new SelectListItem { Value = "0", Text = "Select an Existing External Report..." });
+                //selectExistingReports.Add(new SelectListItem { Value = "1", Text = "'NHLSreport.PDF' added by 'John Smith' on 29 Mar 2017 09:39:14" });
+                //selectExistingReports.Add(new SelectListItem { Value = "2", Text = "'AmpathReport.PDF' added by 'Jane Smith' on 2 Apr 2017 08:35:54" });
+                //selectExistingReports.Add(new SelectListItem { Value = "3", Text = "'LancetReport.PDF' added by 'Jeff Peters' on 10 Apr 2017 10:29:19" });
+                //selectExistingReports.Add(new SelectListItem { Value = "4", Text = "'Vermaak&VennoteReport.PDF' added by 'Peter Jefferson' on 11 Apr 2017 12:32:11" });
+                //selectExistingReports.Add(new SelectListItem { Value = "5", Text = "'AmpathReport.PDF' added by 'Sam Brown' on 15 Apr 2017 06:52:11" });
+                //selectExistingReports.Add(new SelectListItem { Value = "6", Text = "'NHLSReport.PDF' added by 'Bronwyn Samuel' on 18 Apr 2017 09:42:24" });
+                //selectExistingReports.Add(new SelectListItem { Value = "7", Text = "'Vermaak&VennoteReport.PDF' added by 'Felicia Bye' on 21 Apr 2017 14:21:16" });
+
+                //ViewBag.ExistingReports = selectExistingReports;
+                //ViewBag.DateReceivedDefault = "20 Apr 2017 09:25:36";
+                //ViewBag.DateCapturedDefault = System.DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
 
 
-                return View();
+                return View(model);
             }
             catch (Exception)
             {

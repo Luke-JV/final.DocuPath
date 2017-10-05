@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.tag.ContentTagText, htmlAttributes: new { @class = "control-label col-md-12", @style = "padding-left: 0px; text-align: left" })
                                     <div class="col-md-12" style="padding-left: 0px; padding-right: 0px">
-                                        @Html.EditorFor(model => model.tag.ContentTagText, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                        @Html.EditorFor(model => model.tag.ContentTagText, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%", @placeholder = "Main Content Tag Descriptor Goes Here" } })
                                         @Html.ValidationMessageFor(model => model.tag.ContentTagText, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                                     @Html.LabelFor(model => model.tag.TagCategoryID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                     <div class="col-md-12" style="padding-right: 0px">
                                         <div class="autocomplete-wrapper">
-                                            @Html.AutocompleteFor(model => model.catName, model => model.catID, "GetCategories", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.AutocompleteFor(model => model.catName, model => model.catID, "GetCategories", "ContentTag", false, new { htmlAttributes = new { @class = "form-control", @placeholder = "Assign a Category..." } })
                                             @Html.ValidationMessageFor(model => model.tag.TagCategoryID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -103,7 +103,7 @@
                                     @Html.LabelFor(model => model.tag.TagSubCategoryID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                     <div class="col-md-12" style="padding-right: 0px">
                                         <div class="autocomplete-wrapper">
-                                            @Html.AutocompleteFor(model => model.subcatName, model => model.subcatID, "GetSubcategories", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.AutocompleteFor(model => model.subcatName, model => model.subcatID, "GetSubcategories", "ContentTag", false, new { htmlAttributes = new { @class = "form-control", @placeholder = "Assign a Subcategory..." } })
                                             @Html.ValidationMessageFor(model => model.tag.TagSubCategoryID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                     @Html.LabelFor(model => model.tag.TagConditionID, htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                                     <div class="col-md-12" style="padding-right: 0px">
                                         <div class="autocomplete-wrapper">
-                                            @Html.AutocompleteFor(model => model.conditionName, model => model.conditionID, "GetConditions", "ContentTag", false, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.AutocompleteFor(model => model.conditionName, model => model.conditionID, "GetConditions", "ContentTag", false, new { htmlAttributes = new { @class = "form-control", @placeholder = "Assign a Condition..." } })
                                             @Html.ValidationMessageFor(model => model.tag.TagConditionID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

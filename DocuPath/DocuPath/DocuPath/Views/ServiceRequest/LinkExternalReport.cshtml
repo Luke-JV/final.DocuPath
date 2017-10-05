@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-four">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -28,9 +28,14 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+                <form class="minimalform" action="~/ServiceRequest/LinkExternalReport" method="post" style="margin-top: 2px">
+                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-link btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="LINK & EXIT"></button>
+                </form>
             </div>
             <div grid-area="btn3">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>
+            <div grid-area="btn4">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
@@ -42,37 +47,42 @@
 </div>
 
 <div class="form-horizontal border-generic form-generic">
-    <div class="row" style="margin-left: 0px; padding-right: 15px">
-        <div class="col-md-12" style="padding: 0px">
-            <div class="panel-group" id="LinkExternalReportAccordion">
-                <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#NewReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
-                        <span>Link New Report</span>
-                    </div>
-                    <div id="NewReportPanel" class="panel-collapse collapse in">
-                        <div class="panel-body" style="padding-top: 30px; padding-bottom: 30px">
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.DateReceived, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-4">
-                                    <div class="input-group date">
+    <ul class="nav nav-tabs">
+        <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#NEW">LINK NEW EXTERNAL REPORT</a></li>
+        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXISTING" style="margin-left: 5px">LINK EXISTING EXTERNAL REPORT</a></li>
+    </ul>
+    <div class="tab-content">
+        @* NEW REPORT *@
+        <div id="NEW" class="tab-pane fade in active nomarg" style="padding: 5px 0 0 0">
+            @* DETAILS *@
+            <div class="panel panel-default nomarg" style="margin-bottom: 5px !important">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
+                    <span>CAPTURE NEW EXTERNAL REPORT DATE INFORMATION</span>
+                </div>
+                <div id="NewReportPanel" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateReceived, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-4">
+                                @*<div class="input-group date">
                                         <input type="text" class="form-control" id="ReceptionDate" />
                                         <span class="input-group-addon" onclick="receptionDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
-                                    </div>
-                                    @*@Html.EditorFor(model => model.DateReceived, new { htmlAttributes = new { @class = "form-control", @style = "width: 322.38px; margin-bottom: 0px", @Value = (string)ViewBag.DateAddedDefault } })*@
-                                    @Html.ValidationMessageFor(model => model.DateReceived, "", new { @class = "text-danger" })
-                                </div>
+                                    </div>*@
+                                @Html.EditorFor(model => model.DateReceived, new { htmlAttributes = new { @type = "date", @class = "form-control", @style = "width: 100%; margin-bottom: 5px" } })
+                                @Html.ValidationMessageFor(model => model.DateReceived, "", new { @class = "text-danger" })
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.DateCaptured, htmlAttributes: new { @class = "control-label col-md-4" })
-                                <div class="col-md-4">
-                                    @Html.EditorFor(model => model.DateCaptured, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @Value = (string)ViewBag.DateCapturedDefault, @disabled = "disabled" } })
-                                    @Html.ValidationMessageFor(model => model.DateCaptured, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateCaptured, htmlAttributes: new { @class = "control-label col-md-4" })
+                            <div class="col-md-4">
+                                @Html.EditorFor(model => model.DateCaptured, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0px", @readonly = true } })
+                                @Html.ValidationMessageFor(model => model.DateCaptured, "", new { @class = "text-danger" })
                             </div>
+                        </div>
 
-                            <div class="form-group">
+                        @*<div class="form-group">
                                 @Html.Label("Upload Report", htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-4" style="padding-right: 5px">
                                     @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "false", @id = "ofdDailyAutopsySchedule", @style = "width: 352px" } })
@@ -80,36 +90,117 @@
                                 <div class="col-md-2" style="padding-left: 0px; margin-left: -5px">
                                     <button class="btn btn-default btn-generic" type="submit" style="width: auto; height: 34px"><i class="mdl2icon mdl2-upload"></i> Upload &amp; Link</button>
                                 </div>
-                            </div>
-                        </div>
+                            </div>*@
                     </div>
                 </div>
-                <div class="panel panel-default" style="margin-top: 5px">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#ExistingReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
-                        <span>Link Existing Report</span>
-                    </div>
-                    <div id="ExistingReportPanel" class="panel-collapse collapse">
-                        <div class="panel-body" style="padding: 5px">
-                            <div class="form-group" style="margin-top: 25px; margin-bottom: 25px">
-                                @Html.Label("Select Existing Report", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align: right; margin-left: -10px" })
-                                <div class="col-md-8">
-                                    @Html.DropDownList("ddlExistingReport", (IEnumerable<SelectListItem>)ViewBag.ExistingReports, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
-                                </div>
-                                <div class="col-md-2" style="padding-left: 0px">
-                                    <button class="btn btn-default btn-generic" type="submit" style="width: auto; height: 34px"><i class="mdl2icon mdl2-done"></i> Select &amp; Link</button>
-                                </div>
-                            </div>
+            </div>
+            @* FILEUPLOAD *@
+            <div class="panel panel-default nomarg" id="pnlFile" style="min-height: 250px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-upload panel-mdl2icon"></span>
+                    <span>SELECT NEW EXTERNAL REPORT TO UPLOAD</span>
+                </div>
+                <div class="panel-body apad5">
+                    <div class="row">
+                        @*@Html.Label("Upload Files", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })*@
+                        <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                            <input id="ExtReport" name="ExtReport" type="file" @*class="file-loading"*@ />
+                            @*<input id="input-fa" name="inputfa[]" type="file" multiple class="file-loading">*@
+                            @*@Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "true", @id = "ofdLegacyCase", @style = "width: 100%" } })*@
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        @* EXISTING REPORT *@
+        <div id="EXISTING" class="tab-pane fade" style="padding: 5px 0 0 0">
+            @* POST FORM ----------------->>>>>>>>>>>>>>>>> TODO URL *@
+            <form action="~/ForensicCase/UploadAdditionalEvidenceItems"><input id="btnPOST" class="hidden" type="submit" /></form> 
+            @* REPORT SELECTOR *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading" data-toggle="collapse" data-target="#ExistingReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
+                    <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
+                    <span>SELECT EXISTING EXTERNAL REPORT TO LINK</span>
+                </div>
+                <div id="ExistingReportPanel" class="panel-default">
+                    <div class="panel-body" style="padding: 5px">
+                        <div class="form-group" style="margin-top: 25px; margin-bottom: 25px !important">
+                            @Html.Label("Select Existing Report", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align: right; margin-left: -10px" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("ddlExistingReport", (IEnumerable<SelectListItem>)ViewBag.ExistingReports, htmlAttributes: new { @class = "form-control", @style = "padding-left: 0px; width: 100%" })
+                            </div>
+                            @*<div class="col-md-2" style="padding-left: 0px">
+                                <button class="btn btn-default btn-generic" type="submit" style="width: auto; height: 34px"><i class="mdl2icon mdl2-done"></i> Select &amp; Link</button>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 @section Scripts
 {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/fileinput")
+
+    <script>
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#ExtReport").fileinput({
+                theme: "fa",
+                uploadUrl: "/LegacyCase/UploadFiles", // TODO URL
+                fileActionSettings: {
+                    showUpload: false
+                },
+            });
+
+            $('#btnSave').click(function () {
+
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+                    //var fileUpload = $("#LCDocs").fileinput({ theme: "fa", uploadUrl: "/LegacyCase/UploadFiles" });
+
+                    //var fileUpload = $("#LCDocs").get(0);
+                    //var files = fileUpload.files;
+                    var files = $("#ExtReport").fileinput('getFileStack');
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+                    gdata = fileData;
+
+                    // Adding one more key to FormData object
+                    fileData.append('LCDR', document.getElementById("drnum").value);
+
+                    $.ajax({
+                        url: '/LegacyCase/UploadFiles',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: fileData,
+                        success: function (result) {
+                            alert(result); //Throw Success Modal 404
+                            document.getElementById("btnPOST").click();
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            });
+        });
+    </script>
     @* DATETIMEPICKERS: *@
     <script name="DTPCallers" type="text/javascript">
         $(function receptionDTP() {

@@ -65,7 +65,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <span class="mdl2icon mdl2-date panel-mdl2icon"></span>
-                            <span>Preliminary Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.CurrentMonthName</span></span>
+                            <span>Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.CurrentMonthName</span></span>
                         </div>
                         <div class="col-md-4 text-right" style="padding-right: 20px">
 
@@ -155,7 +155,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <span class="mdl2icon mdl2-date panel-mdl2icon"></span>
-                            <span>Preliminary Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.NextMonthName</span></span>
+                            <span>Duty Roster for the Month of <span class="colour-dpred" style="font-weight: normal">@ViewBag.NextMonthName</span></span>
                         </div>
                         <div class="col-md-4 text-right" style="padding-right: 20px">
 
@@ -231,7 +231,7 @@
                                         @Html.DropDownList("OnCallUser", (IEnumerable<SelectListItem>)ViewBag.Users, htmlAttributes: new { @class = "form-control frmctrl-small", @style = "width: 100%" })
                                     </td>
                                     <td class="mdr-commentsizing">
-                                        @Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @Value = "" } })
+                                        @Html.Editor("Comments", new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @placeholder = "Type comments here..." } })
                                     </td>
                                 </tr>
                             }

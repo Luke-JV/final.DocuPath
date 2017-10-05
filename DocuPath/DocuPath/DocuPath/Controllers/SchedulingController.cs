@@ -180,7 +180,7 @@ namespace DocuPath.Controllers
                 List<SelectListItem> selectSlots = new List<SelectListItem>();
 
                 selectUsers.Add(new SelectListItem { Value = "0", Text = "..." });
-                selectUsers.Add(new SelectListItem { Value = "1", Text = "Override" });
+                //selectUsers.Add(new SelectListItem { Value = "1", Text = "Override" });
                 foreach (var item in db.USER)
                 {
                     selectUsers.Add(new SelectListItem { Value = (item.UserID + 1).ToString(), Text = item.DisplayInitials });

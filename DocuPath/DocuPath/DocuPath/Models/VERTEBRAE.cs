@@ -256,546 +256,550 @@ namespace DocuPath.Models
             const string MyProfileSpecific = "";
             const string GenerateTokensSpecific = "";
 
-            #endregion
-            #endregion
+        #endregion
+        #endregion
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FETCHES, GETS & QUERIES:
-        public static List<NOTIFICATION> GetUnhandledNeurons()
-        {
-            List<NOTIFICATION> unhandledNeurons = new List<NOTIFICATION>();
-            using (DocuPathEntities db = new DocuPathEntities())
+            #region NEURON
+                public static List<NOTIFICATION> GetUnhandledNeurons()
             {
-                var id = HttpContext.Current.User.Identity.GetUserId<int>();
-                foreach (var neuron in db.NOTIFICATION.Where(x => x.UserID == id && x.HandledDateTimeStamp == null))
+                List<NOTIFICATION> unhandledNeurons = new List<NOTIFICATION>();
+                using (DocuPathEntities db = new DocuPathEntities())
                 {
-                    unhandledNeurons.Add(neuron);
-                }
-            }
-            unhandledNeurons = unhandledNeurons.OrderByDescending(x => x.DateID).ToList();
-            return unhandledNeurons;
-        }
-        public static USER getCurrentUser()
-        {
-            DocuPathEntities db = new DocuPathEntities();
-
-            int id = HttpContext.Current.User.Identity.GetUserId<int>();
-            USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
-            currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
-            currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
-
-            return currentUser;
-
-        }
-        public static List<METRIC> GetVisionMetrics()
-        {
-            using (DocuPathEntities db = new DocuPathEntities())
-            {
-                #region Parameters, Extracted Constants & Values:
-                List<METRIC> visionMetrics = new List<METRIC>();
-                DateTime dtToday = DateTime.Today;
-                DateTime dtTodayMidnight = dtToday.AddDays(1).AddMilliseconds(-1);
-                DateTime dtDateToday = DateTime.Today.Date;
-                DateTime dtTimeNow = DateTime.Now;
-                DateTime dtDateNow = DateTime.Now.Date;
-                double targetAge = TimeSpan.FromDays(365 * 11).TotalDays;
-                var pastSeven = dtTodayMidnight.AddDays(-7);
-                var pastThirty = dtTodayMidnight.AddDays(-30);
-                var pastSixty = dtTodayMidnight.AddDays(-60);
-                var pastNinety = dtTodayMidnight.AddDays(-90);
-                #endregion
-
-                // ======= FORENSIC CASES (GROUP ID: 1) =======
-                #region Forensic Case Metrics
-                METRIC vmFCCount = new METRIC(1, 1, "mdl2icon mdl2-fc metric-mdl2icon", "/ForensicCase/All", "All Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "in total", "The total number of Forensic Cases in the DocuPath database, regardless of case status.", DateTime.Now);
-                visionMetrics.Add(vmFCCount);
-
-                // --> COUNT OF FC BY STATUS:
-                // Active:
-                METRIC vmActiveFCCount = new METRIC(1, 2, "mdl2icon mdl2-done metric-mdl2icon", "/ForensicCase/All", "Active Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Forensic Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmActiveFCCount);
-                // Pending:
-                METRIC vmPendingFCCount = new METRIC(1, 2, "mdl2icon mdl2-warning metric-mdl2icon", "/ForensicCase/All", "Pending Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending Forensic Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmPendingFCCount);
-                // Archived:
-                METRIC vmArchivedFCCount = new METRIC(1, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/ForensicCase/All", "Archived Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Forensic Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmArchivedFCCount);
-                // Locked:
-                METRIC vmLockedFCCount = new METRIC(1, 2, "mdl2icon mdl2-lock metric-mdl2icon", "/ForensicCase/All", "Locked Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked Forensic Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmLockedFCCount);
-                // FC Counts By Status:
-                #region Case Counts:
-                string FCByStatusChartData = vmActiveFCCount.MetricValue + ", " + vmPendingFCCount.MetricValue + ", " + vmArchivedFCCount.MetricValue + ", " + vmLockedFCCount.MetricValue;
-                #endregion
-                METRIC vmFCCountsByStatusGraph = new METRIC(1, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/ForensicCase/All", "Forensic Cases By Status", FCByStatusChartData, "cases", "by status", "Doughnut chart of Forensic Case counts in the DocuPath database, by status.", DateTime.Now);
-                visionMetrics.Add(vmFCCountsByStatusGraph);
-                // Average Duration:
-                #region Average Duration Calculation
-                var avgFC = Math.Round((double)db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue).Average(fc => SqlFunctions.DateDiff("month", fc.DateClosed, fc.DateAdded)), 2);
-                #endregion
-                METRIC vmAvgFCDuration = new METRIC(1, 2, "mdl2icon mdl2-time metric-mdl2icon", "/ForensicCase/All", "Average Duration", avgFC.ToString(), "months", "open", "The average duration of a typical Forensic Case in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmAvgFCDuration);
-                // Aged:Non-Aged Ratio:
-                #region Aged:Non-Aged Ratio Calculation:
-                double iAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
-                double iNonAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
-                string ratio = "1:" + Math.Round(iAgedCount / iNonAgedCount, 2).ToString();
-                #endregion
-                METRIC vmAgedNonAgedFCRatio = new METRIC(1, 2, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Aged Case Ratio", ratio, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Forensic Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmAgedNonAgedFCRatio);
-                // FC Additions:
-                #region FC Additions:
-                var FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded >= dtToday).Count();
-                var FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSeven).Count();
-                var FCAddedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastThirty).Count();
-                var FCAddedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSixty).Count();
-                var FCAddedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastNinety).Count();
-                var FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed >= dtToday).Count();
-                var FCClosedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSeven).Count();
-                var FCClosedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastThirty).Count();
-                var FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSixty).Count();
-                var FCClosedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastNinety).Count();
-                string FCAddedChartData = FCAddedToday + ", " + FCAddedPastSevenDays + ", " + FCAddedPastThirtyDays + ", " + FCAddedPastSixtyDays + ", " + FCAddedPastNinetyDays;
-                string FCClosedChartData = FCClosedToday + ", " + FCClosedPastSevenDays + ", " + FCClosedPastThirtyDays + ", " + FCClosedPastSixtyDays + ", " + FCClosedPastNinetyDays;
-                #endregion
-                METRIC vmFCAddedByDayGraph = new METRIC(1, 3, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Forensic Cases Added & Closed", FCAddedChartData + "|" + FCClosedChartData, "cases", "added/closed", "Bar chart of Forensic Cases added and closed in the DocuPath database, by time interval.", DateTime.Now);
-                visionMetrics.Add(vmFCAddedByDayGraph);
-                #endregion
-
-                // ======= LEGACY CASES (GROUP ID: 2) =======
-                #region Legacy Case Metrics
-                METRIC vmLCCount = new METRIC(2, 1, "mdl2icon mdl2-lc metric-mdl2icon", "/LegacyCase/All", "All Cases", db.LEGACY_CASE.Count().ToString(), "cases", "in total", "The total number of Legacy Cases in the DocuPath database, regardless of case status.", DateTime.Now);
-                visionMetrics.Add(vmLCCount);
-
-                // --> COUNT OF LC BY STATUS:
-                // Active:
-                METRIC vmActiveLCCount = new METRIC(2, 2, "mdl2icon mdl2-done metric-mdl2icon", "/LegacyCase/All", "Active Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Legacy Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmActiveLCCount);
-                // Archived:
-                METRIC vmArchivedLCCount = new METRIC(2, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/LegacyCase/All", "Archived Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Legacy Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmArchivedLCCount);
-                // LC Counts By Status:
-                #region Case Counts:
-                string LCByStatusChartData = vmActiveLCCount.MetricValue + ", " + vmArchivedLCCount.MetricValue;
-                #endregion
-                METRIC vmLCCountsByStatusGraph = new METRIC(2, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/LegacyCase/All", "Legacy Cases By Status", LCByStatusChartData, "cases", "by status", "Doughnut chart of Legacy Case counts in the DocuPath database, by status.", DateTime.Now);
-                visionMetrics.Add(vmLCCountsByStatusGraph);
-                // Average Duration:
-                #region Average Duration Calculation
-                var avgLC = Math.Round((double)db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue).Average(lc => SqlFunctions.DateDiff("month", lc.DateClosed, lc.DateAdded)), 2);
-                #endregion
-                METRIC vmAvgLCDuration = new METRIC(2, 2, "mdl2icon mdl2-time metric-mdl2icon", "/LegacyCase/All", "Average Duration", avgLC.ToString(), "months", "open", "The average duration of a typical Legacy Case in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmAvgLCDuration);
-                // Aged:Non-Aged Ratio:
-                #region Aged:Non-Aged Ratio Calculation:
-                double iAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
-                double iNonAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
-                string ratioLC = "1:" + Math.Round(iAgedLCCount / iNonAgedLCCount, 2).ToString();
-                #endregion
-                METRIC vmAgedNonAgedLCRatio = new METRIC(2, 2, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Aged Case Ratio", ratioLC, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Legacy Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmAgedNonAgedLCRatio);
-                // LC Additions:
-                #region LC Additions:
-                var LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded >= dtToday).Count();
-                var LCAddedPastSevenDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSeven).Count();
-                var LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastThirty).Count();
-                var LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSixty).Count();
-                var LCAddedPastNinetyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastNinety).Count();
-                string LCAddedChartData = LCAddedToday + ", " + LCAddedPastSevenDays + ", " + LCAddedPastThirtyDays + ", " + LCAddedPastSixtyDays + ", " + LCAddedPastNinetyDays;
-                #endregion
-                METRIC vmLCAddedByDayGraph = new METRIC(2, 3, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Legacy Cases Captured", LCAddedChartData, "cases", "captured", "Bar chart of Legacy Cases added captured into the DocuPath database, by time interval.", DateTime.Now);
-                visionMetrics.Add(vmLCAddedByDayGraph);
-                #endregion
-
-                // ======= EXTERNAL REVIEW CASES (GROUP ID: 3) =======
-                #region External Review Case Metrics
-                METRIC vmERCCount = new METRIC(3, 1, "mdl2icon mdl2-erc metric-mdl2icon", "/ExternalReviewCase/All", "All Cases", db.EXTERNAL_REVIEW_CASE.Count().ToString(), "cases", "in total", "The total number of External Review Cases in the DocuPath database, regardless of case status.", DateTime.Now);
-                visionMetrics.Add(vmERCCount);
-
-                // --> COUNT OF ERC BY STATUS:
-                // Active:
-                METRIC vmActiveERCCount = new METRIC(3, 2, "mdl2icon mdl2-done metric-mdl2icon", "/ExternalReviewCase/All", "Active Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active External Review Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmActiveERCCount);
-                // Pending:
-                METRIC vmPendingERCCount = new METRIC(3, 2, "mdl2icon mdl2-warning metric-mdl2icon", "/ExternalReviewCase/All", "Pending Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending External Review Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmPendingERCCount);
-                // Archived:
-                METRIC vmArchivedERCCount = new METRIC(3, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/ExternalReviewCase/All", "Archived Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived External Review Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmArchivedERCCount);
-                // Locked:
-                METRIC vmLockedERCCount = new METRIC(3, 2, "mdl2icon mdl2-lock metric-mdl2icon", "/ExternalReviewCase/All", "Locked Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked External Review Cases in the DocuPath database.", DateTime.Now);
-                visionMetrics.Add(vmLockedERCCount);
-                // ERC Counts By Status:
-                #region Case Counts:
-                string ERCByStatusChartData = vmActiveERCCount.MetricValue + ", " + vmPendingERCCount.MetricValue + ", " + vmArchivedERCCount.MetricValue + ", " + vmLockedERCCount.MetricValue;
-                #endregion
-                METRIC vmERCCountsByStatusGraph = new METRIC(3, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/ExternalReviewCase/All", "External Review Cases By Status", ERCByStatusChartData, "cases", "by status", "Doughnut chart of External Review Case counts in the DocuPath database, by status.", DateTime.Now);
-                visionMetrics.Add(vmERCCountsByStatusGraph);
-                #endregion
-
-                // ======= MEDIA (GROUP ID: 4) =======
-
-                // ======= SERVICE REQUESTS & SERVICE PROVIDERS (GROUP ID: 5) =======
-
-                // ======= CONTENT TAGS (GROUP ID: 6) =======
-
-                // ======= USERS & SYSTEM ACTIVITY (GROUP ID: 7) =======
-
-                return visionMetrics;
-            }
-        }
-        public static string GetUrl(string path)
-        {
-            try
-            {
-
-                var arr = path.Split('\\');
-                string url = "";
-                bool begin = false;
-                foreach (var item in arr)
-                {
-                    if (item == "Content")
+                    var id = HttpContext.Current.User.Identity.GetUserId<int>();
+                    foreach (var neuron in db.NOTIFICATION.Where(x => x.UserID == id && x.HandledDateTimeStamp == null))
                     {
-                        begin = true;
-                    }
-                    if (begin)
-                    {
-                        url += item + "/";
+                        unhandledNeurons.Add(neuron);
                     }
                 }
-                url = url.Remove(url.Length - 1);
-
-                return url;
+                unhandledNeurons = unhandledNeurons.OrderByDescending(x => x.DateID).ToList();
+                return unhandledNeurons;
             }
-            catch (Exception)
+            #endregion
+            #region VISION
+                public static List<METRIC> GetVisionMetrics()
             {
-
-                return path;
-            }
-        }
-        public static string GetThumbUrl(string inPath)
-        {
-            try
-            {
-
-                string relPath = GetUrl(inPath);
-                return relPath.Insert(relPath.LastIndexOf('.'), "_thumb");
-
-            }
-            catch (Exception)
-            {
-
-                return inPath;
-            }
-            //404!
-
-        }
-        public static void GenerateAndSaveThumb(string fetchFromPath)
-        {
-            if (fetchFromPath != null && Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(fetchFromPath).ToUpper()) && File.Exists(fetchFromPath))
-            {
-                Image thumb;
-                //var fileName = fetchFromPath.Substring(fetchFromPath.LastIndexOf('/'));
-
-                Image img = Image.FromFile(fetchFromPath);
-
-                string destinationPath = fetchFromPath.Insert(fetchFromPath.LastIndexOf('.'), "_thumb"); ;
-
-                int imgHeight = 150;
-                int imgWidth = 150;
-                if (img.Width < img.Height)
+                using (DocuPathEntities db = new DocuPathEntities())
                 {
-                    //portrait image  
-                    imgHeight = 150;
-                    var imgRatio = (float)imgHeight / (float)img.Height;
-                    imgWidth = Convert.ToInt32(img.Height * imgRatio);
+                    #region Parameters, Extracted Constants & Values:
+                    List<METRIC> visionMetrics = new List<METRIC>();
+                    DateTime dtToday = DateTime.Today;
+                    DateTime dtTodayMidnight = dtToday.AddDays(1).AddMilliseconds(-1);
+                    DateTime dtDateToday = DateTime.Today.Date;
+                    DateTime dtTimeNow = DateTime.Now;
+                    DateTime dtDateNow = DateTime.Now.Date;
+                    double targetAge = TimeSpan.FromDays(365 * 11).TotalDays;
+                    var pastSeven = dtTodayMidnight.AddDays(-7);
+                    var pastThirty = dtTodayMidnight.AddDays(-30);
+                    var pastSixty = dtTodayMidnight.AddDays(-60);
+                    var pastNinety = dtTodayMidnight.AddDays(-90);
+                    #endregion
+
+                    // ======= FORENSIC CASES (GROUP ID: 1) =======
+                    #region Forensic Case Metrics
+                    METRIC vmFCCount = new METRIC(1, 1, "mdl2icon mdl2-fc metric-mdl2icon", "/ForensicCase/All", "All Cases", db.FORENSIC_CASE.Count().ToString(), "cases", "in total", "The total number of Forensic Cases in the DocuPath database, regardless of case status.", DateTime.Now);
+                    visionMetrics.Add(vmFCCount);
+
+                    // --> COUNT OF FC BY STATUS:
+                    // Active:
+                    METRIC vmActiveFCCount = new METRIC(1, 2, "mdl2icon mdl2-done metric-mdl2icon", "/ForensicCase/All", "Active Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Forensic Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmActiveFCCount);
+                    // Pending:
+                    METRIC vmPendingFCCount = new METRIC(1, 2, "mdl2icon mdl2-warning metric-mdl2icon", "/ForensicCase/All", "Pending Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending Forensic Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmPendingFCCount);
+                    // Archived:
+                    METRIC vmArchivedFCCount = new METRIC(1, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/ForensicCase/All", "Archived Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Forensic Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmArchivedFCCount);
+                    // Locked:
+                    METRIC vmLockedFCCount = new METRIC(1, 2, "mdl2icon mdl2-lock metric-mdl2icon", "/ForensicCase/All", "Locked Cases", db.FORENSIC_CASE.Where(x => x.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked Forensic Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmLockedFCCount);
+                    // FC Counts By Status:
+                    #region Case Counts:
+                    string FCByStatusChartData = vmActiveFCCount.MetricValue + ", " + vmPendingFCCount.MetricValue + ", " + vmArchivedFCCount.MetricValue + ", " + vmLockedFCCount.MetricValue;
+                    #endregion
+                    METRIC vmFCCountsByStatusGraph = new METRIC(1, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/ForensicCase/All", "Forensic Cases By Status", FCByStatusChartData, "cases", "by status", "Doughnut chart of Forensic Case counts in the DocuPath database, by status.", DateTime.Now);
+                    visionMetrics.Add(vmFCCountsByStatusGraph);
+                    // Average Duration:
+                    #region Average Duration Calculation
+                    var avgFC = Math.Round((double)db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue).Average(fc => SqlFunctions.DateDiff("month", fc.DateClosed, fc.DateAdded)), 2);
+                    #endregion
+                    METRIC vmAvgFCDuration = new METRIC(1, 2, "mdl2icon mdl2-time metric-mdl2icon", "/ForensicCase/All", "Average Duration", avgFC.ToString(), "months", "open", "The average duration of a typical Forensic Case in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmAvgFCDuration);
+                    // Aged:Non-Aged Ratio:
+                    #region Aged:Non-Aged Ratio Calculation:
+                    double iAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
+                    double iNonAgedCount = db.FORENSIC_CASE.Where(fc => fc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", fc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
+                    string ratio = "1:" + Math.Round(iAgedCount / iNonAgedCount, 2).ToString();
+                    #endregion
+                    METRIC vmAgedNonAgedFCRatio = new METRIC(1, 2, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Aged Case Ratio", ratio, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Forensic Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmAgedNonAgedFCRatio);
+                    // FC Additions:
+                    #region FC Additions:
+                    var FCAddedToday = db.FORENSIC_CASE.Where(fc => fc.DateAdded >= dtToday).Count();
+                    var FCAddedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSeven).Count();
+                    var FCAddedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastThirty).Count();
+                    var FCAddedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastSixty).Count();
+                    var FCAddedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateAdded <= dtToday && fc.DateAdded > pastNinety).Count();
+                    var FCClosedToday = db.FORENSIC_CASE.Where(fc => fc.DateClosed >= dtToday).Count();
+                    var FCClosedPastSevenDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSeven).Count();
+                    var FCClosedPastThirtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastThirty).Count();
+                    var FCClosedPastSixtyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastSixty).Count();
+                    var FCClosedPastNinetyDays = db.FORENSIC_CASE.Where(fc => fc.DateClosed <= dtToday && fc.DateClosed > pastNinety).Count();
+                    string FCAddedChartData = FCAddedToday + ", " + FCAddedPastSevenDays + ", " + FCAddedPastThirtyDays + ", " + FCAddedPastSixtyDays + ", " + FCAddedPastNinetyDays;
+                    string FCClosedChartData = FCClosedToday + ", " + FCClosedPastSevenDays + ", " + FCClosedPastThirtyDays + ", " + FCClosedPastSixtyDays + ", " + FCClosedPastNinetyDays;
+                    #endregion
+                    METRIC vmFCAddedByDayGraph = new METRIC(1, 3, "mdl2icon mdl2-history metric-mdl2icon", "/ForensicCase/All", "Forensic Cases Added & Closed", FCAddedChartData + "|" + FCClosedChartData, "cases", "added/closed", "Bar chart of Forensic Cases added and closed in the DocuPath database, by time interval.", DateTime.Now);
+                    visionMetrics.Add(vmFCAddedByDayGraph);
+                    #endregion
+
+                    // ======= LEGACY CASES (GROUP ID: 2) =======
+                    #region Legacy Case Metrics
+                    METRIC vmLCCount = new METRIC(2, 1, "mdl2icon mdl2-lc metric-mdl2icon", "/LegacyCase/All", "All Cases", db.LEGACY_CASE.Count().ToString(), "cases", "in total", "The total number of Legacy Cases in the DocuPath database, regardless of case status.", DateTime.Now);
+                    visionMetrics.Add(vmLCCount);
+
+                    // --> COUNT OF LC BY STATUS:
+                    // Active:
+                    METRIC vmActiveLCCount = new METRIC(2, 2, "mdl2icon mdl2-done metric-mdl2icon", "/LegacyCase/All", "Active Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active Legacy Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmActiveLCCount);
+                    // Archived:
+                    METRIC vmArchivedLCCount = new METRIC(2, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/LegacyCase/All", "Archived Cases", db.LEGACY_CASE.Where(lc => lc.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived Legacy Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmArchivedLCCount);
+                    // LC Counts By Status:
+                    #region Case Counts:
+                    string LCByStatusChartData = vmActiveLCCount.MetricValue + ", " + vmArchivedLCCount.MetricValue;
+                    #endregion
+                    METRIC vmLCCountsByStatusGraph = new METRIC(2, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/LegacyCase/All", "Legacy Cases By Status", LCByStatusChartData, "cases", "by status", "Doughnut chart of Legacy Case counts in the DocuPath database, by status.", DateTime.Now);
+                    visionMetrics.Add(vmLCCountsByStatusGraph);
+                    // Average Duration:
+                    #region Average Duration Calculation
+                    var avgLC = Math.Round((double)db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue).Average(lc => SqlFunctions.DateDiff("month", lc.DateClosed, lc.DateAdded)), 2);
+                    #endregion
+                    METRIC vmAvgLCDuration = new METRIC(2, 2, "mdl2icon mdl2-time metric-mdl2icon", "/LegacyCase/All", "Average Duration", avgLC.ToString(), "months", "open", "The average duration of a typical Legacy Case in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmAvgLCDuration);
+                    // Aged:Non-Aged Ratio:
+                    #region Aged:Non-Aged Ratio Calculation:
+                    double iAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) > targetAge)).Count();
+                    double iNonAgedLCCount = db.LEGACY_CASE.Where(lc => lc.DateClosed.HasValue && (SqlFunctions.DateDiff("day", lc.DateClosed.ToString(), DateTime.Now.ToString()) < targetAge)).Count();
+                    string ratioLC = "1:" + Math.Round(iAgedLCCount / iNonAgedLCCount, 2).ToString();
+                    #endregion
+                    METRIC vmAgedNonAgedLCRatio = new METRIC(2, 2, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Aged Case Ratio", ratioLC, "cases", "Non-Aged:Aged", "The ratio of non-aged versus aged Legacy Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmAgedNonAgedLCRatio);
+                    // LC Additions:
+                    #region LC Additions:
+                    var LCAddedToday = db.LEGACY_CASE.Where(lc => lc.DateAdded >= dtToday).Count();
+                    var LCAddedPastSevenDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSeven).Count();
+                    var LCAddedPastThirtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastThirty).Count();
+                    var LCAddedPastSixtyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastSixty).Count();
+                    var LCAddedPastNinetyDays = db.LEGACY_CASE.Where(lc => lc.DateAdded <= dtToday && lc.DateAdded > pastNinety).Count();
+                    string LCAddedChartData = LCAddedToday + ", " + LCAddedPastSevenDays + ", " + LCAddedPastThirtyDays + ", " + LCAddedPastSixtyDays + ", " + LCAddedPastNinetyDays;
+                    #endregion
+                    METRIC vmLCAddedByDayGraph = new METRIC(2, 3, "mdl2icon mdl2-history metric-mdl2icon", "/LegacyCase/All", "Legacy Cases Captured", LCAddedChartData, "cases", "captured", "Bar chart of Legacy Cases added captured into the DocuPath database, by time interval.", DateTime.Now);
+                    visionMetrics.Add(vmLCAddedByDayGraph);
+                    #endregion
+
+                    // ======= EXTERNAL REVIEW CASES (GROUP ID: 3) =======
+                    #region External Review Case Metrics
+                    METRIC vmERCCount = new METRIC(3, 1, "mdl2icon mdl2-erc metric-mdl2icon", "/ExternalReviewCase/All", "All Cases", db.EXTERNAL_REVIEW_CASE.Count().ToString(), "cases", "in total", "The total number of External Review Cases in the DocuPath database, regardless of case status.", DateTime.Now);
+                    visionMetrics.Add(vmERCCount);
+
+                    // --> COUNT OF ERC BY STATUS:
+                    // Active:
+                    METRIC vmActiveERCCount = new METRIC(3, 2, "mdl2icon mdl2-done metric-mdl2icon", "/ExternalReviewCase/All", "Active Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Active").Count().ToString(), "cases", "active", "The number of active External Review Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmActiveERCCount);
+                    // Pending:
+                    METRIC vmPendingERCCount = new METRIC(3, 2, "mdl2icon mdl2-warning metric-mdl2icon", "/ExternalReviewCase/All", "Pending Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Pending").Count().ToString(), "cases", "pending", "The number of pending External Review Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmPendingERCCount);
+                    // Archived:
+                    METRIC vmArchivedERCCount = new METRIC(3, 2, "mdl2icon mdl2-delete metric-mdl2icon", "/ExternalReviewCase/All", "Archived Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Archived").Count().ToString(), "cases", "archived", "The number of archived External Review Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmArchivedERCCount);
+                    // Locked:
+                    METRIC vmLockedERCCount = new METRIC(3, 2, "mdl2icon mdl2-lock metric-mdl2icon", "/ExternalReviewCase/All", "Locked Cases", db.EXTERNAL_REVIEW_CASE.Where(erc => erc.STATUS.StatusValue == "Locked").Count().ToString(), "cases", "locked", "The number of locked External Review Cases in the DocuPath database.", DateTime.Now);
+                    visionMetrics.Add(vmLockedERCCount);
+                    // ERC Counts By Status:
+                    #region Case Counts:
+                    string ERCByStatusChartData = vmActiveERCCount.MetricValue + ", " + vmPendingERCCount.MetricValue + ", " + vmArchivedERCCount.MetricValue + ", " + vmLockedERCCount.MetricValue;
+                    #endregion
+                    METRIC vmERCCountsByStatusGraph = new METRIC(3, 3, "mdl2icon mdl2-approvedeny metric-mdl2icon", "/ExternalReviewCase/All", "External Review Cases By Status", ERCByStatusChartData, "cases", "by status", "Doughnut chart of External Review Case counts in the DocuPath database, by status.", DateTime.Now);
+                    visionMetrics.Add(vmERCCountsByStatusGraph);
+                    #endregion
+
+                    // ======= MEDIA (GROUP ID: 4) =======
+
+                    // ======= SERVICE REQUESTS & SERVICE PROVIDERS (GROUP ID: 5) =======
+
+                    // ======= CONTENT TAGS (GROUP ID: 6) =======
+
+                    // ======= USERS & SYSTEM ACTIVITY (GROUP ID: 7) =======
+
+                    return visionMetrics;
                 }
-                else if (img.Height < img.Width)
+            }
+            #endregion
+            #region HAPTIC
+                public static string GetHelp(string inSelector)
+            {
+                switch (inSelector)
                 {
-                    //landscape image  
-                    imgWidth = 150;
-                    var imgRatio = (float)imgWidth / (float)img.Width;
-                    imgHeight = Convert.ToInt32(img.Height * imgRatio);
+                    // GENERIC SELECTORS:
+                    case "AddGeneric": return AddGeneric;
+                    case "AllGeneric": return AllGeneric;
+                    case "ViewGeneric": return ViewGeneric;
+                    case "UpdateGeneric": return UpdateGeneric;
+                    case "UploadGeneric": return UploadGeneric;
+                    case "MigrateGeneric": return MigrateGeneric;
+                    case "HapticGeneric": return HapticGeneric;
+                    case "HomePageGeneric": return HomePageGeneric;
+                    case "INSIGHTGeneric": return INSIGHTGeneric;
+                    case "VISIONGeneric": return VISIONGeneric;
+                    case "CalendarGeneric": return CalendarGeneric;
+                    case "DASGeneric": return DASGeneric;
+                    case "MDRGeneric": return MDRGeneric;
+                    case "ErrorGeneric": return ErrorGeneric;
+                    case "UnauthorizedAccessGeneric": return UnauthorizedAccessGeneric;
+                    case "SystemParametersGeneric": return SystemParametersGeneric;
+                    case "GenerateTokensGeneric": return GenerateTokensGeneric;
+                    //SPECIFIC SELECTORS:
+                    case "AddUALSpecific": return AddUALSpecific;
+                    case "AllUALpecific": return AllUALpecific;
+                    case "ViewUALSpecific": return ViewUALSpecific;
+                    case "UpdateUALSpecific": return UpdateUALSpecific;
+                    case "AllATSpecific": return AllATSpecific;
+                    case "ViewAuditTrailSpecific": return ViewAuditTrailSpecific;
+                    case "AddCTSpecific": return AddCTSpecific;
+                    case "AllCTSpecific": return AllCTSpecific;
+                    case "ViewCTSpecific": return ViewCTSpecific;
+                    case "UpdateCTRepoSpecific": return UpdateCTRepoSpecific;
+                    case "AddERCSpecific": return AddERCSpecific;
+                    case "AllERCSpecific": return AllERCSpecific;
+                    case "ViewERCSpecific": return ViewERCSpecific;
+                    case "UpdateERCSpecific": return UpdateERCSpecific;
+                    case "AddFCSpecific": return AddFCSpecific;
+                    case "AllFCSpecific": return AllFCSpecific;
+                    case "ViewFCSpecific": return ViewFCSpecific;
+                    case "UpdateFCSpecific": return UpdateFCSpecific;
+                    case "MigrateFCSpecific": return MigrateFCSpecific;
+                    case "HapticSpecific": return HapticSpecific;
+                    case "HomePageSpecific": return HomePageSpecific;
+                    case "AddLCSpecific": return AddLCSpecific;
+                    case "AllLCSpecific": return AllLCSpecific;
+                    case "ViewLCSpecific": return ViewLCSpecific;
+                    case "UpdateLCSpecific": return UpdateLCSpecific;
+                    case "AddMediaSpecific": return AddMediaSpecific;
+                    case "AllMediaSpecific": return AllMediaSpecific;
+                    case "ViewMediaSpecific": return ViewMediaSpecific;
+                    case "UpdateMediaSpecific": return UpdateMediaSpecific;
+                    case "UploadMediaSpecific": return UploadMediaSpecific;
+                    case "INSIGHTSpecific": return INSIGHTSpecific;
+                    case "VISIONSpecific": return VISIONSpecific;
+                    case "CalendarSpecific": return CalendarSpecific;
+                    case "DASSpecific": return DASSpecific;
+                    case "MDRSpecific": return MDRSpecific;
+                    case "AddSPSpecific": return AddSPSpecific;
+                    case "AllSPSpecific": return AllSPSpecific;
+                    case "ViewSPSpecific": return ViewSPSpecific;
+                    case "UpdateSPSpecific": return UpdateSPSpecific;
+                    case "AddSRSpecific": return AddSRSpecific;
+                    case "AllSRSpecific": return AllSRSpecific;
+                    case "ViewSRSpecific": return ViewSRSpecific;
+                    case "LinkReportSpecific": return LinkReportSpecific;
+                    case "ErrorSpecific": return ErrorSpecific;
+                    case "UnauthorizedAccessSpecific": return UnauthorizedAccessSpecific;
+                    case "SystemParametersSpecific": return SystemParametersSpecific;
+                    case "AllUsersSpecific": return AllUsersSpecific;
+                    case "ViewUserSpecific": return ViewUserSpecific;
+                    case "MyProfileSpecific": return MyProfileSpecific;
+                    case "GenerateTokensSpecific": return GenerateTokensSpecific;
+                    // DEFAULT RETURN:
+                    default:
+                        return null;
                 }
-
-                thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
-                thumb.Save(destinationPath);
             }
-        }
-        public static string GetHelp(string inSelector)
-        {
-            switch (inSelector)
+                public static string GetOnThisPageInfo(string inPageName)
             {
-                // GENERIC SELECTORS:
-                case "AddGeneric": return AddGeneric;
-                case "AllGeneric": return AllGeneric;
-                case "ViewGeneric": return ViewGeneric;
-                case "UpdateGeneric": return UpdateGeneric;
-                case "UploadGeneric": return UploadGeneric;
-                case "MigrateGeneric": return MigrateGeneric;
-                case "HapticGeneric": return HapticGeneric;
-                case "HomePageGeneric": return HomePageGeneric;
-                case "INSIGHTGeneric": return INSIGHTGeneric;
-                case "VISIONGeneric": return VISIONGeneric;
-                case "CalendarGeneric": return CalendarGeneric;
-                case "DASGeneric": return DASGeneric;
-                case "MDRGeneric": return MDRGeneric;
-                case "ErrorGeneric": return ErrorGeneric;
-                case "UnauthorizedAccessGeneric": return UnauthorizedAccessGeneric;
-                case "SystemParametersGeneric": return SystemParametersGeneric;
-                case "GenerateTokensGeneric": return GenerateTokensGeneric;
-                //SPECIFIC SELECTORS:
-                case "AddUALSpecific": return AddUALSpecific;
-                case "AllUALpecific": return AllUALpecific;
-                case "ViewUALSpecific": return ViewUALSpecific;
-                case "UpdateUALSpecific": return UpdateUALSpecific;
-                case "AllATSpecific": return AllATSpecific;
-                case "ViewAuditTrailSpecific": return ViewAuditTrailSpecific;
-                case "AddCTSpecific": return AddCTSpecific;
-                case "AllCTSpecific": return AllCTSpecific;
-                case "ViewCTSpecific": return ViewCTSpecific;
-                case "UpdateCTRepoSpecific": return UpdateCTRepoSpecific;
-                case "AddERCSpecific": return AddERCSpecific;
-                case "AllERCSpecific": return AllERCSpecific;
-                case "ViewERCSpecific": return ViewERCSpecific;
-                case "UpdateERCSpecific": return UpdateERCSpecific;
-                case "AddFCSpecific": return AddFCSpecific;
-                case "AllFCSpecific": return AllFCSpecific;
-                case "ViewFCSpecific": return ViewFCSpecific;
-                case "UpdateFCSpecific": return UpdateFCSpecific;
-                case "MigrateFCSpecific": return MigrateFCSpecific;
-                case "HapticSpecific": return HapticSpecific;
-                case "HomePageSpecific": return HomePageSpecific;
-                case "AddLCSpecific": return AddLCSpecific;
-                case "AllLCSpecific": return AllLCSpecific;
-                case "ViewLCSpecific": return ViewLCSpecific;
-                case "UpdateLCSpecific": return UpdateLCSpecific;
-                case "AddMediaSpecific": return AddMediaSpecific;
-                case "AllMediaSpecific": return AllMediaSpecific;
-                case "ViewMediaSpecific": return ViewMediaSpecific;
-                case "UpdateMediaSpecific": return UpdateMediaSpecific;
-                case "UploadMediaSpecific": return UploadMediaSpecific;
-                case "INSIGHTSpecific": return INSIGHTSpecific;
-                case "VISIONSpecific": return VISIONSpecific;
-                case "CalendarSpecific": return CalendarSpecific;
-                case "DASSpecific": return DASSpecific;
-                case "MDRSpecific": return MDRSpecific;
-                case "AddSPSpecific": return AddSPSpecific;
-                case "AllSPSpecific": return AllSPSpecific;
-                case "ViewSPSpecific": return ViewSPSpecific;
-                case "UpdateSPSpecific": return UpdateSPSpecific;
-                case "AddSRSpecific": return AddSRSpecific;
-                case "AllSRSpecific": return AllSRSpecific;
-                case "ViewSRSpecific": return ViewSRSpecific;
-                case "LinkReportSpecific": return LinkReportSpecific;
-                case "ErrorSpecific": return ErrorSpecific;
-                case "UnauthorizedAccessSpecific": return UnauthorizedAccessSpecific;
-                case "SystemParametersSpecific": return SystemParametersSpecific;
-                case "AllUsersSpecific": return AllUsersSpecific;
-                case "ViewUserSpecific": return ViewUserSpecific;
-                case "MyProfileSpecific": return MyProfileSpecific;
-                case "GenerateTokensSpecific": return GenerateTokensSpecific;
-                // DEFAULT RETURN:
-                default:
-                    return null;
-            }
-        }
-        public static string GetOnThisPageInfo(string inPageName)
-        {
-            switch (inPageName)
-            {
-                case "AddUAL": return AddUAL;
-                case "AllUAL": return AllUAL;
-                case "ViewUAL": return ViewUAL;
-                case "UpdateUAL": return UpdateUAL;
-                case "AllAT": return AllAT;
-                case "ViewAuditTrail": return ViewAuditTrail;
-                case "AddCT": return AddCT;
-                case "AllCT": return AllCT;
-                case "ViewCT": return ViewCT;
-                case "UpdateCTRepo": return UpdateCTRepo;
-                case "AddERC": return AddERC;
-                case "AllERC": return AllERC;
-                case "ViewERC": return ViewERC;
-                case "UpdateERC": return UpdateERC;
-                case "AddFC": return AddFC;
-                case "AllFC": return AllFC;
-                case "ViewFC": return ViewFC;
-                case "UpdateFC": return UpdateFC;
-                case "MigrateFC": return MigrateFC;
-                case "HapticHelpCentre": return HapticHelpCentre;
-                case "Home": return Home;
-                case "AddLC": return AddLC;
-                case "AllLC": return AllLC;
-                case "ViewLC": return ViewLC;
-                case "UpdateLC": return UpdateLC;
-                case "AddMedia": return AddMedia;
-                case "AllMedia": return AllMedia;
-                case "ViewMedia": return ViewMedia;
-                case "UpdateMedia": return UpdateMedia;
-                case "UploadMedia": return UploadMedia;
-                case "INSIGHT": return INSIGHT;
-                case "VISION": return VISION;
-                case "Calendar": return Calendar;
-                case "DAS": return DAS;
-                case "MDR": return MDR;
-                case "AddSP": return AddSP;
-                case "AllSP": return AllSP;
-                case "ViewSP": return ViewSP;
-                case "UpdateSP": return UpdateSP;
-                case "AddSR": return AddSR;
-                case "AllSR": return AllSR;
-                case "ViewSR": return ViewSR;
-                case "LinkReport": return LinkReport;
-                case "Error": return Error;
-                case "UnauthorizedAccess": return UnauthorizedAccess;
-                case "SystemParameters": return SystemParameters;
-                case "AllUsers": return AllUsers;
-                case "ViewUser": return ViewUser;
-                case "MyProfile": return MyProfile;
-                case "GenerateTokens": return GenerateTokens;
-                default:
-                    return null;
-            }
-        }
-        public static List<string> BuildHapticHelp(string inPageName)
-        {
-            List<string> FAQs = new List<string>();
-            return FAQs;
-        }
-        ///<summary>
-        ///Pass a single comma-separated string of any combination of the following to fetch the relevant file type icons (case insensitive): PowerPoint / Excel / Word / PDF / Image / Video / Audio / Text / Markup / Compressed. An additional bool parameter specifies whether icons should be returned with or without their container.
-        ///</summary>
-        public static string GetAcceptedFileTypeMinis(string inAcceptedFiletypes, bool inContainerNeeded)
-        {
-            var split = inAcceptedFiletypes.Split(',');
-            var markup = "";
-            if (inContainerNeeded)
-            {
-                markup += "<div class=\"grid ico-container\">";
-                foreach (var type in split)
+                switch (inPageName)
                 {
-                    switch (type.ToUpper())
+                    case "AddUAL": return AddUAL;
+                    case "AllUAL": return AllUAL;
+                    case "ViewUAL": return ViewUAL;
+                    case "UpdateUAL": return UpdateUAL;
+                    case "AllAT": return AllAT;
+                    case "ViewAuditTrail": return ViewAuditTrail;
+                    case "AddCT": return AddCT;
+                    case "AllCT": return AllCT;
+                    case "ViewCT": return ViewCT;
+                    case "UpdateCTRepo": return UpdateCTRepo;
+                    case "AddERC": return AddERC;
+                    case "AllERC": return AllERC;
+                    case "ViewERC": return ViewERC;
+                    case "UpdateERC": return UpdateERC;
+                    case "AddFC": return AddFC;
+                    case "AllFC": return AllFC;
+                    case "ViewFC": return ViewFC;
+                    case "UpdateFC": return UpdateFC;
+                    case "MigrateFC": return MigrateFC;
+                    case "HapticHelpCentre": return HapticHelpCentre;
+                    case "Home": return Home;
+                    case "AddLC": return AddLC;
+                    case "AllLC": return AllLC;
+                    case "ViewLC": return ViewLC;
+                    case "UpdateLC": return UpdateLC;
+                    case "AddMedia": return AddMedia;
+                    case "AllMedia": return AllMedia;
+                    case "ViewMedia": return ViewMedia;
+                    case "UpdateMedia": return UpdateMedia;
+                    case "UploadMedia": return UploadMedia;
+                    case "INSIGHT": return INSIGHT;
+                    case "VISION": return VISION;
+                    case "Calendar": return Calendar;
+                    case "DAS": return DAS;
+                    case "MDR": return MDR;
+                    case "AddSP": return AddSP;
+                    case "AllSP": return AllSP;
+                    case "ViewSP": return ViewSP;
+                    case "UpdateSP": return UpdateSP;
+                    case "AddSR": return AddSR;
+                    case "AllSR": return AllSR;
+                    case "ViewSR": return ViewSR;
+                    case "LinkReport": return LinkReport;
+                    case "Error": return Error;
+                    case "UnauthorizedAccess": return UnauthorizedAccess;
+                    case "SystemParameters": return SystemParameters;
+                    case "AllUsers": return AllUsers;
+                    case "ViewUser": return ViewUser;
+                    case "MyProfile": return MyProfile;
+                    case "GenerateTokens": return GenerateTokens;
+                    default:
+                        return null;
+                }
+            }
+            #endregion
+            #region FILES & FILE TYPES
+                public static string GetUrl(string path)
+                {
+                    try
                     {
-                        case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;
-                        case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;
-                        case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;
-                        case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
-                        case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
-                        case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
-                        case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
-                        case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
-                        case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
-                        case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
-                        default: markup += ""; break;
+
+                        var arr = path.Split('\\');
+                        string url = "";
+                        bool begin = false;
+                        foreach (var item in arr)
+                        {
+                            if (item == "Content")
+                            {
+                                begin = true;
+                            }
+                            if (begin)
+                            {
+                                url += item + "/";
+                            }
+                        }
+                        url = url.Remove(url.Length - 1);
+
+                        return url;
+                    }
+                    catch (Exception)
+                    {
+
+                        return path;
                     }
                 }
-                markup += "</div>";
-            }
-            else
-            {
-                foreach (var type in split)
+                public static string GetThumbUrl(string inPath)
                 {
-                    switch (type.ToUpper())
+                    try
                     {
-                        case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;
-                        case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;
-                        case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;
-                        case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
-                        case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
-                        case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
-                        case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
-                        case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
-                        case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
-                        case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
-                        default: markup += ""; break;
+
+                        string relPath = GetUrl(inPath);
+                        return relPath.Insert(relPath.LastIndexOf('.'), "_thumb");
+
+                    }
+                    catch (Exception)
+                    {
+
+                        return inPath;
+                    }
+                    //404!
+
+                }
+                public static void GenerateAndSaveThumb(string fetchFromPath)
+                {
+                    if (fetchFromPath != null && Thumbnail_AcceptedFileTypes().Contains(Path.GetExtension(fetchFromPath).ToUpper()) && File.Exists(fetchFromPath))
+                    {
+                        Image thumb;
+                        //var fileName = fetchFromPath.Substring(fetchFromPath.LastIndexOf('/'));
+
+                        Image img = Image.FromFile(fetchFromPath);
+
+                        string destinationPath = fetchFromPath.Insert(fetchFromPath.LastIndexOf('.'), "_thumb"); ;
+
+                        int imgHeight = 150;
+                        int imgWidth = 150;
+                        if (img.Width < img.Height)
+                        {
+                            //portrait image  
+                            imgHeight = 150;
+                            var imgRatio = (float)imgHeight / (float)img.Height;
+                            imgWidth = Convert.ToInt32(img.Height * imgRatio);
+                        }
+                        else if (img.Height < img.Width)
+                        {
+                            //landscape image  
+                            imgWidth = 150;
+                            var imgRatio = (float)imgWidth / (float)img.Width;
+                            imgHeight = Convert.ToInt32(img.Height * imgRatio);
+                        }
+
+                        thumb = img.GetThumbnailImage(imgWidth, imgHeight, () => false, IntPtr.Zero);
+                        thumb.Save(destinationPath);
                     }
                 }
-            }
-            return markup;
-        }
-        public static string GetFileTypeThumbnail(string inFiletype, bool inContainerNeeded)
-        {
-            var markup = "";
-            if (inContainerNeeded)
-            {
-                markup += "<div class=\"grid ico-container\">";
-                switch (inFiletype.ToUpper())
+                ///<summary>
+                ///Pass a single comma-separated string of any combination of the following to fetch the relevant file type icons (case insensitive): PowerPoint / Excel / Word / PDF / Image / Video / Audio / Text / Markup / Compressed. An additional bool parameter specifies whether icons should be returned with or without their container.
+                ///</summary>
+                public static string GetAcceptedFileTypeMinis(string inAcceptedFiletypes, bool inContainerNeeded)
                 {
-                    case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
-                    case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
-                    case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
-                    case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
-                    case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
-                    case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
-                    case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
-                    case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
-                    case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
-                    case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
-                    case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
-                    case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
-                    case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
-                    case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
-                    case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
-                    case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
-                    case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
-                    case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
-                    case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
-                    case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
-                    case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
-                    case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
-                    case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
-                    case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
-                    case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
-                    case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
-                    case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
-                    case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
-                    case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
-                    case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
-                    default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                    var split = inAcceptedFiletypes.Split(',');
+                    var markup = "";
+                    if (inContainerNeeded)
+                    {
+                        markup += "<div class=\"grid ico-container\">";
+                        foreach (var type in split)
+                        {
+                            switch (type.ToUpper())
+                            {
+                                case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;
+                                case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;
+                                case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;
+                                case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
+                                case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
+                                case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
+                                case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
+                                case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
+                                case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
+                                case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
+                                default: markup += ""; break;
+                            }
+                        }
+                        markup += "</div>";
+                    }
+                    else
+                    {
+                        foreach (var type in split)
+                        {
+                            switch (type.ToUpper())
+                            {
+                                case "POWERPOINT": markup += "<div class=\"ico ppt-mini\" data-toggle=\"tooltip\" title=\"PPT, PPTX, POT, POTX\" data-placement=\"bottom\"></div>"; break;
+                                case "EXCEL": markup += "<div class=\"ico xls-mini\" data-toggle=\"tooltip\" title=\"XLS, XLSX, XLT, XLTX\" data-placement=\"bottom\"></div>"; break;
+                                case "WORD": markup += "<div class=\"ico doc-mini\" data-toggle=\"tooltip\" title=\"DOC, DOCX, DOT, DOTX\" data-placement=\"bottom\"></div>"; break;
+                                case "PDF": markup += "<div class=\"ico pdf-mini\" data-toggle=\"tooltip\" title=\"PDF\" data-placement=\"bottom\"></div>"; break;
+                                case "IMAGE": markup += "<div class=\"ico imagefile-mini\" data-toggle=\"tooltip\" title=\"BMP, GIF, JPG, PNG, TIFF\" data-placement=\"bottom\"></div>"; break;
+                                case "VIDEO": markup += "<div class=\"ico videofile-mini\" data-toggle=\"tooltip\" title=\"3GP, AVI, MP4, MPG, WMV\" data-placement=\"bottom\"></div>"; break;
+                                case "AUDIO": markup += "<div class=\"ico audiofile-mini\" data-toggle=\"tooltip\" title=\"MP3, WAV\" data-placement=\"bottom\"></div>"; break;
+                                case "TEXT": markup += "<div class=\"ico txtfile-mini\" data-toggle=\"tooltip\" title=\"TXT, RTF\" data-placement=\"bottom\"></div>"; break;
+                                case "MARKUP": markup += "<div class=\"ico markupfile-mini\" data-toggle=\"tooltip\" title=\"XML\" data-placement=\"bottom\"></div>"; break;
+                                case "COMPRESSED": markup += "<div class=\"ico compressedfile-mini\" data-toggle=\"tooltip\" title=\"ZIP, RAR\" data-placement=\"bottom\"></div>"; break;
+                                default: markup += ""; break;
+                            }
+                        }
+                    }
+                    return markup;
                 }
-                markup += "</div>";
-            }
-            else
-            {
-                switch (inFiletype.ToUpper())
+                public static string GetFileTypeThumbnail(string inFiletype, bool inContainerNeeded)
                 {
-                    case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
-                    case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
-                    case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
-                    case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
-                    case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
-                    case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
-                    case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
-                    case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
-                    case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
-                    case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
-                    case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
-                    case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
-                    case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
-                    case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
-                    case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
-                    case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
-                    case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
-                    case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
-                    case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
-                    case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
-                    case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
-                    case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
-                    case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
-                    case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
-                    case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
-                    case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
-                    case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
-                    case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
-                    case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
-                    case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
-                    default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                    var markup = "";
+                    if (inContainerNeeded)
+                    {
+                        markup += "<div class=\"grid ico-container\">";
+                        switch (inFiletype.ToUpper())
+                        {
+                            case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
+                            case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
+                            case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
+                            case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
+                            case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
+                            case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
+                            case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
+                            case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
+                            case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
+                            case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
+                            case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
+                            case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
+                            case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
+                            case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
+                            case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
+                            case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
+                            case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
+                            case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
+                            case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
+                            case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
+                            case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
+                            case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
+                            case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
+                            case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
+                            case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
+                            case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
+                            case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
+                            case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
+                            case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
+                            case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
+                            default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                        }
+                        markup += "</div>";
+                    }
+                    else
+                    {
+                        switch (inFiletype.ToUpper())
+                        {
+                            case "PPT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPT</span></div>"; break;
+                            case "POT": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POT</span></div>"; break;
+                            case "PPTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>PPTX</span></div>"; break;
+                            case "PPOTX": markup += "<div class=\"ico-lg\"><div class=\"ico ppt-mini\"></div><br /><span>POTX</span></div>"; break;
+                            case "XLS": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLS</span></div>"; break;
+                            case "XLT": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLT</span></div>"; break;
+                            case "XLSX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLSX</span></div>"; break;
+                            case "XLTX": markup += "<div class=\"ico-lg\"><div class=\"ico xls-mini\"></div><br /><span>XLTX</span></div>"; break;
+                            case "DOC": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOC</span></div>"; break;
+                            case "DOT": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOT</span></div>"; break;
+                            case "DOCX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOCX</span></div>"; break;
+                            case "DOTX": markup += "<div class=\"ico-lg\"><div class=\"ico doc-mini\"></div><br /><span>DOTX</span></div>"; break;
+                            case "PDF": markup += "<div class=\"ico-lg\"><div class=\"ico pdf-mini\"></div><br /><span>PDF</span></div>"; break;
+                            case "MP3": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>MP3</span></div>"; break;
+                            case "WAV": markup += "<div class=\"ico-lg\"><div class=\"ico audiofile-mini\"></div><br /><span>WAV</span></div>"; break;
+                            case "BMP": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>BMP</span></div>"; break;
+                            case "GIF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>GIF</span></div>"; break;
+                            case "JPG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>JPG</span></div>"; break;
+                            case "PNG": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>PNG</span></div>"; break;
+                            case "TIFF": markup += "<div class=\"ico-lg\"><div class=\"ico imagefile-mini\"></div><br /><span>TIFF</span></div>"; break;
+                            case "3GP": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>3GP</span></div>"; break;
+                            case "AVI": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>AVI</span></div>"; break;
+                            case "MP4": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MP4</span></div>"; break;
+                            case "MPG": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>MPG</span></div>"; break;
+                            case "WMV": markup += "<div class=\"ico-lg\"><div class=\"ico videofile-mini\"></div><br /><span>WMV</span></div>"; break;
+                            case "TXT": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>TXT</span></div>"; break;
+                            case "RTF": markup += "<div class=\"ico-lg\"><div class=\"ico txtfile-mini\"></div><br /><span>RTF</span></div>"; break;
+                            case "XML": markup += "<div class=\"ico-lg\"><div class=\"ico markupfile-mini\"></div><br /><span>XML</span></div>"; break;
+                            case "ZIP": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>ZIP</span></div>"; break;
+                            case "RAR": markup += "<div class=\"ico-lg\"><div class=\"ico compressedfile-mini\"></div><br /><span>RAR</span></div>"; break;
+                            default: markup += "<div class=\"ico-lg\"><div class=\"ico nopreview-mini\" data-toggle=\"tooltip\" title=\"NO PREVIEW AVAILABLE\"></div><br /><span>NONE</span></div>"; break;
+                        }
+                    }
+                    return markup;
                 }
-            }
-            return markup;
-        }
+            #endregion
+            #region USERS
+            public static USER getCurrentUser()
+            {
+                DocuPathEntities db = new DocuPathEntities();
 
+                int id = HttpContext.Current.User.Identity.GetUserId<int>();
+                USER currentUser = db.USER.Where(x => x.UserID == id).FirstOrDefault();
+                currentUser.USER_LOGIN = db.USER_LOGIN.Where(x => x.UserLoginID == currentUser.UserLoginID).FirstOrDefault();
+                currentUser.TITLE = db.TITLE.Where(x => x.TitleID == currentUser.TitleID).FirstOrDefault();
+
+                return currentUser;
+
+            }
+            #endregion
         #endregion
         //----------------------------------------------------------------------------------------------//
         #region FORMATTING & MARKUP:
@@ -926,6 +930,10 @@ namespace DocuPath.Models
             {
                 return e.ToString();
             }
+        }
+        public static string GetDeletePopoverContent()
+        {
+            return "<div class=\"popoverbox\"> <div class=\"popoverbox-title-warning\"><img class=\"popoverbox-title-mdl2icon\" src=\"~/Content/Resources/icoWarn.png\" />WARNING</div> <div class=\"popoverbox-message-text\"> Are you sure you want to delete this item? This action cannot be reverted. </div> <div class=\"popoverbox-button-bar\"> <div class=\"col-md-12 popover-btn-col\"> <input type=\"submit\" id=\"btnWarningYes\" value=\"Yes\" class=\"btn btn-modal-generic\" /> <input type=\"submit\" id=\"btnWarningNo\" value=\"No\" class=\"btn btn-modal-generic\" /> </div> </div> </div>";
         }
         #endregion
         //----------------------------------------------------------------------------------------------//
