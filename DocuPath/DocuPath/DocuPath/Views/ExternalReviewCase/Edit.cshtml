@@ -27,7 +27,7 @@
                 </form>
             </div><div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
+                    <button id="btnSave"class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-save btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="SAVE & EXIT"></button>
                 </form>
             </div>
             <div grid-area="btn3">
@@ -260,48 +260,77 @@
             $('#btnSave').click(function () {
                 // Checking whether FormData is available in browser
                 if (window.FormData !== undefined) {
-                    var files = $("#ercCover").fileinput('getFileStack');
-
-
-                    //  ============     .========.     ||==.        .========. 
-                    //       ||         ||        ||    ||   \\     ||        ||
-                    //       ||         ||        ||    ||    ||    ||        ||    O
-                    //       ||         ||        ||    ||    ||    ||        ||    O
-                    //       ||         ||        ||    ||   //     ||        ||
-                    //       ||          '========'     ||=='        '========'
-
-                    // HANDLE MULTIPLE FILEUPLOADS IN A SINGLE AJAX CALL! =D
+                    var cover = $("#ercCover").fileinput('getFileStack');
+                    var report = $("#ercReport").fileinput('getFileStack');
 
                     // Create FormData object
-                    var fileData = new FormData();
-
+                    var coverData = new FormData();
+                    //coverData.append('ECDR', document.getElementById("drnum").value);
                     // Looping over all files and add it to FormData object
-                    for (var i = 0; i < files.length; i++) {
-                        fileData.append(files[i].name, files[i]);
+                    for (var i = 0; i < cover.length; i++) {
+                        coverData.append(cover[i].name, cover[i]);
                     }
-                    gdata = fileData;
+                    gdata = coverData;
 
                     // Adding one more key to FormData object
                     // none needed here
                     //fileData.append('LCDR', document.getElementById("drnum").value);
+                    if (cover.length > 0) {
+               // alert()
 
-                    $.ajax({
-                        url: '/ForensicCase/UploadAdditionalEvidenceItems/@Html.Raw(ViewBag.FCID)',
-                        type: "POST",
-                        contentType: false, // Not to set any content header
-                        processData: false, // Not to process data
-                        data: fileData,
-                        success: function (result) {
-                            alert(result); //Throw Success Modal 404
-                            document.getElementById("btnPOST").click();
-                        },
-                        error: function (err) {
-                            alert(err.statusText);
-                        }
-                    });
+                        $.ajax({
+                            url: '/ExternalReviewCase/UpdateCLFiles/',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: coverData,
+                            success: function (result) {
+                                alert(result); //Throw Success Modal 404
+                                //document.getElementById("btnPOST").click();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+
+
+                    // Create FormData object
+                    var reportData = new FormData();
+                    //reportData.append('ECDR', document.getElementById("drnum").value);
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < report.length; i++) {
+                        reportData.append(report[i].name, report[i]);
+                    }
+                    gdata = reportData;
+
+                    // Adding one more key to FormData object
+                    // none needed here
+                    //fileData.append('LCDR', document.getElementById("drnum").value);
+                    if (report.length > 0) {
+
+                        $.ajax({
+                            url: '/ExternalReviewCase/UpdateERFiles/',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: reportData,
+                            success: function (result) {
+                                alert(result); //Throw Success Modal 404
+                                //document.getElementById("btnPOST").click();
+                            },
+                            error: function (err) {
+                                alert(err.statusText);
+                            }
+                        });
+                    }
+                    
                 } else {
-                    alert("FormData is not supported.");
+                     alert("FormData is not supported.");
                 }
+
+                document.getElementById("btnPOST").click();
+
             });
         });
     </script>
