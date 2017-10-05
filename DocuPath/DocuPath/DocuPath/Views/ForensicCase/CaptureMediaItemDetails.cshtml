@@ -6,7 +6,18 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+    @{
+        if (ViewBag.Instruction == "UPDATE")
+        {
+            ViewBag.Title = "Update";
+            <li class="active">@Html.ActionLink("Update Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+        }
+        else
+        {
+            <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "CaptureMediaItemDetails") </li>
+        }
+    }
+    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -98,7 +109,7 @@
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Observations</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Service Requests</a></li>
             <li class="active"><a class="dynamic-tab-heading" href="javascript:void(0)" style="margin-left: 5px">Media Items</a></li>
-            <li><a class="dynamic-tab-heading" href="@Url.Action("AddAdditionalEvidence","ForensicCase")" style="margin-left: 5px">Additional Evidence</a></li>
+            <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Additional Evidence</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
         </ul>

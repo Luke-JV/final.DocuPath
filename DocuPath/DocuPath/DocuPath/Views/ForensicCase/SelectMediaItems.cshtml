@@ -4,7 +4,17 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    @if (ViewBag.Instruction == "UPDATE")
+            {
+                ViewBag.Title = "Update";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    }
+    else
+    {
+        ViewBag.Title = "Add";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Media Items)", "SelectMediaItems") </li>
+    } 
+    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -25,7 +35,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-four">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             @*<div grid-area="btn1">
@@ -33,9 +43,20 @@
                     <button id="btnCancel" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" type="submit" data-toggle="tooltip" title="CANCEL ADD"></button>
                 </form>
             </div>*@
-            <div grid-area="btn1">
+            @{
+                if (ViewBag.Instruction != "UPDATE")
+                {
+                    <div grid-area="btn1">
+                        <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                            <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD"></button>
+                        </form>
+                    </div>
+                }
+            }
+            
+            <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)"  style="margin-top: 2px">
-                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                    <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
             <div grid-area="btn2">

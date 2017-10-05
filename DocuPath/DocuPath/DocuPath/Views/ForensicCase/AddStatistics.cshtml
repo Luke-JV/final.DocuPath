@@ -6,7 +6,17 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Statistics)", "AddStatistics") </li>
+    @if (ViewBag.Instruction == "UPDATE")
+    {
+        ViewBag.Title = "Update";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Statistics)", "AddStatistics") </li>
+    }
+    else
+    {
+        ViewBag.Title = "Add";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Statistics)", "AddStatistics") </li>
+    }
+    
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -14,7 +24,17 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-fc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">STATISTICS</span></div>
+            @if (ViewBag.Instruction == "UPDATE")
+            {
+                ViewBag.Title = "Update";
+                <div class="page-header-text">UPDATE FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">STATISTICS</span></div>
+            }
+            else
+            {
+                ViewBag.Title = "Add";
+                <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">STATISTICS</span></div>
+            }
+            
         </div>
     </div>
     <div class="page-btns">
@@ -264,10 +284,19 @@
                                                     <div class="form-group">
                                                         @Html.Label("Select a Discovery Date", htmlAttributes: new { @class = "control-label col-md-5", @style = "text-align: right; margin-left: -10px" })
                                                         <div class="col-md-7" style="padding-right: 5px">
-                                                            
-                                                            @Html.EditorFor(model => model.stats.DiscoveryDate, new {  htmlAttributes = new {@value="2010-01-01", @id = "DiscoveryDate", @type = "date", @*@onclick = "discoveryDTP()",*@  @class = "form-control", @style = "width: 100%"} })
+
+                                                            @Html.EditorFor(model => model.stats.DiscoveryDate, new
+                                                       {
+                                                           htmlAttributes = new
+                                                           {
+                                                               @value = "2010-01-01",
+                                                               @id = "DiscoveryDate",
+                                                               @type = "date", @*@onclick = "discoveryDTP()",*@  @class = "form-control",
+                                                               @style = "width: 100%"
+                                                           }
+                                                       })
                                                             @Html.ValidationMessageFor(model => model.stats.DiscoveryDate, "", new { @class = "validation-text text-danger" })
-                                                                
+
                                                             @*<div class="input-group date">
                                                                     <input type="text" class="form-control" id="DiscoveryDate" />
                                                                     <span class="input-group-addon" onclick="discoveryDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
@@ -1099,6 +1128,6 @@
             }
         });
 
-        
+
     </script>
 }

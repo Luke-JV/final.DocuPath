@@ -5,7 +5,17 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
-    <li class="active">@Html.ActionLink("Add Forensic Case (Service Requests)", "ProvideSpecimens") </li>
+    @if (ViewBag.Instruction == "UPDATE")
+    {
+        ViewBag.Title = "Update";
+        <li class="active">@Html.ActionLink("Update Forensic Case (Service Requests)", "ProvideSpecimens") </li>
+    }
+    else
+    {
+        ViewBag.Title = "Add";
+        <li class="active">@Html.ActionLink("Add Forensic Case (Service Requests)", "ProvideSpecimens") </li>
+    }
+
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -13,7 +23,17 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-fc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">SERVICE REQUESTS</span></div>
+            @if (ViewBag.Instruction == "UPDATE")
+            {
+                ViewBag.Title = "Update";
+                <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">SERVICE REQUESTS</span></div>
+            }
+            else
+            {
+                ViewBag.Title = "Add";
+                <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">SERVICE REQUESTS</span></div>
+            }
+
         </div>
     </div>
     <div class="page-btns">
@@ -84,10 +104,10 @@
 @* PAGE CONTENT: *@
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(m=>m.fcID)
+    @Html.HiddenFor(m => m.fcID)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
-    <input id="btnPOST" type="submit"class="hidden" />
+    <input id="btnPOST" type="submit" class="hidden" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)">Core Data</a></li>
@@ -98,7 +118,7 @@
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Cause of Death</a></li>
             <li><a class="dynamic-tab-heading link-disabled" href="javascript:void(0)" style="margin-left: 5px">Statistics</a></li>
         </ul>
-    
+
         <p class="alert-bar alert-bar-info fullwidth" style="margin: 7.5px 0 7.5px 0">Service Requests are document-based requests and orders issued to third-party Service Providers to render services applicable to a Forensic Case (e.g. testing or consultation)</p>
 
         <div class="panel panel-default" style="margin-bottom: 0">
@@ -118,22 +138,22 @@
                                 <td style="width: 80px !important">Actions</td>
                             </tr>
                         </thead>
-                        <tbody id="tbody_specimens" class="specimenList">                            
-                                <tr class="specimenRow">
-                                    <td class="table-large-identifier text-center">
-                                        <div class="specID">1</div>
-                                        @*@Html.HiddenFor(model => model.dutySlots[i].SlotID, new { @class = "slotIDval" })*@
-                                    </td>
-                                    <td>
-                                        @Html.EditorFor(model => model.specimens[0].sealnumber, new { htmlAttributes = new { @class = "sealNum form-control large-identifier nomarg textbox-multiline", @placeholder = "XXXXX XXXXX XXXXX XXXXX", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
-                                    </td>
-                                    <td>
-                                        @Html.EditorFor(model => model.specimens[0].description, new { htmlAttributes = new { @id = "specimenNature", @class = "specDescription form-control nomarg", @placeholder = "Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
-                                    </td>                                    
-                                    <td>
-                                        @*<a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>*@
-                                    </td>
-                                </tr>
+                        <tbody id="tbody_specimens" class="specimenList">
+                            <tr class="specimenRow">
+                                <td class="table-large-identifier text-center">
+                                    <div class="specID">1</div>
+                                    @*@Html.HiddenFor(model => model.dutySlots[i].SlotID, new { @class = "slotIDval" })*@
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.specimens[0].sealnumber, new { htmlAttributes = new { @class = "sealNum form-control large-identifier nomarg textbox-multiline", @placeholder = "XXXXX XXXXX XXXXX XXXXX", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.specimens[0].description, new { htmlAttributes = new { @id = "specimenNature", @class = "specDescription form-control nomarg", @placeholder = "Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)", @style = "width: 100%", @onfocus = "this.select()", @onclick = "this.select()" } })
+                                </td>
+                                <td>
+                                    @*<a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="DELETE" data-placement="right" style="font-style: normal"></i></a>*@
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -155,13 +175,13 @@
         $(document).ready(function () {
 
             $("#btnAddSpecimen").click(function () {
-                
+
                 var rowCount = $('.specimenRow').length;
 
                 //todo
                 //$(".specimenList").append('<tr class="specimenRow"><td class="table-large-identifier text-center"><div class="specID">' + (rowCount + 1) + '</div></td><td><input class="sealNum form-control large-identifier nomarg textbox-multiline text-box single-line" data-val="true" data-val-required="The sealnumber field is required." id="specimens_' + rowCount + '__sealnumber" name="specimens[' + rowCount + '].sealnumber" onclick="this.select()" onfocus="this.select()" placeholder="XXXXX XXXXX XXXXX XXXXX" style="width: 100%" type="text"></td><td><input class="specDescription form-control nomarg text-box single-line" data-val="true" data-val-required="The description field is required."  id="specimenNature" name="specimens[' + rowCount +'].description" onclick="this.select()" onfocus="this.select()" placeholder="Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)" style="width: 100%" type="text" value=""></td> <td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
-                $(".specimenList").append('<tr class="specimenRow"><td class="table-large-identifier text-center"><div class="specID">' + (rowCount + 1) + '</div></td><td><input class="sealNum form-control large-identifier nomarg textbox-multiline text-box single-line" data-val="true" data-val-required="The sealnumber field is required." id="specimens_0__sealnumber" name="specimens[' + rowCount + '].sealnumber" onclick="this.select()" onfocus="this.select()" placeholder="XXXXX XXXXX XXXXX XXXXX" style="width: 100%" type="text" value=""></td><td><input class="specDescription form-control nomarg text-box single-line" data-val="true" data-val-required="The description field is required." id="specimenNature" name="specimens[' + rowCount +'].description" onclick="this.select()" onfocus="this.select()" placeholder="Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)" style="width: 100%" type="text" value=""></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
-                
+                $(".specimenList").append('<tr class="specimenRow"><td class="table-large-identifier text-center"><div class="specID">' + (rowCount + 1) + '</div></td><td><input class="sealNum form-control large-identifier nomarg textbox-multiline text-box single-line" data-val="true" data-val-required="The sealnumber field is required." id="specimens_0__sealnumber" name="specimens[' + rowCount + '].sealnumber" onclick="this.select()" onfocus="this.select()" placeholder="XXXXX XXXXX XXXXX XXXXX" style="width: 100%" type="text" value=""></td><td><input class="specDescription form-control nomarg text-box single-line" data-val="true" data-val-required="The description field is required." id="specimenNature" name="specimens[' + rowCount + '].description" onclick="this.select()" onfocus="this.select()" placeholder="Provide a clear description of specimen characteristics (e.g. size, shape, volume, appearance, etc.)" style="width: 100%" type="text" value=""></td><td><a id="remRow" class="mdl2icon colour-dpblack" href="javascript:void(0)" style="padding-top: 2.5px"><i class="mdl2-delete" data-toggle="tooltip" title="" data-placement="right" style="font-style: normal" data-original-title="DELETE"></i></a></td></tr>');
+
             });
 
             $(".specimenList").on('click', '#remRow', function () {
@@ -173,13 +193,13 @@
 
                 });
 
-                $('.sealNum').each(function (index) {                    
+                $('.sealNum').each(function (index) {
                     $(this).attr('name', 'specimens[' + (index + 1) + '].sealnumber');
                 });
                 $('.specDescription').each(function (index) {
                     $(this).attr('name', 'dutySlots[' + index + '].description');
                 });
-                
+
             })
         });
     </script>
