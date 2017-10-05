@@ -559,7 +559,7 @@ namespace DocuPath.Controllers
                 newModel.specimens = new List<SPECIMEN>();
                 newModel.activeSP = db.SERVICE_PROVIDER.Where(x => x.IsDeactivated == false).ToList();
                 newModel.requestTypes = db.REQUEST_TYPE.ToList();
-                foreach (var item in model.specimens)
+                foreach (var item in model.specimens.Where(x => x.sealnumber != null && x.description != null))
                 {
                 SERVICE_REQUEST req = new SERVICE_REQUEST();
                 SPECIMEN spec = new SPECIMEN();
@@ -1058,7 +1058,7 @@ namespace DocuPath.Controllers
                     AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Additional Evidence");
                     #endregion
                     // Returns message that successfully uploaded  
-                    return Json("File Uploaded Successfully!");
+                    return Json("File(s) Uploaded Successfully!");
                 }
                 catch (Exception x)
                 {
@@ -1223,6 +1223,10 @@ namespace DocuPath.Controllers
         [ValidateInput(false)]
         public ActionResult AddCauseOfDeath(CODViewModel model)
         {
+            if (model.primaryCODEst.CONTENT_TAG.ContentTagText == null || model.primaryCODEst.CODMotivation == null)
+            {
+                return View(model);
+            }
             string actionName = "AddCauseOfDeath";
             if (!ModelState.IsValid)
             {

@@ -182,12 +182,16 @@
                         data: fileData,
                         success: function (result) {
                             alert(result); //Throw Success Modal 404
-                            document.getElementById("btnPOST").click();
+                            if (result == 'File(s) Uploaded Successfully!') {
+
+                                document.getElementById("btnPOST").click();
+                            }
                         },
                         error: function (err) {
                             alert(err.statusText);
                         }
                     });
+                            
                 } else {
                     alert("FormData is not supported.");
                 }

@@ -276,12 +276,15 @@ namespace DocuPath.Models.DPViewModels
 
     public class SpecimenViewModel
     {
+        
         public int fcID { get; set; }
         public List<specimen> specimens { get; set; }
     }
     public struct specimen
     {
+        [Required]
         public string sealnumber { get; set; }
+        [Required]
         public string description { get; set; }
     }
 

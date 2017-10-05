@@ -25,13 +25,17 @@ namespace DocuPath.DataLayer
         [DataType(DataType.MultilineText)]
         [StringLength(235)]
         [DisplayName("Item Description")]
+        [Required]
         public string EvidenceDescription { get; set; }
+        [Required]
         [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Serial/Seal Number")]
         public string EvidenceSerialNumber { get; set; }
+        [Required]
         [DefaultValue(FLAG.Text)]
         [DisplayName("Contact Person")]
         public string ContactPersonNameSurname { get; set; }
+        [Required]
         [DefaultValue(FLAG.ContactNumber)]
         [RegularExpression("0[0-9]{9}", ErrorMessage = "Enter a valid 10-digit number starting with 0")]
         [DisplayName("Contact Number")]
