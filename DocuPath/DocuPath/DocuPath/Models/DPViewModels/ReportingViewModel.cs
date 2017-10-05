@@ -8,23 +8,21 @@ namespace DocuPath.Models.DPViewModels
 {
     public class ReportingViewModel
     {
-        public List<AUDIT_LOG> activityTransactions { get; set; }
-        public USER target { get; set; }
-        //public List<string> reports { get; set; }
-        //public InsightQuery query { get; set; }
+        public InsightQuery iq { get; set; }
+        public List<USER> users { get; set; }
+        public List<USER> superusers { get; set; }
+        public List<AUDIT_TX_TYPE> activityTypes { get; set; }
     }
-    //public class InsightQuery
-    //{
-    //    public int reportToGenerate { get; set; }
-    //    public int timeframeToTarget { get; set; }
-    //    public DateTime dateFrom { get; set; }
-    //    public DateTime dateTo { get; set; }
-    //    public List<InsightUser> allUsers { get; set; }
-    //    public List<ActivityType> allActivityTypes { get; set; }
-    //    public int selectedSuperuser { get; set; }
-    //    public int selectedUser { get; set; }
-    //    public int selectedActivityType { get; set; }
-    //}
+    public class InsightQuery
+    {
+        public int reportToGenerate { get; set; }
+        public int reportTimeframe { get; set; }
+        public Nullable<DateTime> reportDateFrom { get; set; }
+        public Nullable<DateTime> reportDateTo { get; set; }
+        public int reportUsersSelector { get; set; }
+        public int reportActivitiesSelector { get; set; }
+        public int reportSuperuserSelector { get; set; }
+    }
 
     //public class InsightUser
     //{
@@ -61,9 +59,4 @@ namespace DocuPath.Models.DPViewModels
     //    private string ParamName { get; set; }
     //    private string ParamID { get; set; }
     //}
-
-    public class VisionQuery
-    {
-
-    }
 }

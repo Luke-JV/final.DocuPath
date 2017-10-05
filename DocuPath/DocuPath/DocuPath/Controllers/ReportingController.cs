@@ -77,7 +77,72 @@ namespace DocuPath.Controllers
             try
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "Media");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "INSIGHT Reporting");
+                #endregion
+
+                //model = new ReportingViewModel();
+                //model.query = new InsightQuery();
+                //model.query.allUsers = new List<InsightUser>();
+                //model.query.allActivityTypes = new List<ActivityType>();
+
+                //foreach (var item in db.USER)
+                //{
+                //    //if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
+                //    //{
+                //    InsightUser userToAdd = new InsightUser();
+                //    InsightUser.
+                //    model.query.allUsers.Add(new User { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
+                //    //}
+                //}
+
+                //model.query.reportToGenerate = 0;
+                //model.query.timeframeToTarget = 0;
+                //model.query.dateFrom = DateTime.Today;
+                //model.query.dateTo = DateTime.Today;
+                //model.query.suID = 0;
+                //model.query.uID = 0;
+                //model.query.activityTypeID = 0;
+
+                ReportingViewModel model = new ReportingViewModel();
+                
+                InsightQuery query = new InsightQuery();
+                query.reportToGenerate = -1;
+                query.reportTimeframe = -1;
+                query.reportDateFrom = null;
+                query.reportDateTo = null;
+                query.reportUsersSelector = -1;
+                query.reportActivitiesSelector = -1;
+                query.reportSuperuserSelector = -1;
+
+                model.iq = query;
+                model.users = db.USER.ToList();
+                model.superusers = db.USER.Where(u => u.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser").ToList();
+                model.activityTypes = db.AUDIT_TX_TYPE.ToList();
+                                                                
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
+                #endregion
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingFail, "Media");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
+        public ActionResult Insight(ReportingViewModel model)
+        {
+            string actionName = "Insight";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "INSIGHT Reporting");
                 #endregion
 
                 //model = new ReportingViewModel();
@@ -135,9 +200,9 @@ namespace DocuPath.Controllers
                 int userID = VERTEBRAE.getCurrentUser().UserID;
                 DateTime dateFrom = DateTime.Today.Date.AddDays(-7);
                 DateTime dateTo = DateTime.Today.Date;
-                model.activityTransactions = db.AUDIT_LOG.Where(x => x.UserID == userID && x.TxDateStamp > dateFrom && x.TxDateStamp < dateTo ).ToList();
+                model.activityTransactions = db.AUDIT_LOG.Where(x => x.UserID == userID && x.TxDateStamp > dateFrom && x.TxDateStamp < dateTo).ToList();
                 model.activityTransactions = model.activityTransactions.OrderByDescending(x => x.TxTimeStamp).ToList();
-                                
+
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
                 #endregion
@@ -151,6 +216,12 @@ namespace DocuPath.Controllers
                 VERTEBRAE.DumpErrorToTxt(x);
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
+        }
+
+        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
+        public ActionResult GenCODReport()
+        {
+
         }
     }
 }

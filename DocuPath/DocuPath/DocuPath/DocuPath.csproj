@@ -1254,6 +1254,7 @@
     <Content Include="Views\ForensicCase\ForensicCaseAdditionalEvidenceItems.cshtml" />
     <Content Include="Views\ForensicCase\ProvideSpecimens.cshtml" />
     <Content Include="Views\Scheduling\DisplayEvent.cshtml" />
+    <Content Include="Views\ForensicCase\CompileReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

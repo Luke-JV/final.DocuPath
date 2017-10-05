@@ -27,7 +27,7 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form class="minimalform" action="~/ForensicCase/CompileReport" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="~/ForensicCase/GenerateReport/@Model.forensicCase.ForensicCaseID" method="post" style="margin-top: 2px">
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-compilereport btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="COMPILE REPORT"></button>
                 </form>
             </div>
@@ -551,7 +551,7 @@
                                         <td>
                                             <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SR_@item.ServiceRequestID"></a></span>
                                             <div class="modal fade" id="SR_@item.ServiceRequestID" role="dialog">
-                                                <div class="modal-dialog" style="width:900px;height:auto;max-height:600px;">
+                                                <div class="modal-dialog" style="width:1100px;height:auto;max-height:600px;">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <div class="grid hdr-grid">
@@ -579,106 +579,112 @@
                                                             @*<button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                 <h4 class="modal-title">VIEW SERVICE REQUEST</h4>*@
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-horizontal border-generic form-generic nomarg">
-                                                                <div class="row" style="margin-left: 0px">
-                                                                    <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-                                                                        <div class="panel-group">
-                                                                            <div class="panel panel-default">
-                                                                                <div class="panel-heading">
-                                                                                    <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
-                                                                                    <span>SERVICE REQUEST DETAILS</span>
-                                                                                </div>
-                                                                                <div class="panel-body">
-                                                                                    <dl class="dl-horizontal-small">
-                                                                                        <dt>
-                                                                                            @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyName)
-                                                                                        </dt>
-
-                                                                                        <dd>
-                                                                                            @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyName)
-                                                                                        </dd>
-
-
-                                                                                        <dt style="padding-top: 5.2px">
-                                                                                            @Html.DisplayNameFor(model => item.ForensicCaseID)
-                                                                                        </dt>
-
-                                                                                        <dd class="large-identifier">
-                                                                                            @Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)
-                                                                                        </dd>
-                                                                                        <hr class="details-hr" />
-                                                                                        <dt>
-                                                                                            @Html.DisplayNameFor(model => item.REQUEST_TYPE.RequestTypeValue)
-                                                                                        </dt>
-
-                                                                                        <dd>
-                                                                                            @Html.DisplayFor(model => item.REQUEST_TYPE.RequestTypeValue)
-                                                                                        </dd>
-
-                                                                                        <dt>
-                                                                                            @Html.DisplayNameFor(model => item.RequestNote)
-                                                                                        </dt>
-
-                                                                                        <dd>
-                                                                                            @Html.DisplayFor(model => item.RequestNote)
-                                                                                        </dd>
-                                                                                        <hr class="details-hr" />
-                                                                                        <dt>
-                                                                                            @Html.DisplayNameFor(model => item.DateAdded)
-                                                                                        </dt>
-
-                                                                                        <dd>
-                                                                                            @Html.DisplayFor(model => item.DateAdded)
-                                                                                        </dd>
-
-                                                                                        <dt>
-                                                                                            @Html.DisplayNameFor(model => item.IsCancelled)
-                                                                                        </dt>
-                                                                                        @if (item.IsCancelled == true)
-                                                                                        {
-                                                                                            <dd class="status-inactive">Cancelled</dd>
-                                                                                        }
-                                                                                        else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
-                                                                                        {
-                                                                                            <dd class="status-danger">Active</dd>
-                                                                                        }
-                                                                                        else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
-                                                                                        {
-                                                                                            <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
-                                                                                        }
-                                                                                    </dl>
-                                                                                </div>
+                                                        <div class="modal-body" style="padding-bottom: 0">
+                                                            <ul class="nav nav-tabs">
+                                                                <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#SRSP-@item.ServiceRequestID">SERVICE REQUEST &amp; SPECIMEN DETAILS</a></li>
+                                                                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@item.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+                                                            </ul>
+                                                            <div class="tab-content">
+                                                                @* SR & SP *@
+                                                                <div id="SRSP-@item.ServiceRequestID" class="tab-pane fade in active nomarg" style="padding: 5px 0 0 0;">
+                                                                    <div class="panel-group">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                                                                                <span>SERVICE REQUEST DETAILS</span>
                                                                             </div>
-                                                                            <div class="panel panel-default">
-                                                                                <div class="panel-heading">
-                                                                                    <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
-                                                                                    <span>SPECIMEN DETAILS</span>
-                                                                                </div>
-                                                                                <div class="panel-body">
-                                                                                    <dl class="dl-horizontal-small">
-                                                                                        <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dt>
-                                                                                        <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
+                                                                            <div class="panel-body">
+                                                                                <dl class="dl-horizontal-small">
+                                                                                    <dt>
+                                                                                        @Html.DisplayNameFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                    </dt>
 
-                                                                                        <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dt>
-                                                                                        <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
-                                                                                        <hr class="details-hr" />
-                                                                                        <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
-                                                                                        <dd class="large-identifier">
-                                                                                            @VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
-                                                                                            @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
-                                                                                        </dd>
+                                                                                    <dd>
+                                                                                        @Html.DisplayFor(model => item.SERVICE_PROVIDER.CompanyName)
+                                                                                    </dd>
 
-                                                                                        <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
-                                                                                        <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
-                                                                                    </dl>
-                                                                                </div>
+
+                                                                                    <dt style="padding-top: 5.2px">
+                                                                                        @Html.DisplayNameFor(model => item.ForensicCaseID)
+                                                                                    </dt>
+
+                                                                                    <dd class="large-identifier">
+                                                                                        @Html.DisplayFor(model => item.FORENSIC_CASE.ForensicDRNumber)
+                                                                                    </dd>
+                                                                                    <hr class="details-hr" />
+                                                                                    <dt>
+                                                                                        @Html.DisplayNameFor(model => item.REQUEST_TYPE.RequestTypeValue)
+                                                                                    </dt>
+
+                                                                                    <dd>
+                                                                                        @Html.DisplayFor(model => item.REQUEST_TYPE.RequestTypeValue)
+                                                                                    </dd>
+
+                                                                                    <dt>
+                                                                                        @Html.DisplayNameFor(model => item.RequestNote)
+                                                                                    </dt>
+
+                                                                                    <dd>
+                                                                                        @Html.DisplayFor(model => item.RequestNote)
+                                                                                    </dd>
+                                                                                    <hr class="details-hr" />
+                                                                                    <dt>
+                                                                                        @Html.DisplayNameFor(model => item.DateAdded)
+                                                                                    </dt>
+
+                                                                                    <dd>
+                                                                                        @Html.DisplayFor(model => item.DateAdded)
+                                                                                    </dd>
+
+                                                                                    <dt>
+                                                                                        @Html.DisplayNameFor(model => item.IsCancelled)
+                                                                                    </dt>
+                                                                                    @if (item.IsCancelled == true)
+                                                                                    {
+                                                                                        <dd class="status-inactive">Cancelled</dd>
+                                                                                    }
+                                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                                                                                    {
+                                                                                        <dd class="status-danger">Active</dd>
+                                                                                    }
+                                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                                                                                    {
+                                                                                        <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
+                                                                                    }
+                                                                                </dl>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="panel panel-default" style="margin-bottom: 5px">
+                                                                            <div class="panel-heading">
+                                                                                <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                                                                                <span>SPECIMEN DETAILS</span>
+                                                                            </div>
+                                                                            <div class="panel-body">
+                                                                                <dl class="dl-horizontal-small">
+                                                                                    <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dt>
+                                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
+
+                                                                                    <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dt>
+                                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
+                                                                                    <hr class="details-hr" />
+                                                                                    <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
+                                                                                    <dd class="large-identifier">
+                                                                                        @VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
+                                                                                        @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
+                                                                                    </dd>
+
+                                                                                    <dt>@Html.DisplayNameFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
+                                                                                    <dd>@Html.DisplayFor(model => item.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
+                                                                                </dl>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                @* EXTERNAL REPORT *@
+                                                                <div id="EXTREP-@item.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
+                                                                    <embed src="~/@VERTEBRAE.GetUrl(@item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1065" type="text/pdf" />
+                                                                </div>
                                                             </div>
-                                                            @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.LegacyDocumentLocation)"></iframe>*@
                                                         </div>
                                                     </div>
                                                 </div>

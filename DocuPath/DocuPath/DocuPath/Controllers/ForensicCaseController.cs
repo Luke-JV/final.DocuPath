@@ -1,6 +1,7 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
 using DocuPath.Models.DPViewModels;
+using IronPdf;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -1695,8 +1696,57 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, "ForensicCase", "Details"));
             }
         }
+
+        [AuthorizeByAccessArea(AccessArea = "View Forensic Case - All Sections")]
+        public ActionResult GenerateReport(int id)
+        {
+            try
+            {
+
+                #region VALIDATE_ACCESS
+                bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
+                #endregion
+
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "Generate Forensic Case Report");
+                #endregion
+
+                //var PDF = HtmlToPdf.StaticRenderUrlAsPdf(new Uri("localhost:56640/ForensicCase/Details/"+id));
+                //return File(PDF.BinaryData, "application/pdf", "Wiki.Pdf"); 
+
+                IronPdf.HtmlToPdf Renderer = new IronPdf.HtmlToPdf();
+
+                // add a header to very page easily
+                Renderer.PrintOptions.FirstPageNumber = 1; // use 2 if a cover page will be
+                Renderer.PrintOptions.Header.DrawDividerLine = true;
+                Renderer.PrintOptions.Header.CenterText = "{url}";
+                Renderer.PrintOptions.Header.FontFamily = "Helvetica,Arial";
+                Renderer.PrintOptions.Header.FontSize = 12;
+                // add a footer too
+                Renderer.PrintOptions.Footer.DrawDividerLine = true;
+                Renderer.PrintOptions.Footer.FontFamily = "Arial";
+                Renderer.PrintOptions.Footer.FontSize = 10;
+                Renderer.PrintOptions.Footer.LeftText = "{date} {time}";
+                Renderer.PrintOptions.Footer.RightText = "{page} of {total-pages}";
+                var file = Renderer.RenderHtmlAsPdf("<h1>Hello World<h1>”).SaveAs(“html-string.pdf");
+
+                return File(file.BinaryData, "application/pdf", "test.pdf");
+
+                //return File(Renderer)
+
+                //return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingFail, "Generate Forensic Case Report");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, "ForensicCase", "Details"));
+            }
+        }
         #endregion
-//----------------------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------------------//
         #region UPDATES:
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]
         public ActionResult Edit(int id)

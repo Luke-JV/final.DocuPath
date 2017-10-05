@@ -4496,7 +4496,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .nav-tabs > li.active > a {
-  color: #fff;
+  color: #fff !important;
   cursor: auto !important;
   background: rgba(174, 31, 31, 1);
   /*border: 1px solid #dddddd;*/
@@ -8030,7 +8030,7 @@ td.visible-print {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
-    color: #fff;
+    color: #fff !important;
     border-bottom: 1px solid transparent;
     background-color: #999;
     transition: 1s all !important;
@@ -8038,6 +8038,10 @@ td.visible-print {
     border-top-right-radius: 15px !important;
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
+}
+
+a .dynamic-tab-heading{
+    color: #fff !important;
 }
 
 .dynamic-tab-heading:not(:first-child):not(:last-child):before{
@@ -8926,7 +8930,7 @@ td.visible-print {
     padding-bottom: 2px;
     color: #333333;
     padding-left: 5px;
-    background-color: #cccccc;
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid transparent;
     cursor: pointer;
 }
@@ -8934,8 +8938,8 @@ td.visible-print {
 .modal-help-panel {
     margin: 0 5px 5px 5px;
     background-color: #999;
-    border: 1px solid #999 !important;
-    border-radius: 4px;
+    /*border: 1px solid #999 !important;*/
+    border-radius: 4px !important;
     /*-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);*/
 }
@@ -8982,6 +8986,41 @@ td.visible-print {
     margin-bottom: 2.5px;
 }
 
+idntwarn{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #EEA236;
+    letter-spacing: 1px;
+}
+
+idntsucc{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #468847;
+    letter-spacing: 1px;
+}
+
+idnterr{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #ED7D31;
+    letter-spacing: 1px;
+}
+
+idntfail{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #b94a48;
+    letter-spacing: 1px;
+}
+
+idntinfo{
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #428bca;
+    letter-spacing: 1px;
+}
+
 .modal-help-hr-error {
     border: 1px solid;
     border-color: #d9534f;
@@ -9017,8 +9056,9 @@ td.visible-print {
 .modalbox-button-bar {
     margin-top: 5px;
     /*border: 1px solid white;*/
-    border-radius: 4px;
-    height: 45px;
+    border-top-left-radius: 7.5px !important;
+    border-top-right-radius: 7.5px !important;
+    height: 49px !important;
     margin-bottom: 0px;
     background-color: rgba(255, 255, 255, 0.15);
 }
@@ -9028,7 +9068,7 @@ td.visible-print {
     font-size:16px;
     background-color: #333333;
     color: #fff;
-    margin-top: 5px;
+    margin-top: 6.8px;
     margin-right: 0px;
     border-color: #cccccc;
 }
@@ -9041,9 +9081,17 @@ td.visible-print {
     border-color: #cccccc;
 }
 
+.txt-motivation{
+    width: 402px !important;
+    margin-top: 6.8px !important;
+    margin-right: 5px !important;
+    height: 36.4px !important;
+    border-top-right-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+}
+
 .modal-btn-col {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 0 5px;
     height: 50px;
     text-align: right;
 }

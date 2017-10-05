@@ -102,7 +102,10 @@
 
 @section Scripts{
 <script id="onDomReady" type="text/javascript">
-        $(document).ready(function () {
+    $(document).ready(function () {
+        // Shortcuts:
+        shortcut.add("Ctrl+K", function () { document.getElementById('CORTEXheading').modal('show'); });
+
             // Enable tooltips:
             $('[data-toggle="tooltip"]').tooltip();
 

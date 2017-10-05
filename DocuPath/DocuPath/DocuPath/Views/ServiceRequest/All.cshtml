@@ -18,27 +18,26 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-five">
+        <div class="page-buttons-subgrid buttons-three">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
-            <div grid-area="btn1">
+            @*<div grid-area="btn1">
                 <form class="minimalform" action="~/ServiceRequest/Add" style="margin-top: 2px">
-                    @* TODO: Link form action to ADD SR *@
                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" onclick="this.blur()" data-toggle="tooltip" title="ADD SERVICE REQUEST"></button>
+                </form>
+            </div>
+            <div grid-area="btn2">
+                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+            </div>*@
+            <div grid-area="btn1">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
                 </form>
             </div>
             <div grid-area="btn2">
                 <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
             </div>
             <div grid-area="btn3">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnDensityToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-density btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="TOGGLE TABLE DENSITY"></button>
-                </form>
-            </div>
-            <div grid-area="btn4">
-                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
-            </div>
-            <div grid-area="btn5">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
@@ -67,6 +66,10 @@
             <th data-column-id="serialNum" data-formatter="serial" class="colour-dpred">
                 @*@Html.DisplayNameFor(model => model.RequestNote)*@
                 @Html.DisplayName("Raw Serial/Seal Number")
+            </th>
+            <th data-column-id="relCase" data-formatter="drnum" class="colour-dpred">
+                @*@Html.DisplayNameFor(model => model.RequestNote)*@
+                @Html.DisplayName("Related Forensic Case")
             </th>
             @*<th data-column-id="specimenID" class="colour-dpred">
                 @Html.DisplayName("Specimen Serial Number")
@@ -111,6 +114,9 @@
                         @Html.DisplayFor(modelitem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
                     </td>*@
                     <td>
+                        @Html.DisplayFor(modelItem => item.FORENSIC_CASE.ForensicDRNumber)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
                 </tr>
@@ -135,6 +141,9 @@
                         @*@Html.DisplayFor(modelItem => item.RequestNote)*@
                         @*@VERTEBRAE.ChunkString(item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")*@
                         @Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
+                    </td>
+                    <td>
+                        @item.FORENSIC_CASE.ForensicDRNumber
                     </td>
                     @*<td>
                         @Html.DisplayFor(modelitem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)
@@ -176,6 +185,9 @@
                  },
                 "serial": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                     return "<span class=\"table-large-identifier\">"+ row.serialNum + "</span>";
+                },
+                "drnum": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
+                    return "<span class=\"table-large-identifier\">" + row.relCase + "</span>";
                 }
             }
         });
