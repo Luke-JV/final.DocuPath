@@ -26,6 +26,7 @@ namespace DocuPath.DataLayer
         [DisplayName("ID")]
         public int ExternalReportID { get; set; }
         [DisplayName("Date Received")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime DateReceived { get; set; }
         [DisplayName("Date Captured")]
         public System.DateTime DateCaptured { get; set; }

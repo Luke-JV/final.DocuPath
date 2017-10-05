@@ -16,6 +16,7 @@ namespace DocuPath.Controllers
     //[LogAction]
     public class ServiceRequestController : Controller
     {
+        string controllerName = "ServiceRequest";
         DocuPathEntities db = new DocuPathEntities();
 
         [AuthorizeByAccessArea(AccessArea = "Search Service Request")]
@@ -219,6 +220,22 @@ namespace DocuPath.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Link External Report To Service Request")]
+        public ActionResult LinkExternalReport(LinkERToSRViewModel model)
+        {
+            if (model.targetER.ExternalReportID > 0)
+            {
+                SERVICE_REQUEST req = db.SERVICE_REQUEST.Where(x => x.ServiceRequestID == model.targetSR.ServiceRequestID).FirstOrDefault();
+                req.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT = db.EXTERNAL_REPORT.Where(x=>x.ExternalReportID == model.targetER.ExternalReportID).FirstOrDefault();
+                db.SERVICE_REQUEST.Attach(req);
+                db.Entry(req).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            
+            
+            return RedirectToAction("All");
+        }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Link External Report To Service Request")]
@@ -311,7 +328,94 @@ namespace DocuPath.Controllers
         //----------------------------------------------------------------------------------------------//
 
         #region NON-CRUD ACTIONS:
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Link External Report To Service Request")]
+        public ActionResult UploadFiles()
+        {
+            string actionName = "UploadFiles";
+            
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Service Request - External Report");
+                #endregion
+                // Checking no of files injected in Request object  
+                if (Request.Files.Count > 0)
+                {
+                    try
+                    {
+                        //  Get all files from Request object  
+                        HttpFileCollectionBase files = Request.Files;
+                        string foldername = Request.Form.Get("SRID");
+                        DateTime received = Convert.ToDateTime(Request.Form.Get("received"));
+                        string rootpath = VERTEBRAE.EXT_REPORT_REPORootPath;
+                        for (int i = 0; i < files.Count; i++)
+                        {
+                        EXTERNAL_REPORT rep = new EXTERNAL_REPORT();
+                            //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                            //string filename = Path.GetFileName(Request.Files[i].FileName);  
 
+                            HttpPostedFileBase file = files[i];
+                            string fname;
+
+                            // Checking for Internet Explorer  
+                            if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                            {
+                                string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                                fname = testfiles[testfiles.Length - 1];
+                            }
+                            else
+                            {
+                                fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                                //fname = file.FileName;
+                                //fname = VERTEBRAE.RenameFileForStorage() 404;
+                            }
+
+                            // Get the complete folder path and store the file inside it.  
+                            fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                            bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                            if (!exists)
+                                System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+
+                            file.SaveAs(fname);
+                            rep.ExternalReportLocation = fname;
+                            rep.ExternalReportID = db.EXTERNAL_REPORT.Max(x => x.ExternalReportID) + 1;
+                            rep.DateCaptured = DateTime.Now;
+                            rep.DateReceived = received;
+                            db.EXTERNAL_REPORT.Add(rep);
+                            db.SaveChanges();
+
+                            int srid = Convert.ToInt32(foldername);
+                            SERVICE_REQUEST req = db.SERVICE_REQUEST.Where(x=>x.ServiceRequestID == srid).FirstOrDefault();
+                            req.SPECIMEN.FirstOrDefault().ExternalReportID = rep.ExternalReportID;
+                            db.SERVICE_REQUEST.Attach(req);
+                            db.Entry(req).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        //add logic here
+                        // Returns message that successfully uploaded  
+                        return Json("File Uploaded Successfully!");
+                    }
+                    catch (Exception ex)
+                    {
+                        return Json("Error occurred. Error details: " + ex.Message);
+                    }
+                }
+                else
+                {
+                    return Json("No files selected.");
+                }
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Service Request - External Report");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
         #endregion
     }
 }
