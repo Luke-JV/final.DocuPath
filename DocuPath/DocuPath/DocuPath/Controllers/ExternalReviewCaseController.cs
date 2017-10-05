@@ -361,6 +361,159 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update External Review Case")]
+        public ActionResult UpdateERFiles()
+        {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            #endregion
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                   EXTERNAL_REVIEW_CASE EC = new EXTERNAL_REVIEW_CASE();
+
+                   
+                    string foldername = Request.Form.Get("ECDR");
+                    EC = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalDRNumber == foldername).FirstOrDefault();
+
+                    string rootpath = VERTEBRAE.ERC_REPORootPath;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //LEGACY_DOCUMENT doc = new LEGACY_DOCUMENT();
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        string title;
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {//404!?
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            title = testfiles[testfiles.Length - 1];
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                        }
+                        else
+                        {
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            title = file.FileName;
+
+                        }
+
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                        bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+                        EC.ExtCaseReportLocation = fname;
+                        
+                        file.SaveAs(fname);
+                    }
+                    db.EXTERNAL_REVIEW_CASE.Attach(EC);
+                    db.Entry(EC).State = EntityState.Modified;
+                    db.SaveChanges();
+                    // Returns message that successfully uploaded  
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Legacy Case");
+                    #endregion
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Legacy Case");
+                    #endregion
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
+
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Update External Review Case")]
+        public ActionResult UpdateCLFiles()
+        {
+            #region AUDIT_WRITE
+            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            #endregion
+            // Checking no of files injected in Request object  
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    //  Get all files from Request object  
+                    HttpFileCollectionBase files = Request.Files;
+                    EXTERNAL_REVIEW_CASE EC = new EXTERNAL_REVIEW_CASE();
+
+
+                    string foldername = Request.Form.Get("ECDR");
+                    EC = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalDRNumber == foldername).FirstOrDefault();
+
+                    string rootpath = VERTEBRAE.ERC_REPORootPath;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //LEGACY_DOCUMENT doc = new LEGACY_DOCUMENT();
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        string title;
+                        // Checking for Internet Explorer  
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {//404!?
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            title = testfiles[testfiles.Length - 1];
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                        }
+                        else
+                        {
+                            fname = DateTime.Now.ToString("ddMMyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
+                            title = file.FileName;
+
+                        }
+
+                        // Get the complete folder path and store the file inside it.  
+                        fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+                        bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
+
+                        if (!exists)
+                            System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
+                        EC.CoverLetterLocation = fname;
+
+                        file.SaveAs(fname);
+                    }
+                    db.EXTERNAL_REVIEW_CASE.Attach(EC);
+                    db.Entry(EC).State = EntityState.Modified;
+                    db.SaveChanges();
+                    // Returns message that successfully uploaded  
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Legacy Case");
+                    #endregion
+                    return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    #region AUDIT_WRITE
+                    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadFail, "Legacy Case");
+                    #endregion
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
 
         #endregion
     }
