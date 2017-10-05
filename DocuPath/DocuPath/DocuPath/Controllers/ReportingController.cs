@@ -218,10 +218,10 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
-        public ActionResult GenCODReport()
-        {
+        //[AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
+        //public ActionResult GenCODReport()
+        //{
 
-        }
+        //}
     }
 }
