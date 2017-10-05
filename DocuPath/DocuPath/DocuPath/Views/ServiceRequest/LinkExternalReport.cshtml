@@ -121,7 +121,7 @@
 
                 @* REPORT SELECTOR *@
                 <div class="panel panel-default nomarg">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#ExistingReportPanel" data-parent="#LinkExternalReportAccordion" style="cursor: pointer">
+                    <div class="panel-heading">
                         <span class="mdl2icon mdl2-link panel-mdl2icon"></span>
                         <span>SELECT EXISTING EXTERNAL REPORT TO LINK</span>
                     </div>
@@ -162,6 +162,18 @@
                 fileActionSettings: {
                     showUpload: false
                 },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['pdf']
             });
 
             $('#btnSave').click(function () {

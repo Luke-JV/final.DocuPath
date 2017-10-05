@@ -194,22 +194,6 @@ namespace DocuPath.Controllers
                 model.targetER = report;
                 model.existingERList = existingReports;
 
-                //List<SelectListItem> selectExistingReports = new List<SelectListItem>();
-
-                //selectExistingReports.Add(new SelectListItem { Value = "0", Text = "Select an Existing External Report..." });
-                //selectExistingReports.Add(new SelectListItem { Value = "1", Text = "'NHLSreport.PDF' added by 'John Smith' on 29 Mar 2017 09:39:14" });
-                //selectExistingReports.Add(new SelectListItem { Value = "2", Text = "'AmpathReport.PDF' added by 'Jane Smith' on 2 Apr 2017 08:35:54" });
-                //selectExistingReports.Add(new SelectListItem { Value = "3", Text = "'LancetReport.PDF' added by 'Jeff Peters' on 10 Apr 2017 10:29:19" });
-                //selectExistingReports.Add(new SelectListItem { Value = "4", Text = "'Vermaak&VennoteReport.PDF' added by 'Peter Jefferson' on 11 Apr 2017 12:32:11" });
-                //selectExistingReports.Add(new SelectListItem { Value = "5", Text = "'AmpathReport.PDF' added by 'Sam Brown' on 15 Apr 2017 06:52:11" });
-                //selectExistingReports.Add(new SelectListItem { Value = "6", Text = "'NHLSReport.PDF' added by 'Bronwyn Samuel' on 18 Apr 2017 09:42:24" });
-                //selectExistingReports.Add(new SelectListItem { Value = "7", Text = "'Vermaak&VennoteReport.PDF' added by 'Felicia Bye' on 21 Apr 2017 14:21:16" });
-
-                //ViewBag.ExistingReports = selectExistingReports;
-                //ViewBag.DateReceivedDefault = "20 Apr 2017 09:25:36";
-                //ViewBag.DateCapturedDefault = System.DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
-
-
                 return View(model);
             }
             catch (Exception)
@@ -356,7 +340,7 @@ namespace DocuPath.Controllers
                             //string filename = Path.GetFileName(Request.Files[i].FileName);  
 
                             HttpPostedFileBase file = files[i];
-                            string fname;
+                            string fname = file.FileName;
 
                             // Checking for Internet Explorer  
                             if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
@@ -364,25 +348,19 @@ namespace DocuPath.Controllers
                                 string[] testfiles = file.FileName.Split(new char[] { '\\' });
                                 fname = testfiles[testfiles.Length - 1];
                             }
-                            else
-                            {
-                                fname = DateTime.Now.ToString("ddmmyyyy_HHmmss") + "_" + i.ToString() + file.FileName.Substring(file.FileName.IndexOf('.'));
-                                //fname = file.FileName;
-                                //fname = VERTEBRAE.RenameFileForStorage() 404;
-                            }
-
+                           
                             // Get the complete folder path and store the file inside it.  
                             fname = Path.Combine(Server.MapPath(rootpath + foldername), fname);
+
                             bool exists = System.IO.Directory.Exists(Server.MapPath(rootpath + foldername));
 
                             if (!exists)
                                 System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
 
-                            file.SaveAs(fname);
-                            rep.ExternalReportLocation = fname;
                             rep.ExternalReportID = db.EXTERNAL_REPORT.Max(x => x.ExternalReportID) + 1;
                             rep.DateCaptured = DateTime.Now;
                             rep.DateReceived = received;
+                            rep.ExternalReportLocation = fname;
                             db.EXTERNAL_REPORT.Add(rep);
                             db.SaveChanges();
 
@@ -392,6 +370,7 @@ namespace DocuPath.Controllers
                             db.SERVICE_REQUEST.Attach(req);
                             db.Entry(req).State = EntityState.Modified;
                             db.SaveChanges();
+                            file.SaveAs(fname);
                         }
                         //add logic here
                         // Returns message that successfully uploaded  
