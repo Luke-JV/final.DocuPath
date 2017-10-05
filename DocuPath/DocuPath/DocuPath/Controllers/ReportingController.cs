@@ -80,45 +80,141 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "INSIGHT Reporting");
                 #endregion
 
-                //model = new ReportingViewModel();
-                //model.query = new InsightQuery();
-                //model.query.allUsers = new List<InsightUser>();
-                //model.query.allActivityTypes = new List<ActivityType>();
-
-                //foreach (var item in db.USER)
-                //{
-                //    //if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
-                //    //{
-                //    InsightUser userToAdd = new InsightUser();
-                //    InsightUser.
-                //    model.query.allUsers.Add(new User { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
-                //    //}
-                //}
-
-                //model.query.reportToGenerate = 0;
-                //model.query.timeframeToTarget = 0;
-                //model.query.dateFrom = DateTime.Today;
-                //model.query.dateTo = DateTime.Today;
-                //model.query.suID = 0;
-                //model.query.uID = 0;
-                //model.query.activityTypeID = 0;
+                DateTime TODAY = DateTime.Today;
+                DateTime TODAY_MIDN = TODAY.AddDays(1).AddMilliseconds(-1);
+                var YESTERDAY = TODAY_MIDN.AddDays(-1);
+                var LAST_WEEK = TODAY_MIDN.AddDays(-7);
+                var LAST_MONTH = TODAY_MIDN.AddDays(-30);
 
                 ReportingViewModel model = new ReportingViewModel();
                 
+                //QUERY
                 InsightQuery query = new InsightQuery();
-                query.reportToGenerate = -1;
-                query.reportTimeframe = -1;
-                query.reportDateFrom = null;
-                query.reportDateTo = null;
+                query.reportToGenerate = 0;
+                query.reportTimeframe = 0;
+                query.reportDateFrom = DateTime.Now;
+                query.reportDateTo = DateTime.Now;
                 query.reportUsersSelector = -1;
                 query.reportActivitiesSelector = -1;
                 query.reportSuperuserSelector = -1;
-
                 model.iq = query;
-                model.users = db.USER.ToList();
-                model.superusers = db.USER.Where(u => u.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser").ToList();
-                model.activityTypes = db.AUDIT_TX_TYPE.ToList();
-                                                                
+                //USERS
+                List<UserFullKVP> userKVPList = new List<UserFullKVP>();
+                foreach (var user in db.USER)
+                {
+                    UserFullKVP userToAdd = new UserFullKVP();
+                    userToAdd.uId = user.UserID;
+                    userToAdd.uNameSurname = user.FirstName + " " + user.LastName;
+                    userKVPList.Add(userToAdd);
+                }
+                model.users = userKVPList;
+                //SUPERUSERS
+                List<UserFullKVP> superuserKVPList = new List<UserFullKVP>();
+                foreach (var user in db.USER.Where(u => u.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser"))
+                {
+                    UserFullKVP superuserToAdd = new UserFullKVP();
+                    superuserToAdd.uId = user.UserID;
+                    superuserToAdd.uNameSurname = user.FirstName + " " + user.LastName;
+                    superuserKVPList.Add(superuserToAdd);
+                }
+                model.superusers = superuserKVPList;
+                //ACTIVITY TYPES
+                List<ActivityKVP> activityKVPList = new List<ActivityKVP>();
+                ActivityKVP allTypes = new ActivityKVP();
+                allTypes.aId = 999;
+                allTypes.aDesc = "All Activity Types";
+                activityKVPList.Add(allTypes);
+                foreach (var activityType in db.AUDIT_TX_TYPE)
+                {
+                    ActivityKVP typeToAdd = new ActivityKVP();
+                    typeToAdd.aId = activityType.AuditLogTxTypeID;
+                    typeToAdd.aDesc = activityType.TypeValue;
+                    activityKVPList.Add(typeToAdd);
+                }
+                model.activityTypes = activityKVPList;
+                //REPORTS
+                List<ReportKVP> reportsKVPList = new List<ReportKVP>();
+                ReportKVP cod = new ReportKVP();
+                cod.reportID = 1;
+                cod.reportPhrase = "Generate Cause Of Death Report";
+                reportsKVPList.Add(cod);
+
+                ReportKVP mod = new ReportKVP();
+                mod.reportID = 2;
+                mod.reportPhrase = "Generate Manner Of Death Report";
+                reportsKVPList.Add(mod);
+
+                ReportKVP soi = new ReportKVP();
+                soi.reportID = 3;
+                soi.reportPhrase = "Generate Scene Of Injury Report";
+                reportsKVPList.Add(soi);
+
+                ReportKVP outSR = new ReportKVP();
+                outSR.reportID = 4;
+                outSR.reportPhrase = "Generate Outstanding Service Request Report";
+                reportsKVPList.Add(outSR);
+
+                ReportKVP newMedia = new ReportKVP();
+                newMedia.reportID = 5;
+                newMedia.reportPhrase = "Generate New Media Report";
+                reportsKVPList.Add(newMedia);
+
+                ReportKVP SUoverride = new ReportKVP();
+                SUoverride.reportID = 6;
+                SUoverride.reportPhrase = "Generate Superuser Override Report";
+                reportsKVPList.Add(SUoverride);
+
+                ReportKVP caseDuration = new ReportKVP();
+                caseDuration.reportID = 7;
+                caseDuration.reportPhrase = "Generate Case Duration Report";
+                reportsKVPList.Add(caseDuration);
+
+                ReportKVP userActivity = new ReportKVP();
+                userActivity.reportID = 8;
+                userActivity.reportPhrase = "Generate User Activity Report";
+                reportsKVPList.Add(userActivity);
+
+                model.reports = reportsKVPList;
+
+                //TIMEFRAMES
+                List<TimeframeKVP> timeframesKVPList = new List<TimeframeKVP>();
+                TimeframeKVP today = new TimeframeKVP();
+                today.tfId = 1;
+                today.tfPhrase = "Today";
+                today.tfStartValue = TODAY;
+                today.tfEndValue = TODAY_MIDN;
+                timeframesKVPList.Add(today);
+
+                TimeframeKVP yesterday = new TimeframeKVP();
+                yesterday.tfId = 2;
+                yesterday.tfPhrase = "Yesterday";
+                yesterday.tfStartValue = TODAY;
+                yesterday.tfEndValue = YESTERDAY;
+                timeframesKVPList.Add(yesterday);
+
+                TimeframeKVP thisweek = new TimeframeKVP();
+                thisweek.tfId = 3;
+                thisweek.tfPhrase = "This Week";
+                thisweek.tfStartValue = TODAY_MIDN;
+                thisweek.tfEndValue = TODAY_MIDN.AddDays(-7);
+                timeframesKVPList.Add(thisweek);
+
+                TimeframeKVP lastweek = new TimeframeKVP();
+                lastweek.tfId = 4;
+                lastweek.tfPhrase = "Last Week";
+                lastweek.tfStartValue = TODAY_MIDN.AddDays(-7);
+                lastweek.tfEndValue = TODAY_MIDN.AddDays(-14);
+                timeframesKVPList.Add(lastweek);
+
+                TimeframeKVP custom = new TimeframeKVP();
+                custom.tfId = 5;
+                custom.tfPhrase = "Custom Timeframe";
+                custom.tfStartValue = TODAY;
+                custom.tfEndValue = TODAY_MIDN;
+                timeframesKVPList.Add(custom);
+
+                model.timeframes = timeframesKVPList;
+
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
                 #endregion
@@ -144,29 +240,6 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "INSIGHT Reporting");
                 #endregion
-
-                //model = new ReportingViewModel();
-                //model.query = new InsightQuery();
-                //model.query.allUsers = new List<InsightUser>();
-                //model.query.allActivityTypes = new List<ActivityType>();
-
-                //foreach (var item in db.USER)
-                //{
-                //    //if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
-                //    //{
-                //    InsightUser userToAdd = new InsightUser();
-                //    InsightUser.
-                //    model.query.allUsers.Add(new User { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
-                //    //}
-                //}
-
-                //model.query.reportToGenerate = 0;
-                //model.query.timeframeToTarget = 0;
-                //model.query.dateFrom = DateTime.Today;
-                //model.query.dateTo = DateTime.Today;
-                //model.query.suID = 0;
-                //model.query.uID = 0;
-                //model.query.activityTypeID = 0;
 
                 return null;
             }

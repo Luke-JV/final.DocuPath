@@ -129,6 +129,11 @@ kbdicon > .mdl2icon {
     color: rgba(174,31,31,1) !important;
 }
 
+.grn{
+    background-color: #c7fcc9 !important;
+    color: #468847 !important;
+}
+
 pre {
   white-space: pre-wrap;
 }
@@ -5718,12 +5723,12 @@ a.thumbnail:focus {
     color: #ffffff;
     background-color: #5cb85c;
     border-color: #4cae4c;
-}*/
+}
 .alert-bar-danger {
     color: #ffffff;
-    background-color: #ae1f1f;
-    border-color: rgba(174, 31, 31, 1);
-}
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}*/
 .alert-bar-info {
     color: #ffffff;
     background-color: #428bca;
@@ -10823,32 +10828,7 @@ a.cal-event-week {
     font-weight: normal;
     text-transform: uppercase !important;
     transition: 1s all;
-    /*line-height: 2px;*/
-}
-
-.validation-bar-danger {
-    color: rgba(174, 31, 31, 1);
-    background-color: #999;
-    border-color: rgba(174, 31, 31, 1);
-    width: 100%;
-    height: auto;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 1.428571429;
-    text-align: left;
-    white-space: nowrap;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    line-height: 2px;
 }
 
 .haptic-ul {
