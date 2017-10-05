@@ -1731,7 +1731,8 @@ namespace DocuPath.Controllers
                 Renderer.PrintOptions.Footer.FontFamily = "Arial";
                 Renderer.PrintOptions.Footer.FontSize = 10;
                 Renderer.PrintOptions.Footer.LeftText = "{date} {time}";
-                Renderer.PrintOptions.Footer.RightText = "{page} of {total-pages}";
+                Renderer.PrintOptions.Footer.RightText = "{page} of {total-pages}";
+
                 var file = Renderer.RenderHtmlAsPdf("<h1>Hello World<h1>”).SaveAs(“html-string.pdf");
 
                 return File(file.BinaryData, "application/pdf", "test.pdf");

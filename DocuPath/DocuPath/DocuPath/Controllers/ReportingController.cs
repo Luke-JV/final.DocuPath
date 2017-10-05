@@ -168,45 +168,7 @@ namespace DocuPath.Controllers
                 //model.query.uID = 0;
                 //model.query.activityTypeID = 0;
 
-                List<SelectListItem> selectSuperusers = new List<SelectListItem>();
-                List<SelectListItem> selectUsers = new List<SelectListItem>();
-                List<SelectListItem> selectActivityTypes = new List<SelectListItem>();
-
-                selectSuperusers.Add(new SelectListItem { Value = "0", Text = "Select a Superuser..." });
-                foreach (var item in db.USER)
-                {
-                    if (item.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
-                    {
-                        selectSuperusers.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
-                    }
-                }
-                ViewBag.Superusers = selectSuperusers;
-
-                selectUsers.Add(new SelectListItem { Value = "0", Text = "Select a User..." });
-                foreach (var item in db.USER)
-                {
-                    selectUsers.Add(new SelectListItem { Value = item.UserID.ToString(), Text = item.FirstName + " " + item.LastName });
-                }
-                ViewBag.Users = selectUsers;
-
-                selectActivityTypes.Add(new SelectListItem { Value = "0", Text = "Select an Activity Type..." });
-                selectActivityTypes.Add(new SelectListItem { Value = "1", Text = "All Activity Types" });
-                foreach (var item in db.AUDIT_TX_TYPE)
-                {
-                    selectActivityTypes.Add(new SelectListItem { Value = (item.AuditLogTxTypeID + 1).ToString(), Text = item.TypeValue });
-                }
-                ViewBag.ActivityTypes = selectActivityTypes;
-                ReportingViewModel model = new ReportingViewModel();
-                int userID = VERTEBRAE.getCurrentUser().UserID;
-                DateTime dateFrom = DateTime.Today.Date.AddDays(-7);
-                DateTime dateTo = DateTime.Today.Date;
-                model.activityTransactions = db.AUDIT_LOG.Where(x => x.UserID == userID && x.TxDateStamp > dateFrom && x.TxDateStamp < dateTo).ToList();
-                model.activityTransactions = model.activityTransactions.OrderByDescending(x => x.TxTimeStamp).ToList();
-
-                #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingSuccess, "Media");
-                #endregion
-                return View(model);
+                return null;
             }
             catch (Exception x)
             {
@@ -218,10 +180,10 @@ namespace DocuPath.Controllers
             }
         }
 
-        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
-        public ActionResult GenCODReport()
-        {
+        //[AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
+        //public ActionResult GenCODReport()
+        //{
 
-        }
+        //}
     }
 }
