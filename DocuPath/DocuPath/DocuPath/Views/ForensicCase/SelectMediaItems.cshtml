@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-three">
+        <div class="page-buttons-subgrid buttons-four">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             @*<div grid-area="btn1">
@@ -43,9 +43,20 @@
                     <button id="btnCancel" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" type="submit" data-toggle="tooltip" title="CANCEL ADD"></button>
                 </form>
             </div>*@
-            <div grid-area="btn1">
+            @{
+                if (ViewBag.Instruction != "UPDATE")
+                {
+                    <div grid-area="btn1">
+                        <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                            <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD"></button>
+                        </form>
+                    </div>
+                }
+            }
+            
+            <div grid-area="btn2">
                 <form class="minimalform" action="javascript:void(0)"  style="margin-top: 2px">
-                    <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                    <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
             <div grid-area="btn2">
