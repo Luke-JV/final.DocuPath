@@ -41,7 +41,113 @@
 </div>
 @* DETAILS OF SELECTED SERVICE REQUEST & RELATED SPECIMEN: *@
 <div class="form-horizontal border-generic form-generic">
-    <div class="row" style="margin-left: 0px">
+    <ul class="nav nav-tabs">
+        <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#SRSP-@Model.ServiceRequestID">SERVICE REQUEST &amp; SPECIMEN DETAILS</a></li>
+        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@Model.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+    </ul>
+    <div class="tab-content">
+        @* SR & SP *@
+        <div id="SRSP-@Model.ServiceRequestID" class="tab-pane fade in active nomarg" style="padding: 5px 0 0 0;">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-servicerequest panel-mdl2icon"></span>
+                        <span>SERVICE REQUEST DETAILS</span>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.SERVICE_PROVIDER.CompanyName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.SERVICE_PROVIDER.CompanyName)
+                            </dd>
+
+
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.ForensicCaseID)
+                            </dt>
+
+                            <dd class="large-identifier">
+                                @Html.DisplayFor(model => model.FORENSIC_CASE.ForensicDRNumber)
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.REQUEST_TYPE.RequestTypeValue)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.REQUEST_TYPE.RequestTypeValue)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.RequestNote)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.RequestNote)
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DateAdded)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DateAdded)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.IsCancelled)
+                            </dt>
+                            @if (Model.IsCancelled == true)
+                            {
+                                <dd class="status-inactive">Cancelled</dd>
+                            }
+                            else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                            {
+                                <dd class="status-danger">Active</dd>
+                            }
+                            else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                            {
+                                <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel panel-default" style="margin-bottom: 0">
+                    <div class="panel-heading">
+                        <span class="mdl2icon mdl2-specimen panel-mdl2icon"></span>
+                        <span>SPECIMEN DETAILS</span>
+                    </div>
+                    <div class="panel-body">
+                        <dl class="dl-horizontal-small">
+                            <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().InvestigationRequired)</dt>
+                            <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().InvestigationRequired)</dd>
+
+                            <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenNature)</dt>
+                            <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenNature)</dd>
+                            <hr class="details-hr" />
+                            <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
+                            <dd class="large-identifier">
+                                @VERTEBRAE.ChunkString(Model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
+                                @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
+                            </dd>
+
+                            <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
+                            <dd>@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* EXTERNAL REPORT *@
+        <div id="EXTREP-@Model.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
+            <embed src="~/@VERTEBRAE.GetUrl(@Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1125" type="text/pdf" />
+        </div>
+    </div>
+
+    @*<div class="row" style="margin-left: 0px">
         <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
             <div class="panel-group">
                 <div class="panel panel-default">
@@ -106,7 +212,7 @@
                                 }
                                 else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
                                 {
-                                    <dd><span class="status-ok">Closed</span> - External Report Available @Html.Raw("<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ServiceRequest/ViewExternalReport/" + Model.SPECIMEN.FirstOrDefault().ExternalReportID + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>")</dd>
+                                    <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
                                 }
 
                                 @*<dt>
@@ -123,7 +229,7 @@
 
                                     <dd>
                                         @Html.DisplayFor(model => model.IsClosed)
-                                    </dd>*@
+                                    </dd>
                             </dl>
                         </div>
                     </div>
@@ -145,7 +251,6 @@
                                 <dt style="padding-top: 5.2px">@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</dt>
                                 <dd class="large-identifier">
                                     @VERTEBRAE.ChunkString(Model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber, 5, " ")
-                                    @*@Html.DisplayFor(model => model.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)*@
                                 </dd>
 
                                 <dt>@Html.DisplayNameFor(model => model.SPECIMEN.FirstOrDefault().DisposalMechanism)</dt>
@@ -156,7 +261,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 </div>
 
 @section Scripts {

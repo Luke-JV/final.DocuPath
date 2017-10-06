@@ -5723,12 +5723,12 @@ a.thumbnail:focus {
     color: #ffffff;
     background-color: #5cb85c;
     border-color: #4cae4c;
-}
+}*/
 .alert-bar-danger {
     color: #ffffff;
-    background-color: #5cb85c;
-    border-color: #4cae4c;
-}*/
+    background-color: rgba(174, 23, 23, 1);
+    border-color: #b94a48;
+}
 .alert-bar-info {
     color: #ffffff;
     background-color: #428bca;
@@ -13326,8 +13326,8 @@ a.cal-event-week {
 
 .insight-actions-subgrid {
     grid-gap: 5px;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "generate download";
+    grid-template-columns: 1fr;
+    /*grid-template-areas: "generate download";*/
 }
 
 .insight-subgrid .form-group:before {

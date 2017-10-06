@@ -49,7 +49,16 @@ namespace DocuPath.Controllers
                 #endregion
 
                 ExternalReviewCaseViewModel model = new ExternalReviewCaseViewModel();
-                model.users = db.USER.ToList();
+
+                List<UserFullKVP> userList = new List<UserFullKVP>();
+                foreach (var user in db.USER)
+                {
+                    UserFullKVP userToAdd = new UserFullKVP();
+                    userToAdd.uId = user.UserID;
+                    userToAdd.uNameSurname = user.FirstName + " " + user.LastName;
+                    userList.Add(userToAdd);
+                }
+                model.users = userList;
 
                 return View(model);
             }

@@ -45,11 +45,44 @@
         </div>
     </div>
 </div>
+@foreach (var ual in Model)
+{
+    <div id="del-modal-@ual.AccessLevelID" class="modal-background hidden">
+        <div class="modalbox">
+            <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+            <div class="modalbox-message-text">
+                Are you sure you want to <idntwarn>TOGGLE THE STATUS</idntwarn> of User Access Level <idntwarn>@ual.LevelName</idntwarn>?
+            </div>
+            @* HELP/INFO *@
+            <div class="panel-group" id="delete-modal-help-@ual.AccessLevelID">
+                <div class="modal-help-panel">
+                    <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#delete-modal-helpbody-@ual.AccessLevelID" data-parent="#delete-modal-help-@ual.AccessLevelID">More Information</div>
+                    <div id="delete-modal-helpbody-@ual.AccessLevelID" class="panel-collapse collapse modalbox-help-panel-text">
+                        <p style="margin-bottom: 0px; font-weight: bold">Code: W006</p>
+                        <hr class="modal-help-hr-warning" />
+                        <ul style="margin-bottom: 0">
+                            <li>This action toggles the status of the selected User Access Level between <kbd>Activated</kbd> and <kbd>Deactivated</kbd>.</li>
+                            <li>Once a User Access Level has been <kbd>Deactivated</kbd>, all system Users that are assigned that User Access Level are unable to log into the system until it is <kbd>Activated</kbd>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @* BUTTONS *@
+            <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                @*<div class="">*@
+                <input type="button" id="del-yes-@ual.AccessLevelID" href="~/AccessLevel/ToggleStatus/@ual.AccessLevelID" value="Yes" class="btn btn-modal-generic" />
+                <input type="submit" id="del-no-@ual.AccessLevelID" onclick="$('#del-modal-'+@ual.AccessLevelID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                @*</div>*@
+            </div>
+        </div>
+    </div>
+}
+
 @* ASPTABLE WITH ALL ACCESS LEVELS: *@
 <table id="allUAL" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="UALID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="UALID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.AccessLevelID)
             </th>
             <th data-column-id="levelName" class="colour-dpred">
@@ -95,16 +128,31 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() == "Active") { /* CHECK IF THE ACCESS LEVEL IS ACTIVE, IF TRUE, THEN SHOW 'VIEW', 'EDIT', 'TOGGLE ACTIVATION' and 'DELETE': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/AccessLevel/Details/" + row.UALID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/AccessLevel/Edit/" + row.UALID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Activation\" href=\"/AccessLevel/ToggleActivation/" + row.UALID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() == "Deactivated") { /* CHECK IF THE ACCESS LEVEL IS DEACTIVATED, IF TRUE, THEN SHOW 'VIEW' and 'TOGGLE ACTIVATION': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/AccessLevel/Details/" + row.UALID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Toggle Activation\" href=\"/AccessLevel/ToggleActivation/" + row.UALID.trim() + "\"><i class=\"mdl2-powerbtn\" style=\"font-style: normal\"></i></a>";
+                    var checkStatus = row.status.trim().toUpperCase();
+                    //return checkStatus.toUpperCase();
+
+                    switch (checkStatus) {
+                        case "ACTIVE":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"TOGGLE STATUS\" data-placement=\"top\"><span class=\"mdl2icon mdl2-powerbtn\"></span></button>";
+                        case "DEACTIVATED":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"TOGGLE STATUS\" data-placement=\"top\"><span class=\"mdl2icon mdl2-powerbtn\"></span></button>";
+                        default:
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.UALID + "\" data-toggle=\"tooltip\" title=\"TOGGLE STATUS\" data-placement=\"top\"><span class=\"mdl2icon mdl2-powerbtn\"></span></button>";
                     }
                  }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Edit/" + $(this).data("row-id").trim(); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Details/" + $(this).data("row-id").trim(); }).tooltip().end()
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
     </script>
 

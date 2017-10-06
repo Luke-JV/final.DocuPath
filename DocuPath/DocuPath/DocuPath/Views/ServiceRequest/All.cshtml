@@ -47,11 +47,47 @@
         </div>
     </div>
 </div>
+@foreach (var sr in Model)
+{
+    if (!sr.IsCancelled)
+    {
+        <div id="del-modal-@sr.ServiceRequestID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>CANCEL</idntwarn> Service Request with Serial Number <idntwarn>@sr.SPECIMEN.FirstOrDefault().SpecimenSerialNumber</idntwarn>?
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="delete-modal-help-@sr.ServiceRequestID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#delete-modal-helpbody-@sr.ServiceRequestID" data-parent="#delete-modal-help-@sr.ServiceRequestID">More Information</div>
+                        <div id="delete-modal-helpbody-@sr.ServiceRequestID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action cannot be reverted.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    @*<div class="">*@
+                    <input type="button" id="del-yes-@sr.ServiceRequestID" href="~/ServiceProvider/Delete/@sr.ServiceRequestID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="del-no-@sr.ServiceRequestID" onclick="$('#del-modal-'+@sr.ServiceRequestID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
 @* ASPTABLE WITH ALL SERVICE REQUESTS: *@
 <table id="allSR" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="SRID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="SRID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ServiceRequestID)
             </th>
             <th data-column-id="serviceProvider" class="colour-dpred">
@@ -174,13 +210,20 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() == "Closed") {
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" data-placement=\"right\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() == "Active")
-                    {
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" data-placement=\"right\" href=\"/ServiceRequest/Details/" + row.SRID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Cancel\" data-placement=\"right\" href=\"/ServiceRequest/Cancel/" + row.SRID.trim() + "\"><i class=\"mdl2-cancel\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link\" data-placement=\"right\" href=\"/ServiceRequest/LinkExternalReport/" + row.SRID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>";
+                    var checkStatus = row.status.trim().toUpperCase();
+                    //return checkStatus.toUpperCase();
+
+                    switch (checkStatus) {
+                        case "CLOSED":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
+                        case "ACTIVE":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"LINK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-link\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"CANCEL\" data-placement=\"top\" data-target=\"#del-modal-" + row.SRID + "\"><span class=\"mdl2icon mdl2-cancel\"></span></button> ";
+                        default:
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"LINK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-link\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.SRID + "\" data-toggle=\"tooltip\" title=\"CANCEL\" data-placement=\"top\" data-target=\"#del-modal-" + row.SRID + "\"><span class=\"mdl2icon mdl2-cancel\"></span></button> ";
                     }
                  },
                 "serial": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
@@ -190,6 +233,12 @@
                     return "<span class=\"table-large-identifier\">" + row.relCase + "</span>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/ServiceRequest/LinkExternalReport/" + $(this).data("row-id").trim(); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/ServiceRequest/Details/" + $(this).data("row-id").trim(); }).tooltip().end()
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
     </script>
 
