@@ -178,7 +178,7 @@ namespace DocuPath.Controllers
                         session.id = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString()); 
                         session.alID = tk.AccessLevelID;
                         Session["REG"] = session;
-                        return RedirectToAction("Register");
+                        return RedirectToAction("RegisterUserProfile");
                     }
                 }
 

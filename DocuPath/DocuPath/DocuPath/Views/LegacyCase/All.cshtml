@@ -74,44 +74,51 @@
             <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
         </tr>
     </thead>
+    @*<tbody>
+        <tr>
+            <td>TEST1</td>
+            <td>TEST2</td>
+            <td>TEST3</td>
+            <td>TEST4</td>
+            <td>TEST5</td>
+            <td>TEST6</td>
+        </tr>
+    </tbody>*@
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Where(lc => lc.STATUS.StatusValue != "Archived"))
         {
-            if (item.STATUS.StatusValue != "Archived")
-            {
-                <tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LegacyCaseID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.USER.FirstName) @Html.DisplayFor(modelItem => item.USER.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LegacyDRNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LCBriefDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateAdded)
+                </td>
+                @if (item.DateClosed.Value.Year == 9999)
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.LegacyCaseID)
+                        Active Case
                     </td>
+                }
+                else
+                {
                     <td>
-                        @Html.DisplayFor(modelItem => item.USER.FirstName) @Html.DisplayFor(modelItem => item.USER.LastName)
+                        @Html.DisplayFor(modelItem => item.DateClosed)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LegacyDRNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LCBriefDescription)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateAdded)
-                    </td>
-                    @if (item.DateClosed.Value.Year == 9999)
-                    {
-                        <td>
-                            Active Case
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateClosed)
-                        </td>
-                    }
-                </tr>
-            }
+                }
+            </tr>
         }
     </tbody>
 </table>
@@ -238,8 +245,8 @@
                     //return checkStatus.toUpperCase();
 
                     switch (checkStatus) {
-                        case "LOCKED":
-                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
+                        //case "LOCKED":
+                        //    return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
                         case "ACTIVE":
                             return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
                                 "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
@@ -249,8 +256,7 @@
                         default:
                             return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
                                 "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
-                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.LCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
-                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"";
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.LCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> ";
                     }
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
@@ -259,12 +265,10 @@
             }
         }).on("loaded.rs.jquery.bootgrid", function () {
             grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
-                .find(".cmd-lock").on("click", function (e) { this.blur(); $('#lock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
-                .find(".cmd-unlock").on("click", function (e) { this.blur(); $('#unlock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
                 .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/LegacyCase/Edit/" + $(this).data("row-id"); }).tooltip().end()
                 .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/LegacyCase/Details/" + $(this).data("row-id"); }).tooltip().end()
-                .find(".pagination").tooltip().end()
-                .find(".infos").tooltip().end()
+                //.find(".pagination").tooltip().end()
+                //.find(".infos").tooltip().end()
         });
 </script>
 
