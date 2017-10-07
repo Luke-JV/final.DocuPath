@@ -42,39 +42,45 @@
         <div class="col-md-12" style="padding: 0px">
             <div class="panel-group" id="CaptureDASAccordion">
                 <div class="panel panel-default">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#CapturePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-capturedas panel-mdl2icon"></span>
-                        <span>Capture Daily Autopsy Schedule</span>
+                    @* CAPTURE DAS *@
+                    <div class="panel-heading params-panel-heading-grid" data-toggle="collapse" data-target="#CapturePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                        <span grid-area="parm_hdr_txt">CAPTURE DAILY AUTOPSY SCHEDULE</span>
+                        <button id="btnUploadDAS" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-upload btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="UPLOAD" data-placement="left" grid-area="parm_hdr_btn"></button>
                     </div>
                     <div id="CapturePanel" class="panel-collapse collapse in">
-                        <div class="panel-body" style="padding-top: 30px; padding-bottom: 30px">
-                            @Html.Label("Upload Scan Of Daily Autopsy Schedule", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="panel-body" style="padding-bottom: 5px">
+                            <div class="row">
+                                <div class="col-md-12 file-input theme-fa file-input-ajax-new">
+                                    <input id="DAS" name="DAS" type="file" @*class="file-loading"*@ />
+                                </div>
+                            </div>
+                            @*@Html.Label("Upload Scan Of Daily Autopsy Schedule", htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-4" style="padding-right: 5px">
                             @Html.Editor("Upload", new { htmlAttributes = new { @type = "file", @class = "form-control", @multiple = "false", @id = "ofdDailyAutopsySchedule", @style = "width: 100%" } })
                             </div>
                             <div class="col-md-2" style="padding-left: 0px">
                                 <button class="btn btn-default btn-generic" type="submit" data-toggle="tooltip" value="Upload" style="padding: 1px; width: 34px; height: 34px; color: #fff"><i class="mdl2icon mdl2-upload" style="color: #fff"></i></button>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-default" style="margin-top: 5px">
-                    <div class="panel-heading" data-toggle="collapse" data-target="#RetrievePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
-                        <span class="mdl2icon mdl2-search panel-mdl2icon"></span>
-                        <span>Retrieve Daily Autopsy Schedule</span>
+                    @* RETRIEVE DAS *@
+                    <div class="panel-heading params-panel-heading-grid" data-toggle="collapse" data-target="#RetrievePanel" data-parent="#CaptureDASAccordion" style="cursor: pointer">
+                        <span class="mdl2icon mdl2-search panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                        <span grid-area="parm_hdr_txt">RETRIEVE DAILY AUTOPSY SCHEDULE</span>
+                        <button id="btnRetrieveDAS" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-search btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="RETRIEVE" data-placement="left" grid-area="parm_hdr_btn"></button>
                     </div>
                     <div id="RetrievePanel" class="panel-collapse collapse">
-                        <div class="panel-body" style="padding: 5px">
-                            <div class="form-group" style="margin-top: 25px; margin-bottom: 25px">
+                        <div class="panel-body" style="padding: 30px 5px">
+                            <div class="form-group">
                                 @Html.Label("Select a Target Date", htmlAttributes: new { @class = "control-label col-md-4", @style = "text-align: right; margin-left: -10px" })
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="input-group date">
-                                        <input type="text" class="form-control" id="TargetDate" />
+                                        <input type="date" class="form-control" id="TargetDate" />
                                         <span class="input-group-addon" onclick="targetDTP()"><span class="mdl2icon mdl2-datetime"></span></span>
                                     </div>
-                                </div>
-                                <div class="col-md-2" style="padding-left: 0px">
-                                    <button class="btn btn-default btn-generic" type="submit" data-toggle="tooltip" value="Retrieve" style="padding: 1px; width: 34px; height: 34px"><i class="mdl2icon mdl2-search" style="color: #fff"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -98,6 +104,70 @@
                 this.blur();
             });
         });
-
     </script>
+<script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#DAS").fileinput({
+                theme: "fa",
+                uploadUrl: "/Scheduling/CaptureDailyAutopsySchedule",
+                fileActionSettings: {
+                    showUpload: false
+                },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['pdf', 'jpg', 'png'],
+                maxFileCount: 1
+            });
+
+        $('#btnUploadDAS').click(function () {
+            // Checking whether FormData is available in browser
+            if (window.FormData !== undefined) {
+                var files = $("#DAS").fileinput('getFileStack');
+
+                // Create FormData object
+                var fileData = new FormData();
+
+                // Looping over all files and add it to FormData object
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                gdata = fileData;
+
+                // Adding one more key to FormData object
+                // none needed here
+                //fileData.append('LCDR', document.getElementById("drnum").value);
+
+                $.ajax({
+                    url: '/Scheduling/CaptureDailyAutopsySchedule',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        alert(result); //Throw Success Modal 404
+                        document.getElementById("btnPOST").click();
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+        $('#btnProceed').blur();
+    });
+</script>
+
 }

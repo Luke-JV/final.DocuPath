@@ -11,4 +11,10 @@ namespace DocuPath.Models.DPViewModels
         public List<USER> users { get; set; }
         public int tkCount { get; set; }
     }
+
+    public class UpdateUserViewModel
+    {
+        public USER user { get; set; }
+        public List<TITLE> titles { get; set; }
+    }
 }

@@ -16,6 +16,7 @@ namespace DocuPath.Controllers
     // [LogAction]
     public class UserController : Controller
     {
+        string controllerName = "User";
         DocuPathEntities db = new DocuPathEntities();
 
         [AuthorizeByAccessArea(AccessArea = "Search User - All Profiles")]
@@ -97,47 +98,51 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
         public ActionResult Edit(int id)
         {
+            string actionName = "Edit";
             try
             {
 
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "User Management");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "My Profile");
                 #endregion
-                return View();
 
-
+                UpdateUserViewModel model = new UpdateUserViewModel();
+                model.user = db.USER.Where(u => u.UserID == id).FirstOrDefault();
+                model.titles = db.TITLE.ToList();
+                
+                return View(model);
             }
-            catch (Exception)
+            catch (Exception x)
             {
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
                 #endregion
-                return RedirectToAction("Error", "Home"); ;
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             };
         }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit User - Own Profile")]
-        public ActionResult Edit(int id, USER updatedUser)
+        public ActionResult Edit(int id, UpdateUserViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "User Management");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "My Profile");
                 #endregion
-                return View(updatedUser);
+                return View(model);
             }
 
             try
             {
                 #region DB UPDATE
-                db.USER.Attach(updatedUser);
-                db.Entry(updatedUser).State = EntityState.Modified;
+                db.USER.Attach(model.user);
+                db.Entry(model.user).State = EntityState.Modified;
                 db.SaveChanges();
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "User Management");
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "My Profile");
                 #endregion
                 return RedirectToAction("Index");
             }

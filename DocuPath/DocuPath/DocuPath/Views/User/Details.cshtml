@@ -20,7 +20,7 @@ else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-five">
+        <div class="page-buttons-subgrid buttons-three">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
@@ -33,14 +33,6 @@ else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric
             </div>
             <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnExpandCollapse" accordion-id="#UserDetailsAccordion" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-view btn-mdl2icon toggle-accordion active" data-toggle="tooltip" title="TOGGLE PANEL EXPAND/COLLAPSE"></button>
-                </form>
-            </div>
-            <div grid-area="btn4">
-                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
-            </div>
-            <div grid-area="btn5">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
@@ -50,301 +42,295 @@ else { ViewBag.Title = "My Profile"; ViewBag.GenericHAPTICLocator = "ViewGeneric
     </div>
 </div>
 @* DETAILS OF SELECTED USER: *@
-<div class="form-horizontal border-generic form-generic">
-    <div class="row" style="margin-left: 0px">
-        <div class="col-md-12" style="padding-left: 0px; padding-right: 15px">
-            <div class="panel-group" id="UserDetailsAccordion">
-                <div class="row">
-                    <div class="col-md-6" style="padding-right: 2.5px">
-                        @* NAME & SURNAME *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span>
-                                <span>NAME &amp; SURNAME DETAILS</span>
-                            </div>
-                            <div id="NamePanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5">
-                                    <dl class="dl-horizontal-small">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.DisplayInitials)
-                                        </dt>
+<div class="form-horizontal border-generic form-generic" style="padding-bottom: 0">
+    <div class="form grid view-user-grid">
+        <div grid-area="name">
+            @* NAME & SURNAME *@
+            <div class="panel panel-default nomarg" style="margin-bottom: 5px">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-namesurname panel-mdl2icon"></span>
+                    <span>Name &amp; Surname Details</span>
+                </div>
+                <div id="NamePanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DisplayInitials)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.DisplayInitials)
-                                        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.DisplayInitials)
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.TitleID)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TitleID)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.TITLE.TitleValue)
-                                        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.TITLE.TitleValue)
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.FirstName)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FirstName)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.FirstName)
-                                        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.FirstName)
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.MiddleName)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.MiddleName)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.MiddleName)
-                                        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.MiddleName)
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.LastName)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.LastName)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.LastName)
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            <dd>
+                                @Html.DisplayFor(model => model.LastName)
+                            </dd>
+                        </dl>
                     </div>
-                    <div class="col-md-6" style="padding-left: 2.5px">
-                        @* CONTACT DETAILS *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-contactdetails panel-mdl2icon"></span>
-                                <span>CONTACT DETAILS</span>
-                            </div>
-                            <div id="ContactPanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5">
-                                    <dl class="dl-horizontal-small">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.CellNum)
-                                        </dt>
+                </div>
+            </div>
+        </div>
+        <div grid-area="contact">
+            @* CONTACT DETAILS *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-contactdetails panel-mdl2icon"></span>
+                    <span>Contact Details</span>
+                </div>
+                <div id="ContactPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CellNum)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.CellNum))
-                                        </dd>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.CellNum))
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.TelNum)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TelNum)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.TelNum))
-                                        </dd>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.TelNum))
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.WorkNum)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.WorkNum)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.WorkNum))
-                                        </dd>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.PhoneNumberMarkup(Model.WorkNum))
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.PersonalEmail)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonalEmail)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.EmailMarkup(Model.PersonalEmail))
-                                        </dd>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.EmailMarkup(Model.PersonalEmail))
+                            </dd>
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.AcademicEmail)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.AcademicEmail)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.EmailMarkup(Model.AcademicEmail))
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.EmailMarkup(Model.AcademicEmail))
+                            </dd>
+                        </dl>
                     </div>
-                    <div class="col-md-6" style="padding-right: 2.5px; padding-top: 5px">
-                        @* QUALIFICATION DETAILS *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-qualifications panel-mdl2icon"></span>
-                                <span>QUALIFICATION DETAILS</span>
-                            </div>
-                            <div id="QualificationsPanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5">
-                                    <dl class="dl-horizontal-small">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.QualificationDescription)
-                                        </dt>
+                </div>
+            </div>
+        </div>
+        <div grid-area="id">
+            @* IDENTIFICATION DETAILS *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-identification panel-mdl2icon"></span>
+                    <span>Identification Details</span>
+                </div>
+                <div id="IDPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.NationalID)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.QualificationDescription)
-                                        </dd>
+                            <dd class="large-identifier">
+                                @Html.Raw(VERTEBRAE.ChunkString(Model.NationalID, 6, " "))
+                            </dd>
 
-                                        <dt style="padding-top: 5.2px">
-                                            @Html.DisplayName("HPCSA Registration")
-                                        </dt>
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayNameFor(model => model.AcademicID)
+                            </dt>
 
-                                        <dd class="large-identifier">
-                                            @Html.DisplayFor(model => model.HPCSARegNumber)
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            <dd class="large-identifier">
+                                @Html.DisplayFor(model => model.AcademicID)
+                            </dd>
+                        </dl>
                     </div>
-                    <div class="col-md-6" style="padding-left: 2.5px; padding-top: 5px">
-                        @* IDENTIFICATION DETAILS *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-identification panel-mdl2icon"></span>
-                                <span>IDENTIFICATION DETAILS</span>
-                            </div>
-                            <div id="IDPanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5">
-                                    <dl class="dl-horizontal-small">
-                                        <dt style="padding-top: 5.2px">
-                                            @Html.DisplayNameFor(model => model.NationalID)
-                                        </dt>
+                </div>
+            </div>
+        </div>
+        <div grid-area="qualification">
+            @* QUALIFICATION DETAILS *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-qualifications panel-mdl2icon"></span>
+                    <span>Qualification Details</span>
+                </div>
+                <div id="QualificationsPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.QualificationDescription)
+                            </dt>
 
-                                        <dd class="large-identifier">
-                                            @Html.Raw(VERTEBRAE.ChunkString(Model.NationalID, 6, " "))
-                                        </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.QualificationDescription)
+                            </dd>
 
-                                        <dt style="padding-top: 5.2px">
-                                            @Html.DisplayNameFor(model => model.AcademicID)
-                                        </dt>
+                            <dt style="padding-top: 5.2px">
+                                @Html.DisplayName("HPCSA Registration")
+                            </dt>
 
-                                        <dd class="large-identifier">
-                                            @Html.DisplayFor(model => model.AcademicID)
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            <dd class="large-identifier">
+                                @Html.DisplayFor(model => model.HPCSARegNumber)
+                            </dd>
+                        </dl>
                     </div>
-                    <div class="col-md-6" style="padding-right: 2.5px; padding-top: 5px">
-                        @* ADDRESS DETAILS *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-addressdetails panel-mdl2icon"></span>
-                                <span>ADDRESS DETAILS</span>
-                            </div>
-                            <div id="AddressPanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5" style="min-height: 71.4px">
-                                    <dl class="dl-horizontal-small">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.PhysicalAddress)
-                                        </dt>
+                </div>
+            </div>
+        </div>
+        <div grid-area="address">
+            @* ADDRESS DETAILS *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-addressdetails panel-mdl2icon"></span>
+                    <span>Address Details</span>
+                </div>
+                <div id="AddressPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PhysicalAddress)
+                            </dt>
 
-                                            @Html.Raw(VERTEBRAE.SplitAddress(Model.PhysicalAddress, ',', ' ',"<dd>"))
-                                            @*@Html.DisplayFor(model => model.PhysicalAddress)*@
-                                        <hr class="details-hr" />
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.PostalAddress)
-                                        </dt>
+                            @Html.Raw(VERTEBRAE.SplitAddress(Model.PhysicalAddress, ',', ' ', "<dd>"))
+                            @*@Html.DisplayFor(model => model.PhysicalAddress)*@
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PostalAddress)
+                            </dt>
 
-                                            @Html.Raw(VERTEBRAE.SplitAddress(Model.PostalAddress, ',', ' ', "<dd>"))
-                                            @*@Html.DisplayFor(model => model.PostalAddress)*@
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            @Html.Raw(VERTEBRAE.SplitAddress(Model.PostalAddress, ',', ' ', "<dd>"))
+                            @*@Html.DisplayFor(model => model.PostalAddress)*@
+                        </dl>
                     </div>
-                    <div class="col-md-6" style="padding-left: 2.5px; padding-top: 5px">
-                        @* SYSTEM PREFERENCES & SECURITY DETAILS *@
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
-                                <span>SYSTEM &amp; SECURITY DETAILS</span>
-                            </div>
-                            <div id="LoginPanel" class="panel-collapse collapse in">
-                                <div class="panel-body apad5" style="min-height: 81.8px">
-                                    <dl class="dl-horizontal-small">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.DarkUIPref)
-                                        </dt>
-                                        @if (Model.DarkUIPref == true)
-	                                    {
-		                                     <dd>Dark</dd>
-                                        }
-                                        else
-                                        {
-                                            <dd>Light</dd>
-                                        }
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.USER_LOGIN.Username)
-                                        </dt>
+                </div>
+            </div>
+        </div>
+        <div grid-area="login">
+            @* LOGIN DETAILS & SYSTEM PREFS *@
+            <div class="panel panel-default nomarg">
+                <div class="panel-heading">
+                    <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
+                    <span>Login Details</span>
+                </div>
+                <div id="LoginPanel" class="panel-collapse collapse in">
+                    <div class="panel-body apad5">
+                        <dl class="dl-horizontal-small">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DarkUIPref)
+                            </dt>
+                            @if (Model.DarkUIPref == true)
+                            {
+                                <dd>Dark</dd>
+                            }
+                            else
+                            {
+                                <dd>Light</dd>
+                            }
+                            <dt>
+                                @Html.DisplayNameFor(model => model.USER_LOGIN.Username)
+                            </dt>
 
-                                        <dd>
-                                            @Html.Raw(@VERTEBRAE.EmailMarkup(Model.USER_LOGIN.Username))
-                                        </dd>
-                                        <hr class="details-hr"/>
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.IsDeactivated)
-                                        </dt>
-                                        @if (Model.IsDeactivated == true)
-	                                    {
-                                            <dd class="status-inactive">Deactivated</dd>
-                                        }
-                                        else
-                                        {
-                                            <dd class="status-ok">Active</dd>
-                                        }
-                                        @*<dt>
-                                            @Html.DisplayNameFor(model => model.IsConfirmed)
-                                        </dt>
-                                        @if (Model.IsConfirmed == true)
-	                                    {
-		                                    <dd class="status-ok">Confirmed</dd>
-                                        }
-                                        else
-                                        {
-                                            <dd class="status-danger">Unconfirmed</dd>
-                                        }
-                                        
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.SecurityStamp)
-                                        </dt>
+                            <dd>
+                                @Html.Raw(@VERTEBRAE.EmailMarkup(Model.USER_LOGIN.Username))
+                            </dd>
+                            <hr class="details-hr" />
+                            <dt>
+                                @Html.DisplayNameFor(model => model.IsDeactivated)
+                            </dt>
+                            @if (Model.IsDeactivated == true)
+                            {
+                                <dd class="status-inactive">Deactivated</dd>
+                            }
+                            else
+                            {
+                                <dd class="status-ok">Active</dd>
+                            }
+                            @*<dt>
+                @Html.DisplayNameFor(model => model.IsConfirmed)
+            </dt>
+            @if (Model.IsConfirmed == true)
+            {
+                <dd class="status-ok">Confirmed</dd>
+            }
+            else
+            {
+                <dd class="status-danger">Unconfirmed</dd>
+            }
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.SecurityStamp)
-                                        </dd>*@
-                                        @*<dt>
-                                            @Html.DisplayNameFor(model => model.LockoutEnabled)
-                                        </dt>
-                                        @if (Model.LockoutEnabled == null)
-	                                    {
-                                            <dd class="status-inactive">Not Set</dd>
-                                        }
-                                        else if (Model.LockoutEnabled == true)
-                                        {
-                                            <dd class="status-ok">Yes</dd>
-                                        }
-                                        else
-                                        {
-                                            <dd class="status-danger">No</dd>
-                                        }*@
+            <dt>
+                @Html.DisplayNameFor(model => model.SecurityStamp)
+            </dt>
 
-                                        @if (Model.LockoutEndDate != null)
-                                        {
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.LockoutEndDate)
-                                            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SecurityStamp)
+            </dd>*@
+                            @*<dt>
+                @Html.DisplayNameFor(model => model.LockoutEnabled)
+            </dt>
+            @if (Model.LockoutEnabled == null)
+            {
+                <dd class="status-inactive">Not Set</dd>
+            }
+            else if (Model.LockoutEnabled == true)
+            {
+                <dd class="status-ok">Yes</dd>
+            }
+            else
+            {
+                <dd class="status-danger">No</dd>
+            }*@
+
+                            @if (Model.LockoutEndDate != null)
+                            {
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.LockoutEndDate)
+                                </dt>
                                             <dd>@Html.DisplayFor(model => model.LockoutEndDate)</dd>
-                                        }
+                            }
 
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.AccessFailedCount)
-                                        </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.AccessFailedCount)
+                            </dt>
 
-                                        <dd>
-                                            @Html.DisplayFor(model => model.AccessFailedCount)
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
+                            <dd>
+                                @Html.DisplayFor(model => model.AccessFailedCount)
+                            </dd>
+                        </dl>
                     </div>
                 </div>
             </div>

@@ -344,6 +344,16 @@
                 checkReady();
             });
 
+            $("#startDate").change(function () {                
+                $("#summaryReportTimeframe").text($("#startDate").val() + ' to ' + $("#endDate").val())
+                checkReady();
+            });
+
+            $("#endDate").change(function () {
+                $("#summaryReportTimeframe").text($("#startDate").val() + ' to ' + $("#endDate").val())
+                checkReady();
+            });
+
             function checkReady() {
                 if (reportSelected && timeframeSelected) {
                     $('#btnGenerate').removeClass('hidden')
@@ -355,4 +365,23 @@
             }
         })
     </script>
+    <script>
+        var startDate = $('startDate').value;
+        alert();
+        document.getElementById('endDate').setAttribute('min', startDate);
+
+        //var today = new Date();
+        //var dd = today.getDate();
+        //var mm = today.getMonth() + 1; //January is 0!
+        //var yyyy = today.getFullYear();
+        //if (dd < 10) {
+        //    dd = '0' + dd
+        //}
+        //if (mm < 10) {
+        //    mm = '0' + mm
+        //}
+
+        //today = yyyy + '-' + mm + '-' + dd;
+        //document.getElementById("datefield").setAttribute("max", today);
+</script>
 }

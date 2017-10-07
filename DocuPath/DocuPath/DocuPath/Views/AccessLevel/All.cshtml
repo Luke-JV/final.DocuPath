@@ -149,8 +149,8 @@
             }
         }).on("loaded.rs.jquery.bootgrid", function () {
             grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
-                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Edit/" + $(this).data("row-id").trim(); }).tooltip().end()
-                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Details/" + $(this).data("row-id").trim(); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Edit/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/AccessLevel/Details/" + $(this).data("row-id"); }).tooltip().end()
                 .find(".pagination").tooltip().end()
                 .find(".infos").tooltip().end()
         });
