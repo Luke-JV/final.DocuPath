@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.user.TitleID, "TitleID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.user.TitleID, new SelectList(Model.titles,"TitleID","TitleValue"), Model.titles.Where(x => x.TitleID == Model.user.TitleID)), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.user.TitleID, new SelectList(Model.titles,"TitleID","TitleValue"), Model.titles.Where(x => x.TitleID == Model.user.TitleID).FirstOrDefault().TitleValue,  new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.user.TitleID, "", new { @class = "text-danger" })
             </div>
         </div>
