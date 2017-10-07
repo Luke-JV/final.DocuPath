@@ -37,6 +37,7 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Text)]
         [DataType(DataType.MultilineText)]
         [DisplayName("Request Note")]
+        [Required]
         public string RequestNote { get; set; }
         [DisplayName("Status")]
         public bool IsCancelled { get; set; }

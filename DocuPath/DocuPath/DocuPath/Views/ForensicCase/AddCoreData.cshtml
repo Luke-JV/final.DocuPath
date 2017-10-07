@@ -35,6 +35,8 @@
         </div>
     </div>
     <div class="page-btns">
+@if (ViewBag.Instruction != "UPDATE")
+{
         <div class="page-buttons-subgrid buttons-four">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
@@ -59,6 +61,39 @@
             <div></div>
             <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
         </div>
+}
+else
+{
+    <div class="page-buttons-subgrid buttons-five">
+        <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+        <div></div>
+        <div grid-area="btn1">
+            <form id="backForm" class="minimalform" action="~/ForensicCaseUpdateHub/@ViewBag.FCID" style="margin-top: 2px">
+                <button id="btnHub" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-hub btn-mdl2icon" type="submit" data-toggle="tooltip" title="BACK TO HUB"></button>
+            </form>
+        </div>
+        <div grid-area="btn2">
+            <form id="backForm" class="minimalform" action="javascript:void(0))" style="margin-top: 2px">
+                <button id="btnCancel" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" type="submit" data-toggle="tooltip" title="CANCEL ADD"></button>
+            </form>
+        </div>
+        <div grid-area="btn3">
+            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+            </form>
+        </div>
+        <div grid-area="btn4">
+            <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+        </div>
+        <div grid-area="btn5">
+            <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+            </form>
+        </div>
+        <div></div>
+        <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+    </div>
+}
     </div>
 </div>
 @* MODAL NOTIFICATIONS: *@

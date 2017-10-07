@@ -44,29 +44,33 @@
                 </form>
             </div>*@
             @{
-                if (ViewBag.Instruction != "UPDATE")
+                <div grid-area="btn1">
+                    <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                        <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD"></button>
+                    </form>
+                </div>
+                if (ViewBag.Instruction == "UPDATE")
                 {
-                    <div grid-area="btn1">
-                        <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                            <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD"></button>
+                }
+                else
+                {
+                    <div grid-area="btn2">
+                        <form class="minimalform" action="~/ForensicCase/SelectNewAdditionalEvidenceItems/@ViewBag.FCID" method="get" style="margin-top: 2px">
+                            <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="SKIP SECTION"></button>
                         </form>
                     </div>
                 }
+                    <div grid-area="btn3">
+                        <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
+                    </div>
+                    <div grid-area="btn4">
+                        <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                            <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
+                        </form>
+                    </div>
             }
             
-            <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)"  style="margin-top: 2px">
-                    <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
-                </form>
-            </div>
-            <div grid-area="btn2">
-                <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
-            </div>
-            <div grid-area="btn3">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
-                </form>
-            </div>
+            
             <div>
                 @{
                     if (ViewBag.Instruction=="UPDATE")

@@ -972,6 +972,30 @@ namespace DocuPath.Controllers
             }
 
         }
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Additional Evidence Section")]
+        public ActionResult SelectNewAdditionalEvidenceItems(int id)
+        {
+            string actionName = "SelectAdditionalEvidenceItems";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Forensic Case -Additional Evidence");
+                #endregion
+                ViewBag.FCID = id;
+                ViewBag.Instruction = "UPDATE";
+                return View("SelectAdditionalEvidenceItems",new {id = id });
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddFail, "Forensic Case - Additional Evidence");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+
+        }
 
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
