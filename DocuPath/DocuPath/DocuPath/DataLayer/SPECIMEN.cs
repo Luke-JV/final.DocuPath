@@ -28,9 +28,11 @@ namespace DocuPath.DataLayer
         [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Investigation Required")]
         [DataType(DataType.MultilineText)]
+        [Required]
         public string InvestigationRequired { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
         [DisplayName("Chain Of Custody")]
+        [Required]
         public string DisposalMechanism { get; set; }
         [DefaultValue(FLAG.Alphanumeric)]
         [StringLength(255)]

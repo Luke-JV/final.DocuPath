@@ -1,4 +1,4 @@
-﻿@model DocuPath.Models.DPViewModels.AdditionalEvidenceViewModel
+﻿
 @{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -6,8 +6,8 @@
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Forensic Cases", "All", "ForensicCase") </li>
     @if (ViewBag.Instruction == "UPDATE")
-            {
-                ViewBag.Title = "Update";
+    {
+        ViewBag.Title = "Update";
         <li class="active">@Html.ActionLink("Update Forensic Case (Additional Evidence)", "SelectAdditionalEvidenceItems") </li>
     }
     else
@@ -23,40 +23,45 @@
             <div class="icon-circle mdl2icon mdl2-fc"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
             @if (ViewBag.Instruction == "UPDATE")
-            {                
+            {
                 <div class="page-header-text">UPDATE FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">ADDITIONAL EVIDENCE</span></div>
             }
             else
-            {                
+            {
                 <div class="page-header-text">ADD FORENSIC CASE <span style="color: #666">– </span><span style="color: #ae1f1f">ADDITIONAL EVIDENCE</span></div>
             }  
             
         </div>
     </div>
     <div class="page-btns">
-        <div class="page-buttons-subgrid buttons-four">
+        <div class="page-buttons-subgrid buttons-three">
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             @{
-                if (ViewBag.Instruction != "UPDATE")
+                if (ViewBag.Instruction == "UPDATE")
                 {
-                    
+
                     <div grid-area="btn1">
                         <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                             <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-upload btn-mdl2icon" type="submit" data-toggle="tooltip" title="UPLOAD"></button>
                         </form>
                     </div>
                 }
-            }
-            <div grid-area="btn2">
-                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+
+                else
+                {
+            <div grid-area="btn1">
+                <form class="minimalform" action="~/ForensicCase/SkipAE/@ViewBag.FCID" style="margin-top: 2px">
+                    <button id="btnSkip" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="SKIP SECTION"></button>
                 </form>
             </div>
-            <div grid-area="btn3">
+                    }   
+                }
+
+            <div grid-area="btn2">
                 <img src="~/Content/Resources/SlantedDivider.png" style="height: 45px; margin-top: 3px" />
             </div>
-            <div grid-area="btn4">
+            <div grid-area="btn3">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
                 </form>
@@ -154,7 +159,7 @@
 <script>
         $(document).ready(function () {
             //$('[title=""]').tooltip();
-
+            
 
             $("#AEItems").fileinput({
                 theme: "fa",
