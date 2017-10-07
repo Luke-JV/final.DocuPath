@@ -98,9 +98,18 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateClosed)
-                    </td>
+                    @if (item.DateClosed.Value.Year == 9999)
+                    {
+                        <td>
+                            Active Case
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateClosed)
+                        </td>
+                    }
                 </tr>
             }
         }

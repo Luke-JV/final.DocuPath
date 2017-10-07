@@ -216,10 +216,10 @@
                             </dl>
                             <hr class="details-hr" />
                             <div class="grid insight-actions-subgrid">
-                                <form id="btnGenerate" grid-area="generate" class="minimalform hidden form-inline" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
+                                <form id="btnGenerate" grid-area="generate" class="minimalform hidden" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
                                     <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon pull-right" onclick="this.blur()" @*type="submit"*@ data-toggle="tooltip" title="GENERATE REPORT" data-placement="left"></button>
                                 </form>
-                                <form id="btnReset" grid-area="reset" class="minimalform form-inline" action="~/Reporting/Insight" style="margin-top: 2px">
+                                <form id="btnReset" grid-area="reset" class="minimalform pull-right" action="~/Reporting/Insight" style="margin-top: 2px">
                                     <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-reset btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="RESET REPORT BUILDER" data-placement="right"></button>
                                 </form>
                             </div>
@@ -305,20 +305,28 @@
                     $("#frmSuperuserSelect").hide("slow"),
                     $("#frmUserSelect").hide("slow"),
                     $("#frmActivityTypeSelect").hide("slow"),
-                    $("#pnlTimeframeParams").hide("slow")
+                    $("#pnlTimeframeParams").hide("slow"),
+                    $("#summaryReportTimeframe").text('All Time'),
+                    $("#summaryReportTimeframe").addClass('grn')
                 } else {
                     $("#pnlReportParams").hide("slow"),
                     $("#frmSuperuserSelect").hide("slow"),
                     $("#frmUserSelect").hide("slow"),
                     $("#frmActivityTypeSelect").hide("slow"),
-                    $("#pnlTimeframeParams").show("slow")
+                    $("#pnlTimeframeParams").show("slow"),
+                    $("#summaryReportTimeframe").text('No Timeframe Selected'),
+                    $("#summaryReportTimeframe").removeClass('grn')
                 }
                 checkReady();
             });
 
             $("#ddlTimeframeSelector").change(function () {
                 if ($("#ddlTimeframeSelector option:selected").text().toUpperCase() != "SELECT A TIMEFRAME...")
-                { timeframeSelected = true; } else { timeframeSelected = false }
+                { timeframeSelected = true; } else {
+                    timeframeSelected = false;
+                    $("#summaryReportTimeframe").text("No Report Timeframe Specified")
+                    $("#summaryReportTimeframe").removeClass('grn')
+                }
 
                 if ($("#ddlTimeframeSelector option:selected").text().toUpperCase() == "CUSTOM TIMEFRAME") {
                     $("#summaryReportTimeframe").text($("#startDate").val() + ' to ' + $("#endDate").val())
@@ -339,10 +347,10 @@
             function checkReady() {
                 if (reportSelected && timeframeSelected) {
                     $('#btnGenerate').removeClass('hidden')
-                    $('#btnReset button').addClass('pull-left')
+                    $('#btnReset button').removeClass('pull-right')
                 } else if (!reportSelected && !timeframeSelected) {
-                    $('#btnGenerate').addClass('hidden'),
-                    $('#btnReset button').removeClass('pull-left')
+                    $('#btnGenerate').addClass('hidden')
+                    $('#btnReset button').addClass('pull-right')
                 }
             }
         })

@@ -13326,7 +13326,7 @@ a.cal-event-week {
 
 .insight-actions-subgrid {
     grid-gap: 5px;
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto;
     /*grid-template-areas: "generate download";*/
 }
 

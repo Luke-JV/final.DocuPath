@@ -50,7 +50,7 @@
             </div>
             <div grid-area="btn7">
                 <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
-                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="HELP"></button>
+                    <button id="btnHapticToggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-help btn-mdl2icon" data-toggle="tooltip" title="HELP"></button>
                 </form>
             </div>
             <div></div>
@@ -105,7 +105,7 @@
             <th data-column-id="thumbnail" class="colour-dpred" data-sortable="false">
                 @Html.DisplayName("Thumbnail")
             </th>
-            <th data-column-id="caption" class="colour-dpred">
+            <th data-column-id="caption" data-formatter="captionFix" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.MediaCaption)
             </th>
             <th data-column-id="purpose" class="colour-dpred">
@@ -215,7 +215,10 @@
                     return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
                     "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
                     "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.MediaID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
-                    "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"";                    
+                    "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"";   
+                },
+                "captionFix": function (column, row) {
+                    return "<div style=\"min-width: 300px !important\">"+row.caption+"</div>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function () {
