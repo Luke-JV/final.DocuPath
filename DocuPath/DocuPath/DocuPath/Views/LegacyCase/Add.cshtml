@@ -22,8 +22,8 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/LegacyCase/All" method="post" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnBack" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
@@ -45,7 +45,43 @@
         </div>
     </div>
 </div>
-
+@* MODAL NOTIFICATIONS: *@
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W005</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","ExternalReviewCase"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic btn-negate" />
+            </div>
+        </div>
+    </div>
+</div>
 
 @using (Html.BeginForm())
 {
@@ -62,7 +98,7 @@
                         <span class="mdl2icon mdl2-info panel-mdl2icon"></span>
                         <span>Legacy Case Details</span>
                     </div>
-                    <div class="panel-body" style="height: 430.2px !important">
+                    <div class="panel-body" style="min-height: 363px">
                         <div class="form-group">
                             @Html.Label("Date Added", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left" })
                             <div class="col-md-12">
@@ -213,41 +249,12 @@
 });
 </script>  
 
-    @*<script>
-        $("#LCDocs").fileinput({
-            theme: "fa",
-            uploadUrl: "/LegacyCase/UploadFiles",
-        });
-    </script>*@
+<script>
+    $(document).ready(function () {
+        $('#btnBack').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
+        $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "LegacyCase")"; });
+        $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
+    });
+</script>
                                         
-    @* DATETIMEPICKERS: *@
-    <script name="DTPCallers" type="text/javascript">
-        $("#DateClosed").click(function () {
-            $('#DateClosed').bootstrapMaterialDatePicker({
-                format: 'DD MMMM YYYY',
-                year: true,
-                date: true,
-                time: false,
-                clearButton: true,
-                nowButton: true,
-                nowText: "Now",
-                switchOnClick: true,
-                okText: "OK"
-            });
-        });
-
-        $(function dateClosedDTP() {
-            $('#DateClosed').bootstrapMaterialDatePicker({
-                format: 'DD MMMM YYYY',
-                year: true,
-                date: true,
-                time: false,
-                clearButton: true,
-                nowButton: true,
-                nowText: "Now",
-                switchOnClick: true,
-                okText: "OK"
-            });
-        });
-    </script>
 }

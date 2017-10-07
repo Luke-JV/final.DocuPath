@@ -50,7 +50,7 @@
 <table id="allLC" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="LCID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="LCID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.LegacyCaseID)
             </th>
             <th data-column-id="addedBy" class="colour-dpred">
@@ -106,6 +106,107 @@
         }
     </tbody>
 </table>
+@foreach (var lc in Model)
+{
+    if (lc.STATUS.StatusValue != "Pending" || lc.STATUS.StatusValue != "Locked")
+    {
+        <div id="del-modal-@lc.LegacyCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>DELETE</idntwarn> Legacy Case <idntwarn>@lc.LegacyDRNumber</idntwarn>?
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="delete-modal-help-@lc.LegacyCaseID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#delete-modal-helpbody-@lc.LegacyCaseID" data-parent="#delete-modal-help-@lc.LegacyCaseID">More Information</div>
+                        <div id="delete-modal-helpbody-@lc.LegacyCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action cannot be reverted.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    @*<div class="">*@
+                    <input type="button" id="del-yes-@lc.LegacyCaseID" href="~/LegacyCase/Delete/@lc.LegacyCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="del-no-@lc.LegacyCaseID" onclick="$('#del-modal-'+@lc.LegacyCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    }
+
+    @*if (lc.STATUS.StatusValue == "Active")
+    {
+        <div id="lock-modal-@lc.LegacyCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>LOCK</idntwarn> Legacy Case <idntwarn>@lc.LegacyDRNumber</idntwarn>?
+                </div>*@
+                @* HELP/INFO *@
+                @*<div class="panel-group" id="lock-modal-help-@fc.ForensicCaseID">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#lock-modal-helpbody-@fc.ForensicCaseID" data-parent="#lock-modal-help-@fc.ForensicCaseID">More Information</div>
+                            <div id="lock-modal-helpbody-@fc.ForensicCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                                <p style="margin-bottom: 0px; font-weight: bold">Code: W003</p>
+                                <hr class="modal-help-hr-warning" />
+                                <ul style="margin-bottom: 0">
+                                    <li>This action will result in a status change of the Forensic Case on the system.</li>
+                                    <li>This action requires authorisation by a Superuser.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>*@
+                @* BUTTONS *@
+                @*<div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    <input type="button" id="lock-yes-@lc.LegacyCaseID" href="~/LegacyCase/Lock/@lc.LegacyCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="lock-no-@lc.LegacyCaseID" onclick="$('#lock-modal-'+@lc.LegacyCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                </div>
+            </div>
+        </div>
+    }*@
+
+    @*if (lc.STATUS.StatusValue == "Locked")
+    {
+        <div id="unlock-modal-@lc.LegacyCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>UNLOCK</idntwarn> Forensic Case <idntwarn>@lc.LegacyDRNumber</idntwarn>?
+                </div>*@
+                @* HELP/INFO *@
+                @*<div class="panel-group" id="unlock-modal-help-@lc.LegacyCaseID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#unlock-modal-helpbody-@lc.LegacyCaseID" data-parent="#unlock-modal-help-@lc.LegacyCaseID">More Information</div>
+                        <div id="unlock-modal-helpbody-@lc.LegacyCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W002</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action requires a motivation/reason.</li>
+                                <li>This action requires authorisation by a Superuser.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>*@
+                @* BUTTONS *@
+                @*<div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    <input type="button" id="unlock-yes-@lc.LegacyCaseID" onclick="$('#unlock-yes-'+@lc.LegacyCaseID).addClass('hidden'); $('#unlock-no-'+@lc.LegacyCaseID).addClass('hidden'); $('#reason-'+@lc.LegacyCaseID).removeClass('hidden'); $('#finalize-'+@lc.LegacyCaseID).removeClass('hidden'); " value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="unlock-no-@lc.LegacyCaseID" onclick="$('#unlock-modal-'+@lc.LegacyCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    <div class="input-group pull-right">
+                        <input type="text" placeholder="Please provide a reason..." id="reason-@lc.LegacyCaseID" onfocus="this.select()" onmouseup="return false;" class="form-control hidden txt-motivation" />
+                        <input type="button" id="finalize-@lc.LegacyCaseID" href="~/LegacyCase/Unlock/@lc.LegacyCaseID" value="Finalize" class="btn btn-modal-generic hidden" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }*@
+}
+
 
 @section Scripts {
 @Scripts.Render("~/bundles/bootgrid")
@@ -124,25 +225,37 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/LegacyCase/Details/" + row.LCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/LegacyCase/Unlock/" + row.LCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/LegacyCase/Details/" + row.LCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/LegacyCase/Edit/" + row.LCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/LegacyCase/Delete/" + row.LCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/LegacyCase/Details/" + row.LCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/LegacyCase/Details/" + row.LCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/LegacyCase/Edit/" + row.LCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/LegacyCase/Delete/" + row.LCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
+                    var checkStatus = row.status.trim().toUpperCase();
+                    //return checkStatus.toUpperCase();
+
+                    switch (checkStatus) {
+                        case "LOCKED":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
+                        case "ACTIVE":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.LCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> ";
+                        case "PENDING":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
+                        default:
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.LCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.LCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"";
                     }
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                     return "<span class=\"table-large-identifier\">"+ row.LCDR + "</span>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-lock").on("click", function (e) { this.blur(); $('#lock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-unlock").on("click", function (e) { this.blur(); $('#unlock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/LegacyCase/Edit/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/LegacyCase/Details/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
 </script>
 

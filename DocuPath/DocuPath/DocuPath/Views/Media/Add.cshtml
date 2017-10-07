@@ -6,7 +6,7 @@
 <ol class="breadcrumb">
     <li>@Html.ActionLink("Home", "Index", "Home") </li>
     <li>@Html.ActionLink("Media Repository", "All", "Media") </li>
-    <li class="active">@Html.ActionLink("Add Media Items", "Add") </li>
+    <li class="active">@Html.ActionLink("Handle Inbound Media Items", "Add") </li>
 </ol>
 @* PAGE HEADER & ACTION BUTTONS: *@
 <div class="grid hdr-grid">
@@ -14,7 +14,7 @@
         <div class="page-header-subgrid">
             <div class="icon-circle mdl2icon mdl2-media"></div>
             <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
-            <div class="page-header-text">ADD MEDIA ITEMS</div>
+            <div class="page-header-text">HANDLE INBOUND MEDIA ITEMS</div>
         </div>
     </div>
     <div class="page-btns">
@@ -22,9 +22,9 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/Media/All" style="margin-top: 2px">
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
                     @* TODO: Code to clear out folder if cancelled after modal confirmation  *@
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="CANCEL ADD MEDIA"></button>
+                    <button id="btnBack" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
@@ -45,6 +45,43 @@
         </div>
     </div>
 </div>
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W005</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","Media"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic btn-negate" />
+            </div>
+        </div>
+    </div>
+</div>
+
 @* PROVIDE METADATA FOR EACH MEDIA ITEM: *@
 @using (Html.BeginForm())
 {
@@ -501,9 +538,15 @@
         //DEBUG
     </script>
 <script>
-                $("button").click(function () {
-                    this.blur();
-                });
+    $("button").click(function () {
+        this.blur();
+    });
+
+    $(document).ready(function () {
+        $('#btnBack').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
+        $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "Media")"; });
+        $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
+    });
 </script>
 }
 

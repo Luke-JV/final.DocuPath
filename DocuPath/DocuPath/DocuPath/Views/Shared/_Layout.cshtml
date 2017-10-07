@@ -68,7 +68,7 @@
                 <div class="modal-help-panel">
                     <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#homenav_helpbody" data-parent="#homenav_helpaccordion">More Information</div>
                     <div id="homenav_helpbody" class="panel-collapse collapse modalbox-help-panel-text">
-                        <p style="margin-bottom: 0px; font-weight: bold">Code: W002</p>
+                        <p style="margin-bottom: 0px; font-weight: bold">Code: W004</p>
                         <hr class="modal-help-hr-warning" />
                         <ul class="haptic-ul">
                             <li>This is a generic system warning for navigating to the DocuPath Home Page via the keyboard <kbd>Ctrl + Home</kbd> shortcut.</li>
@@ -86,7 +86,7 @@
                 <div class="col-md-3 modal-btn-col"></div>
                 <div class="col-md-3 modal-btn-col">
                     <input type="button" id="btnHomeYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("Index","Home"))" />
-                    <input type="button" id="btnHomeNo" value="No" class="btn btn-modal-generic" />
+                    <input type="button" id="btnHomeNo" value="No" class="btn btn-modal-generic btn-negate" />
                 </div>
             </div>
         </div>
@@ -646,7 +646,7 @@
         shortcut.add("2", function () { document.getElementById('CORNEAheading').click(); });
         shortcut.add("3", function () { document.getElementById('PULSEheading').click(); });
         shortcut.add("F5", function (e) { e.preventDefault(); });
-        shortcut.add("Esc", function (e) { e.preventDefault(); document.elementFromPoint(1, 1).click(); });
+        shortcut.add("Esc", function (e) { e.preventDefault(); document.elementFromPoint(1, 1).click(); $('.modal-background').addClass('hidden'); });
 
 
         shortcut.add("Ctrl+Home", function () { if (document.title.indexOf('Home', 0) != 0) { $('#divHomeNavWarning').removeClass("hidden"); } });

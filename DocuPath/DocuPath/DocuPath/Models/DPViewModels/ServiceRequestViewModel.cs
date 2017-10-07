@@ -24,10 +24,4 @@ namespace DocuPath.Models.DPViewModels
         public EXTERNAL_REPORT targetER { get; set; }
         public List<ReportKVP> existingERList { get; set; }
     }
-
-    public class ReportKVP
-    {
-        public int reportID { get; set; }
-        public string reportPhrase { get; set; }
-    }
 }

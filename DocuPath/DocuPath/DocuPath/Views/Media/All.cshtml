@@ -58,12 +58,48 @@
         </div>
     </div>
 </div>
+@foreach (var mediaItem in Model)
+{
+    if (mediaItem.STATUS.StatusValue != "Pending" || mediaItem.STATUS.StatusValue != "Locked")
+    {
+        <div id="del-modal-@mediaItem.MediaID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>DELETE</idntwarn> Media Item with caption
+                    <br />"<idntwarn>@mediaItem.MediaCaption</idntwarn>"?
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="delete-modal-help-@mediaItem.MediaID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#delete-modal-helpbody-@mediaItem.MediaID" data-parent="#delete-modal-help-@mediaItem.MediaID">More Information</div>
+                        <div id="delete-modal-helpbody-@mediaItem.MediaID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action cannot be reverted.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    @*<div class="">*@
+                    <input type="button" id="del-yes-@mediaItem.MediaID" href="~/Media/Delete/@mediaItem.MediaID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="del-no-@mediaItem.MediaID" onclick="$('#del-modal-'+@mediaItem.MediaID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    }
+}
+
 
 @* ASPTABLE WITH ALL MEDIA ITEMS: *@
 <table id="allMedia" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="MediaID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="MediaID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.MediaID)
             </th>
             <th data-column-id="thumbnail" class="colour-dpred" data-sortable="false">
@@ -82,18 +118,18 @@
                 @Html.DisplayNameFor(model => model.UserID)
             </th>
             @*<th data-column-id="status" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.StatusID)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.StatusID)
+                </th>*@
             @*<th data-column-id="FCDR" data-cssClass="table-large-identifier" data-formatter="drnumbers" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.ForensicDRNumber)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.ForensicDRNumber)
+                </th>*@
             @*<th data-column-id="dateClosed" data-converter="dpdate" class="colour-dpred">
-                @Html.DisplayNameFor(model => model.DateClosed)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.DateClosed)
+                </th>*@
             <th data-column-id="commands" data-formatter="commands" data-sortable="false" class="colour-dpred">Actions</th>
         </tr>
     </thead>
-    @{ string imgHTML = ""; } 
+    @{ string imgHTML = ""; }
     <tbody>
         @foreach (var item in Model)
         {
@@ -105,38 +141,38 @@
             catch (Exception x)
             {
 
-               
+
             }
             // 404 TODO: Propagate correct IDs from VM
-            if (item.STATUS.StatusValue != "Archived" && item.STATUS.StatusValue != "Inbound" )
+            if (item.STATUS.StatusValue != "Archived" && item.STATUS.StatusValue != "Inbound")
             {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.MediaID)
                     </td>
                     <td>
-                      @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
+                        @*  <img src="@Url.Content(item.MediaLocation)" alt="thumbnail_@item.MediaID" class="media-thumb" style="height: 25px; width: 25px" />*@
                         @*<img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb thumbsize-normal"/>*@
                         @imgHTML
-                        
-                        
+
+
                         @*@Html.Raw(imgHTML)*@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MediaCaption)
                     </td>
-                @if (item.MEDIA_PURPOSE.MediaPurposeValue == "Case Related" && item.ForensicCaseID != null)
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MEDIA_PURPOSE.MediaPurposeValue) (@item.FORENSIC_CASE.ForensicDRNumber)
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MEDIA_PURPOSE.MediaPurposeValue)
-                    </td>
-                }
+                    @if (item.MEDIA_PURPOSE.MediaPurposeValue == "Case Related" && item.ForensicCaseID != null)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MEDIA_PURPOSE.MediaPurposeValue) (@item.FORENSIC_CASE.ForensicDRNumber)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MEDIA_PURPOSE.MediaPurposeValue)
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
@@ -144,14 +180,14 @@
                         @Html.DisplayFor(modelItem => item.USER.FirstName) @Html.DisplayFor(modelItem => item.USER.LastName)
                     </td>
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.STATUS.StatusValue)
+                        </td>*@
                     @*<td class="table-large-identifier">
-                        @Html.DisplayFor(modelItem => item.ForensicDRNumber)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.ForensicDRNumber)
+                        </td>*@
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.DateClosed)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.DateClosed)
+                        </td>*@
                 </tr>
             }
             imgHTML = "";
@@ -176,21 +212,18 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    //if (row.purpose.trim() == "Case Related") { /* CHECK IF THE ITEM IS CASE RELATED, IF TRUE, THEN SHOW 'VIEW', 'MAINTAIN TAGS' and 'DELETE': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" title=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
-                    //} else { /* IN ALL OTHER CASES, SHOW 'VIEW', 'MAINTAIN TAGS', 'LINK TO FORENSIC CASE' and 'DELETE': (FALLBACK): */
-                    //    return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"View\" href=\"/Media/Details/" + row.MediaID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Maintain Tags\" href=\"/Media/Edit/" + row.MediaID.trim() + "\"><i class=\"mdl2-tag\" style=\"font-style: normal\"></i></a>" +
-                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Link To Forensic Case\" href=\"/Media/Link/" + row.MediaID.trim() + "\"><i class=\"mdl2-link\" style=\"font-style: normal\"></i></a>" +
-                    //"<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"Delete\" href=\"/Media/Delete/" + row.MediaID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>"
-                    //}
-                 }/*,*/
-                //"drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                //    return "<span class=\"table-large-identifier\">"+ row.FCDR + "</span>";
-                //}
+                    return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                    "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                    "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.MediaID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.MediaID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                    "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"";                    
+                }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()                
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/Media/Edit/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/Media/Details/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
     </script>
 

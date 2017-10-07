@@ -51,7 +51,7 @@
 <table id="allERC" class="table table-striped table-hover">
     <thead>
         <tr>
-            <th data-id="identifier" data-column-id="ERCID" data-visible="false" data-identifier="true" class="colour-dpred">
+            <th data-id="identifier" data-column-id="ERCID" data-visible="false" data-identifier="true" data-converter="numeric" class="colour-dpred">
                 @Html.DisplayNameFor(model => model.ExternalReviewCaseID)
             </th>
             <th data-column-id="addedBy" class="colour-dpred">
@@ -101,6 +101,112 @@
         }
     </tbody>
 </table>
+@* NOTIFICATION/WARNING MODALS: *@
+@foreach (var erc in Model)
+{
+    if (erc.STATUS.StatusValue != "Pending" || erc.STATUS.StatusValue != "Locked")
+    {
+        <div id="del-modal-@erc.ExternalReviewCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>DELETE</idntwarn> External Review Case <idntwarn>@erc.ExternalDRNumber</idntwarn>?
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="delete-modal-help-@erc.ExternalReviewCaseID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#delete-modal-helpbody-@erc.ExternalReviewCaseID" data-parent="#delete-modal-help-@erc.ExternalReviewCaseID">More Information</div>
+                        <div id="delete-modal-helpbody-@erc.ExternalReviewCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action cannot be reverted.</li>
+                                <li>This action requires authorisation by a Superuser.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    @*<div class="">*@
+                    <input type="button" id="del-yes-@erc.ExternalReviewCaseID" href="~/ExternalReviewCase/Delete/@erc.ExternalReviewCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="del-no-@erc.ExternalReviewCaseID" onclick="$('#del-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    }
+
+    if (erc.STATUS.StatusValue == "Active")
+    {
+        <div id="lock-modal-@erc.ExternalReviewCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>LOCK</idntwarn> External Review Case <idntwarn>@erc.ExternalDRNumber</idntwarn>?
+                </div>
+                @* HELP/INFO *@
+                @*<div class="panel-group" id="lock-modal-help-@fc.ForensicCaseID">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#lock-modal-helpbody-@fc.ForensicCaseID" data-parent="#lock-modal-help-@fc.ForensicCaseID">More Information</div>
+                            <div id="lock-modal-helpbody-@fc.ForensicCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                                <p style="margin-bottom: 0px; font-weight: bold">Code: W003</p>
+                                <hr class="modal-help-hr-warning" />
+                                <ul style="margin-bottom: 0">
+                                    <li>This action will result in a status change of the Forensic Case on the system.</li>
+                                    <li>This action requires authorisation by a Superuser.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>*@
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    @*<div class="">*@
+                    <input type="button" id="lock-yes-@erc.ExternalReviewCaseID" href="~/ExternalReviewCase/Lock/@erc.ExternalReviewCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="lock-no-@erc.ExternalReviewCaseID" onclick="$('#lock-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    @*</div>*@
+                </div>
+            </div>
+        </div>
+    }
+
+    if (erc.STATUS.StatusValue == "Locked")
+    {
+        <div id="unlock-modal-@erc.ExternalReviewCaseID" class="modal-background hidden">
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>UNLOCK</idntwarn> External Review Case <idntwarn>@erc.ExternalDRNumber</idntwarn>?
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="unlock-modal-help-@erc.ExternalReviewCaseID">
+                    <div class="modal-help-panel">
+                        <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#unlock-modal-helpbody-@erc.ExternalReviewCaseID" data-parent="#unlock-modal-help-@erc.ExternalReviewCaseID">More Information</div>
+                        <div id="unlock-modal-helpbody-@erc.ExternalReviewCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                            <p style="margin-bottom: 0px; font-weight: bold">Code: W002</p>
+                            <hr class="modal-help-hr-warning" />
+                            <ul style="margin-bottom: 0">
+                                <li>This action requires a motivation/reason.</li>
+                                <li>This action requires authorisation by a Superuser.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">
+                    <input type="button" id="unlock-yes-@erc.ExternalReviewCaseID" onclick="$('#unlock-yes-'+@erc.ExternalReviewCaseID).addClass('hidden'); $('#unlock-no-'+@erc.ExternalReviewCaseID).addClass('hidden'); $('#reason-'+@erc.ExternalReviewCaseID).removeClass('hidden'); $('#finalize-'+@erc.ExternalReviewCaseID).removeClass('hidden'); " value="Yes" class="btn btn-modal-generic" />
+                    <input type="submit" id="unlock-no-@erc.ExternalReviewCaseID" onclick="$('#unlock-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    <div class="input-group pull-right">
+                        <input type="text" placeholder="Please provide a reason..." id="reason-@erc.ExternalReviewCaseID" onfocus="this.select()" onmouseup="return false;" class="form-control hidden txt-motivation" />
+                        <input type="button" id="finalize-@erc.ExternalReviewCaseID" href="~/ExternalReviewCase/Unlock/@erc.ExternalReviewCaseID" value="Finalize" class="btn btn-modal-generic hidden" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/bootgrid")
@@ -119,27 +225,39 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    if (row.status.trim() === "Locked") { /* CHECK IF THE CASE IS LOCKED, IF TRUE, THEN SHOW 'VIEW' AND 'UNLOCK': */
-                        return "<a class=\"mdl2icon colour-dpblack\" href=\"/ExternalReviewCase/Details/" + row.ERCID.trim() + "\"><i class=\"mdl2-view\" data-toggle=\"tooltip\" value=\"View\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ExternalReviewCase/Unlock/" + row.ERCID.trim() + "\"><i class=\"mdl2-unlock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Active") { /* CHECK IF THE CASE IS ACTIVE, IF TRUE, THEN SHOW ALL ICONS: */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ExternalReviewCase/Details/" + row.ERCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ExternalReviewCase/Edit/" + row.ERCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ExternalReviewCase/Delete/" + row.ERCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ExternalReviewCase/Lock/" + row.ERCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>";
-                    } else if (row.status.trim() === "Pending") { /* CHECK IF THE CASE IS PENDING, IF TRUE, THEN SHOW ONLY 'VIEW': */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ExternalReviewCase/Details/" + row.ERCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>";
-                    } else { /* IN ALL OTHER CASES, SHOW ALL ICONS (FALLBACK): */
-                        return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"View\" href=\"/ExternalReviewCase/Details/" + row.ERCID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Edit\" href=\"/ExternalReviewCase/Edit/" + row.ERCID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Delete\" href=\"/ExternalReviewCase/Delete/" + row.ERCID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>" +
-                    "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" value=\"Lock\" href=\"/ExternalReviewCase/Lock/" + row.ERCID.trim() + "\"><i class=\"mdl2-lock\" style=\"font-style: normal\"></i></a>";
+                    var checkStatus = row.status.trim().toUpperCase();
+                    //return checkStatus.toUpperCase();
+
+                    switch (checkStatus) {
+                        case "LOCKED":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-unlock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"UNLOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-unlock\"></span></button>";
+                        case "ACTIVE":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.ERCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-lock\"></span></button>";
+                        case "PENDING":
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>";
+                        default:
+                            return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.ERCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-lock\"></span></button>";
                     }
                  },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
                     return "<span class=\"table-large-identifier\">"+ row.ERCDR + "</span>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); $('#del-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-lock").on("click", function (e) { this.blur(); $('#lock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-unlock").on("click", function (e) { this.blur(); $('#unlock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/ExternalReviewCase/Edit/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/ExternalReviewCase/Details/" + $(this).data("row-id"); }).tooltip().end()                
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
     </script>
 

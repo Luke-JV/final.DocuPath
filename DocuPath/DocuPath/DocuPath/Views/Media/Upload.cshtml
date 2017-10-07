@@ -20,8 +20,8 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/Media/All" method="post" style="margin-top: 2px">
-                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
+                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                    <button id="btnBack" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-backprevious btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="BACK TO LIST"></button>
                 </form>
             </div>
             <div grid-area="btn2">
@@ -42,6 +42,43 @@
         </div>
     </div>
 </div>
+<div id="divCancelWarning" class="modal-background hidden">
+    <div class="modalbox">
+        @* TITLE *@
+        <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+        @* MESSAGE *@
+        <div class="modalbox-message-text">
+            Are you sure you want to leave this page? Any unsaved changes will be lost.
+        </div>
+        @* HELP/INFO *@
+        <div class="panel-group" id="warninghelpaccordion">
+            <div class="modal-help-panel">
+                <div class="panel-heading modalbox-help-panel-heading" data-toggle="collapse" data-target="#warninghelpbody" data-parent="#warninghelpaccordion">More Information</div>
+                <div id="warninghelpbody" class="panel-collapse collapse modalbox-help-panel-text">
+                    <p style="margin-bottom: 0px; font-weight: bold">Code: W005</p>
+                    <hr class="modal-help-hr-warning" />
+                    <ul class="haptic-ul">
+                        <li>This page allows the user to manipulate information.</li>
+                        <li>If any data has been added/changed/amended, navigating away from this page will result in a loss of modified data.</li>
+                        <li class="colour-dpred">Please make sure that navigation away from this page is the desired action.</li>
+                        <li>To prevent data loss and remain on the current page, click the <kbd>No</kbd> button.</li>
+                        <li>To cancel changes and return to the previous page, click the <kbd>Yes</kbd> button.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* BUTTONS *@
+        <div class="modalbox-button-bar">
+            <div class="col-md-3 modal-btn-col"></div><div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col"></div>
+            <div class="col-md-3 modal-btn-col">
+                <input type="button" id="btnCancelYes" value="Yes" class="btn btn-modal-generic" onclick="window.location.href(@Url.Action("All","Media"))" />
+                <input type="button" id="btnCancelNo" value="No" class="btn btn-modal-generic btn-negate" />
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="form-horizontal border-generic form-generic">
     <form action="~/Media/Add"><input id="btnPOST" class="hidden" type="submit" /></form>
@@ -83,6 +120,13 @@
                 },
             });
 
+            $('#btnBack').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });
+            $('#btnCancelYes').click(function (target) { window.location.href = "@Url.Action("All", "Media")"; });
+            $('#btnCancelNo').click(function () { $('#divCancelWarning').addClass("hidden"); });
+
+        });
+
+
         $('#btnProceed').click(function () {
             // Checking whether FormData is available in browser
             if (window.FormData !== undefined) {
@@ -120,7 +164,6 @@
             }
         });
         $('#btnProceed').blur();
-    });
     </script>
 
     }
