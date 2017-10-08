@@ -2679,10 +2679,20 @@ namespace DocuPath.Controllers
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - Service Requests Section")]
         public ActionResult ForensicCaseAdditionalEvidenceItems(int id)
         {
-            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
-            ViewBag.TargetID = id;
-            ViewBag.Instruction = "UPDATE";
-            return View(db.ADDITIONAL_EVIDENCE.Where(ae => ae.ForensicCaseID == id));
+            var count = db.ADDITIONAL_EVIDENCE.Where(ae => ae.ForensicCaseID == id).Count();
+            if (count < 1)
+            {
+                List<ADDITIONAL_EVIDENCE> aeList = new List<ADDITIONAL_EVIDENCE>();
+                ADDITIONAL_EVIDENCE ae = new ADDITIONAL_EVIDENCE();
+                return View(aeList);
+            }
+            else
+            {
+                ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+                ViewBag.TargetID = id;
+                ViewBag.Instruction = "UPDATE";
+                return View(db.ADDITIONAL_EVIDENCE.Where(ae => ae.ForensicCaseID == id));
+            }
         }
     //>>>>>>>>>>>>>>>>>>>>>>
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Forensic Case - All Sections")]

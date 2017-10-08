@@ -27,12 +27,12 @@
                 </form>
             </div>
             <div grid-area="btn2">
-                <form id="backForm" class="minimalform" action="javascript:void(0))" style="margin-top: 2px">
+                <form id="backForm" class="minimalform" action="@Url.Action("SelectAdditionalEvidenceItems","ForensicCase", new { id = ViewBag.TargetID})" style="margin-top: 2px">
                     <button id="btnAdd" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-add btn-mdl2icon" type="submit" data-toggle="tooltip" title="ADD ADDITIONAL EVIDENCE"></button>
                 </form>
             </div>
             <div grid-area="btn3">
-                <form class="minimalform" action="@Url.Action("ForensicCaseAdditionalEvidenceItems","ForensicCase")" method="post" style="margin-top: 2px">
+                <form class="minimalform" action="@Url.Action("ForensicCaseAdditionalEvidenceItems","ForensicCase", new { id = ViewBag.TargetID})" method="post" style="margin-top: 2px">
                     <button id="btnNext" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-forwardnext btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
                 </form>
             </div>
