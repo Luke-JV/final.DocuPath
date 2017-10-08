@@ -59,7 +59,7 @@
                         <span class="mdl2icon mdl2-company panel-mdl2icon"></span>
                         <span>COMPANY DETAILS</span>
                     </div>
-                    <div class="panel-body" style="height: 298px">
+                    <div class="panel-body" style="min-height: 278px">
                         <div class="form-group">
                             @Html.LabelFor(model => model.serviceProvider.CompanyName, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
@@ -168,7 +168,7 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.serviceProvider.RepEmail, htmlAttributes: new { @class = "control-label col-md-4" })
                             <div class="col-md-8">
-                                @Html.EditorFor(model => model.serviceProvider.RepEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%" } })
+                                @Html.EditorFor(model => model.serviceProvider.RepEmail, new { htmlAttributes = new { @class = "form-control", @style = "width: 100%; margin-bottom: 0" } })
                                 @Html.ValidationMessageFor(model => model.serviceProvider.RepEmail, "", new { @class = "validation-text text-danger" })
                             </div>
                         </div>
