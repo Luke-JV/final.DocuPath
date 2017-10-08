@@ -153,14 +153,14 @@ else
         </ul>
         <div id="CORE" class="tab-pane fade in active" style="padding-top: 5px">
             <div class="row" style="margin-top: 10px">
-                <div class="col-md-9" style="padding-right: 2.5px">
+                <div class="col-md-12">
                     @Html.Label("Critical Data Progress:", htmlAttributes: new { @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
                     <div class="fort-container" id="fortContainerCoreData" data-toggle="tooltip" title="OVERALL PROGRESS" data-placement="top"></div>
                 </div>
-                <div class="col-md-3" style="padding-left: 2.5px">
-                    @Html.Label("Non-Critical Data Progress:", htmlAttributes: new { @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
-                    <div class="fort-container text-center"><span class="missing" id="cke_COD">Cause Of Death Conclusion</span></div>
-                </div>
+                @*<div class="col-md-3" style="padding-left: 2.5px">
+                    @Html.Label("Non-Critical Data Checklist:", htmlAttributes: new { @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
+                    <div class="fort-container text-center"><span class="check" id="cke_COD">Cause Of Death Conclusion</span></div>
+                </div>*@
             </div>
             <div class="row" style="margin-top: 10px;padding:0 45px;">
                 <div class="col-md-6 text-left">

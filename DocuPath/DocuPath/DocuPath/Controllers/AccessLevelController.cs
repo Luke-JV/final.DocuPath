@@ -461,6 +461,128 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Access Level");
                 #endregion
                 AccessLevelViewModel model = new AccessLevelViewModel();
+                model.accessLevel = db.ACCESS_LEVEL.Where(ual => ual.AccessLevelID == id).FirstOrDefault();
+                model.allAreas = db.ACCESS_AREA.ToList();
+                model.fxGroups = db.FUNCTION_GROUP.ToList();
+
+                model.FCAreas = new List<selectAreaKVP>();
+                model.ECAreas = new List<selectAreaKVP>();
+                model.LCAreas = new List<selectAreaKVP>();
+                model.MediaAreas = new List<selectAreaKVP>();
+                model.InsightAreas = new List<selectAreaKVP>();
+                model.VisionAreas = new List<selectAreaKVP>();
+                model.SPAreas = new List<selectAreaKVP>();
+                model.SRAreas = new List<selectAreaKVP>();
+                model.SchedulingAreas = new List<selectAreaKVP>();
+                model.UserAreas = new List<selectAreaKVP>();
+                model.AuditAreas = new List<selectAreaKVP>();
+                model.AccessLevelAreas = new List<selectAreaKVP>();
+                model.ContentTagAreas = new List<selectAreaKVP>();
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.FCAreas.Add(area);
+                }
+
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.ECAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Legacy Case"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.LCAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Media Repository"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.MediaAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Insight Reporting"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.InsightAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORNEA > Vision Dashboard"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.VisionAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Providers"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.SPAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Service Requests"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.SRAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Scheduling"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.SchedulingAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Users"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.UserAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Audit Trail"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.AuditAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Access Levels"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.AccessLevelAreas.Add(area);
+                }
+
+                foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "PULSE > Content Tags"))
+                {
+                    selectAreaKVP area = new selectAreaKVP();
+                    area.areaName = item.AccessAreaDescription;
+                    area.hasAccess = false;
+                    model.ContentTagAreas.Add(area);
+                }
 
                 return View(model);
             }
