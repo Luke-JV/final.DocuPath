@@ -147,6 +147,14 @@ else
         </ul>
 
         <div id="COD" class="tab-pane" style="padding-top: 5px">
+            <div class="row" style="margin-top: 10px;padding:0 45px;">
+                <div class="col-md-6 text-left">
+
+                    <p> @Html.ValidationSummary(false, "", new { @class = "validation-text text-danger" })</p>
+
+
+                </div>
+            </div>
             <div class="container" id="single-left-timelinecontainer">
                 <article id="single-left-timeline">
                     <ul class="single-left-timeline" id="bSTime">
@@ -509,6 +517,7 @@ else
     </script>
     <script>
             $("#btnNext").click(function () {
+                alert()
                 document.getElementById("btnPOST").click();
             })
     </script>
