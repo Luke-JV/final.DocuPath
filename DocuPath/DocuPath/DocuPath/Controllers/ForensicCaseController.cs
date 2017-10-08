@@ -1065,10 +1065,10 @@ namespace DocuPath.Controllers
                     foreach (var AE in AEitems)
                     {
                         AE.AdditionalEvidenceID = AEID;
-                        AE.ContactPersonContactNum = "";
+                        AE.ContactPersonContactNum = "0999999999";
                         AE.ContactPersonNameSurname = "PENDING";
                         AE.EvidenceDescription = "PENDING";
-                        AE.EvidenceSerialNumber = "";
+                        AE.EvidenceSerialNumber = "PENDING";
 
                         AE.ForensicCaseID = id;
 
