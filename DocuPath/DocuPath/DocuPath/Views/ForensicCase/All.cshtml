@@ -171,8 +171,10 @@
             @* BUTTONS *@
             <div class="modalbox-button-bar col-md-12 modal-btn-col">                
                 @*<div class="">*@
-                    <input type="button" id="del-yes-@fc.ForensicCaseID" href="~/ForensicCase/Delete/@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="del-no-@fc.ForensicCaseID" onclick="$('#del-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                <form action="~/ForensicCase/Delete/@fc.ForensicCaseID" method="post">
+                    <input type="submit" id="del-yes-@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
+                    <input type="button" id="del-no-@fc.ForensicCaseID" onclick="$('#del-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                </form>
                 @*</div>*@
             </div>
         </div>
@@ -204,8 +206,10 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <input type="button" id="lock-yes-@fc.ForensicCaseID" href="~/ForensicCase/Lock/@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="lock-no-@fc.ForensicCaseID" onclick="$('#lock-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    <form action="~/ForensicCase/RequestLock/@fc.ForensicCaseID" method="post">
+                        <input type="submit" id="lock-yes-@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
+                        <input type="button" id="lock-no-@fc.ForensicCaseID" onclick="$('#lock-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    </form>
                     @*</div>*@
                 </div>
             </div>

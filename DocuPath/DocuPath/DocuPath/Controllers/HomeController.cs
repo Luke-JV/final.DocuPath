@@ -263,7 +263,10 @@ namespace DocuPath.Controllers
 
         public void ApproveNeuron(NOTIFICATION inbound)
         {
-          
+            if (inbound.NotificationTitle == "LOCK")
+            {
+                db.FORENSIC_CASE.Where(x => x.ForensicDRNumber == inbound.NotificationSummary).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Locked").FirstOrDefault().StatusID;
+            }
         }
 
         

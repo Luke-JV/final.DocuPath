@@ -2861,8 +2861,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Forensic Case");
                 #endregion
                 //404 CONFIRM
-                db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
-                db.SaveChanges();
+                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Forensic Case");
                 #endregion
@@ -2888,6 +2887,8 @@ namespace DocuPath.Controllers
 
             try
             {
+                db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                db.SaveChanges();
                 // TODO: Add delete logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
@@ -2951,6 +2952,68 @@ namespace DocuPath.Controllers
                 RedirectToAction("Error", "Home", x.Message);
             }
             return serviceProviders;
+        }
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Lock Forensic Case")]
+        public ActionResult RequestLock(int id, FormCollection collection)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
+            try
+            {
+                NOTIFICATION lockReq = new NOTIFICATION();
+                USER user = VERTEBRAE.getCurrentUser();
+                lockReq.DateID = DateTime.Now;
+                lockReq.NotificationID = db.NOTIFICATION.Max(x=>x.NotificationID)+1;
+                lockReq.NotificationTitle = "LOCK";
+                lockReq.NotificationTypeID = db.NOTIFICATION_TYPE.Where(x=>x.NotificationTypeValue == "ApproveDeny").FirstOrDefault().NotificationTypeID;
+                lockReq.NotificationSummary = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+                lockReq.NotificationDetails = user.FirstName + " " + user.LastName +" requested a deletion of a Forensic Case with the following details: "+lockReq.NotificationTitle+".";
+                lockReq.UserID = 2;
+                db.NOTIFICATION.Add(lockReq);
+                db.SaveChanges();
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("All");
+            }
+            catch
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
+        }
+        [HttpPost]
+        [AuthorizeByAccessArea(AccessArea = "Lock Forensic Case")]
+        public ActionResult Lock(int id, FormCollection collection)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(collection);
+            }
+
+            try
+            {
+                db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Locked").FirstOrDefault().StatusID;
+                db.SaveChanges();
+                // TODO: Add delete logic here
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                #region AUDIT_WRITE
+                //AuditModel.WriteTransaction(0, "404");
+                #endregion
+                return View();
+            }
         }
         #endregion
     }

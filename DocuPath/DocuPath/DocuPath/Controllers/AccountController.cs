@@ -333,9 +333,8 @@ namespace DocuPath.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterUserProfile(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new DPUser { UserName = model.Email };
+            
+                var user = new DPUser { UserName = model.user.AcademicEmail };
                 user.FirstName = model.user.FirstName;
                 user.AcademicID = model.user.AcademicID;
                 user.NationalID = model.user.NationalID;
@@ -371,10 +370,7 @@ namespace DocuPath.Controllers
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return null;
         }
         //
         // GET: /Account/ConfirmEmail
