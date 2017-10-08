@@ -296,7 +296,7 @@
 
     <script>
         $('#btnNext').click(function () {
-            document.getElementById('btnPOST').click();
+            
         })
     </script>
 
@@ -351,7 +351,7 @@
         //    document.getElementById("btnPOST").click();
 
         //});
-        $("#btnSubmit").click(function (request) {
+        $("#btnNext").click(function (request) {
 
             var all = "";
             for (var z = 0; z < count; z++) {
@@ -369,6 +369,7 @@
                 success: function (data) {
                     response($.map(data, function (item) {
                         return item;
+                    document.getElementById('btnPOST').click();
                     }))
                 },
                 error: function (response) {

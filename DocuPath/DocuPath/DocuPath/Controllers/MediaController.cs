@@ -433,7 +433,7 @@ namespace DocuPath.Controllers
                         AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadSuccess, "Media");
                         #endregion
                         // Returns message that successfully uploaded  
-                        return Json("File Uploaded Successfully!");
+                        return Json("File(s) Uploaded Successfully!");
                     }
                     catch (Exception ex)
                     {

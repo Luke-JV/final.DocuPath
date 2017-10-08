@@ -910,7 +910,7 @@ namespace DocuPath.Controllers
                 {
 
                 }
-
+                
                 foreach (var item in model.mediaList)
                 {
                     var input = db.MEDIA.Where(x => x.MediaID == item.MediaID).FirstOrDefault();
@@ -922,8 +922,10 @@ namespace DocuPath.Controllers
                     {
                         input.ForensicCaseID = item.ForensicCaseID;
                     }
-
+                    db.MEDIA.Attach(input);
+                    db.Entry(input).State = EntityState.Modified;
                 }
+                
                 db.SaveChanges();
 
                 // TODO: Add insert logic here
