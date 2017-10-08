@@ -43,7 +43,7 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
+        <input  class="hidden" type="submit" id="btnPOST"/>
         <div class="form-horizontal form-generic nopad">
             @Html.Label("Critical Data Progress:", htmlAttributes: new { @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
             <div class="fort-container" id="pbrRegistration"></div>
@@ -64,6 +64,7 @@
                                         @*@Html.DropDownList("TitleID", null, htmlAttributes: new { @class = "form-control" })*@
                                         @*@Html.EditorFor(model => model.TITLE.TitleValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                         @Html.DropDownListFor(model => model.user.TitleID, new SelectList(Model.titles, "TitleID", "TitleValue"), "Select a Title...", new { @class = "form-control", @style = "width: 75px" })
+                                        
                                         @Html.ValidationMessageFor(model => model.user.TitleID, "", new { @class = "validation-text text-danger" })
                                     </div>
                                 </div>
@@ -417,6 +418,16 @@
             //    })
             //});
         </script>
+<script>
+            $('#btnSave').click(function () {
+                var btnPost = document.getElementById('btnPOST');
+
+                btnPost.click();
+
+            });
+
+</script>
+
         <script>
             //$(document).ready(function () {
             //    jQuery(function ($) {

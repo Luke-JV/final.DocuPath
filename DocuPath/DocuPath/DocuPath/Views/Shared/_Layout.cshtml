@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @using DocuPath.Models
+@using DocuPath.DataLayer
 <!DOCTYPE html>
 <html>
 <head>
@@ -558,10 +559,10 @@
 
             // TODO: jQuery to handle each individual notification, loop-style...
             $("#noNotifications").hide();
-            $("#N1").show();
-            $("#N2").show();
-            $("#N3").show();
-            $("#N4").show();
+            //$("#N1").show();
+            //$("#N2").show();
+            //$("#N3").show();
+            //$("#N4").show();
             //$("#N5").show();
             //$("#N6").show();
 
@@ -571,10 +572,10 @@
                 $("#noNotifications").hide();
                 $("#neuronBadge").show();
                 $("#neuronBadge").text("4");
-                $("#N1").show();
-                $("#N2").show();
-                $("#N3").show();
-                $("#N4").show();
+                //$("#N1").show();
+                //$("#N2").show();
+                //$("#N3").show();
+                //$("#N4").show();
                 //$("#N5").show();
                 //$("#N6").show();
                 $("#neuronicon").removeClass("mdl2-neuron");
@@ -692,6 +693,42 @@
         //    setInterval(updateClock, 1000);
         //}
         //updateClock(); // initial call
+    </script>
+    @* NEURON *@
+  
+    <script>
+        @{
+            List<NOTIFICATION> neurons = ViewBag.Neurons;
+            if (Request.IsAuthenticated)
+            {
+                foreach (NOTIFICATION notification in neurons)
+                {
+                    int id = notification.NotificationID;
+                    if (notification.NotificationID == 2)
+                    {
+                        @Html.Raw("$('#n_btnAcpt_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','ACCEPT');$.ajax({url: '/Home/HandleNeuron/'+" + id + ",type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        //@Html.Raw("$('#n_btnAcpt_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','APPROVE');alert(nData)});");
+                        @Html.Raw("$('#n_btnRjct_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','REJECT');$.ajax({url: '/Home/HandleNeuron/'+" + id + ",type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        //@Html.Raw("$('#n_btnRjct_" + id + "').click(function () {alert()});");
+                    }
+                    else if (notification.NotificationID == 3)
+                    {
+                        @Html.Raw("$('#n_btnAprv_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','APPROVE');$.ajax({url: '/Home/HandleNeuron/'+" + id + ",type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        //@Html.Raw("$('#n_btnAprv_" + id + "').click(function () {alert()});");
+                        @Html.Raw("$('#n_btnDeny_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','DENY');$.ajax({url: '/Home/HandleNeuron/'+" + id + ",type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        //@Html.Raw("$('#n_btnDeny_" + id + "').click(function () {alert()});");
+                    }
+                    else
+                    {
+                        @Html.Raw("$('#n_btnOK_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','OK');$.ajax({url: '/Home/HandleNeuron/'+" + id + ",type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        //@Html.Raw("$('#n_btnOK_" + id + "').click(function () {alert()});");
+
+                    }
+
+                }
+            }
+            }
+
     </script>
 </body>
 </html>

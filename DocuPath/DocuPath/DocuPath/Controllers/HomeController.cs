@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -208,5 +209,83 @@ namespace DocuPath.Controllers
         {
             return View();
         }
+
+
+        public ActionResult HandleNeuron(int id)
+        {
+            try
+            {
+                NOTIFICATION neuron = db.NOTIFICATION.Where(x => x.NotificationID == id).FirstOrDefault();
+                string instruction = Request.Form.Get("INSTRUCTION");
+                switch (neuron.NOTIFICATION_TYPE.NotificationTypeValue)
+                {
+                    case "AcceptReject":
+                        if (instruction == "ACCEPT")
+                        {
+                            AcceptNeuron(neuron);
+                        }
+                        else
+                        {
+                            RejectNeuron(neuron);
+                        }
+                        break;
+
+                    case "ApproveDeny":
+                        if (instruction == "APPROVE")
+                        {
+                            ApproveNeuron(neuron);
+                        }
+                        else
+                        {
+                            DenyNeuron(neuron);
+                        }
+                        break;
+
+                    case "Information":
+                        break;                    
+
+                    default:
+                        break;
+                }
+
+                neuron.HandledDateTimeStamp = DateTime.Now;
+                db.NOTIFICATION.Attach(neuron);
+                db.Entry(neuron).State = EntityState.Modified;
+                db.SaveChanges();
+                return null;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+        }
+
+        public void ApproveNeuron(NOTIFICATION inbound)
+        {
+          
+        }
+
+        
+        public void DenyNeuron(NOTIFICATION inbound)
+        {
+           
+        }
+
+        
+        public void AcceptNeuron(NOTIFICATION inbound)
+        {
+          
+        }
+
+        
+        public void RejectNeuron(NOTIFICATION inbound)
+        {
+            
+        }
+
+        
+
+
     }
 }
