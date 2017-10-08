@@ -460,8 +460,9 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Access Level");
                 #endregion
-                //logic 404
-                return View();
+                AccessLevelViewModel model = new AccessLevelViewModel();
+
+                return View(model);
             }
             catch (Exception x)
             {

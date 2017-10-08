@@ -1693,6 +1693,13 @@ namespace DocuPath.Controllers
                 }
 
                 model.forensicCase = modelCase;
+                foreach (var item in model.forensicCase.SERVICE_REQUEST)
+                {
+                    if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                    {
+                        item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT = new EXTERNAL_REPORT();
+                    }
+                }
                 model.genObservation = modelCase.GENERAL_OBSERVATION.FirstOrDefault();
                 model.headNeckObservation = modelCase.HEAD_NECK_OBSERVATION.FirstOrDefault();
                 model.abdObservation = modelCase.ABDOMEN_OBSERVATION.FirstOrDefault();
@@ -1701,7 +1708,7 @@ namespace DocuPath.Controllers
                 model.serviceRequests = modelCase.SERVICE_REQUEST.ToList();
                 model.media = modelCase.MEDIA.ToList();
                 model.additionalEvidence = modelCase.ADDITIONAL_EVIDENCE.ToList();
-                model.stats = modelCase.CASE_STATISTICS.FirstOrDefault();
+                model.stats = modelStats;
                 model.caseCODEstimations = modelCase.CASE_COD_ESTIMATION.ToList();
                 model.sampleInvestigations = modelStats.STATS_SAMPLES_INVESTIGATION.ToList();
                 model.medTreatments = modelStats.STATS_TREATMENTS.ToList();
