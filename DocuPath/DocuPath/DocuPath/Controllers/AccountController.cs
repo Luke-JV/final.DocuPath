@@ -15,9 +15,9 @@ using System.Collections.Generic;
 
 namespace DocuPath.Controllers
 {
-   
-    
-   
+
+
+
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -27,7 +27,7 @@ namespace DocuPath.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -39,9 +39,9 @@ namespace DocuPath.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -59,14 +59,14 @@ namespace DocuPath.Controllers
 
         //
         // GET: /Account/Login
-        
+
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
-       
+
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -89,8 +89,8 @@ namespace DocuPath.Controllers
             {
                 case SignInStatus.Success:
                     {
-                        
-                        int id = UserManager.FindByName(model.Email).Id ;
+
+                        int id = UserManager.FindByName(model.Email).Id;
                         #region AUDIT_WRITE
                         AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddInit, "Account");
                         #endregion
@@ -149,7 +149,7 @@ namespace DocuPath.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -168,16 +168,16 @@ namespace DocuPath.Controllers
             TOKEN_LOG redemptionToken = new TOKEN_LOG();
             using (DocuPathEntities db = new DocuPathEntities())
             {
-                
+
                 PasswordHasher crypto = new PasswordHasher();
                 //string hash = crypto.HashPassword(id);
-                foreach (var tk in db.TOKEN_LOG.Where(x=>x.RedemptionTimestamp == null))
+                foreach (var tk in db.TOKEN_LOG.Where(x => x.RedemptionTimestamp == null))
                 {
-                    if (crypto.VerifyHashedPassword(tk.TokenValue,id) != PasswordVerificationResult.Failed)
+                    if (crypto.VerifyHashedPassword(tk.TokenValue, id) != PasswordVerificationResult.Failed)
                     {
                         db.TOKEN_LOG.Where(m => m.TokenID == tk.TokenID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
                         RegSesh session = new RegSesh();
-                        session.id = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString()); 
+                        session.id = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString());
                         session.alID = tk.AccessLevelID;
                         Session["REG"] = session;
                         return RedirectToAction("RegisterUserProfile");
@@ -203,29 +203,29 @@ namespace DocuPath.Controllers
             if (VECTOR._lock(session.id))
             {
                 RegisterViewModel model = new RegisterViewModel();
-                using (DocuPathEntities db = new DocuPathEntities())
-                {
-                    model.user = new USER();
-                    model.user.USER_LOGIN = new USER_LOGIN();
-                    model.user.USER_LOGIN.AccessLevelID = session.alID;
-                    model.titles = db.TITLE.ToList();
+                DocuPathEntities db = new DocuPathEntities();
 
-                    List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
-                    UiPrefKVP notset = new UiPrefKVP();
-                    notset.prefID = null;
-                    notset.prefPhrase = "Not Set";
-                    prefslist.Add(notset);
-                    UiPrefKVP light = new UiPrefKVP();
-                    light.prefID = 0;
-                    light.prefPhrase = "Light Theme";
-                    prefslist.Add(light);
-                    UiPrefKVP dark = new UiPrefKVP();
-                    dark.prefID = 1;
-                    dark.prefPhrase = "Dark Theme";
-                    prefslist.Add(dark);
+                model.user = new USER();
+                model.user.USER_LOGIN = new USER_LOGIN();
+                model.user.USER_LOGIN.AccessLevelID = session.alID;
+                model.titles = db.TITLE.ToList();
 
-                    model.uiprefs = prefslist;
-                }
+                List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
+                UiPrefKVP notset = new UiPrefKVP();
+                notset.prefID = null;
+                notset.prefPhrase = "Not Set";
+                prefslist.Add(notset);
+                UiPrefKVP light = new UiPrefKVP();
+                light.prefID = 0;
+                light.prefPhrase = "Light Theme";
+                prefslist.Add(light);
+                UiPrefKVP dark = new UiPrefKVP();
+                dark.prefID = 1;
+                dark.prefPhrase = "Dark Theme";
+                prefslist.Add(dark);
+
+                model.uiprefs = prefslist;
+
                 return View(model);
             }
             else
@@ -243,29 +243,29 @@ namespace DocuPath.Controllers
             if (VECTOR._lock(session.id))
             {
                 RegisterViewModel model = new RegisterViewModel();
-                using (DocuPathEntities db = new DocuPathEntities())
-                {
-                    model.user = new USER();
-                    model.user.USER_LOGIN = new USER_LOGIN();
-                    model.user.USER_LOGIN.AccessLevelID = session.alID;
-                    model.titles = db.TITLE.ToList();
+                DocuPathEntities db = new DocuPathEntities();
 
-                    List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
-                    UiPrefKVP notset = new UiPrefKVP();
-                    notset.prefID = null;
-                    notset.prefPhrase = "Not Set";
-                    prefslist.Add(notset);
-                    UiPrefKVP light = new UiPrefKVP();
-                    light.prefID = 0;
-                    light.prefPhrase = "Light Theme";
-                    prefslist.Add(light);
-                    UiPrefKVP dark = new UiPrefKVP();
-                    dark.prefID = 1;
-                    dark.prefPhrase = "Dark Theme";
-                    prefslist.Add(dark);
+                model.user = new USER();
+                model.user.USER_LOGIN = new USER_LOGIN();
+                model.user.USER_LOGIN.AccessLevelID = session.alID;
+                model.titles = db.TITLE.ToList();
 
-                    model.uiprefs = prefslist;
-                }
+                List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
+                UiPrefKVP notset = new UiPrefKVP();
+                notset.prefID = null;
+                notset.prefPhrase = "Not Set";
+                prefslist.Add(notset);
+                UiPrefKVP light = new UiPrefKVP();
+                light.prefID = 0;
+                light.prefPhrase = "Light Theme";
+                prefslist.Add(light);
+                UiPrefKVP dark = new UiPrefKVP();
+                dark.prefID = 1;
+                dark.prefPhrase = "Dark Theme";
+                prefslist.Add(dark);
+
+                model.uiprefs = prefslist;
+
                 return View(model);
             }
             else
@@ -308,8 +308,60 @@ namespace DocuPath.Controllers
 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return
+
+                View(model);
+        }
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterUserProfile(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new DPUser { UserName = model.Email };
+                user.FirstName = model.user.FirstName;
+                user.AcademicID = model.user.AcademicID;
+                user.NationalID = model.user.NationalID;
+                user.MiddleName = model.user.MiddleName;
+                user.LastName = model.user.LastName;
+                user.PhysicalAddress = model.user.PhysicalAddress;
+                user.TitleID = model.user.TitleID;
+                user.TelNum = model.user.TelNum;
+                user.PostalAddress = model.user.PostalAddress;
+                user.PersonalEmail = model.Email;
+                user.AcademicEmail = model.user.AcademicEmail;
+                user.QualificationDescription = model.user.QualificationDescription;
+                user.AccessLevelID = model.user.USER_LOGIN.AccessLevelID;
+
+                user.Discriminator = model.user.FirstName;
+                user.DisplayInitials = model.user.DisplayInitials;
+                user.CellNum = model.user.CellNum;
+                user.DarkUIPref = model.user.DarkUIPref;
+                user.WorkNum = model.user.WorkNum;
+                user.HPCSARegNumber = model.user.HPCSARegNumber;
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -324,7 +376,6 @@ namespace DocuPath.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -359,14 +410,14 @@ namespace DocuPath.Controllers
                 if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToAction("Home","Index");
+                    return RedirectToAction("Home", "Index");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                 VERTEBRAE.sendMail(model.Email, "Please reset your password by clicking: " + callbackUrl ,"RESET PASSWORD");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                VERTEBRAE.sendMail(model.Email, "Please reset your password by clicking: " + callbackUrl, "RESET PASSWORD");
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
