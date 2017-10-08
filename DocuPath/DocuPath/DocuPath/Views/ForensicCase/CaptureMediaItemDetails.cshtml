@@ -353,6 +353,7 @@
         //});
         $("#btnNext").click(function (request) {
 
+                    document.getElementById('btnPOST').click();
             var all = "";
             for (var z = 0; z < count; z++) {
                 var mID = document.getElementById("key-" + z).value;
@@ -369,7 +370,6 @@
                 success: function (data) {
                     response($.map(data, function (item) {
                         return item;
-                    document.getElementById('btnPOST').click();
                     }))
                 },
                 error: function (response) {

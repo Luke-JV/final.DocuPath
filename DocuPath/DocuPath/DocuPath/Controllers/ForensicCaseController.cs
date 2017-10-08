@@ -506,6 +506,13 @@ namespace DocuPath.Controllers
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
             }
         }
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
+        [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
+        public ActionResult UpdateSpecimens(int id)
+        {
+            TempData["INSTRUCTION"] = "UPDATE";
+            return RedirectToAction("ProvideSpecimens","ForensicCase",new { id = id});
+        }
         //>>>>>>>>>>>>>>>>>>>>>>        
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - All Sections")]
         [AuthorizeByAccessArea(AccessArea = "Add Forensic Case - Service Requests Section")]
@@ -523,8 +530,11 @@ namespace DocuPath.Controllers
                 model.fcID = id;
                 model.specimens = new List<specimen>();
                 model.specimens.Add(new specimen());
-                
 
+                if ((string)TempData["INSTRUCTION"]=="UPDATE")
+                {
+                    ViewBag.Instruction = "UPDATE";
+                }
                 #endregion
                 return View(model);
             }
@@ -2039,7 +2049,8 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("UpdateCauseOfDeath", new { id = upCase.ForensicCaseID });
+                TempData["INSTRUCTION"] = "UPDATE";
+                return RedirectToAction("ProvideSpecimens", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {

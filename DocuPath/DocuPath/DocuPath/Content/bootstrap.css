@@ -10842,7 +10842,6 @@ a.cal-event-week {
     font-weight: normal;
     text-transform: uppercase !important;
     transition: 1s all;
-    line-height: 2px;
 }
 
 .haptic-ul {

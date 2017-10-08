@@ -135,7 +135,7 @@ else
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+    
     <input id="btnPOST" type="submit" class="hidden" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
@@ -156,6 +156,7 @@ else
 
                 </div>
             </div>
+
             <div class="container" id="timelinecontainer">
                 <article id="timeline">
                     <ul class="timeline" id="bSTime">
