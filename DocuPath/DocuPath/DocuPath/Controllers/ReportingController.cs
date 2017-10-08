@@ -253,10 +253,39 @@ namespace DocuPath.Controllers
             }
         }
 
-        //[AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
-        //public ActionResult GenCODReport()
-        //{
+        [AuthorizeByAccessArea(AccessArea = "Insight Reporting - All Reports")]
+        public ActionResult GenerateCauseOfDeathReport()
+        {
+            string actionName = "GenerateCauseOfDeathReport";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingInit, "INSIGHT Reporting");
+                #endregion
 
-        //}
+                List<AUDIT_LOG> model = new List<AUDIT_LOG>();
+                int uId = VERTEBRAE.getCurrentUser().UserID;
+                AUDIT_LOG txToAdd = new AUDIT_LOG();
+
+                foreach (var tx in db.AUDIT_LOG.Where(tx => tx.UserID == uId))
+                {
+                    txToAdd = tx;
+                    model.Add(txToAdd);
+                }
+
+                ViewBag.EntriesQty = model.Count;
+
+                model = model.OrderByDescending(tx => tx.TxDateStamp).ToList();
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.ReportingFail, "INSIGHT Reporting");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
     }
 }

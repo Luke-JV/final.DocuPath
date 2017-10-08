@@ -276,7 +276,7 @@
                                 <div class="form-group" style="margin-bottom: 0px">
                                     @Html.LabelFor(model => model.user.DarkUIPref, htmlAttributes: new { @class = "col-md-4 control-label" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.user.DarkUIPref, new { @class = "form-control", @style = "width: 50px; margin-bottom: 0" })
+                                        @Html.DropDownListFor(model => model.user.DarkUIPref, new SelectList(Model.uiprefs, "prefID", "prefPhrase"), new { @class = "form-control", @style = "padding: 5px; margin-bottom: 0" })
                                         @Html.ValidationMessageFor(model => model.user.DarkUIPref, "", new { @class = "validation-text text-danger text-center" })
                                     </div>
                                 </div>

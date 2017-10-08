@@ -40,14 +40,14 @@
     </div>
 </div>
 @* DETAILS OF SELECTED EXTERNAL REVIEW CASE: *@
-<div class="form-horizontal border-generic form-generic grid erc-view-grid">
+<div class="form-horizontal border-generic form-generic grid erc-view-grid" style="padding-bottom: 0">
     <div class="panel panel-default nomarg" grid-area="details">
         <div class="panel-heading">
             <span class="mdl2icon mdl2-erc panel-mdl2icon"></span>
             <span>EXTERNAL REVIEW CASE DETAILS</span>
         </div>
         <div id="ERCPanel" class="panel-collapse collapse in">
-            <div class="panel-body">
+            <div class="panel-body" style="text-align: left">
                 <dl class="dl-horizontal-small">
                     <dt style="padding-top: 5.2px">
                         @Html.DisplayNameFor(model => model.ExternalDRNumber)
@@ -84,10 +84,17 @@
                     <dt>
                         @Html.DisplayNameFor(model => model.DateClosed)
                     </dt>
+                    @if (Model.DateClosed == null || Model.DateClosed.Value.Year == 9999)
+                    {
+                        <dd class="status-inactive">Active Case</dd>
+                    }
+                    else
+                    {
+                        <dd>
+                            @ViewBag.DateClosed
+                        </dd>                        
+                    }
 
-                    <dd>
-                        @Html.DisplayFor(model => model.DateClosed)
-                    </dd>
 
                     @*<dt>
                             @Html.DisplayNameFor(model => model.CoverLetterLocation)
@@ -108,34 +115,69 @@
                     <dt>
                         @Html.DisplayNameFor(model => model.STATUS.StatusValue)
                     </dt>
-
-                    <dd>
+                    @if (Model.STATUS.StatusValue == "Active")
+                    {
+                        <dd class="status-ok">Active</dd>
+                    }
+                    else if (Model.STATUS.StatusValue == "Pending")
+                    {
+                        <dd class="status-warning">Pending</dd>
+                    }
+                    else if (Model.STATUS.StatusValue == "Locked")
+                    {
+                        <dd class="status-danger">Locked</dd>
+                    }
+                    @*<dd>
                         @Html.DisplayFor(model => model.STATUS.StatusValue)
-                    </dd>
+                    </dd>*@
                 </dl>
             </div>
         </div>
     </div>
     <div class="panel panel-default nomarg" grid-area="cover">
-        <div class="panel-heading">
-            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-            <span>Cover Letter</span>
+        <div class="panel-heading params-panel-heading-grid" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer"*@>
+            <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+            <span grid-area="parm_hdr_txt">COVER LETTER</span>
+            <button id="btnViewCover" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="VIEW" data-placement="bottom" grid-area="parm_hdr_btn"></button>
         </div>
         <div id="CoverLetterPanel" class="panel-collapse collapse in">
-            <div class="panel-body text-center apad5">
-                <img src="@VERTEBRAE.GetThumbUrl(Model.CoverLetterLocation)" class='media-thumb thumbsize-normal'/>
+            <div class="panel-body text-center apad5" style="padding-top: 25px">
+                @if (Model.CoverLetterLocation == null)
+                {
+                    @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail("", false))
+                    <p class="filetype-thumbnail-filename">NO FILE UPLOADED</p>
+                }
+                else if (Model.CoverLetterLocation != null)
+                {
+                    @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.CoverLetterLocation).Replace(".", ""), false))
+                    <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.CoverLetterLocation)</p>
+                }
+
+                @*<img src="@VERTEBRAE.GetThumbUrl(Model.CoverLetterLocation)" class='media-thumb thumbsize-normal'/>*@
                 @*<img src="~/Content/Resources/ERCCoverLetterPreview.png" style="max-width: 57%" />*@
             </div>
         </div>
     </div>
     <div class="panel panel-default nomarg" grid-area="report">
-        <div class="panel-heading">
-            <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-            <span>Case Report</span>
-        </div>
+        <div class="panel-heading params-panel-heading-grid" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer"*@>
+            <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+            <span grid-area="parm_hdr_txt">CASE REPORT</span>
+            <button id="btnViewReport" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="VIEW" data-placement="bottom" grid-area="parm_hdr_btn"></button>
+        </div>        
         <div id="ERCReportPanel" class="panel-collapse collapse in">
-            <div class="panel-body text-center apad5">
-                <img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />
+            <div class="panel-body text-center apad5" style="padding-top: 25px">
+                @if (Model.ExtCaseReportLocation == null)
+                {
+                    @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail("", false))
+                    <p class="filetype-thumbnail-filename">NO FILE UPLOADED</p>
+                }
+                else if (Model.ExtCaseReportLocation != null)
+                {
+                    @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.ExtCaseReportLocation).Replace(".", ""), false))
+                    <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.ExtCaseReportLocation)</p>
+                }
+
+                @*<img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />*@
             </div>
         </div>
     </div>

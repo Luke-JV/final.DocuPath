@@ -142,6 +142,7 @@ namespace DocuPath.Models
             const string AddCT = "<ul class=\"haptic-ul\"> <li><strong>This page displays the details required to add a Content Tag to the DocuPath system.</strong></li> <li><kbd>Tag Text</kbd>, <kbd>Tag Category</kbd>, <kbd>Tag Subcategory</kbd> and <kbd>Tag Condition</kbd> are required to successfully add the Content Tag.</li> </ul>";
             const string AllCT = "<ul class=\"haptic-ul\"> <li><strong>This page displays an interactive table containing all CDC ICD10 Content Tags in the DocuPath system that the user is eligible to access.</strong></li> <li>Items in the table can be <kbd>Searched/Filtered</kbd>, <kbd>Sorted</kbd> in either ascending or descending order by a specific column, and columns can be <kbd>Hidden / Shown</kbd> as needed.</li> <li>Access to functionality for <kbd>Viewing</kbd>, <kbd>Editing</kbd>, <kbd>Deleting</kbd>, an item is provided in the last column of the table for each Content Tag displayed.</li> <li>The option to add a new Content Tag or update the Content Tag Repository is available from the actions bar on this page.</li> </ul>";
             const string ViewCT = "<ul class=\"haptic-ul\"> <li><strong>This page displays the full set of detailed information of the selected Content Tag at the current point in time.</strong></li> <li><kbd>Content Tag details</kbd> as well as the <kbd>Tag Category</kbd>, <kbd>Tag Subcategory</kbd> and <kbd>Tag Condition</kbd> are displayed.</li> <li>No changes can be made to the Content Tag from this page.</li> </ul>";
+            const string UpdateCT = "";
             const string UpdateCTRepo = "<ul class=\"haptic-ul\"> <li><strong>This page displays the facility to Update the Content Tag Repository.</strong></li> <li>Content Tag Files are uploaded via the <kbd>Browse</kbd> button.</li> <li>The <ctrl>File Upload</ctrl> control on this page is set up to warn the user of any file incompatibilities, size restrictions, upload quantity restrictions or other applicable limitations.</li> </ul>";
             const string AddERC = "<ul class=\"haptic-ul\"> <li><strong>This page captures the details required to add an External Review Case to the DocuPath system.  </strong></li> <li>Each captured External Review Case requires a <kbd>DR Number</kbd> and an <kbd>assignee</kbd> to be successfully added. </ul>";
             const string AllERC = "<ul class=\"haptic-ul\"> <li><strong>This page displays an interactive table containing all External Review Cases in the DocuPath system that the user is eligible to access. </strong></li> <li>Items in the table can be <kbd>Searched/Filtered</kbd>, <kbd>Sorted</kbd> in either ascending or descending order by a specific column, and columns can be <kbd>Hidden / Shown</kbd> as needed.</li> <li>Access to functionality for <kbd>Viewing</kbd> <kbd>Locking</kbd>, <kbd>Unlocking</kbd>, <kbd>Editing</kbd> and <kbd>Archiving</kbd> an item is provided in the last column of the table for each External Review Case displayed.</li> <li>The option to add a new External Review case is available from this page.</li> </ul>";
@@ -214,6 +215,7 @@ namespace DocuPath.Models
             const string AddCTSpecific = "";
             const string AllCTSpecific = "";
             const string ViewCTSpecific = "";
+            const string UpdateCTSpecific = "";
             const string UpdateCTRepoSpecific = "";
             const string AddERCSpecific = "";
             const string AllERCSpecific = "";
@@ -469,6 +471,7 @@ namespace DocuPath.Models
                     case "AddCTSpecific": return AddCTSpecific;
                     case "AllCTSpecific": return AllCTSpecific;
                     case "ViewCTSpecific": return ViewCTSpecific;
+                    case "UpdateCTSpecific": return UpdateCTSpecific;
                     case "UpdateCTRepoSpecific": return UpdateCTRepoSpecific;
                     case "AddERCSpecific": return AddERCSpecific;
                     case "AllERCSpecific": return AllERCSpecific;
@@ -528,6 +531,7 @@ namespace DocuPath.Models
                     case "AddCT": return AddCT;
                     case "AllCT": return AllCT;
                     case "ViewCT": return ViewCT;
+                    case "UpdateCT": return UpdateCT;
                     case "UpdateCTRepo": return UpdateCTRepo;
                     case "AddERC": return AddERC;
                     case "AllERC": return AllERC;

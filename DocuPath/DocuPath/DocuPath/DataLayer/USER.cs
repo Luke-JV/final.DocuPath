@@ -44,7 +44,6 @@ namespace DocuPath.DataLayer
         [DisplayName("First Name")]
         public string FirstName { get; set; }
         [DefaultValue(FLAG.Text)]
-        [Required]
         [DisplayName("Middle Name")]
         public string MiddleName { get; set; }
         [DefaultValue(FLAG.Text)]

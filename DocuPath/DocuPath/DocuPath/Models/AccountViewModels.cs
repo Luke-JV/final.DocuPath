@@ -1,4 +1,5 @@
 ﻿using DocuPath.DataLayer;
+using DocuPath.Models.DPViewModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -84,6 +85,7 @@ namespace DocuPath.Models
         public USER user{ get; set; }
         
         public List<TITLE> titles { get; set; }
+        public List<UiPrefKVP> uiprefs { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -152,6 +152,10 @@ namespace DocuPath.Controllers
                 #region MODEL POPULATION
                 EXTERNAL_REVIEW_CASE model = new EXTERNAL_REVIEW_CASE();
                 model = db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalReviewCaseID == id).FirstOrDefault();
+
+                string test = Convert.ToDateTime(model.DateClosed).ToString("dd MMM yyyy HH:mm:ss");
+                ViewBag.DateClosed = test;
+
                 #endregion
 
                 #region VALIDATE_ACCESS

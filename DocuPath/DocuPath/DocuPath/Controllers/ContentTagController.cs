@@ -212,6 +212,32 @@ namespace DocuPath.Controllers
             }
         }
 
+        [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
+        public ActionResult Edit(int id)
+        {
+            string actionName = "Edit";
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "Content Tag - Edit");
+                #endregion
+
+                ContentTagViewModel model = new ContentTagViewModel();
+
+                model.tag = db.CONTENT_TAG.Where(ct => ct.ContentTagID == id).FirstOrDefault();
+
+                return View(model);
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "Content Tag - Edit");
+                #endregion
+                VERTEBRAE.DumpErrorToTxt(x);
+                return View("Error", new HandleErrorInfo(x, controllerName, actionName));
+            }
+        }
+
         [HttpPost]
         [AuthorizeByAccessArea(AccessArea = "Update/Edit Content Tag")]
         public ActionResult Edit(int id, FormCollection collection)

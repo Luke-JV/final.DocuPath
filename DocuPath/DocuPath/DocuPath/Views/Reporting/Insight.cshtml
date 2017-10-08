@@ -1,6 +1,4 @@
 ﻿@model DocuPath.Models.DPViewModels.ReportingViewModel
-<link rel="stylesheet" href="~/Content/bootstrap-material-datetimepicker.css" type="text/css" />
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
 @{ ViewBag.Title = "INSIGHT"; ViewBag.GenericHAPTICLocator = "INSIGHTGeneric"; ViewBag.SpecificHAPTICLocator = "INSIGHTSpecific"; ViewBag.PageInfoLocator = "INSIGHT"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -63,7 +61,7 @@
                 <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
                 <span>Report Timeframe</span>
             </div>
-            <div id="timeframe" class="panel-collapse collapse in">
+            <div id="timeframe" class="panel-collapse collapse">
                 <div class="panel-body grid insight-subgrid apad5">
                     <div class="controls">
                         @* TIMEFRAME OPTIONS *@
@@ -140,7 +138,7 @@
                 <span class="mdl2icon mdl2-params panel-mdl2icon"></span>
                 <span>Report Parameters</span>
             </div>
-            <div id="parameters" class="panel-collapse collapse in">
+            <div id="parameters" class="panel-collapse collapse">
                 <div class="panel-body grid insight-subgrid apad5">
                     <div grid-area="controls">
                         @* SUPERUSER SELECTOR PARAMETER: *@
@@ -196,7 +194,7 @@
                 <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
                 <span>Report Summary & Actions</span>
             </div>
-            <div id="reportactions" class="panel-collapse collapse in">
+            <div id="reportactions" class="panel-collapse collapse">
                 <div class="panel-body grid insight-subgrid apad5">
                     <div grid-area="controls">
                         @* REPORT ACTIONS CODE HERE *@
@@ -216,7 +214,7 @@
                             </dl>
                             <hr class="details-hr" />
                             <div class="grid insight-actions-subgrid">
-                                <form id="btnGenerate" grid-area="generate" class="minimalform hidden" action="javascript:void(0)" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
+                                <form id="btnGenerate" grid-area="generate" class="minimalform hidden" action="~/Reporting/GenerateCauseOfDeathReport" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
                                     <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon pull-right" onclick="this.blur()" @*type="submit"*@ data-toggle="tooltip" title="GENERATE REPORT" data-placement="left"></button>
                                 </form>
                                 <form id="btnReset" grid-area="reset" class="minimalform pull-right" action="~/Reporting/Insight" style="margin-top: 2px">

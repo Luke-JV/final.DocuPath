@@ -10629,20 +10629,34 @@ a.cal-event-week {
         /*VIEW ERC:*/
             .erc-view-grid {
                 grid-gap: 5px;
-                grid-template-columns: 250px 1fr;
+                grid-template-columns: 1fr 250px 250px ;
                 grid-template-rows: auto auto !important;
-                grid-template-areas:    "cover coverUpload"
-                                        "report reportUpload";
             }
             .erc-view-grid .panel-body {
-                display: grid;
-                height: inherit;
-                justify-content: center;
+                /*display: grid;
+                /*height: inherit;
+                /*justify-content: center;*/
             }
             .erc-view-grid .panel-default{
                 background-color: #F9F9F9;
             }
             
+            .erc-update-grid {
+                grid-gap: 5px;
+                grid-template-columns: 250px 1fr;
+                grid-template-rows: auto auto !important;
+                grid-template-areas:    "cover coverUpload"
+                                        "report reportUpload";
+            }
+            .erc-update-grid .panel-body {
+                display: grid;
+                height: inherit;
+                justify-content: center;
+            }
+            .erc-update-grid .panel-default{
+                background-color: #F9F9F9;
+            }
+
 
             /*@media (max-width: 991px) {
                 .erc-view-grid {
@@ -10652,7 +10666,7 @@ a.cal-event-week {
                     grid-template-areas:    "details details"
                                             "cover report";
                 }
-            }*/
+            }
 
         /*VIEW XXX:*/
 
@@ -14395,7 +14409,7 @@ mark {
 .ico-lg{
     display: inline-block;
     line-height: 32.5px;
-    margin: 50px auto 0 auto;
+    margin: 0 auto 0 auto;
     border-top-left-radius: 7.5px;
     border-bottom-right-radius: 7.5px;
     height: 65px !important;

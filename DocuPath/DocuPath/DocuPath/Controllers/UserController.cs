@@ -109,6 +109,23 @@ namespace DocuPath.Controllers
                 UpdateUserViewModel model = new UpdateUserViewModel();
                 model.user = db.USER.Where(u => u.UserID == id).FirstOrDefault();
                 model.titles = db.TITLE.ToList();
+
+
+                List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
+                UiPrefKVP notset = new UiPrefKVP();
+                notset.prefID = null;
+                notset.prefPhrase = "Not Set";
+                prefslist.Add(notset);
+                UiPrefKVP light = new UiPrefKVP();
+                light.prefID = 0;
+                light.prefPhrase = "Light Theme";
+                prefslist.Add(light);
+                UiPrefKVP dark = new UiPrefKVP();
+                dark.prefID = 1;
+                dark.prefPhrase = "Dark Theme";
+                prefslist.Add(dark);
+
+                model.uiprefs = prefslist;
                 
                 return View(model);
             }

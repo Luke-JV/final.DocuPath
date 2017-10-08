@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using DocuPath.Models;
 using DocuPath.DataLayer;
+using DocuPath.Models.DPViewModels;
+using System.Collections.Generic;
 
 namespace DocuPath.Controllers
 {
@@ -207,6 +209,22 @@ namespace DocuPath.Controllers
                     model.user.USER_LOGIN = new USER_LOGIN();
                     model.user.USER_LOGIN.AccessLevelID = session.alID;
                     model.titles = db.TITLE.ToList();
+
+                    List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
+                    UiPrefKVP notset = new UiPrefKVP();
+                    notset.prefID = null;
+                    notset.prefPhrase = "Not Set";
+                    prefslist.Add(notset);
+                    UiPrefKVP light = new UiPrefKVP();
+                    light.prefID = 0;
+                    light.prefPhrase = "Light Theme";
+                    prefslist.Add(light);
+                    UiPrefKVP dark = new UiPrefKVP();
+                    dark.prefID = 1;
+                    dark.prefPhrase = "Dark Theme";
+                    prefslist.Add(dark);
+
+                    model.uiprefs = prefslist;
                 }
                 return View(model);
             }
@@ -219,15 +237,41 @@ namespace DocuPath.Controllers
         [AllowAnonymous]
         public ActionResult RegisterUserProfile()
         {
-            RegisterViewModel model = new RegisterViewModel();
-            using (DocuPathEntities db = new DocuPathEntities())
+            RegSesh session = new RegSesh();
+            session = (RegSesh)Session["REG"];
+            Session["REG"] = null;
+            if (VECTOR._lock(session.id))
             {
-                model.user = new USER();
-                model.user.USER_LOGIN = new USER_LOGIN();
-                model.user.USER_LOGIN.AccessLevelID = 1;
-                model.titles = db.TITLE.ToList();
+                RegisterViewModel model = new RegisterViewModel();
+                using (DocuPathEntities db = new DocuPathEntities())
+                {
+                    model.user = new USER();
+                    model.user.USER_LOGIN = new USER_LOGIN();
+                    model.user.USER_LOGIN.AccessLevelID = session.alID;
+                    model.titles = db.TITLE.ToList();
+
+                    List<UiPrefKVP> prefslist = new List<UiPrefKVP>();
+                    UiPrefKVP notset = new UiPrefKVP();
+                    notset.prefID = null;
+                    notset.prefPhrase = "Not Set";
+                    prefslist.Add(notset);
+                    UiPrefKVP light = new UiPrefKVP();
+                    light.prefID = 0;
+                    light.prefPhrase = "Light Theme";
+                    prefslist.Add(light);
+                    UiPrefKVP dark = new UiPrefKVP();
+                    dark.prefID = 1;
+                    dark.prefPhrase = "Dark Theme";
+                    prefslist.Add(dark);
+
+                    model.uiprefs = prefslist;
+                }
+                return View(model);
             }
-            return View(model);
+            else
+            {
+                return RedirectToAction("Home", "Index");
+            }
         }
 
         //

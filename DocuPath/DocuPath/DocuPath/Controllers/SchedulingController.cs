@@ -254,5 +254,35 @@ namespace DocuPath.Controllers
             }
         }
 
+        [AuthorizeByAccessArea(AccessArea = "Retrieve Daily Autopsy Schedule")]
+        public ActionResult RetrievedDailyAutopsySchedule(DateTime id)
+        {
+            try
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushInit, "Scheduling");
+                #endregion
+
+                //DateTime target = new DateTime(2017, 2, 20, 0, 0, 0);
+                ViewBag.RetrieveDate = id;
+
+                ViewBag.PreviewURL = "";
+
+
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushSuccess, "Scheduling");
+                #endregion
+                return View();
+            }
+            catch (Exception x)
+            {
+                #region AUDIT_WRITE
+                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushFail, "Scheduling");
+                #endregion
+                return RedirectToAction("Error", "Home", new HandleErrorInfo(x, "Scheduling", "DailyAutopsySchedule"));
+            }
+        }
+
+
     }
 }

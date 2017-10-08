@@ -709,6 +709,8 @@
     <Content Include="Content\DocuPathRepositories\EXT_REPORT_REPO\3\1.Ampath_Histology_Report_2017_08_25.PDF" />
     <Content Include="Content\DocuPathRepositories\EXT_REPORT_REPO\3\2.Ampath_Histology_Report_2017_07_02.PDF" />
     <Content Include="Content\DocuPathRepositories\EXT_REPORT_REPO\5\SmallPDFTest.pdf" />
+    <Content Include="Content\DocuPathRepositories\ERC_REPO\AMPATH Pty Ltd - Toxicology Report.pdf" />
+    <Content Include="Content\DocuPathRepositories\ERC_REPO\CoverLetter_DR151_2017.pdf" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -1277,6 +1279,8 @@
     <Content Include="Views\ForensicCase\CompileReport.cshtml" />
     <Content Include="Views\Reporting\GenerateCauseOfDeathReport.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\ContentTag\Edit.cshtml" />
+    <Content Include="Views\Scheduling\RetrievedDailyAutopsySchedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />
