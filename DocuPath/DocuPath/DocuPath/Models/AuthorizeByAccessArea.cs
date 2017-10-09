@@ -36,11 +36,11 @@ namespace DocuPath.Models
                     {
                         return true;
                     }
-                    else return false;
+                    //else return false;
                 }
                 
             }
-            return true;
+            return false;
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext ctx)
         {

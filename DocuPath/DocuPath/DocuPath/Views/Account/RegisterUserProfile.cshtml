@@ -40,9 +40,10 @@
 </div>
 
 @* DETAILS OF NEW USER: *@
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("RegisterUserProfile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.user.USER_LOGIN.AccessLevelID);
         <input  class="hidden" type="submit" id="btnPOST"/>
         <div class="form-horizontal form-generic nopad">
             @Html.Label("Critical Data Progress:", htmlAttributes: new { @class = "control-label emph col-md-12 nopad", @style = "text-align: left" })
