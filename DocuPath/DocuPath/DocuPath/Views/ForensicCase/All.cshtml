@@ -129,7 +129,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DateAdded)
                     </td>
-                    @if (Convert.ToDateTime(item.DateClosed).Year == 9999)
+                    @if (Convert.ToDateTime(item.DateClosed).Year == 9999 || (Convert.ToDateTime(item.DateClosed).Year == 2001 && Convert.ToDateTime(item.DateClosed).Month == 1 && Convert.ToDateTime(item.DateClosed).Day == 1 && Convert.ToDateTime(item.DateClosed).Hour == 0 && Convert.ToDateTime(item.DateClosed).Minute == 0 && Convert.ToDateTime(item.DateClosed).Second == 0))
                     {
                         @Html.Raw("<td>Active Case</td>")
                     }

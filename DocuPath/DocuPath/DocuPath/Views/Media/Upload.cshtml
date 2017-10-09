@@ -118,6 +118,20 @@
                 fileActionSettings: {
                     showUpload: false
                 },
+                previewZoomButtonIcons: {
+                    close: ''
+                },
+                previewZoomButtonClasses: {
+                    prev: 'btn btn-navigate',
+                    next: 'btn btn-navigate',
+                    toggleheader: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    fullscreen: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    borderless: 'btn btn-kv btn-default btn-outline-secondary hidden',
+                    close: 'btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon'
+                },
+                allowedFileExtensions: ['jpg', 'jpeg', 'bmp', 'gif', 'png', 'pdf', 'mp3', 'm4a', 'wav', 'avi', '3gp', 'wmv', 'mpg', 'mpeg'],
+                maxFilePreviewSize: 102400,
+                maxFileSize: 102400,
             });
 
             $('#btnBack').click(function (event) { event.preventDefault(); $('#divCancelWarning').removeClass("hidden"); });

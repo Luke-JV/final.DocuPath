@@ -495,7 +495,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("ProvideSpecimens", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("ForensicCaseServiceRequests", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -1928,6 +1928,8 @@ namespace DocuPath.Controllers
                 model.sessionSelector.Add(newSesh);
             }
             #endregion
+            ViewBag.TargetDR = model.forensicCase.ForensicDRNumber;
+            ViewBag.FCID = model.forensicCase.ForensicCaseID;
             return View("AddCoreData", model);
         }
 
@@ -1998,6 +2000,8 @@ namespace DocuPath.Controllers
 
             model.spineObservation = db.SPINE_OBSERVATION.Where(x => x.ForensicCaseID == id).FirstOrDefault();
 
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.FCID = id;
             return View("AddObservations", model);
         }
 
@@ -2330,6 +2334,8 @@ namespace DocuPath.Controllers
 
                 model.stats.DiscoveryDate =Convert.ToDateTime(Convert.ToDateTime(model.stats.DiscoveryDate).ToString("yyyy-MM-dd"));
                 ViewBag.Instruction = "UPDATE";
+                ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+                ViewBag.FCID = id;
 
                 #endregion
                 return View("AddStatistics",model);
@@ -2688,6 +2694,8 @@ namespace DocuPath.Controllers
             model.quaternaryCODEst.ForensicCaseID = id;
 
             ViewBag.Instruction = "UPDATE";
+            ViewBag.TargetDR = db.FORENSIC_CASE.Where(fc => fc.ForensicCaseID == id).FirstOrDefault().ForensicDRNumber;
+            ViewBag.FCID = id;
 
             return View("AddCauseOfDeath",model);
         }

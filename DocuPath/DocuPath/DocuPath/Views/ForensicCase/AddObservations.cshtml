@@ -1,5 +1,13 @@
 ﻿@model DocuPath.Models.DPViewModels.ObservationsViewModel
-@{ ViewBag.Title = "Add"; ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC"; }
+@{ if (ViewBag.Instruction != "UPDATE")
+    {
+        ViewBag.GenericHAPTICLocator = "AddGeneric"; ViewBag.SpecificHAPTICLocator = "AddFCSpecific"; ViewBag.PageInfoLocator = "AddFC";
+    }
+    else
+    {
+        ViewBag.GenericHAPTICLocator = "UpdateGeneric"; ViewBag.SpecificHAPTICLocator = "UpdateFCSpecific"; ViewBag.PageInfoLocator = "UpdateFC";
+    }
+}
 
 @* BREADCRUMB NAVIGATION: *@
 <ol class="breadcrumb">
@@ -8,7 +16,8 @@
     @if (ViewBag.Instruction == "UPDATE")
     {
         ViewBag.Title = "Update";
-        <li class="active">@Html.ActionLink("Update Forensic Case (Observations)", "AddObservations") </li>
+        string BreadcrumbText = "Update Forensic Case: " + ViewBag.TargetDR + " (Observations)";
+        <li class="active">@Html.ActionLink(BreadcrumbText, "AddObservations") </li>
     }
     else
     {
@@ -43,8 +52,8 @@
             <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
             <div></div>
             <div grid-area="btn1">
-                <form class="minimalform" action="~/ForensicCaseUpdateHub/@ViewBag.FCID"  style="margin-top: 2px">
-                    <button id="btnHub" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-hub btn-mdl2icon" type="submit" data-toggle="tooltip" title="NEXT SECTION"></button>
+                <form class="minimalform" action="~/ForensicCase/ForensicCaseUpdateHub/@ViewBag.FCID"  style="margin-top: 2px">
+                    <button id="btnHub" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-hub btn-mdl2icon" type="submit" data-toggle="tooltip" title="BACK TO UPDATE HUB"></button>
                 </form>
             </div>
             <div grid-area="btn2">

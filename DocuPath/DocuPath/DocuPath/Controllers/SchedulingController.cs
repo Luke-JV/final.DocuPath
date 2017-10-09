@@ -18,7 +18,7 @@ namespace DocuPath.Controllers
         string controllerName = "Scheduling";
         DocuPathEntities db = new DocuPathEntities();
 
-        [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
+        [AuthorizeByAccessArea(AccessArea = "Access Personal Schedule")]
         public ActionResult Index()
         {
             try
@@ -31,7 +31,7 @@ namespace DocuPath.Controllers
             }
         }
 //----------------------------------------------------------------------------------------------//
-        [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
+        [AuthorizeByAccessArea(AccessArea = "Access Personal Schedule")]
         public ActionResult Calendar()
         {
             try
@@ -148,7 +148,7 @@ namespace DocuPath.Controllers
             return Newtonsoft.Json.JsonConvert.SerializeObject(aptList);
         }
 
-        [AuthorizeByAccessArea(AccessArea = "Access Google Calendar")]
+        [AuthorizeByAccessArea(AccessArea = "Access Personal Schedule")]
         public ActionResult DisplayEvent(int id)
         {
             #region AUDIT_WRITE

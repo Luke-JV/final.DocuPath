@@ -108,13 +108,13 @@
 
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCoreData/@ViewBag.TargetID">Core Data</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID" style="margin-left: 5px">Observations</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID" style="margin-left: 5px">Service Requests</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateCoreData/@ViewBag.TargetID">Core Data</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID" style="margin-left: 5px">Observations</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID" style="margin-left: 5px">Service Requests</a></li>
             <li class="active"> <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID" style="margin-left: 5px">Media Items</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID" style="margin-left: 5px">Additional Evidence</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID" style="margin-left: 5px">Cause of Death</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID" style="margin-left: 5px">Statistics</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID" style="margin-left: 5px">Additional Evidence</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID" style="margin-left: 5px">Cause of Death</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID" style="margin-left: 5px">Statistics</a></li>
         </ul>
 
         <p class="alert-bar alert-bar-neutral fullwidth" style="margin: 5px 0 7.5px 0; text-align: left">Currently showing all <span class="table-large-identifier-alertbar">MEDIA ITEMS</span> for <span class="table-large-identifier-alertbar">@ViewBag.TargetDR</span>:</p>
@@ -135,11 +135,11 @@
                 <tr>
                     <td class="text-center"><img src="~/@VERTEBRAE.GetThumbUrl(item.MediaLocation)" class="media-thumb" /></td>
                     <td><strong>@Html.DisplayFor(modelItem => item.MediaCaption)</strong></td>
-                    <td>@Html.DisplayFor(modelItem => item.MediaDescription)</td>
+                    <td><p style="max-width: 400px !important; margin: 0 !important; text-align: justify">@Html.DisplayFor(modelItem => item.MediaDescription)</p></td>
                     <td>
-                        <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#MEDIA_@item.MediaID"></a></span>
-                        <span data-toggle="tooltip" title="MAINTAIN TAGS" data-placement="right"><a class="mdl2icon mdl2-edit colour-dpblack" href="javascript:void(0)" onclick="this.blur()" ></a></span>
-                        <span data-toggle="tooltip" title="DELETE" data-placement="right"><a class="mdl2icon mdl2-delete colour-dpblack" href="javascript:void(0)" onclick="this.blur()"></a></span>
+                        <span data-toggle="tooltip" title="VIEW" data-placement="top"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#MEDIA_@item.MediaID"></a></span>
+                        <span data-toggle="tooltip" title="MAINTAIN TAGS" data-placement="top"><a class="mdl2icon mdl2-edit colour-dpblack" href="javascript:void(0)" onclick="this.blur()" ></a></span>
+                        <span data-toggle="tooltip" title="DELETE" data-placement="top"><a class="mdl2icon mdl2-delete colour-dpblack" href="javascript:void(0)" onclick="this.blur()"></a></span>
                         <div class="modal fade" id="MEDIA_@item.MediaID" role="dialog">
                             <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
                                 <div class="modal-content">

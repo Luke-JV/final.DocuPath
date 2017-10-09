@@ -103,13 +103,13 @@
 
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCoreData/@ViewBag.TargetID">Core Data</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID" style="margin-left: 5px">Observations</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateCoreData/@ViewBag.TargetID">Core Data</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateObservations/@ViewBag.TargetID" style="margin-left: 5px">Observations</a></li>
             <li class="active"> <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseServiceRequests/@ViewBag.TargetID" style="margin-left: 5px">Service Requests</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID" style="margin-left: 5px">Media Items</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID" style="margin-left: 5px">Additional Evidence</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID" style="margin-left: 5px">Cause of Death</a></li>
-            <li>                <a class="dynamic-tab-heading" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID" style="margin-left: 5px">Statistics</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/ForensicCaseMediaItems/@ViewBag.TargetID" style="margin-left: 5px">Media Items</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/ForensicCaseAdditionalEvidenceItems/@ViewBag.TargetID" style="margin-left: 5px">Additional Evidence</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateCauseOfDeath/@ViewBag.TargetID" style="margin-left: 5px">Cause of Death</a></li>
+            <li>                <a class="dynamic-tab-heading link-disabled" href="~/ForensicCase/UpdateStatistics/@ViewBag.TargetID" style="margin-left: 5px">Statistics</a></li>
         </ul>
 
         <p class="alert-bar alert-bar-neutral fullwidth" style="margin: 5px 0 7.5px 0; text-align: left">Currently showing all <span class="table-large-identifier-alertbar">SERVICE REQUESTS</span> for <span class="table-large-identifier-alertbar">@ViewBag.TargetDR</span>:</p>
@@ -133,10 +133,10 @@
                     <td>@Html.DisplayFor(modelItem => item.SERVICE_PROVIDER.CompanyName)</td>
                     <td>@Html.DisplayFor(modelItem => item.REQUEST_TYPE.RequestTypeValue)</td>
                     <td class="table-large-identifier">@Html.DisplayFor(modelItem => item.SPECIMEN.FirstOrDefault().SpecimenSerialNumber)</td>
-                    <td><p style="max-width: 350px !important; margin: 0 !important; text-align: justify">@item.RequestNote</p></td>
+                    <td><p style="max-width: 400px !important; margin: 0 !important; text-align: justify">@item.RequestNote</p></td>
                     <td>@Html.DisplayFor(modelItem => item.DateAdded)</td>
                     <td>
-                        <span data-toggle="tooltip" title="VIEW" data-placement="right"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SR_@item.ServiceRequestID"></a></span>
+                        <span data-toggle="tooltip" title="VIEW" data-placement="top"><a class="mdl2icon mdl2-view colour-dpblack" href="javascript:void(0)" onclick="this.blur()" data-toggle="modal" data-target="#SR_@item.ServiceRequestID"></a></span>
                         <div class="modal fade" id="SR_@item.ServiceRequestID" role="dialog">
                             <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
                                 <div class="modal-content">
