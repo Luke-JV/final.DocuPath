@@ -44,6 +44,34 @@
         <form class="navbar-form" action="javascript:void(0)" style="border-top: 1px solid rgba(174,31,31,1); border-bottom: 1px solid rgba(174,31,31,1); margin: 0 0 5px 0; padding: 15px">
             <input id="HapticSearchBar" type="text" class="form-control" onfocus="this.select()" onclick="this.select()" onmouseup="return false;" placeholder="Enter a keyword/phrase...">
         </form>
+        @* ALL UAL *@
+        <div id="AllFC" class="haptic-subheading">
+            <span class="mdl2icon mdl2-login haptic-subheading-mdl2icon"></span>
+            <span>ALL USER ACCESS LEVELS</span>
+        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("AllGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("AllUALSpecific"))
+        @* ADD UAL *@
+        <div id="AddFC" class="haptic-subheading">
+            <span class="mdl2icon mdl2-add haptic-subheading-mdl2icon"></span>
+            <span>ADD USER ACCESS LEVEL</span>
+        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("AddGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("AddUALSpecific"))
+        @* UPDATE UAL *@
+        <div id="UpdatetFC" class="haptic-subheading">
+            <span class="mdl2icon mdl2-edit haptic-subheading-mdl2icon"></span>
+            <span>UPDATE USER ACCESS LEVEL</span>
+        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("UpdateGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("UpdateUALSpecific"))
+        @* VIEW UAL *@
+        <div class="haptic-subheading">
+            <span class="mdl2icon mdl2-view haptic-subheading-mdl2icon"></span>
+            <span>VIEW USER ACCESS LEVEL</span>
+        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("ViewGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("ViewUALSpecific"))
         @* ALL FC *@
         <div id="AllFC" class="haptic-subheading">
             <span class="mdl2icon mdl2-fc haptic-subheading-mdl2icon"></span>
@@ -65,38 +93,20 @@
         </div>
         @Html.Raw(VERTEBRAE.GetHelp("UpdateGeneric"))
         @Html.Raw(VERTEBRAE.GetHelp("UpdateFCSpecific"))
-        @* ARCHIVE FC *@
-        <div id="ArchiveFC" class="haptic-subheading">
-            <span class="mdl2icon mdl2-delete haptic-subheading-mdl2icon"></span>
-            <span>DELETE FORENSIC CASE</span>
-        </div>
-        <div class="haptic-topic-container">
-            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to delete a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
-        </div>
-        @* LOCK FC *@
+        @* VIEW FC *@
         <div class="haptic-subheading">
-            <span class="mdl2icon mdl2-lock haptic-subheading-mdl2icon"></span>
-            <span>LOCK FORENSIC CASE</span>
+            <span class="mdl2icon mdl2-view haptic-subheading-mdl2icon"></span>
+            <span>VIEW FORENSIC CASE</span>
         </div>
-        <div class="haptic-topic-container">
-            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to lock a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
-        </div>
-        @* UNLOCK FC *@
-        <div class="haptic-subheading">
-            <span class="mdl2icon mdl2-unlock haptic-subheading-mdl2icon"></span>
-            <span>UNLOCK FORENSIC CASE</span>
-        </div>
-        <div class="haptic-topic-container">
-            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to unlock a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
-        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("ViewGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("ViewFCSpecific"))
         @* MIGRATE FC *@
         <div class="haptic-subheading">
             <span class="mdl2icon mdl2-migrate haptic-subheading-mdl2icon"></span>
             <span>MIGRATE FORENSIC CASE</span>
         </div>
-        <div class="haptic-topic-container">
-            <div class="grid haptic-catchphrase-grid" style="margin-bottom: 0"> <i class="mdl2icon mdl2-topic haptic-mdl2icon" grid-area="icon"></i> <p class="haptic-catchphrase" grid-area="catchphrase">For information on how to migrate a Forensic Case, <strong class="catchphrase-highlight">Refer</strong> to <kbd>All Forensic Cases</kbd> above.</p> </div>
-        </div>
+        @Html.Raw(VERTEBRAE.GetHelp("MigrateGeneric"))
+        @Html.Raw(VERTEBRAE.GetHelp("MigrateFCSpecific"))
     </div>
 </div>
 

@@ -1,4 +1,5 @@
 ﻿@model DocuPath.Models.DPViewModels.ReportingViewModel
+
 @{ ViewBag.Title = "INSIGHT"; ViewBag.GenericHAPTICLocator = "INSIGHTGeneric"; ViewBag.SpecificHAPTICLocator = "INSIGHTSpecific"; ViewBag.PageInfoLocator = "INSIGHT"; }
 
 @* BREADCRUMB NAVIGATION: *@
@@ -30,165 +31,168 @@
     </div>
 </div>
 
+@*<input id="btnPOST" class="hidden" type="submit" />*@
 <div class="form-horizontal border-generic form-generic apad5">
     @* ACCORDION START *@
     <div class="panel-group grid insight-grid" id="INSIGHTaccordion">
-        <div class="panel panel-default" grid-area="selector">
-            <div class="panel-heading" data-toggle="collapse" data-target="#reportselect" data-parent="#INSIGHTaccordion" style="cursor: pointer">
-                <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
-                <span>Report Selector</span>
-            </div>
-            <div id="reportselect" class="panel-collapse collapse in">
-                <div class="panel-body grid insight-subgrid apad5">
-                    <div grid-area="controls">
-                        @* REPORT SELECTOR CODE HERE *@
-                        @Html.Label("Select an INSIGHT Report:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
-                        @Html.DropDownListFor(model => model.iq.reportToGenerate, new SelectList(Model.reports, "reportID", "reportPhrase"), "Select an INSIGHT Report...",
-                            htmlAttributes: new { @class = "form-control", @style = "Width: 275px", @id = "ddlReportSelector", /*@onchange = "check()"*/ })
-                        @Html.ValidationMessageFor(model => model.iq.reportToGenerate, "", htmlAttributes: new { @class = "validation-text text-danger" })
-                    </div>
-                    <div class="insight-guidance" grid-area="guidance">
-                        <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
-                            <li>Select one of the pre-defined <kbd>System Reports</kbd> to begin.</li>
-                            <li>Remaining steps in the <kbd>Report Builder</kbd> will adjust based on your selection.</li>
-                        </ul>
+        <form action="~/Reporting/Insight" method="post">
+            <div class="panel panel-default" grid-area="selector">
+                <div class="panel-heading" data-toggle="collapse" data-target="#reportselect" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                    <span class="mdl2icon mdl2-file panel-mdl2icon"></span>
+                    <span>Report Selector</span>
+                </div>
+                <div id="reportselect" class="panel-collapse collapse in">
+                    <div class="panel-body grid insight-subgrid apad5">
+                        <div grid-area="controls">
+                            @* REPORT SELECTOR CODE HERE *@
+                            @Html.Label("Select an INSIGHT Report:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
+                            @Html.DropDownListFor(model => model.iq.reportToGenerate, new SelectList(Model.reports, "reportID", "reportPhrase"), "Select an INSIGHT Report...",
+             htmlAttributes: new { @class = "form-control", @style = "Width: 275px", @id = "ddlReportSelector", /*@onchange = "check()"*/ })
+                            @Html.ValidationMessageFor(model => model.iq.reportToGenerate, "", htmlAttributes: new { @class = "validation-text text-danger" })
+                        </div>
+                        <div class="insight-guidance" grid-area="guidance">
+                            <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
+                                <li>Select one of the pre-defined <kbd>System Reports</kbd> to begin.</li>
+                                <li>Remaining steps in the <kbd>Report Builder</kbd> will adjust based on your selection.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-default" grid-area="timeframe" id="pnlTimeframeParams" style="margin-top: 5px">
-            <div class="panel-heading" data-toggle="collapse" data-target="#timeframe" data-parent="#INSIGHTaccordion" style="cursor: pointer">
-                <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
-                <span>Report Timeframe</span>
-            </div>
-            <div id="timeframe" class="panel-collapse collapse">
-                <div class="panel-body grid insight-subgrid apad5">
-                    <div class="controls">
-                        @* TIMEFRAME OPTIONS *@
-                        @Html.Label("Select a Report Timeframe:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
-                        @Html.DropDownListFor(model => model.iq.reportTimeframe, new SelectList(Model.timeframes, "tfId", "tfPhrase"), "Select a Timeframe...",
-                                htmlAttributes: new { @class = "form-control", @style = "Width: 275px", @id = "ddlTimeframeSelector"/*, @onchange = "check()"*/ })
-                        @Html.ValidationMessageFor(model => model.iq.reportTimeframe, "", new { @class = "validation-text text-danger" })
+            <div class="panel panel-default" grid-area="timeframe" id="pnlTimeframeParams" style="margin-top: 5px">
+                <div class="panel-heading" data-toggle="collapse" data-target="#timeframe" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                    <span class="mdl2icon mdl2-datetime panel-mdl2icon"></span>
+                    <span>Report Timeframe</span>
+                </div>
+                <div id="timeframe" class="panel-collapse collapse">
+                    <div class="panel-body grid insight-subgrid apad5">
+                        <div class="controls">
+                            @* TIMEFRAME OPTIONS *@
+                            @Html.Label("Select a Report Timeframe:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
+                            @Html.DropDownListFor(model => model.iq.reportTimeframe, new SelectList(Model.timeframes, "tfId", "tfPhrase"), "Select a Timeframe...",
+                 htmlAttributes: new { @class = "form-control", @style = "Width: 275px", @id = "ddlTimeframeSelector"/*, @onchange = "check()"*/ })
+                            @Html.ValidationMessageFor(model => model.iq.reportTimeframe, "", new { @class = "validation-text text-danger" })
 
-                        <div class="form-group" id="frmStartDate" style="margin-left: 0px; margin-right: 0px">
-                            @* START DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
-                            @Html.Label("Select a Start Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
-                            <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                <div class='input-group date'>
-                                    @Html.EditorFor(model => model.iq.reportDateFrom, new
-                               {
-                                   htmlAttributes = new
-                                   {
-                                       @type = "date", @*@onchange = "check()",*@ @class = "form-control",
-                                       @style = "width: 100%",
-                                       @value = Model.iq.reportDateFrom,
-                                       @id = "startDate"
-                                   }
-                               })
-                                    <span class="input-group-addon" onclick="startDTP()">
-                                        <span class="mdl2icon mdl2-date"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            @*<div class="row" style="padding-left: 15px; padding-right: 15px">
-                                @Html.Editor("StartDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
-                                @Html.ValidationMessage("", new { @class = "validation-text text-danger" })
-                                </div>*@
-                        </div>
-
-                        <div class="form-group" id="frmEndDate" style="margin: 0">
-                            @* END DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
-                            @Html.Label("Select an End Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
-                            <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                <div class="input-group date">
-                                    @Html.EditorFor(model => model.iq.reportDateTo, new
-                               {
-                                   htmlAttributes = new
-                                   {
-                                       @type = "date", @*@onchange = "check()",*@ @class = "form-control",
-                                       @style = "width: 100%",
-                                       @value = Model.iq.reportDateTo,
-                                       @id = "endDate"
-                                   }
-                               })
-                                    <span class="input-group-addon" onclick="endDTP()">
-                                        <span class="mdl2icon mdl2-date">
+                            <div class="form-group" id="frmStartDate" style="margin-left: 0px; margin-right: 0px">
+                                @* START DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
+                                @Html.Label("Select a Start Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    <div class='input-group date'>
+                                        @Html.EditorFor(model => model.iq.reportDateFrom, new
+                                       {
+                                           htmlAttributes = new
+                                           {
+                                               @type = "date", @*@onchange = "check()",*@ @class = "form-control",
+                                               @style = "width: 100%",
+                                               @value = Model.iq.reportDateFrom,
+                                               @id = "startDate"
+                                           }
+                                       })
+                                        <span class="input-group-addon" onclick="startDTP()">
+                                            <span class="mdl2icon mdl2-date"></span>
                                         </span>
-                                    </span>
+                                    </div>
+                                </div>
+                                @*<div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.Editor("StartDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
+                                    @Html.ValidationMessage("", new { @class = "validation-text text-danger" })
+                                    </div>*@
+                            </div>
+
+                            <div class="form-group" id="frmEndDate" style="margin: 0">
+                                @* END DATE PARAMETER: - HIDE IF NOT CUSTOM TIMEFRAME *@
+                                @Html.Label("Select an End Date:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    <div class="input-group date">
+                                        @Html.EditorFor(model => model.iq.reportDateTo, new
+                                       {
+                                           htmlAttributes = new
+                                           {
+                                               @type = "date", @*@onchange = "check()",*@ @class = "form-control",
+                                               @style = "width: 100%",
+                                               @value = Model.iq.reportDateTo,
+                                               @id = "endDate"
+                                           }
+                                       })
+                                        <span class="input-group-addon" onclick="endDTP()">
+                                            <span class="mdl2icon mdl2-date">
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                @*<div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.Editor("EndDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
+                                    @Html.ValidationMessage("", new { @class = "validation-text text-danger" })
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="insight-guidance" grid-area="guidance">
+                            <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
+                                <li>Select one of the pre-defined <kbd>Report Timeframes</kbd> to begin.</li>
+                                <li>Available timeframes are <kbd>Today</kbd>, <kbd>Yesterday</kbd>, <kbd>This Week</kbd>, <kbd>Last Week</kbd> and <kbd>Custom Timeframe</kbd>.</li>
+                                <li>If <kbd>Custom Timeframe</kbd> is selected, proceed to specify a <kbd>Start Date</kbd> and <kbd>End Date</kbd>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" grid-area="parameters" id="pnlReportParams" style="margin-top: 5px">
+                <div class="panel-heading" data-toggle="collapse" data-target="#parameters" data-parent="#INSIGHTaccordion" style="cursor: pointer">
+                    <span class="mdl2icon mdl2-params panel-mdl2icon"></span>
+                    <span>Report Parameters</span>
+                </div>
+                <div id="parameters" class="panel-collapse collapse">
+                    <div class="panel-body grid insight-subgrid apad5">
+                        <div grid-area="controls">
+                            @* SUPERUSER SELECTOR PARAMETER: *@
+                            <div class="form-group" id="frmSuperuserSelect" style="margin: 0">
+                                @Html.Label("Select a Superuser:", htmlAttributes: new { @class = "control-label col-md-12", @data_val = false, @style = "text-align: left; margin-left: -10px; padding-top: 0" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.DropDownListFor(model => model.iq.reportSuperuserSelector, new SelectList(Model.superusers, "uId", "uNameSurname"), "Select a Superuser...", htmlAttributes: new
+                                   { @*@onchange = "check()",*@ @class = "form-control",
+                                       @style = "Width: 275px",
+                                       @id = "ddlSuperuserSelector"
+                                   })
+                                    @Html.ValidationMessageFor(model => model.iq.reportSuperuserSelector, "", new { @class = "validation-text text-danger" })
                                 </div>
                             </div>
-                            @*<div class="row" style="padding-left: 15px; padding-right: 15px">
-                                @Html.Editor("EndDate", new { htmlAttributes = new { @Value = System.DateTime.Now.ToString("dd MMM yyyy"), @class = "form-control", @style = "Width: 275px" } })
-                                @Html.ValidationMessage("", new { @class = "validation-text text-danger" })
-                                </div>*@
+
+                            @* USER SELECTOR PARAMETER: *@
+                            <div class="form-group" id="frmUserSelect" style="margin-left: 0px; margin-right: 0px">
+                                @Html.Label("Select a User:", htmlAttributes: new { @class = "control-label col-md-12 valignore", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.DropDownListFor(model => model.iq.reportUsersSelector, new SelectList(Model.users, "uId", "uNameSurname"), "Select a User...", htmlAttributes: new
+                                   { @*@onchange = "check()",*@ @class = "form-control",
+                                       @style = "Width: 275px",
+                                       @id = "ddlUserSelector"
+                                   })
+                                    @Html.ValidationMessageFor(model => model.iq.reportUsersSelector, "", new { @class = "validation-text text-danger" })
+                                </div>
+                            </div>
+
+                            @* ACTIVITY SELECTOR PARAMETER: *@
+                            <div class="form-group" id="frmActivityTypeSelect" style="margin: 0">
+                                @Html.Label("Select an Activity Type:", htmlAttributes: new { @class = "control-label col-md-12 valignore", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
+                                <div class="row" style="padding-left: 15px; padding-right: 15px">
+                                    @Html.DropDownListFor(model => model.iq.reportActivitiesSelector, new SelectList(Model.activityTypes, "aId", "aDesc"), "Select an Activity Type...", htmlAttributes: new
+                                   { @*@onchange = "check()",*@ @class = "form-control",
+                                       @style = "Width: 275px",
+                                       @id = "ddlActivitySelector"
+                                   })
+                                    @Html.ValidationMessageFor(model => model.iq.reportActivitiesSelector, "", new { @class = "validation-text text-danger" })
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="insight-guidance" grid-area="guidance">
-                        <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
-                            <li>Select one of the pre-defined <kbd>Report Timeframes</kbd> to begin.</li>
-                            <li>Available timeframes are <kbd>Today</kbd>, <kbd>Yesterday</kbd>, <kbd>This Week</kbd>, <kbd>Last Week</kbd> and <kbd>Custom Timeframe</kbd>.</li>
-                            <li>If <kbd>Custom Timeframe</kbd> is selected, proceed to specify a <kbd>Start Date</kbd> and <kbd>End Date</kbd>.</li>
-                        </ul>
+                        <div class="insight-guidance" grid-area="guidance">
+                            <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
+                                <li>Select the appropriate value for the applicable <kbd>Parameter</kbd> or parameters.</li>
+                                <li>Parameters assist with drilling down into larger datasets, for example by restricting report output to records involving a single user.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-default" grid-area="parameters" id="pnlReportParams" style="margin-top: 5px">
-            <div class="panel-heading" data-toggle="collapse" data-target="#parameters" data-parent="#INSIGHTaccordion" style="cursor: pointer">
-                <span class="mdl2icon mdl2-params panel-mdl2icon"></span>
-                <span>Report Parameters</span>
-            </div>
-            <div id="parameters" class="panel-collapse collapse">
-                <div class="panel-body grid insight-subgrid apad5">
-                    <div grid-area="controls">
-                        @* SUPERUSER SELECTOR PARAMETER: *@
-                        <div class="form-group" id="frmSuperuserSelect" style="margin: 0">
-                            @Html.Label("Select a Superuser:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
-                            <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                @Html.DropDownListFor(model => model.iq.reportSuperuserSelector, new SelectList(Model.superusers, "uId", "uNameSurname"), "Select a Superuser...", htmlAttributes: new
-                           { @*@onchange = "check()",*@ @class = "form-control",
-                               @style = "Width: 275px",
-                               @id = "ddlSuperuserSelector"
-                           })
-                                @Html.ValidationMessageFor(model => model.iq.reportSuperuserSelector, "", new { @class = "validation-text text-danger" })
-                            </div>
-                        </div>
-
-                        @* USER SELECTOR PARAMETER: *@
-                        <div class="form-group" id="frmUserSelect" style="margin-left: 0px; margin-right: 0px">
-                            @Html.Label("Select a User:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
-                            <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                @Html.DropDownListFor(model => model.iq.reportUsersSelector, new SelectList(Model.users, "uId", "uNameSurname"), "Select a User...", htmlAttributes: new
-                           { @*@onchange = "check()",*@ @class = "form-control",
-                               @style = "Width: 275px",
-                               @id = "ddlUserSelector"
-                           })
-                                @Html.ValidationMessageFor(model => model.iq.reportUsersSelector, "", new { @class = "validation-text text-danger" })
-                            </div>
-                        </div>
-
-                        @* ACTIVITY SELECTOR PARAMETER: *@
-                        <div class="form-group" id="frmActivityTypeSelect" style="margin: 0">
-                            @Html.Label("Select an Activity Type:", htmlAttributes: new { @class = "control-label col-md-12", @style = "text-align: left; margin-left: -10px; padding-top: 0" })
-                            <div class="row" style="padding-left: 15px; padding-right: 15px">
-                                @Html.DropDownListFor(model => model.iq.reportActivitiesSelector, new SelectList(Model.activityTypes, "aId", "aDesc"), "Select an Activity Type...", htmlAttributes: new
-                           { @*@onchange = "check()",*@ @class = "form-control",
-                               @style = "Width: 275px",
-                               @id = "ddlActivitySelector"
-                           })
-                                @Html.ValidationMessageFor(model => model.iq.reportActivitiesSelector, "", new { @class = "validation-text text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="insight-guidance" grid-area="guidance">
-                        <ul class="haptic-ol" style="padding-top: 0; padding-bottom: 0">
-                            <li>Select the appropriate value for the applicable <kbd>Parameter</kbd> or parameters.</li>
-                            <li>Parameters assist with drilling down into larger datasets, for example by restricting report output to records involving a single user.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+            @*<input type="submit" value="GO BITCH!" />*@
         <div class="panel panel-default" grid-area="actions" style="margin-top: 5px">
             <div class="panel-heading" data-toggle="collapse" data-target="#reportactions" data-parent="#INSIGHTaccordion" style="cursor: pointer">
                 <span class="mdl2icon mdl2-cog panel-mdl2icon"></span>
@@ -214,12 +218,12 @@
                             </dl>
                             <hr class="details-hr" />
                             <div class="grid insight-actions-subgrid">
-                                <form id="btnGenerate" grid-area="generate" class="minimalform hidden" action="~/Reporting/GenerateCauseOfDeathReport" @*method="post"*@ style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">
-                                    <button id="toggle" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon pull-right" onclick="this.blur()" @*type="submit"*@ data-toggle="tooltip" title="GENERATE REPORT" data-placement="left"></button>
-                                </form>
-                                <form id="btnReset" grid-area="reset" class="minimalform pull-right" action="~/Reporting/Insight" style="margin-top: 2px">
-                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-reset btn-mdl2icon" onclick="this.blur()" type="submit" data-toggle="tooltip" title="RESET REPORT BUILDER" data-placement="right"></button>
-                                </form>
+                                @*<form id="btnGenerate"  class="minimalform hidden" action="javascript:void(0)" @*method="post" style="margin-top: 2px" data-toggle="modal" data-target="#report_gen">*@
+                                <button grid-area="generate" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-done btn-mdl2icon pull-right" type="submit" data-toggle="tooltip" title="GENERATE REPORT" data-placement="left"></button>
+                                @*</form>
+                                    <form id="btnReset" class="minimalform pull-right" action="~/Reporting/Insight" style="margin-top: 2px">*@
+                                <button grid-area="reset" class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-reset btn-mdl2icon" onclick="window.location.href('~/Reporting/Insight')" data-toggle="tooltip" title="RESET REPORT BUILDER" data-placement="right"></button>
+                                @*</form>*@
                             </div>
                         </div>
                     </div>
@@ -234,6 +238,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
     @* ACCORDION END *@
 </div>
@@ -342,7 +347,7 @@
                 checkReady();
             });
 
-            $("#startDate").change(function () {                
+            $("#startDate").change(function () {
                 $("#summaryReportTimeframe").text($("#startDate").val() + ' to ' + $("#endDate").val())
                 checkReady();
             });
@@ -364,6 +369,12 @@
         })
     </script>
     <script>
+        $('#btnGO').click(function () {
+            //alert("CLICKED MOTHERFUCKER!");
+            //$('#btnPOST').click();
+            var btn = document.getElementById('btnPOST');
+            btn.click();
+        });
         //var startDate = $('startDate').value;
         ////alert();
         //document.getElementById('endDate').setAttribute('min', startDate);
@@ -381,5 +392,5 @@
 
         //today = yyyy + '-' + mm + '-' + dd;
         //document.getElementById("datefield").setAttribute("max", today);
-</script>
+    </script>
 }

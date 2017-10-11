@@ -875,6 +875,39 @@ dd {
     clear: both;
   }
 
+  /* DL-HORIZONTAL-MINIATURE: */
+  .dl-horizontal-miniature dt {
+    float: left;
+    width: 50px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    /*white-space: nowrap;*/
+    /*white-space: normal;*/
+  }
+  .dl-horizontal-miniature dd {
+    margin-left: 60px;
+    padding-left: 10px;
+    border-left: 1px solid #999;
+  }
+  .dl-horizontal-miniature dd:before,
+  .dl-horizontal-miniature dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-miniature dd:after {
+    clear: both;
+  }
+  .dl-horizontal-miniature dd:before,
+  .dl-horizontal-miniature dd:after {
+    display: table;
+    content: " ";
+  }
+  .dl-horizontal-miniature dd:after {
+    clear: both;
+  }
+
 abbr[title],
 abbr[data-original-title] {
   cursor: help;
@@ -13653,7 +13686,7 @@ a.cal-event-week {
 		font-family: 'U.S. 101';
 		font-size: 15pt;
         text-align: left;
-		color: grey;
+		color: #555;
 		background-color: lightgrey;
 		border-top-right-radius: 12.5px;
 		border-bottom-right-radius: 12.5px;
@@ -13707,7 +13740,7 @@ a.cal-event-week {
 		font-size: 15pt;
         text-align: left;
 		width: 100%;
-		color: grey;
+		color: #555;
 		background-color: lightgrey;
 		border-top-right-radius: 12.5px;
 		border-bottom-right-radius: 12.5px;
@@ -13758,7 +13791,7 @@ a.cal-event-week {
 		font-size: 15pt;
         text-align: center;
 		width: auto;
-		color: grey;
+		color: #555;
 		background-color: lightgrey;
 		border-top-right-radius: 12.5px;
 		border-bottom-right-radius: 12.5px;
@@ -13775,6 +13808,7 @@ a.cal-event-week {
 		font-family: 'Segoe UI';
 		font-weight: bold;
 		padding-left: 2.5px;
+        padding-top: 1.5px;
 		color: grey;
 	}
 	.chart-subtitle::before {
@@ -13816,13 +13850,15 @@ a.cal-event-week {
 		background-color: #fff;
 		margin: 10px 100px 10px 10px;
 		padding: 0 10px 0 10px;
+        text-align: center !important;
+        text-transform: uppercase !important;
 		border-radius: 12px;
-		content: "Page " + counter(page) + " of " + counter(pages);
+		/*content: "Page " + counter(page) + " of " + counter(pages);*/
 	}
 
 	.page-counter-accent {
-		margin-left: 4px;
-		color: grey;
+		/*margin-left: 4px;*/
+		color: rgba(174,31,31,1);
 	}
 
 	@page {
@@ -15446,5 +15482,34 @@ mark {
   100% {
     opacity: 0; } }
 
+
+/*#endregion */
+
+/*#region INSIGHT-MEDIA-GRID: */
+
+.insight-media-grid{
+    grid-gap: 2.5px;
+    grid-template-columns: 150px 1fr;
+    grid-template-rows: minmax(150px, auto) auto;
+    margin-bottom: 7.5px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+.insight-media-grid .thumbcontainer{
+    margin: 5px 0 0 5px !important;
+}
+
+.insight-media-grid .detailscontainer{
+
+}
+
+.insight-media-grid .tagscontainer{
+    grid-column: 1/-1;
+}
+
+/*.insight-media-grid div{
+    border: 1px solid red;
+}*/
 
 /*#endregion */
