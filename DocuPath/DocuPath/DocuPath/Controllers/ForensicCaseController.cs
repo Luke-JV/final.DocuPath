@@ -2890,25 +2890,33 @@ namespace DocuPath.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(collection);
+                return View();
             }
 
             try
             {
-                db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
-                db.SaveChanges();
+                var dcase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault();
+                if (dcase.ABDOMEN_OBSERVATION == null && dcase.ADDITIONAL_EVIDENCE == null && dcase.AUTOPSY_AREA == null && dcase.CASE_COD_ESTIMATION == null && dcase.CASE_STATISTICS == null && dcase.CHEST_OBSERVATION == null && dcase.GENERAL_OBSERVATION == null && dcase.HEAD_NECK_OBSERVATION == null && dcase.MEDIA == null && dcase.SERVICE_REQUEST == null && dcase.SESSION == null && dcase.SPINE_OBSERVATION == null && dcase.STATUS == null && dcase.USER == null)
+                {
+                    db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    return View("All");
+                }
                 // TODO: Add delete logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return RedirectToAction("Index");
+                return View("All");
             }
             catch
             {
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return View();
+                return View("All");
             }
         }
         #endregion

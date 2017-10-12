@@ -179,14 +179,14 @@ namespace DocuPath.Controllers
                 //string hash = crypto.HashPassword(id);
                 foreach (var tk in db.TOKEN_LOG.Where(x => x.RedemptionTimestamp == null))
                 {
-                    if (crypto.VerifyHashedPassword(tk.TokenValue, id) != PasswordVerificationResult.Failed)
+                    if (crypto.VerifyHashedPassword(tk.TokenValue, id) != PasswordVerificationResult.Failed && tk.RedemptionTimestamp == null)
                     {
                         db.TOKEN_LOG.Where(m => m.TokenID == tk.TokenID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
                         RegSesh session = new RegSesh();
-                        session.id = tk.AccessLevelID.ToString() + VECTOR.hash(tk.AccessLevelID.ToString());
+                        session.id = VECTOR.hash(tk.AccessLevelID.ToString());
                         session.alID = tk.AccessLevelID;
                         Session["REG"] = session;
-                        return RedirectToAction("RegisterUserProfile");
+                        return RedirectToAction("RegisterUserProfile","Account");
                     }
                 }
 
@@ -206,7 +206,7 @@ namespace DocuPath.Controllers
             RegSesh session = new RegSesh();
             session = (RegSesh)Session["REG"];
             Session["REG"] = null;
-            if (VECTOR._lock(session.id))
+            if (VECTOR._lock(session.id,session.alID.ToString()))
             {
                 RegisterViewModel model = new RegisterViewModel();
                 DocuPathEntities db = new DocuPathEntities();
@@ -246,7 +246,7 @@ namespace DocuPath.Controllers
             RegSesh session = new RegSesh();
             session = (RegSesh)Session["REG"];
             Session["REG"] = null;
-            if (VECTOR._lock(session.id))
+            if (VECTOR._lock(session.id, session.alID.ToString()))
             {
                 RegisterViewModel model = new RegisterViewModel();
                 DocuPathEntities db = new DocuPathEntities();
@@ -276,7 +276,7 @@ namespace DocuPath.Controllers
             }
             else
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction( "Index","Home");
             }
         }
 
