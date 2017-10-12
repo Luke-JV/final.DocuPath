@@ -49,6 +49,9 @@ namespace DocuPath.Models
         }
         public static void sendSMS(string destination, string content)
         {
+            //TEMP TWILIO BYPASS
+            destination = "+27825592322";
+            //TEMP TWILIO BYPASS
             //404 - SMS logic here
             string accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
 

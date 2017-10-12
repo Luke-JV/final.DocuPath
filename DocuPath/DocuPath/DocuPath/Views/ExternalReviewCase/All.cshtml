@@ -129,9 +129,11 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <input type="button" id="del-yes-@erc.ExternalReviewCaseID" href="~/ExternalReviewCase/Delete/@erc.ExternalReviewCaseID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="del-no-@erc.ExternalReviewCaseID" onclick="$('#del-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
-                    @*</div>*@
+                    <form action="~/ExternalReviewCase/Delete/@fc.ForensicCaseID" method="post">
+                        <input type="submit" id="del-yes-@erc.ExternalReviewCaseID" value="Yes" class="btn btn-modal-generic" />
+
+                        <input type="button" id="del-no-@erc.ExternalReviewCaseID" onclick="$('#del-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    </form> @*</div>*@
                 </div>
             </div>
         </div>
@@ -231,7 +233,7 @@
                     switch (checkStatus) {
                         case "LOCKED":
                             return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
-                        "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-unlock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"UNLOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-unlock\"></span></button>";
+                                "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-unlock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"UNLOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-unlock\"></span></button>";
                         case "ACTIVE":
                             return "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
                                 "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
@@ -245,9 +247,9 @@
                                 "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\" data-target=\"#del-modal-" + row.ERCID + "\"><span class=\"mdl2icon mdl2-delete\"></span></button> " +
                                 "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-lock\" data-row-id=\"" + row.ERCID + "\" data-toggle=\"tooltip\" title=\"LOCK\" data-placement=\"top\"><span class=\"mdl2icon mdl2-lock\"></span></button>";
                     }
-                 },
+                },
                 "drnumbers": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL DR NUMBERS: */
-                    return "<span class=\"table-large-identifier\">"+ row.ERCDR + "</span>";
+                    return "<span class=\"table-large-identifier\">" + row.ERCDR + "</span>";
                 }
             }
         }).on("loaded.rs.jquery.bootgrid", function () {
@@ -255,7 +257,7 @@
                 .find(".cmd-lock").on("click", function (e) { this.blur(); $('#lock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
                 .find(".cmd-unlock").on("click", function (e) { this.blur(); $('#unlock-modal-' + $(this).data("row-id")).removeClass('hidden'); }).tooltip().end()
                 .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/ExternalReviewCase/Edit/" + $(this).data("row-id"); }).tooltip().end()
-                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/ExternalReviewCase/Details/" + $(this).data("row-id"); }).tooltip().end()                
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/ExternalReviewCase/Details/" + $(this).data("row-id"); }).tooltip().end()
                 .find(".pagination").tooltip().end()
                 .find(".infos").tooltip().end()
         });

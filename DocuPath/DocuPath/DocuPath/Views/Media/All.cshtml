@@ -85,10 +85,13 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <input type="button" id="del-yes-@mediaItem.MediaID" href="~/Media/Delete/@mediaItem.MediaID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="del-no-@mediaItem.MediaID" onclick="$('#del-modal-'+@mediaItem.MediaID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
-                    @*</div>*@
-                </div>
+                    <form action="~/Media/Delete/@mediaItem.MediaID" method="post">
+                        <input type="submit" id="del-yes-@mediaItem.MediaID" value="Yes" class="btn btn-modal-generic" />
+                        
+                        <input type="button" id="del-no-@mediaItem.MediaID" onclick="$('#del-modal-'+@mediaItem.MediaID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                        </form>
+                        @*</div>*@
+</div>
             </div>
         </div>
     }

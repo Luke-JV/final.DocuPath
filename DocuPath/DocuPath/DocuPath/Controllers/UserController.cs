@@ -184,7 +184,13 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "User Management");
                 #endregion
                 //404 CONFIRM
-                db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
+                if (db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated == true)
+                {
+                    db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = false;
+                }
+                else db.USER.Where(x => x.UserID == id).FirstOrDefault().IsDeactivated = true;
+
+
                 db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "User Management");

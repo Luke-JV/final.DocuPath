@@ -134,6 +134,7 @@ namespace DocuPath.Models.DPViewModels
         public CHEST_OBSERVATION chestObservation { get; set; }
         public HEAD_NECK_OBSERVATION headNeckObservation { get; set; }
         public SPINE_OBSERVATION spineObservation { get; set; }
+        public string instruction { get; set; }
     }
 
     public class FCServiceRequestViewModel

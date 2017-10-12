@@ -489,13 +489,13 @@ namespace DocuPath.Controllers
                 db.FORENSIC_CASE.Attach(upCase);
                 db.Entry(upCase).State = EntityState.Modified;
                 db.SaveChanges();
-
+                
                 //db.SaveChanges();
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.AddSuccess, "Forensic Case - Observations");
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
-                return RedirectToAction("ForensicCaseServiceRequests", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("ProvideSpecimens", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {
@@ -2054,7 +2054,7 @@ namespace DocuPath.Controllers
                 #endregion
                 //return RedirectToAction("AddServiceRequests");
                 TempData["INSTRUCTION"] = "UPDATE";
-                return RedirectToAction("ProvideSpecimens", new { id = upCase.ForensicCaseID });
+                return RedirectToAction("ForensicCaseServiceRequests", new { id = upCase.ForensicCaseID });
             }
             catch (Exception x)
             {

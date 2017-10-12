@@ -148,10 +148,12 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <input type="button" id="del-yes-@lc.LegacyCaseID" href="~/LegacyCase/Delete/@lc.LegacyCaseID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="del-no-@lc.LegacyCaseID" onclick="$('#del-modal-'+@lc.LegacyCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
-                    @*</div>*@
-                </div>
+                    <form action="~/LegacyCase/Delete/@lc.LegacyCaseID" method="post">
+                        <input type="submit" id="del-yes-@lc.LegacyCaseID" value="Yes" class="btn btn-modal-generic" />                        
+                        <input type="button" id="del-no-@lc.LegacyCaseID" onclick="$('#del-modal-'+@lc.LegacyCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                        </form>
+                        @*</div>*@
+</div>
             </div>
         </div>
     }

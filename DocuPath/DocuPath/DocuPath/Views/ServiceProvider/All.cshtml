@@ -120,10 +120,14 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <input type="button" id="del-yes-@sp.ServiceProviderID" href="~/ServiceProvider/Delete/@sp.ServiceProviderID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="submit" id="del-no-@sp.ServiceProviderID" onclick="$('#del-modal-'+@sp.ServiceProviderID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
-                    @*</div>*@
-                </div>
+                    <form action="~/ServiceProvider/Delete/@sp.ServiceProviderID" method="post">
+                        <input type="submit" id="del-yes-@sp.ServiceProviderID" value="Yes" class="btn btn-modal-generic" />
+
+                        
+                        <input type="button" id="del-no-@sp.ServiceProviderID" onclick="$('#del-modal-'+@sp.ServiceProviderID).addClass('hidden')" value="No" class="btn btn-modal-generic btn-negate" />
+                        </form>
+                        @*</div>*@
+</div>
             </div>
         </div>
     }

@@ -97,10 +97,12 @@
             @* BUTTONS *@
             <div class="modalbox-button-bar col-md-12 modal-btn-col">
                 @*<div class="">*@
-                <input type="button" id="del-yes-@user.UserID" href="~/User/ToggleStatus/@user.UserID" value="Yes" class="btn btn-modal-generic" />
-                <input type="submit" id="del-no-@user.UserID" onclick="$('#del-modal-'+@user.UserID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
-                @*</div>*@
-            </div>
+                <form action="~/User/Delete/@user.UserID" method="post">
+                    <input type="submit" id="del-yes-@user.UserID" value="Yes" class="btn btn-modal-generic" />
+                    
+                    <input type="button" id="del-no-@user.UserID" onclick="$('#del-modal-'+@user.UserID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    </form>@*</div>*@
+</div>
         </div>
     </div>
 }

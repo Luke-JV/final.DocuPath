@@ -140,6 +140,7 @@ else
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "validation-text text-danger" })
+    @Html.HiddenFor(m=>m.instruction);
     <input type="submit" class="hidden" id="btnPOST" />
     <div class="form-horizontal border-generic form-generic">
         <ul class="nav nav-tabs nav-justified" data-toggle="tooltip" title="CASE BUILDER FLOW" data-placement="left">
