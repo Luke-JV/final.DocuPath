@@ -36,7 +36,7 @@
 </div>
 
 <div id="reportPreview" class="form-horizontal form-generic">
-    <div class="grid reportcontainer border-generic form-horizontal" style="width: 760px !important; padding: 5px 5px 5px 10px">
+    <div id="reportDiv" class="grid reportcontainer border-generic form-horizontal" style="width: 760px !important; padding: 5px 5px 5px 10px; border-top-right-radius: 0px; border-bottom-right-radius: 0px">
         <img class="dplogo" src="~/Content/Resources/DPHorizontalLogoWhiteBG.png" style="max-height: 50px; max-width: 150px" />
         <img class="separator1" src="~/Content/Resources/SlantedDivider.png" style="max-height: 50px" />
         <div class="grid report-timestamp">
@@ -54,7 +54,7 @@
             <div class="generator-value">@Model.dsGeneratedBy</div>
         </div>
         <img class="insightlogo" src="~/Content/Resources/DP_INSIGHT_FINALLOGO_TRANSPARENTBG.png" style="max-height: 50px; max-width: 150px" />
-        <div class="report-title">USER ACTIVITY REPORT - @Model.dsUAR.First().USER.FirstName @Model.dsUAR.First().USER.LastName</div>
+        <div class="report-title">USER ACTIVITY REPORT <span style="color: #ccc">– </span><span style="color: rgba(255,220,220,1)">@ViewBag.TargetUser</span></div>
         <div class="grid report-params-summary-container">
             <div class="grid params-grid">
                 <div class="params-icon insight-mdl2icon mdl2-count"></div>
@@ -71,7 +71,7 @@
             <div class="grid summary-grid">
                 <div class="summary-icon insight-mdl2icon mdl2-info"></div>
                 <div class="summary-label">REPORT SUMMARY</div>
-                <div class="summary-value">This report contains grouped information (by date) for the system activity of a specified user during the specified timeframe.</div>
+                <div class="summary-value">This report contains double-grouped information (first by date, then by activity type) for the system activity of a specified user during the specified timeframe.</div>
             </div>
         </div>
         <div class="report-content">
@@ -81,43 +81,76 @@
                         <th @*data-id="identifier" data-column-id="FCID" data-visible="false" data-identifier="true"*@ class="colour-dpred">
                             ID
                         </th>
-                        <th @*data-column-id="addedBy"*@ class="colour-dpred" style="min-width: 80px !important">
+                        @* class="colour-dpred" style="min-width: 80px !important">
                             Datestamp
-                        </th>
+                        </th>*@
                         <th @*data-column-id="status"*@ class="colour-dpred">
                             Timestamp
                         </th>
-                        <th @*data-column-id="FCDR" data-cssClass="table-large-identifier-insight-insight" data-formatter="drnumbers"*@ class="colour-dpred">
+                        @*<th class="colour-dpred">
                             Transaction Type
-                        </th>
+                        </th>*@
                         <th class="colour-dpred">
                             Critical Data String
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.dsUAR.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                @Model.dsUAR[i].AuditLogTxID
-                            </td>
-                            <td>
-                                @Model.dsUAR[i].TxDateStamp.ToString("dd MMM yyyy")
-                            </td>
-                            <td>
-                                <strong class="table-large-identifier-insight">@Model.dsUAR[i].TxTimeStamp.ToString("HH:mm:ss")</strong>
-                            </td>
-                            <td>
-                                @Model.dsUAR[i].AUDIT_TX_TYPE.TypeValue
-                            </td>
-                            <td>
-                                @Model.dsUAR[i].TxCriticalDataString
-                            </td>
-                        </tr>
-                    }
-                </tbody>
+                @for (int i = 0; i < Model.dsUAR.Count; i++)
+                {
+                    <tbody>
+                        <tr style="border-right: 1px solid transparent !important"><th colspan="5" class="ctrl-break-one">@Model.dsUAR[i].cbrkDateTitle</th></tr>
+                        @for (int j = 0; j < Model.dsUAR[i].cbrkDaysActivities.Count; j++)
+                        {
+                            <tr style="border-left: 1px solid transparent !important; margin-bottom: 5px!important"><th colspan="5" class="ctrl-break-two">@Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeTitle</th></tr>
+
+                            if (@Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries.Count == 0)
+                            {
+                                <tr><td colspan="5" class="no-entries">no user activity entries of this type found for this date!</td></tr>
+                            }
+                            else
+                            {
+                                for (int k = 0; k < @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries.Count; k++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].AuditLogTxID
+                                        </td>
+                                        @*<td>
+                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxDateStamp.ToString("dd MMM yyyy")
+                                        </td>*@
+                                        <td>
+                                            <strong class="table-large-identifier-insight">@Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxTimeStamp.ToString("HH:mm:ss")</strong>
+                                        </td>
+                                        @*<td>
+                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].AUDIT_TX_TYPE.TypeValue
+                                        </td>*@
+                                        <td>
+                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxCriticalDataString
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                }
             </table>
+            @*<tr>
+                <td>
+                    @Model.dsUAR[i].AuditLogTxID
+                </td>
+                <td>
+                    @Model.dsUAR[i].TxDateStamp.ToString("dd MMM yyyy")
+                </td>
+                <td>
+                    <strong class="table-large-identifier-insight">@Model.dsUAR[i].TxTimeStamp.ToString("HH:mm:ss")</strong>
+                </td>
+                <td>
+                    @Model.dsUAR[i].AUDIT_TX_TYPE.TypeValue
+                </td>
+                <td>
+                    @Model.dsUAR[i].TxCriticalDataString
+                </td>
+            </tr>*@
             @*<div class="grid insight-chart-grid" style="margin-top: 5px">
                     <span class="chart-icon insight-mdl2icon mdl2-chart"></span>
                     <div class="chart-title">CAUSE OF DEATH BREAKDOWN - TOP 5 CONTRIBUTORS</div>
@@ -133,6 +166,63 @@
 </div>
 
 @section Scripts{
+
+    <script>
+        //$('#rss').click(function (request, response) {
+        //    var rssData = document.getElementById("srch-term").value
+        //    $.ajax({
+        //        url: '/Home/SendRSS/',
+        //        data: "{ 'rssData': '" + rssData + "'}",
+        //        dataType: "json",
+        //        type: "POST",
+        //        contentType: "application/json; charset=utf-8",
+        //        success: function (result) {
+        //            alert(result); //Throw Success Modal 404
+        //            document.getElementById("srch-term").text() = "";
+        //        },
+        //    });
+        //    rssData.value == "";
+        //});
+
+        $('#btnPrint').click(function (/*request, response*/) {
+            PrintElem('reportDiv');
+            //var pdfData = document.getElementById("reportDiv");
+            //console.log(pdfData.outerHTML.toString());
+            //alert('print clicked and data logged');
+
+            //$.ajax({
+            //    url: '/Reporting/PrintReportToPDF/',
+            //    data: "{ 'pdfData': '" + pdfData.outerHTML + "'}",
+            //    dataType: "json",
+            //    type: "POST",
+            //    contentType: "application/pdf; charset=utf-8",
+            //    success: function (result) {
+            //        alert(result); //Throw Success Modal 404
+            //        document.getElementById("srch-term").text() = "";
+            //    },
+            //});
+        });
+
+        function PrintElem(elem) {
+            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+            mywindow.document.write('<html><head><title>' + document.title + '</title>');
+            mywindow.document.write('<link rel="stylesheet" href="~/Content/boostrap.css">');
+            mywindow.document.write('</head><body >');
+            //mywindow.document.write('<h1>' + document.title + '</h1>');
+            mywindow.document.write(document.getElementById(elem).innerHTML);
+            mywindow.document.write('</body></html>');
+            //mywindow.document.write('<script type="text/javascript">$(window).load(function() { window.print(); window.close(); });<\/script>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10*/
+
+            mywindow.print();
+            mywindow.close();
+
+            return true;
+        }
+    </script>
 
 
 @*<script>

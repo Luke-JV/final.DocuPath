@@ -161,9 +161,22 @@ namespace DocuPath.Models.DPViewModels
         public int dsNumEntries { get; set; }
         public string dsSortedBy { get; set; }
         public string dsGroupedBy { get; set; }
-        public List<AUDIT_LOG> dsUAR { get; set; }
+        //public List<AUDIT_LOG> dsUAR { get; set; }
+        public List<cbrkDate> dsUAR { get; set; }
         public string dsChartData { get; set; }
         public string dsChartLabels { get; set; }
+    }
+
+    public class cbrkDate
+    {
+        public string cbrkDateTitle { get; set; }
+        public List<cbrkActivityTypes> cbrkDaysActivities { get; set; }
+    }
+
+    public class cbrkActivityTypes
+    {
+        public string cbrkActivityTypeTitle { get; set; }
+        public List<AUDIT_LOG> cbrkActivityTypeEntries { get; set; }
     }
     //public class ReportTimeframeRange
     //{
