@@ -440,6 +440,46 @@
 <ckh3>Heading 3</ckh3>
 <ckh4>Heading 4</ckh4>
 
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="colour-dpred">Col1</th>
+            <th class="colour-dpred">Col2</th>
+            <th class="colour-dpred">Col3</th>
+            <th class="colour-dpred">Col4</th>
+            <th class="colour-dpred">Col5</th>
+        </tr>
+        <tr><th colspan="5" style="color: red" class="ctrl-break-one">FIRST CONTROL BREAK</th></tr>
+    </thead>
+    <thead>
+    </thead>
+    <tbody>
+        <tr><th colspan="5" style="color: blue" class="ctrl-break-two">SECOND CONTROL BREAK</th></tr>
+        <tr>
+            <td>Val1</td>
+            <td>Val2</td>
+            <td>Val3</td>
+            <td>Val4</td>
+            <td>Val5</td>
+        </tr>
+        <tr>
+            <td>Val1</td>
+            <td>Val2</td>
+            <td>Val3</td>
+            <td>Val4</td>
+            <td>Val5</td>
+        </tr>
+        <tr>
+            <td>Val1</td>
+            <td>Val2</td>
+            <td>Val3</td>
+            <td>Val4</td>
+            <td>Val5</td>
+        </tr>
+    </tbody>
+</table>
+
+
 @using (Html.BeginForm()) {
     @Html.LabelFor(model => model.SpinalColumn)
     @Html.TextAreaFor(model => model.SpinalColumn, new { @class="ckeditor"})
