@@ -1821,6 +1821,42 @@ th {
     height: 32px;
 }
 
+.ctrl-break-one{
+    background-color: rgba(174, 31, 31, 1) !important;
+    padding: 3px 5px 0 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom: none!important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    font-family: 'U.S. 101';
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 15pt;
+}
+
+.ctrl-break-two{
+    background-color: #818181 !important;
+    border-top: none !important;
+    border-right: 1px solid transparent !important;
+    border-bottom-left-radius: 10px !important;
+    padding: 3px 5px 2px 20px !important;
+    text-transform: uppercase !important;
+    font-style: italic !important;
+    font-weight: normal !important;
+    color: #e1e1e1 !important;
+    font-size: 9pt;
+    font-weight: bold !important;
+}
+
+.no-entries{
+    font-family: 'U.S. 101';
+    font-size: 13pt;
+    text-align: center;
+    background-color: rgba(255,220,220,1);
+    color: #000;
+    text-transform: uppercase;
+}
+
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
   background-color: rgba(255,220,220,1);
@@ -10642,7 +10678,7 @@ a.cal-event-week {
 ::-webkit-scrollbar {
     height: 5px;
     width: 5px;
-    background-color: #818181;
+    background-color: #818181 !important;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -10654,6 +10690,7 @@ a.cal-event-week {
 
 ::-webkit-scrollbar-track {
     background-color: inherit;
+    /*-webkit-border-top-right-radius: 5px;*/
 }
 /*#endregion */
 
