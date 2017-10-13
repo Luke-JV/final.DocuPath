@@ -129,7 +129,18 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "External Review Case");
                 #endregion
-                return View(db.EXTERNAL_REVIEW_CASE.ToList());
+                //return View(db.EXTERNAL_REVIEW_CASE.ToList());
+
+                USER user = VERTEBRAE.getCurrentUser();
+                if (user.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
+                {
+                    return View(db.EXTERNAL_REVIEW_CASE.ToList());
+                }
+                else
+                {
+                    return View(db.EXTERNAL_REVIEW_CASE.Where(x => x.UserID == user.UserID).ToList());
+                }
+
             }
             catch (Exception x)
             {

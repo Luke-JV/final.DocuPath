@@ -122,6 +122,7 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Service Request");
                 #endregion
                 return View(db.SERVICE_REQUEST.ToList());
+                
             }
             catch (Exception x)
             {

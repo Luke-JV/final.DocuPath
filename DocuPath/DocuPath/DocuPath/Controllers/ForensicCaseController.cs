@@ -1658,7 +1658,15 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchSuccess, "Forensic Case");
                 #endregion
-                return View(db.FORENSIC_CASE.ToList());
+                USER user = VERTEBRAE.getCurrentUser();
+                if (user.USER_LOGIN.ACCESS_LEVEL.LevelName == "Superuser")
+                {
+                    return View(db.FORENSIC_CASE.ToList());
+                }
+                else
+                {
+                    return View(db.FORENSIC_CASE.Where(x=>x.UserID == user.UserID).ToList());
+                }
 
             }
             catch (Exception x)

@@ -364,7 +364,8 @@ namespace DocuPath.Controllers
                 user.Discriminator = model.user.FirstName;
                 user.DisplayInitials = model.user.DisplayInitials;
                 user.CellNum = model.user.CellNum;
-                user.DarkUIPref = model.user.DarkUIPref;
+                //user.DarkUIPref = model.user.DarkUIPref;
+                user.DarkUIPref = false;
                 user.WorkNum = model.user.WorkNum;
                 user.HPCSARegNumber = model.user.HPCSARegNumber;
                 var result = await UserManager.CreateAsync(user, model.Password);
