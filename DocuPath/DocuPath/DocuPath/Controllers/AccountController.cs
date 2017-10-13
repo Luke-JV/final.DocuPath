@@ -113,7 +113,7 @@ namespace DocuPath.Controllers
                             return RedirectToAction("Index", "Home");
                         }
                         VERTEBRAE.sendSMS("+27"+UserManager.FindById(id).CellNum.Substring(1),"DocuPath: You logged in to the system at: "+DateTime.Now.ToString()+". If this was not you please contact your system administrator as soon as possible.");
-                        return RedirectToLocal(returnUrl);
+                        return RedirectToAction("Index", "Home");
                     }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -185,10 +185,12 @@ namespace DocuPath.Controllers
                         RegSesh session = new RegSesh();
                         session.id = VECTOR.hash(tk.AccessLevelID.ToString());
                         session.alID = tk.AccessLevelID;
+                        session.tkID = tk.TokenID;
                         Session["REG"] = session;
                         return RedirectToAction("RegisterUserProfile","Account");
                     }
                 }
+                        
 
             }
             return View("Login");
@@ -196,6 +198,7 @@ namespace DocuPath.Controllers
         struct RegSesh
         {
             public string id;
+            public int tkID;
             public int alID;
         }
 
@@ -243,13 +246,16 @@ namespace DocuPath.Controllers
         [AllowAnonymous]
         public ActionResult RegisterUserProfile()
         {
+            DocuPathEntities db = new DocuPathEntities();
             RegSesh session = new RegSesh();
             session = (RegSesh)Session["REG"];
             Session["REG"] = null;
+            db.TOKEN_LOG.Where(m => m.TokenID == session.tkID).FirstOrDefault().RedemptionTimestamp = DateTime.Now;
+            db.SaveChanges();
             if (VECTOR._lock(session.id, session.alID.ToString()))
             {
                 RegisterViewModel model = new RegisterViewModel();
-                DocuPathEntities db = new DocuPathEntities();
+                
 
                 model.user = new USER();
                 model.user.USER_LOGIN = new USER_LOGIN();

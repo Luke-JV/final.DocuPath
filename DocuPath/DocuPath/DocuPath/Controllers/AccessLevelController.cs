@@ -404,7 +404,7 @@ namespace DocuPath.Controllers
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.SearchInit, "Access Level");
                 #endregion
-                return View(db.ACCESS_LEVEL.ToList());
+                return View(db.ACCESS_LEVEL.Where(x=>x.IsDeactivated == false).ToList());
             }
             catch (Exception x)
             {
@@ -648,8 +648,19 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Access Level");
                 #endregion
                 //404 CONFIRM
-                db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault().IsDeactivated = true;
-                db.SaveChanges();
+                
+                var level = db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault();
+                if (level.TOKEN_LOG == null && level.USER_LOGIN == null)
+                {
+                    db.ACCESS_LEVEL.Remove(db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault());
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.ACCESS_LEVEL.Where(x => x.AccessLevelID == id).FirstOrDefault().IsDeactivated = true;
+                    db.SaveChanges();
+                    return RedirectToAction("All");
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Access Level");
                 #endregion

@@ -2896,27 +2896,29 @@ namespace DocuPath.Controllers
             try
             {
                 var dcase = db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault();
-                if (dcase.ABDOMEN_OBSERVATION == null && dcase.ADDITIONAL_EVIDENCE == null && dcase.AUTOPSY_AREA == null && dcase.CASE_COD_ESTIMATION == null && dcase.CASE_STATISTICS == null && dcase.CHEST_OBSERVATION == null && dcase.GENERAL_OBSERVATION == null && dcase.HEAD_NECK_OBSERVATION == null && dcase.MEDIA == null && dcase.SERVICE_REQUEST == null && dcase.SESSION == null && dcase.SPINE_OBSERVATION == null && dcase.STATUS == null && dcase.USER == null)
+                if (dcase.ABDOMEN_OBSERVATION == null && dcase.ADDITIONAL_EVIDENCE == null && dcase.AUTOPSY_AREA == null && dcase.CASE_COD_ESTIMATION == null && dcase.CASE_STATISTICS == null && dcase.CHEST_OBSERVATION == null && dcase.GENERAL_OBSERVATION == null && dcase.HEAD_NECK_OBSERVATION == null && dcase.MEDIA == null && dcase.SERVICE_REQUEST == null && dcase.SESSION == null && dcase.SPINE_OBSERVATION == null)
                 {
-                    db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                   db.FORENSIC_CASE.Remove(db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault());
                     db.SaveChanges();
                 }
                 else
                 {
-                    return View("All");
+                    db.FORENSIC_CASE.Where(x => x.ForensicCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                    db.SaveChanges();
+                    return RedirectToAction("All");
                 }
                 // TODO: Add delete logic here
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return View("All");
+                return RedirectToAction("All");
             }
             catch
             {
                 #region AUDIT_WRITE
                 //AuditModel.WriteTransaction(0, "404");
                 #endregion
-                return View("All");
+                return RedirectToAction("All");
             }
         }
         #endregion
@@ -2941,7 +2943,7 @@ namespace DocuPath.Controllers
             try
             {
                 var spResults = (from sp in db.SERVICE_PROVIDER
-                                 where sp.CompanyName.Contains(query)
+                                 where sp.CompanyName.Contains(query) && sp.IsDeactivated == false
                                  orderby sp.CompanyName
                                  select sp).ToList();
 

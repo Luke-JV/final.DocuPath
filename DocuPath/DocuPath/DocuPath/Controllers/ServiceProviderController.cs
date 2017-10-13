@@ -228,8 +228,21 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteInit, "Service Provider");
                 #endregion
                 //404 CONFIRM
-                db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault().IsDeactivated = true;
+                
                 db.SaveChanges();
+
+                var SP = db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault();
+                if (SP.STATS_POLICE_STATION == null && SP.SERVICE_REQUEST == null)
+                {
+                    db.SERVICE_PROVIDER.Remove(db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault());
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.SERVICE_PROVIDER.Where(x => x.ServiceProviderID == id).FirstOrDefault().IsDeactivated = true;
+                    db.SaveChanges();
+                    return View("All");
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Service Provider");
                 #endregion

@@ -324,8 +324,19 @@ namespace DocuPath.Controllers
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
                 //404 CONFIRM!
-                db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
-                db.SaveChanges();
+                
+                var lcase = db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault();
+                if (lcase.LEGACY_DOCUMENT == null)
+                {
+                    db.LEGACY_CASE.Remove(db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault());
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                    db.SaveChanges();
+                    return RedirectToAction("All");
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Legacy Case");
                 #endregion

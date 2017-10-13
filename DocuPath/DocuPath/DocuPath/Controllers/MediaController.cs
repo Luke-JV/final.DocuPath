@@ -288,8 +288,19 @@ namespace DocuPath.Controllers
                 #endregion
 
                 //404 CONFIRM
-                db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
-                db.SaveChanges();
+               
+                var media = db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault();
+                if (media.MEDIA_TAG == null)
+                {
+                    db.MEDIA.Remove(db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault());
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.MEDIA.Where(x => x.MediaID == id).FirstOrDefault().StatusID = db.STATUS.Where(x => x.StatusValue == "Archived").FirstOrDefault().StatusID;
+                    db.SaveChanges();
+                    return RedirectToAction("All");
+                }
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.DeleteSuccess, "Media");
                 #endregion
