@@ -27,11 +27,11 @@ namespace DocuPath.Models
             PasswordHasher crypto = new PasswordHasher();
             return crypto.HashPassword(_key+brown);
         }
-        public static bool _lock(string key)
+        public static bool _lock(string key,string id)
         {
             PasswordHasher crypto = new PasswordHasher();
-            int _id = Convert.ToInt32(key[0].ToString());
-            PasswordVerificationResult open = crypto.VerifyHashedPassword(key.Substring(1), _key+_id);
+            
+            PasswordVerificationResult open = crypto.VerifyHashedPassword(key, _key+id);
             if (open == PasswordVerificationResult.Success)
             {
                 return true ;

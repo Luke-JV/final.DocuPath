@@ -6,7 +6,7 @@
     <div class="login-form" grid-area="form">
         <div class="grid login-form-grid">
             grid login-form-grid
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Url.Action("Index","Home") }, FormMethod.Post, new { role = "form", @class = "grid fieldset", grid_area = "fieldset" }))
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = Url.Action(    ) }, FormMethod.Post, new { role = "form", @class = "grid fieldset", grid_area = "fieldset" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

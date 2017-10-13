@@ -24,6 +24,7 @@ namespace DocuPath.Controllers
 
         public HomeController()
         {
+            
         }
 
         public HomeController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -118,10 +119,10 @@ namespace DocuPath.Controllers
             //HandleErrorInfo model = new HandleErrorInfo(new Exception(errorMessage) ,"Home","Index");
             try
             {
-                
+
                 //ModelState.AddModelError(DateTime.Now.ToString("dd MMM yyyy HH:mm:ss"), model.Exception); // Add the ModelState error
                 //ViewBag.ErrorMessage = errorMessage; // Pass the error message to the view for detailed error handling and flat file dumping using ViewBag
-                
+                Session["Error"] = model;
                 return View(model);
             }
             catch (Exception)
@@ -132,13 +133,35 @@ namespace DocuPath.Controllers
         }
 
         
-        public ActionResult DumpError(string dumpedFileLocation)
+        public ActionResult DumpError(string message)
         {
                       
             try
             {
-                VERTEBRAE.sendMail("ruco@cldrm.co.za","Please note an error has been logged, view the error here:"+dumpedFileLocation,"Error");
+
+                string filepath = VERTEBRAE.ErrorDumpRootPath;  //Text File Path
+                string fname = @"\ErrorDump_User." + VERTEBRAE.getCurrentUser().DisplayInitials.ToUpper() +".txt";
+
+                bool exists = System.IO.Directory.Exists(Server.MapPath(filepath));
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(Server.MapPath(filepath));
+                StreamWriter sw = new StreamWriter(Server.MapPath(filepath)+fname);
+                
+                    string error = "Error Dump DateTimeStamp:" + " " + DateTime.Now.ToString("dd MMM yyyy HH:mm:ss");
+                    sw.WriteLine("[[------- ERROR LOG FILE FOR " + DateTime.Now.ToString("dd MMM yyyy at HH:mm:ss") + " --------------]]");
+                    sw.WriteLine(">---------------------------<<< START >>>---------------------------<");                    
+                    sw.WriteLine(error);
+                sw.WriteLine(message);
+                sw.WriteLine(">----------------------------<<< END >>>----------------------------<");
+                    
+                   // sw.Flush();
+                    sw.Close();
+                
+                VERTEBRAE.sendMail("ruco@cldrm.co.za","Please note an error has been logged, view the error here:"+filepath,"Error");
                 return RedirectToAction("Index","Home");
+                    
+                
             }
             catch (Exception)
             {
