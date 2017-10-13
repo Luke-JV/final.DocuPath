@@ -582,7 +582,10 @@
                                                         <div class="modal-body" style="padding-bottom: 0">
                                                             <ul class="nav nav-tabs">
                                                                 <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#SRSP-@item.ServiceRequestID">SERVICE REQUEST &amp; SPECIMEN DETAILS</a></li>
-                                                                <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@item.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+                                                                @if (item.SPECIMEN.FirstOrDefault().ExternalReportID != null)
+                                                                {
+                                                                    <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@item.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+                                                                }
                                                             </ul>
                                                             <div class="tab-content">
                                                                 @* SR & SP *@
@@ -643,11 +646,11 @@
                                                                                     {
                                                                                         <dd class="status-inactive">Cancelled</dd>
                                                                                     }
-                                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                                                                                    else if (item.SPECIMEN.FirstOrDefault().ExternalReportID == null)
                                                                                     {
                                                                                         <dd class="status-danger">Active</dd>
                                                                                     }
-                                                                                    else if (item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                                                                                    else if (item.SPECIMEN.FirstOrDefault().ExternalReportID != null)
                                                                                     {
                                                                                         <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
                                                                                     }
@@ -681,9 +684,13 @@
                                                                     </div>
                                                                 </div>
                                                                 @* EXTERNAL REPORT *@
-                                                                <div id="EXTREP-@item.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
-                                                                    <embed src="~/@VERTEBRAE.GetUrl(@item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1065" type="text/pdf" />
-                                                                </div>
+                                                                @if (item.SPECIMEN.FirstOrDefault().ExternalReportID != null)
+                                                                {
+                                                                    <div id="EXTREP-@item.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
+                                                                        <embed src="~/@VERTEBRAE.GetUrl(@item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1065" type="text/pdf" />
+                                                                        @*<iframe src="~/@VERTEBRAE.GetUrl(@item.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1065"></iframe>*@
+                                                                    </div>
+                                                                }
                                                             </div>
                                                         </div>
                                                     </div>

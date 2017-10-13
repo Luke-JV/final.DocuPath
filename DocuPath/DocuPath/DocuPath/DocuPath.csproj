@@ -524,6 +524,7 @@
     <Content Include="Content\autotagger\jquery-ui.structure.min.css" />
     <Content Include="Content\autotagger\jquery-ui.theme.min.css" />
     <Content Include="Content\autotagger\jquery.tag-editor.css" />
+    <Content Include="Content\bootstrap-dark.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput-rtl.min.css" />
     <Content Include="Content\bootstrap-fileinput\css\fileinput.css" />
@@ -1159,6 +1160,7 @@
     <Content Include="Scripts\plugins\sortable.js" />
     <Content Include="Scripts\plugins\sortable.min.js" />
     <Content Include="Scripts\plugins\theme.js" />
+    <Content Include="Scripts\printThis.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />

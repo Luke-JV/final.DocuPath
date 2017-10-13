@@ -1,4 +1,4 @@
-/* NUGET: BEGIN LICENSE TEXT
+﻿/* NUGET: BEGIN LICENSE TEXT
  *
  * Microsoft grants you the right to use these script files for the sole
  * purpose of either: (i) interacting through your browser with the Microsoft
@@ -20,6 +20,14 @@
  */
 
 /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
+
+/*
+    ||====:.    //====\\    ||====\\    ||  //
+    ||     ||  ||      ||   ||     ||   || //
+    ||     ||  ||======||   ||====//    ||\\
+    ||     ||  ||      ||   ||   \\     || \\
+    ||====:'   ||      ||   ||    \\    ||  \\
+*/
 
 @import url('bootstrap-material-datetimepicker.css');
 article,
@@ -60,6 +68,7 @@ html {
 
 body {
   margin: 0;
+  background-color: #333 !important;
 }
 
 a:focus {
@@ -1780,12 +1789,14 @@ th {
 
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: rgba(255, 243, 243, 0.6);
+  background-color: #444;
+  color: #fff !important;
   border-top-color: rgba(174,31,31,1);
 }
 .table-striped > tbody > tr:nth-child(even) > td,
 .table-striped > tbody > tr:nth-child(even) > th {
-  background-color: #fff;
+  background-color: #333;
+  color: #fff !important;
   border-top-color: rgba(174,31,31,1);
 }
 
@@ -1917,7 +1928,8 @@ th {
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-  background-color: rgba(255,220,220,1);
+  background-color: #222 !important;
+  color: rgba(255,220,220,1) !important
 }
 
 table col[class*="col-"] {
@@ -2520,6 +2532,7 @@ textarea.input-lg {
 
 .emph{
     text-transform: uppercase !important;
+    color: #666 !important;
     font-family: 'U.S. 101';
     font-weight: normal;
     font-size: 15pt;
@@ -5414,17 +5427,18 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-bottom: 10px;
   list-style: none;
   text-align: left;
-  background-color: #f5f5f5;
-  border-radius: 4px;
+  background-color: #777777;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
   transition: all 0.5s;
 }
 
 .breadcrumb > li{
   display: inline-block;
-  color:rgba(174,31,31,1);
+  color:#fff !important;
 }
 .breadcrumb a{
-  color:rgba(174,31,31,1);
+  color:#e1e1e1 !important;
   font-weight: normal !important;
 }
 
@@ -5469,7 +5483,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-left: -1px;
   line-height: 1.428571429;
   text-decoration: none;
-  background-color: #ffffff;
+  background-color: #222 !important;
   border: 1px solid #dddddd;
 }
 
@@ -6086,8 +6100,8 @@ a.list-group-item:focus {
 
 .panel {
   margin-bottom: 20px;
-  background-color: #ffffff;
-  border: 1px solid transparent;
+  /*background-color: #ffffff;*/
+  border: 1px solid #666 !important;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -6095,9 +6109,10 @@ a.list-group-item:focus {
 
 .panel-body {
   padding: 5px;
-  background-color: #f9f9f9;
+  background-color: #222;
   box-sizing: border-box;
   height: inherit;
+  color: #999;
 }
 
 .panel-body:before,
@@ -6151,12 +6166,14 @@ a.list-group-item:focus {
 
 .panel-heading {
   padding: 0px 0px 0px 15px;
-  border-bottom: 1px solid transparent;
+  /*border-bottom: 1px solid transparent;*/
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
   font-family: 'U.S. 101';
   font-size: 30px;
   text-transform: uppercase;
+  color: #fff !important;
+  background-color: #444 !important;
 }
 
 .panel-title {
@@ -6316,7 +6333,7 @@ a.list-group-item:focus {
   min-height: 20px;
   padding: 19px 19px 0 19px;
   margin-bottom: 20px;
-  background-color: #fdfdfd;
+  background-color: #333;
   border: 1px solid #e3e3e3;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -7929,7 +7946,7 @@ td.visible-print {
 /*CUSTOM DOCUPATH PROTOTYPE CSS*/
 
 .colour-dpred{
-    color: rgba(174, 23, 23, 1);
+    color: rgba(212, 92, 92, 1) !important;
     font-weight: bold;
     border-color:rgba(174, 23, 23, 1);
     border-width:2px;
@@ -8018,7 +8035,7 @@ td.visible-print {
  }
 
 .border-generic{
-    border: 1px solid #cccccc;
+    border: 1px solid #444;
     border-radius:8px;
 }
 
@@ -8348,6 +8365,8 @@ a .dynamic-tab-heading{
     font-size: 13pt;
     top: 50%;
     transform: translateY(-50%);
+    color: #fff;
+    font-weight: normal;
 }
 
 .mdl2-search:before{
@@ -8934,7 +8953,7 @@ a .dynamic-tab-heading{
     z-index: 1050 !important;
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8), rgba(204, 204, 204, 0.8));
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.80), rgba(0,0,0,0.9));
     /*background: radial-gradient(circle at center, rgba(255,255,255,0.6), rgba(255,255,255,0.5));*/
     /*background: radial-gradient(ellipse at center, rgba(0,0,0,0.6), rgba(0,0,0,1));*/
     /*background-color: rgba(255,255,255,0.8);*/
@@ -9282,8 +9301,12 @@ button .btn-bootgrid:hover{
     background-color: transparent !important;
     padding: 1px 0 0 0;
     transition: 0.25s all;
+    /*color: #fff !important;*/
     /*border: 1px solid black;*/
     /*margin-right: -5px !important;*/
+}
+.btn-bootgrid span{
+    color: #fff !important;
 }
 
 .btn-bootgrid:hover > .btn-bootgrid span {
@@ -9499,7 +9522,7 @@ button .btn-bootgrid:hover{
 .sidenav-notification {
   /*background: radial-gradient(circle at center, #ffffff, #cccccc);*/
   margin-bottom: 5px;
-  background-color: #fff;
+  background-color: #333;
   min-height: 75px;
   border-radius: 4px;
 }
@@ -9527,7 +9550,7 @@ button .btn-bootgrid:hover{
     grid-area: "title";
     font-family: 'U.S. 101';
     font-size: 18px;
-    color: #000;
+    color: #999;
 }
 
 .sidenav-notification-timestamp {
@@ -9535,6 +9558,15 @@ button .btn-bootgrid:hover{
     text-align: right;
     font-size: 8pt;
     padding: 4px 4px 0 0;
+    color: #888;
+}
+.sidenav-notification-timestamp span {
+    color: #fff;
+}
+
+.sidenav-notification-detail .panel-footer{
+    background-color: #222 !important;
+    /*border-radius: 0px;*/
 }
 
 .sidenav-hr{
@@ -9555,7 +9587,7 @@ button .btn-bootgrid:hover{
   font-family: 'Segoe UI';
   font-size: 10pt;
   font-weight: bold;
-  color: rgba(174, 23, 23, 1);
+  color: rgb(212, 92, 92);
 }
 
 .sidenav-notification-detail{
@@ -9564,7 +9596,7 @@ button .btn-bootgrid:hover{
   text-align: justify;
   font-family: 'Segoe UI';
   color: #000;
-  background-color: rgb(204, 204, 204);
+  /*background-color: rgb(204, 204, 204);*/
   border: none;
 }
 
@@ -9574,7 +9606,7 @@ button .btn-bootgrid:hover{
     border-radius: 4px;
     height: 28px;
     margin-bottom: 0px;
-    background-color: rgba(255, 255, 255, 0.15);
+    /*background-color: rgba(255, 255, 255, 0.15);*/
 
 }
 
@@ -10399,13 +10431,13 @@ td > span > a:hover {
 }
 .cal-year-box .row-fluid:hover,
 .cal-row-fluid:hover {
-  background-color: #fafafa;
+  background-color: #222 !important;
 }
 .cal-month-day {
   height: 100px;
 }
 [class*="cal-cell"]:hover {
-  background-color: #ededed;
+  background-color: #333;
 }
 .cal-year-box [class*="span"],
 .cal-month-box [class*="cal-cell"] {
@@ -10979,6 +11011,13 @@ a.cal-event-week {
     border-bottom: 1px solid transparent;
 }
 
+.haptic-ol > li.colour-dpred{
+    color: rgba(174,31,31,1) !important;
+}
+.haptic-ul > li.colour-dpred{
+    color: rgba(174,31,31,1) !important;
+}
+
 .haptic-ol {
     font-weight: 500;
     margin: 0;
@@ -11126,7 +11165,7 @@ a.cal-event-week {
         margin: auto;
         transition: all 1s;
         width: auto;
-        background-color: #fff;
+        /*background-color: #fff;*/
         z-index: 999;
     }
 
@@ -12014,6 +12053,10 @@ a.cal-event-week {
 /* Available At:    codepen.io/ghost028/pen/KgrZAN  */
 /* Customized By:   Ruco Pretorius                  */
 
+.table-striped > td > a > i{
+    color: #fff !important;
+}
+
 .dna-modal-overlay {
     position: fixed;
     top: 0;
@@ -12021,7 +12064,7 @@ a.cal-event-week {
     z-index: 99;
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle at center, #ffffff, #cccccc);
+    background: radial-gradient(circle at center, #222, #333);
     background-size: cover;
     justify-content: center;
     align-items: center;
@@ -12793,6 +12836,9 @@ a.cal-event-week {
     background-repeat: no-repeat;
     background-position-y: center;
 }
+.pulse-grid{
+    display: none !important;
+}
 
 .header-par {
 	grid-area: hdr;
@@ -12801,6 +12847,7 @@ a.cal-event-week {
 	font-size: 20pt;
 	text-align: center;
     line-height: 25px;
+    color: #888;
 	/*padding: 10px 0 10px 0 !important;*/
 }
 
@@ -13146,6 +13193,7 @@ a.cal-event-week {
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  background-color: #333 !important;
 }
 
 .timeline > li > .timeline-panel:before {
@@ -13233,7 +13281,7 @@ a.cal-event-week {
 
 .timeline-title {
   margin: 0;
-  color: inherit;
+  color: #fff;
   font-family: 'U.S. 101';
   font-size: 18pt;
 }
@@ -13506,7 +13554,7 @@ a.cal-event-week {
     padding: 5px;
     align-content: center;
     border-radius: 5px;
-    background-color: rgba(255,220,220,0.4);
+    background-color: #333;
     border-left: 2px solid rgba(174,31,31,1) !important;
     border-top: 1px solid rgba(174,31,31,1) !important;
     border-right: 1px solid rgba(174,31,31,1) !important;
@@ -13982,10 +14030,10 @@ a.cal-event-week {
     margin-bottom: 5px;
     padding: 5px;
     /*border: 1px solid #999 !important;*/
-    border: 1px solid #000 !important;
+    border: 1px solid #333 !important;
     /*min-height: 75px;*/
     border-radius: 4px;
-    background-color: #e8e8e8;
+    background-color: #333;
 }
 
 .form-horizontal > .panel-group > .haptic-topic-container {
@@ -13995,7 +14043,7 @@ a.cal-event-week {
 .haptic-catchphrase {
     padding: 0 5px 0 0;
     margin: 0 !important;
-    color: #333;
+    color: #fff;
     text-align: justify;
 }
 
@@ -14024,7 +14072,7 @@ ctrl {
     /*background: linear-gradient(-45deg, rgba(174,31,31,0.25),#fff);*/
     /*background-color: rgba(174,31,31,1);*/
     /*background-color: #5a5a5a;*/
-    background-color: #fff !important;
+    background-color: #333 !important;
     /*border: 1px solid rgba(174,31,31,1);*/
     border-radius: 3px;
     padding: 1px 0 1px 5px;
@@ -14032,7 +14080,7 @@ ctrl {
 }
 
 .catchphrase-highlight {
-    color: rgba(174,31,31,1);
+    color: #d9534f;
 }
 
 .highlight{
@@ -14091,28 +14139,32 @@ mark {
     border-radius: 10px;
     border-right: 1px solid #666;
     border-left: 1px solid #666;
-    background-color: #e8e8e8;
+    background-color: #333;
     font-family: 'U.S. 101';
     font-size: 20pt;
 }
 
 .placeholder-mdl2icon{
     font-size: 60pt;
-    color: #333;
+    color: #d9534f;
 }
 
 /*.sys-params-grid div, ul {
     border: 1px solid black;
 }*/
 
-.tree, .tree ul {
+.tree, .tree ul:not([href='#Default']) {
     display: inline-block;            
     max-width: 300px !important;
     margin: auto;
     padding: 0;
     list-style: none;
-    color: #000 !important;
+    color: #000;
     overflow-y: auto;
+}
+
+.branch > ul > li{
+    color: #fff;
 }
 
             .tree ul {
@@ -14179,7 +14231,7 @@ mark {
             }
 
             .tree ul li:last-child:before {
-                background: #f9f9f9;
+                /*background: #f9f9f9;*/
                 height: auto;
                 top: 1em;
                 bottom: 0;
@@ -14200,7 +14252,7 @@ mark {
             font-weight: normal;
             cursor: pointer !important;
             transition: 0.75s all;
-            background-color: #ddd;
+            background-color: #555;
             padding: 0 7.5px 0 7.5px;
             border-top-right-radius: 10px;
             border-bottom-left-radius: 10px;
@@ -14305,13 +14357,14 @@ mark {
     border-bottom-right-radius: 15px;
     border-top-right-radius: 0;
     border-bottom-left-radius: 0;
-    background-color: rgba(174, 31, 31, 0.1);
+    background-color: rgba(174, 31, 31, 0.75);
+    color: #999;
     padding: 5px;
     cursor: help;
 }
 
 .metric-container:hover .metric-value {
-    color: rgba(174,31,31,1);
+    color: #fff !important;
     transition: 1s all;
 }
 
@@ -14396,7 +14449,7 @@ mark {
 .metric-description {
     display: none;
     font-size: 8pt;
-    color: #666;
+    color: #999;
     grid-column: 1/-1;
     text-align: center;
     line-height: 1.2em;

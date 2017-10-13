@@ -59,10 +59,20 @@ namespace DocuPath
             #region Stylesheet & Visual Script Bundles:
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                           "~/Scripts/bootstrap.js",
+                          "~/Scripts/printThis.js",
                           "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/site.css",
+                      "~/Content/jquery.tag-editor.css",
+                      "~/Content/jquery-ui.css",
+                      "~/Content/jquery-ui.structure.css",
+                      "~/Content/bootstrap-tagsinput.css",
+                      "~/Content/calendar/calendar.css"));
+
+            bundles.Add(new StyleBundle("~/Content/cssdark").Include(
+                      "~/Content/bootstrap-dark.css",
                       "~/Content/site.css",
                       "~/Content/jquery.tag-editor.css",
                       "~/Content/jquery-ui.css",

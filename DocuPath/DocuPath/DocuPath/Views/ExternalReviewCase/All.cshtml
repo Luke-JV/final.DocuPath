@@ -129,7 +129,7 @@
                 @* BUTTONS *@
                 <div class="modalbox-button-bar col-md-12 modal-btn-col">
                     @*<div class="">*@
-                    <form action="~/ExternalReviewCase/Delete/@fc.ForensicCaseID" method="post">
+                    <form action="~/ExternalReviewCase/Delete/@erc.ExternalReviewCaseID" method="post">
                         <input type="submit" id="del-yes-@erc.ExternalReviewCaseID" value="Yes" class="btn btn-modal-generic" />
 
                         <input type="button" id="del-no-@erc.ExternalReviewCaseID" onclick="$('#del-modal-'+@erc.ExternalReviewCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />

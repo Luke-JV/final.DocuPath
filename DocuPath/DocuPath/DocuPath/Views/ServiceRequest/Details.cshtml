@@ -43,7 +43,10 @@
 <div class="form-horizontal border-generic form-generic">
     <ul class="nav nav-tabs">
         <li class="active"><a class="dynamic-tab-heading" data-toggle="tab" href="#SRSP-@Model.ServiceRequestID">SERVICE REQUEST &amp; SPECIMEN DETAILS</a></li>
-        <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@Model.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+        @if (Model.SPECIMEN.FirstOrDefault().ExternalReportID != null)
+        {
+            <li><a class="dynamic-tab-heading" data-toggle="tab" href="#EXTREP-@Model.ServiceRequestID" style="margin-left: 5px">EXTERNAL REPORT</a></li>
+        }
     </ul>
     <div class="tab-content">
         @* SR & SP *@
@@ -104,11 +107,11 @@
                             {
                                 <dd class="status-inactive">Cancelled</dd>
                             }
-                            else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT == null)
+                            else if (Model.SPECIMEN.FirstOrDefault().ExternalReportID == null)
                             {
                                 <dd class="status-danger">Active</dd>
                             }
-                            else if (Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT != null)
+                            else if (Model.SPECIMEN.FirstOrDefault().ExternalReportID != null)
                             {
                                 <dd><span class="status-ok">Closed</span> - External Report Available on <kbd>EXTERNAL REPORT</kbd> tab</dd>
                             }
@@ -142,9 +145,12 @@
             </div>
         </div>
         @* EXTERNAL REPORT *@
-        <div id="EXTREP-@Model.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
-            <embed src="~/@VERTEBRAE.GetUrl(@Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1125" type="text/pdf" />
-        </div>
+        @if (Model.SPECIMEN.FirstOrDefault().ExternalReportID != null)
+        {
+            <div id="EXTREP-@Model.ServiceRequestID" class="tab-pane fade" style="padding: 5px 0 0 0">
+                <embed src="~/@VERTEBRAE.GetUrl(@Model.SPECIMEN.FirstOrDefault().EXTERNAL_REPORT.ExternalReportLocation)" height="650" width="1125" type="text/pdf" />
+            </div>
+        }
     </div>
 
     @*<div class="row" style="margin-left: 0px">

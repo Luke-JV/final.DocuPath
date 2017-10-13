@@ -78,23 +78,21 @@
             <table id="UAR" class="table table-striped table-hover table-condensed table-insight">
                 <thead>
                     <tr>
-                        <th @*data-id="identifier" data-column-id="FCID" data-visible="false" data-identifier="true"*@ class="colour-dpred">
+                        <th class="colour-dpred">
                             ID
                         </th>
-                        @* class="colour-dpred" style="min-width: 80px !important">
-                            Datestamp
-                        </th>*@
-                        <th @*data-column-id="status"*@ class="colour-dpred">
+                        <th class="colour-dpred">
                             Timestamp
                         </th>
-                        @*<th class="colour-dpred">
-                            Transaction Type
-                        </th>*@
                         <th class="colour-dpred">
                             Critical Data String
                         </th>
                     </tr>
                 </thead>
+                @*@{ 
+                    var chartLabels = "";
+                    var chartData = "";
+                }*@
                 @for (int i = 0; i < Model.dsUAR.Count; i++)
                 {
                     <tbody>
@@ -115,15 +113,9 @@
                                         <td>
                                             @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].AuditLogTxID
                                         </td>
-                                        @*<td>
-                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxDateStamp.ToString("dd MMM yyyy")
-                                        </td>*@
                                         <td>
                                             <strong class="table-large-identifier-insight">@Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxTimeStamp.ToString("HH:mm:ss")</strong>
                                         </td>
-                                        @*<td>
-                                            @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].AUDIT_TX_TYPE.TypeValue
-                                        </td>*@
                                         <td>
                                             @Model.dsUAR[i].cbrkDaysActivities[j].cbrkActivityTypeEntries[k].TxCriticalDataString
                                         </td>
@@ -132,31 +124,36 @@
                             }
                         }
                     </tbody>
+                    //if (i == Model.dsUAR.Count)
+                    //{
+                    //    chartLabels += "\'" + Model.dsUAR[i].cbrkDateTitle + "', ";
+                    //    chartData += k
+                    //}
                 }
             </table>
             @*<tr>
-                <td>
-                    @Model.dsUAR[i].AuditLogTxID
-                </td>
-                <td>
-                    @Model.dsUAR[i].TxDateStamp.ToString("dd MMM yyyy")
-                </td>
-                <td>
-                    <strong class="table-large-identifier-insight">@Model.dsUAR[i].TxTimeStamp.ToString("HH:mm:ss")</strong>
-                </td>
-                <td>
-                    @Model.dsUAR[i].AUDIT_TX_TYPE.TypeValue
-                </td>
-                <td>
-                    @Model.dsUAR[i].TxCriticalDataString
-                </td>
-            </tr>*@
+                    <td>
+                        @Model.dsUAR[i].AuditLogTxID
+                    </td>
+                    <td>
+                        @Model.dsUAR[i].TxDateStamp.ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        <strong class="table-large-identifier-insight">@Model.dsUAR[i].TxTimeStamp.ToString("HH:mm:ss")</strong>
+                    </td>
+                    <td>
+                        @Model.dsUAR[i].AUDIT_TX_TYPE.TypeValue
+                    </td>
+                    <td>
+                        @Model.dsUAR[i].TxCriticalDataString
+                    </td>
+                </tr>*@
             @*<div class="grid insight-chart-grid" style="margin-top: 5px">
                     <span class="chart-icon insight-mdl2icon mdl2-chart"></span>
-                    <div class="chart-title">CAUSE OF DEATH BREAKDOWN - TOP 5 CONTRIBUTORS</div>
+                    <div class="chart-title">USER ACTIVITY BREAKDOWN - TRANSACTIONS BY ACTIVITY TYPE</div>
                     <div class="chart-subtitle">@Model.dsTimeframeToString</div>
-                    <canvas class="chart-area" id="CODcanvas" width="750" height="500"></canvas>
-                </div>*@
+                    <canvas class="chart-area" id="UARCanvas" width="750" height="500"></canvas>
+            </div>*@
         </div>
         <div class="grid report-footer footer-bg">
             <div class="page-counter" style="margin-left: 80px">DocuPath INSIGHT REPORTING ENGINE</div>
@@ -185,83 +182,109 @@
         //});
 
         $('#btnPrint').click(function (/*request, response*/) {
-            PrintElem('reportDiv');
-            //var pdfData = document.getElementById("reportDiv");
-            //console.log(pdfData.outerHTML.toString());
-            //alert('print clicked and data logged');
-
-            //$.ajax({
-            //    url: '/Reporting/PrintReportToPDF/',
-            //    data: "{ 'pdfData': '" + pdfData.outerHTML + "'}",
-            //    dataType: "json",
-            //    type: "POST",
-            //    contentType: "application/pdf; charset=utf-8",
-            //    success: function (result) {
-            //        alert(result); //Throw Success Modal 404
-            //        document.getElementById("srch-term").text() = "";
-            //    },
-            //});
+            this.blur();
+            $('#reportDiv').printThis({
+                debug: false,               // show the iframe for debugging
+                importCSS: true,            // import page CSS
+                importStyle: false,         // import style tags
+                printContainer: true,       // grab outer container as well as the contents of the selector
+                //loadCSS: "path/to/my.css",  // path to additional css file - us an array [] for multiple
+                pageTitle: "",              // add title to print page
+                removeInline: false,        // remove all inline styles from print elements
+                //printDelay: 333,            // variable print delay
+                header: null,               // prefix to html
+                footer: null,               // postfix to html
+                //base: false,                // preserve the BASE tag, or accept a string for the URL
+                formValues: false,           // preserve input/form values
+                canvas: false,              // copy canvas elements (experimental)
+                //doctypeString: '...',       // enter a different doctype for older markup
+                removeScripts: true,       // remove script tags from print content
+                //copyTagClasses: false       // copy classes from the html & body tag
+            });
         });
-
-        function PrintElem(elem) {
-            var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-            mywindow.document.write('<html><head><title>' + document.title + '</title>');
-            mywindow.document.write('<link rel="stylesheet" href="~/Content/boostrap.css">');
-            mywindow.document.write('</head><body >');
-            //mywindow.document.write('<h1>' + document.title + '</h1>');
-            mywindow.document.write(document.getElementById(elem).innerHTML);
-            mywindow.document.write('</body></html>');
-            //mywindow.document.write('<script type="text/javascript">$(window).load(function() { window.print(); window.close(); });<\/script>');
-
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10*/
-
-            mywindow.print();
-            mywindow.close();
-
-            return true;
-        }
     </script>
 
 
-@*<script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        datasets: [{
-            label: 'Relative Frequency',
-            data: [12, 19, 3, 5, 2, 26, 25],
-            backgroundColor: [
-                'rgba(174, 31, 31, 0.2)',
-                'rgba(0, 0, 0, 0.2)',
-                'rgba(128, 128, 128, 0.2)',
-                'rgba(174, 31, 31, 0.2)',
-                'rgba(0, 0, 0, 0.2)',
-                'rgba(128, 128, 128, 0.2)',
-            ],
-            borderColor: [
-                'rgba(174, 31, 31, 1)',
-                'rgba(128, 128, 128, 1)',
-                'rgba(180, 180, 180, 1)',
-                'rgba(174, 31, 31, 1)',
-                'rgba(128, 128, 128, 1)',
-                'rgba(180, 180, 180, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-</script>*@
-    }
+    <script>
+        @*$(document).ready(function () {
+
+            console.log(@ViewBag.ChartLabels+" "+@ViewBag.ChartData);
+            //Chart Colour Palettes:
+            var Green = "#468847";
+            var DarkGreen = "#316731";
+            var Orange = "#ff7d00";
+            var DarkOrange = "#a2601f";
+            var Grey = "#999";
+            var DarkGrey = "#666";
+            var DPRed = "#ae1f1f";
+            var DarkRed = "#7b1515";
+
+            var DPRedEighty = "rgba(174, 31, 31, 0.8)";
+            var DPRedSixty = "rgba(174, 31, 31, 0.6)";
+            var DPRedForty = "rgba(174, 31, 31, 0.4)";
+            var DPRedTwenty = "rgba(174, 31, 31, 0.2)";
+
+            var GreyHundred = "rgba(128, 128, 128, 1)";
+            var GreyEighty = "rgba(128, 128, 128, 0.8)";
+            var GreySixty = "rgba(128, 128, 128, 0.6)";
+            var GreyForty = "rgba(128, 128, 128, 0.4)";
+            var GreyTwenty = "rgba(128, 128, 128, 0.2)";
+
+            // UAR Doughnut:
+            var ctx = document.getElementById("UARCanvas").getContext('2d');
+            var UARbyType = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Active', 'Pending', 'Archived', 'Locked'],
+                    datasets: [
+                        {
+                            data: [ 1,5,10,18 ],
+                            backgroundColor: [Green, Orange, Grey, DPRed],
+                            borderColor: [DarkGreen, DarkOrange, DarkGrey, DarkRed],
+                            borderWidth: 1,
+                        }
+                    ]
+                },
+                options: { cutoutPercentage: 50, aspectRatio: 1 }
+            });
+        });*@
+
+        //var ctx = document.getElementById("UARCanvas").getContext('2d');
+        //var myChart = new Chart(ctx, {
+        //    type: 'bar',
+        //    data: {
+        //        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        //        datasets: [{
+        //            label: 'Relative Frequency',
+        //            data: [12, 19, 3, 5, 2, 26, 25],
+        //            backgroundColor: [
+        //                'rgba(174, 31, 31, 0.2)',
+        //                'rgba(0, 0, 0, 0.2)',
+        //                'rgba(128, 128, 128, 0.2)',
+        //                'rgba(174, 31, 31, 0.2)',
+        //                'rgba(0, 0, 0, 0.2)',
+        //                'rgba(128, 128, 128, 0.2)',
+        //            ],
+        //            borderColor: [
+        //                'rgba(174, 31, 31, 1)',
+        //                'rgba(128, 128, 128, 1)',
+        //                'rgba(180, 180, 180, 1)',
+        //                'rgba(174, 31, 31, 1)',
+        //                'rgba(128, 128, 128, 1)',
+        //                'rgba(180, 180, 180, 1)',
+        //            ],
+        //            borderWidth: 1
+        //        }]
+        //    },
+        //    options: {
+        //        scales: {
+        //            yAxes: [{
+        //                ticks: {
+        //                    beginAtZero:true
+        //                }
+        //            }]
+        //        }
+        //    }
+        //});
+        </script>
+}
