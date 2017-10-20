@@ -136,9 +136,17 @@
     </div>
     <div class="panel panel-default nomarg" grid-area="cover">
         <div class="panel-heading params-panel-heading-grid" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer"*@>
-            <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
-            <span grid-area="parm_hdr_txt">COVER LETTER</span>
-            <button id="btnViewCover" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="VIEW" data-placement="bottom" grid-area="parm_hdr_btn"></button>
+            @if (Model.CoverLetterLocation == null)
+            {
+                <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                <span grid-area="parm_hdr_txt">COVER LETTER</span>
+            }
+            else if (Model.CoverLetterLocation != null)
+            {
+                <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                <span grid-area="parm_hdr_txt">COVER LETTER</span>
+                <button id="btnViewCover" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" grid-area="parm_hdr_btn" data-toggle="tooltip" title="VIEW" data-placement="bottom"></button>
+            }
         </div>
         <div id="CoverLetterPanel" class="panel-collapse collapse in">
             <div class="panel-body text-center apad5" style="padding-top: 25px">
@@ -151,18 +159,61 @@
                 {
                     @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.CoverLetterLocation).Replace(".", ""), false))
                     <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.CoverLetterLocation)</p>
-                }
 
                 @*<img src="@VERTEBRAE.GetThumbUrl(Model.CoverLetterLocation)" class='media-thumb thumbsize-normal'/>*@
                 @*<img src="~/Content/Resources/ERCCoverLetterPreview.png" style="max-width: 57%" />*@
+
+                <div class="modal fade" id="coverPreview" role="dialog">
+                    <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="grid hdr-grid">
+                                    <div class="page-hdr">
+                                        <div class="page-header-subgrid">
+                                            <div class="icon-circle mdl2icon mdl2-file"></div>
+                                            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                            <div class="page-header-text">VIEW EXTERNAL REVIEW CASE COVER LETTER</div>
+                                        </div>
+                                    </div>
+                                    <div class="page-btns">
+                                        <div class="page-buttons-subgrid buttons-one">
+                                            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                            <div></div>
+                                            <div grid-area="btn1">
+                                                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                </form>
+                                            </div>
+                                            <div></div>
+                                            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.AdditionalEvidenceLocation)" height="650" width="1165"></iframe>*@
+                                <embed src="~/@VERTEBRAE.GetUrl(Model.CoverLetterLocation)" height="650" width="1165" type="text/pdf" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
             </div>
         </div>
     </div>
     <div class="panel panel-default nomarg" grid-area="report">
         <div class="panel-heading params-panel-heading-grid" @*data-toggle="collapse" data-parent="#LCDetailsAccordion" href="#LCDocsPanel" style="cursor: pointer"*@>
-            <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
-            <span grid-area="parm_hdr_txt">CASE REPORT</span>
-            <button id="btnViewReport" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" onclick="this.blur()" data-toggle="tooltip" title="VIEW" data-placement="bottom" grid-area="parm_hdr_btn"></button>
+            @if (Model.ExtCaseReportLocation == null)
+            {
+                <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                <span grid-area="parm_hdr_txt">CASE REPORT</span>
+            }
+            else if (Model.ExtCaseReportLocation != null)
+            {
+                <span class="mdl2icon mdl2-file panel-mdl2icon" grid-area="parm_hdr_ico"></span>
+                <span grid-area="parm_hdr_txt">CASE REPORT</span>
+                <button id="btnViewReport" type="button" class="btn btn-default btn-generic btn-page-action btn-param-action mdl2icon mdl2-view btn-mdl2icon" onclick="this.blur()" grid-area="parm_hdr_btn" data-toggle="tooltip" title="VIEW" data-placement="bottom"></button>
+            }
         </div>        
         <div id="ERCReportPanel" class="panel-collapse collapse in">
             <div class="panel-body text-center apad5" style="padding-top: 25px">
@@ -175,9 +226,44 @@
                 {
                     @Html.Raw(@VERTEBRAE.GetFileTypeThumbnail(Path.GetExtension(Model.ExtCaseReportLocation).Replace(".", ""), false))
                     <p class="filetype-thumbnail-filename">@Path.GetFileName(Model.ExtCaseReportLocation)</p>
-                }
 
                 @*<img src="~/Content/Resources/NoERCCaseReport.png" style="max-width: 57%" />*@
+
+                <div class="modal fade" id="reportPreview" role="dialog">
+                    <div class="modal-dialog" style="width:1200px;height:auto;max-height:600px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="grid hdr-grid">
+                                    <div class="page-hdr">
+                                        <div class="page-header-subgrid">
+                                            <div class="icon-circle mdl2icon mdl2-file"></div>
+                                            <div class="circular-motif-left"><img src="~/Content/Resources/CircularMotifLeft.png" style="max-height: 45px" /></div>
+                                            <div class="page-header-text">VIEW EXTERNAL REVIEW CASE REPORT</div>
+                                        </div>
+                                    </div>
+                                    <div class="page-btns">
+                                        <div class="page-buttons-subgrid buttons-one">
+                                            <div grid-area="left"><img src="~/Content/Resources/CircuitryMotifLeft.png" class="circuitry-left-motif" /></div>
+                                            <div></div>
+                                            <div grid-area="btn1">
+                                                <form class="minimalform" action="javascript:void(0)" style="margin-top: 2px">
+                                                    <button class="btn btn-default btn-generic btn-page-action mdl2icon mdl2-cancel btn-mdl2icon" onclick="this.blur()" data-dismiss="modal" type="submit" data-toggle="tooltip" title="CLOSE" data-placement="right"></button>
+                                                </form>
+                                            </div>
+                                            <div></div>
+                                            <div class="right-motif" grid-area="right"><img src="~/Content/Resources/CircuitryMotifRight.png" class="circuitry-right-motif" /></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                @*<iframe class="frame1" src="~/@VERTEBRAE.GetUrl(item.AdditionalEvidenceLocation)" height="650" width="1165"></iframe>*@
+                                <embed src="~/@VERTEBRAE.GetUrl(Model.ExtCaseReportLocation)" height="650" width="1165" type="text/pdf" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
             </div>
         </div>
     </div>
@@ -188,6 +274,16 @@
         // Enable tooltips:
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
+        });
+
+        $('#btnViewCover').click(function () {
+            //alert('view cover clicked');
+            $('#coverPreview').modal('show');
+        });
+
+        $('#btnViewReport').click(function () {
+            //alert('view report clicked');
+            $('#reportPreview').modal('show');
         });
     </script>
 }

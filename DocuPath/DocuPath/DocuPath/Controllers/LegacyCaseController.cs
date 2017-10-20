@@ -139,7 +139,7 @@ namespace DocuPath.Controllers
                 LegacyCaseViewModel model = new LegacyCaseViewModel();
                 model.legacyCase = db.LEGACY_CASE.Where(x => x.LegacyCaseID == id).FirstOrDefault();
 
-                string test = Convert.ToDateTime(model.legacyCase.DateClosed).ToString("dd MMM yyyy HH:mm");
+                string test = Convert.ToDateTime(model.legacyCase.DateClosed).ToString("dd MMM yyyy");
                 ViewBag.DateClosed = test;
                 model.legacyCase.USER = db.USER.Where(x => x.UserID == model.legacyCase.UserID).FirstOrDefault();
 

@@ -99,14 +99,20 @@
             formatters: {
                 // INSERTS APPROPRIATE ACTION BUTTONS FOR EACH LINE IN THE ASPTABLE:
                 "commands": function (column, row) {
-                    return "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"right\" href=\"/ContentTag/Details/" + row.CTID.trim() + "\"><i class=\"mdl2-view\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"right\" href=\"/ContentTag/Edit/" + row.CTID.trim() + "\"><i class=\"mdl2-edit\" style=\"font-style: normal\"></i></a>" +
-                            "<a class=\"mdl2icon colour-dpblack\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"right\" href=\"/ContentTag/Delete/" + row.CTID.trim() + "\"><i class=\"mdl2-delete\" style=\"font-style: normal\"></i></a>";
+                    return  "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-view\" data-row-id=\"" + row.CTID.trim() + "\" data-toggle=\"tooltip\" title=\"VIEW\" data-placement=\"top\"><span class=\"mdl2icon mdl2-view\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-edit\" data-row-id=\"" + row.CTID.trim() + "\" data-toggle=\"tooltip\" title=\"EDIT\" data-placement=\"top\"><span class=\"mdl2icon mdl2-edit\"></span></button>" +
+                            "<button type=\"button\" class=\"btn btn-xs btn-bootgrid cmd-delete\" data-row-id=\"" + row.CTID.trim() + "\" data-toggle=\"tooltip\" title=\"DELETE\" data-placement=\"top\"><span class=\"mdl2icon mdl2-delete\"></span></button>";
                     },
                 "tagCode": function (column, row) { /* APPLY LARGE IDENTIFIER CLASS TO ALL TAG CODES: */
                     return "<span class=\"table-large-identifier\">"+ row.tagCode + "</span>";
                 }
             }
+        }).on("loaded.rs.jquery.bootgrid", function () {
+            grid.find(".cmd-delete").on("click", function (e) { this.blur(); window.location = "/ContentTag/Delete/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-edit").on("click", function (e) { this.blur(); window.location = "/ContentTag/Edit/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".cmd-view").on("click", function (e) { this.blur(); window.location = "/ContentTag/Details/" + $(this).data("row-id"); }).tooltip().end()
+                .find(".pagination").tooltip().end()
+                .find(".infos").tooltip().end()
         });
     </script>
 
