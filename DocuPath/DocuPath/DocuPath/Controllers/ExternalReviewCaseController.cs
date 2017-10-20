@@ -202,7 +202,15 @@ namespace DocuPath.Controllers
                 #region VALIDATE_ACCESS
                 bool access = VECTOR.ValidateAccess(/*model.userID - 404*/0);
                 #endregion
-
+                if (model.CoverLetterLocation == null)
+                {
+                    model.CoverLetterLocation = "";
+                }
+                if (model.ExtCaseReportLocation == null)
+                {
+                    model.ExtCaseReportLocation = "";
+                }
+                
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateInit, "External Review Case");
                 #endregion
@@ -226,9 +234,9 @@ namespace DocuPath.Controllers
             if (!ModelState.IsValid)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
+               // AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
                 #endregion
-                return View(updatedERC);
+                return RedirectToAction("All");
             }
 
             try
@@ -240,14 +248,14 @@ namespace DocuPath.Controllers
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "External Review Case");
+             //   AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateSuccess, "External Review Case");
                 #endregion
                 return RedirectToAction("Index");
             }
             catch (Exception x)
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
+            //    AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UpdateFail, "External Review Case");
                 #endregion
                 VERTEBRAE.DumpErrorToTxt(x);
                 return View("Error", new HandleErrorInfo(x, controllerName, actionName));
@@ -323,7 +331,7 @@ namespace DocuPath.Controllers
             try
             {
                 #region AUDIT_WRITE
-                AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "External Review Case");
+                //AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "External Review Case");
                 #endregion
                 // Checking no of files injected in Request object  
                 if (Request.Files.Count > 0)
@@ -332,7 +340,8 @@ namespace DocuPath.Controllers
                     {
                         //  Get all files from Request object  
                         HttpFileCollectionBase files = Request.Files;
-                        string foldername = Request.Form.Get("ERCDR");
+                        string foldername = Request.Form.Get("ECDR");
+                        string instr = Request.Form.Get("instr");
                         string rootpath = VERTEBRAE.ERC_REPORootPath;
                         for (int i = 0; i < files.Count; i++)
                         {
@@ -363,6 +372,14 @@ namespace DocuPath.Controllers
                                 System.IO.Directory.CreateDirectory(Server.MapPath(rootpath + foldername));
 
                             file.SaveAs(fname);
+                            if (instr=="cover")
+                            {
+                                db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalDRNumber == foldername).FirstOrDefault().CoverLetterLocation = fname;                                
+                            }
+                            else if (instr == "report")
+                            {
+                                db.EXTERNAL_REVIEW_CASE.Where(x => x.ExternalDRNumber == foldername).FirstOrDefault().ExtCaseReportLocation = fname;
+                            }
                         }
                         // Returns message that successfully uploaded  
                         return Json("File Uploaded Successfully!");

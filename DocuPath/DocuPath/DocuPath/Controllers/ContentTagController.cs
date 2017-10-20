@@ -225,6 +225,12 @@ namespace DocuPath.Controllers
                 ContentTagViewModel model = new ContentTagViewModel();
 
                 model.tag = db.CONTENT_TAG.Where(ct => ct.ContentTagID == id).FirstOrDefault();
+                model.conditionName = model.tag.TAG_CONDITION.TagConditionName;
+                model.conditionID = model.tag.TAG_CONDITION.TagConditionID;
+                model.catName = model.tag.TAG_CATEGORY.TagCategoryName;
+                model.catID = model.tag.TAG_CATEGORY.TagCategoryID;
+                model.subcatName = model.tag.TAG_SUBCATEGORY.TagSubCategoryName;
+                model.subcatID = model.tag.TAG_SUBCATEGORY.TagSubCategoryID;
 
                 return View(model);
             }

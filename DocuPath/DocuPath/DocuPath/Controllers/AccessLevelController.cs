@@ -482,17 +482,30 @@ namespace DocuPath.Controllers
                 foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > Forensic Case"))
                 {
                     selectAreaKVP area = new selectAreaKVP();
-                    area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    area.areaName = item.AccessAreaDescription;                    
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;                            
+                        }
+                    }
                     model.FCAreas.Add(area);
                 }
-
+               
+                
 
                 foreach (var item in db.ACCESS_AREA.Where(x => x.FUNCTION_GROUP.FunctionGroupDescription == "CORTEX > External Review Case"))
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.ECAreas.Add(area);
                 }
 
@@ -500,7 +513,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.LCAreas.Add(area);
                 }
 
@@ -508,7 +527,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.MediaAreas.Add(area);
                 }
 
@@ -516,7 +541,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.InsightAreas.Add(area);
                 }
 
@@ -524,7 +555,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.VisionAreas.Add(area);
                 }
 
@@ -532,7 +569,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.SPAreas.Add(area);
                 }
 
@@ -540,7 +583,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.SRAreas.Add(area);
                 }
 
@@ -548,7 +597,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.SchedulingAreas.Add(area);
                 }
 
@@ -556,7 +611,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.UserAreas.Add(area);
                 }
 
@@ -564,7 +625,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.AuditAreas.Add(area);
                 }
 
@@ -572,7 +639,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.AccessLevelAreas.Add(area);
                 }
 
@@ -580,7 +653,13 @@ namespace DocuPath.Controllers
                 {
                     selectAreaKVP area = new selectAreaKVP();
                     area.areaName = item.AccessAreaDescription;
-                    area.hasAccess = false;
+                    foreach (var sample in model.accessLevel.LEVEL_AREA)
+                    {
+                        if (item.AccessAreaDescription == sample.ACCESS_AREA.AccessAreaDescription)
+                        {
+                            area.hasAccess = true;
+                        }
+                    }
                     model.ContentTagAreas.Add(area);
                 }
 
