@@ -229,6 +229,7 @@ namespace DocuPath.Controllers
                     if (tag.MediaID == model.media.MediaID)
                     {
                         model.tags.Add(db.CONTENT_TAG.Where(x => x.ContentTagID == tag.ContentTagID).FirstOrDefault());
+                        ViewBag.tags += db.CONTENT_TAG.Where(x => x.ContentTagID == tag.ContentTagID).FirstOrDefault().ContentTagText + " ";
                     }
                 }
 
