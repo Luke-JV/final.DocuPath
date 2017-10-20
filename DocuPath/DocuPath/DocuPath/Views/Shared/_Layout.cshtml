@@ -706,21 +706,21 @@
                     int id = notification.NotificationID;
                     if (notification.NotificationTypeID == 2)
                     {
-                        @Html.Raw("$('#n_btnAcpt_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','ACCEPT');$.ajax({url: '/Home/HandleNeuron/" + id +  "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        @Html.Raw("$('#n_btnAcpt_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','ACCEPT');$.ajax({url: '/Home/HandleNeuron/" + id +  "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {},error: function (err) {alert(err.statusText);}});});");
                         //@Html.Raw("$('#n_btnAcpt_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','APPROVE');alert(nData)});");
-                        @Html.Raw("$('#n_btnRjct_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','REJECT');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        @Html.Raw("$('#n_btnRjct_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','REJECT');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {},error: function (err) {alert(err.statusText);}});});");
                         //@Html.Raw("$('#n_btnRjct_" + id + "').click(function () {alert()});");
                     }
                     else if (notification.NotificationTypeID == 3)
                     {
-                        @Html.Raw("$('#n_btnAprv_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','APPROVE');$.ajax({url: '/Home/HandleNeuron/"+id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        @Html.Raw("$('#n_btnAprv_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','APPROVE');$.ajax({url: '/Home/HandleNeuron/"+id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {},error: function (err) {alert(err.statusText);}});});");
                         //@Html.Raw("$('#n_btnAprv_" + id + "').click(function () {alert()});");
-                        @Html.Raw("$('#n_btnDeny_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','DENY');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        @Html.Raw("$('#n_btnDeny_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','DENY');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {},error: function (err) {alert(err.statusText);}});});");
                         //@Html.Raw("$('#n_btnDeny_" + id + "').click(function () {alert()});");
                     }
                     else
                     {
-                        @Html.Raw("$('#n_btnOK_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','OK');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {alert(result); },error: function (err) {alert(err.statusText);}});});");
+                        @Html.Raw("$('#n_btnOK_" + id + "').click(function () {var nData = new FormData();nData.append('instruction','OK');$.ajax({url: '/Home/HandleNeuron/" + id + "',type: \"POST\",contentType: false, processData: false, data: nData,success: function (result) {},error: function (err) {alert(err.statusText);}});});");
                         //@Html.Raw("$('#n_btnOK_" + id + "').click(function () {alert()});");
 
                     }

@@ -1,6 +1,7 @@
 ﻿using DocuPath.DataLayer;
 using DocuPath.Models;
 using DocuPath.Models.Custom_Classes;
+using DocuPath.Models.DPViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -87,7 +88,7 @@ namespace DocuPath.Controllers
             List<CALENDAR_APPOINTMENT> aptList = new List<CALENDAR_APPOINTMENT>();
             try
             {
-                foreach (var entry in db.SESSION_USER.Where(s => s.UserID == uId))
+                foreach (var entry in db.SESSION_USER.Where(s => s.UserID == uId && s.AllocationStatusID != 5))
                 {
                     #region PREPARE VARIABLES
                     DateTime startUTC = new DateTime(entry.SESSION.DateID.Year, entry.SESSION.DateID.Month, entry.SESSION.DateID.Day, entry.SESSION.SLOT.StartTime.Hour, entry.SESSION.SLOT.StartTime.Minute, entry.SESSION.SLOT.StartTime.Second);
@@ -167,6 +168,7 @@ namespace DocuPath.Controllers
         }
 //----------------------------------------------------------------------------------------------//
         [AuthorizeByAccessArea(AccessArea = "Compile Monthly Duty Roster")]
+        [AuthorizeByAccessArea(AccessArea = "Finalise Monthly Duty Roster")]
         public ActionResult MonthlyDutyRoster()
         {
             try
@@ -175,50 +177,227 @@ namespace DocuPath.Controllers
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushInit, "Scheduling");
                 #endregion
 
-                // General Info:
-                List<SelectListItem> selectUsers = new List<SelectListItem>();
-                List<SelectListItem> selectSlots = new List<SelectListItem>();
+                //Model:
+                MonthlyDutyRosterViewModel model = new MonthlyDutyRosterViewModel();
 
-                selectUsers.Add(new SelectListItem { Value = "0", Text = "..." });
-                //selectUsers.Add(new SelectListItem { Value = "1", Text = "Override" });
-                foreach (var item in db.USER)
+                // General Info:
+                List<UserKVP> selectUsers = new List<UserKVP>();
+                List<SlotKVP> selectSlots = new List<SlotKVP>();
+
+                foreach (var item in db.USER.Where(u => u.IsDeactivated == false))
                 {
-                    selectUsers.Add(new SelectListItem { Value = (item.UserID + 1).ToString(), Text = item.DisplayInitials });
+                    UserKVP userToAdd = new UserKVP();
+                    userToAdd.uID = item.UserID;
+                    userToAdd.uInitials = item.DisplayInitials;
+                    selectUsers.Add(userToAdd);
                 }
-                ViewBag.Users = selectUsers;
+                model.users = selectUsers;
 
                 foreach (var item in db.SLOT)
                 {
-                    selectSlots.Add(new SelectListItem { Value = item.SlotID.ToString(), Text = item.Description });
+                    SlotKVP slotToAdd = new SlotKVP();
+                    slotToAdd.SlotID = item.SlotID;
+                    slotToAdd.SlotDesc = item.Description;
+                    selectSlots.Add(slotToAdd);
                 }
-                ViewBag.Slots = selectSlots;
+                model.slots = selectSlots;
 
-                // This month's info:
-                List<SelectListItem> selectDatesCurrentMonth = new List<SelectListItem>();
-                List<SelectListItem> selectDatesNextMonth = new List<SelectListItem>();
+                // Current & next month's info:
+                var thisMonth = DateTime.Now.Month;
+                var nextMonth = DateTime.Now.AddMonths(1).Month;
+                var year = DateTime.Now.Year;
 
-                ViewBag.CurrentMonthName = "September " + DateTime.Today.Date.Year;
-
-                foreach (var date in db.SESSION.Where(x => x.DateID.Month == DateTime.Today.Date.Month && x.SlotID == 1))
+                switch (thisMonth)
                 {
-                    selectDatesCurrentMonth.Add(new SelectListItem { Value = date.DateID.ToString(), Text = date.DateID.ToString("ddd dd MMM") });
+                    case 1: // JAN
+                        ViewBag.CurrentMonthName = "January " + year;
+                        ViewBag.NextMonthName = "February " + year;
+                        break;
+                    case 2: // FEB
+                        ViewBag.CurrentMonthName = "February " + year;
+                        ViewBag.NextMonthName = "March " + year;
+                        break;
+                    case 3: // MAR
+                        ViewBag.CurrentMonthName = "March " + year;
+                        ViewBag.NextMonthName = "April " + year;
+                        break;
+                    case 4: // APR
+                        ViewBag.CurrentMonthName = "April " + year;
+                        ViewBag.NextMonthName = "May " + year;
+                        break;
+                    case 5: // MAY
+                        ViewBag.CurrentMonthName = "May " + year;
+                        ViewBag.NextMonthName = "June " + year;
+                        break;
+                    case 6: // JUN
+                        ViewBag.CurrentMonthName = "June " + year;
+                        ViewBag.NextMonthName = "July " + year;
+                        break;
+                    case 7: // JUL
+                        ViewBag.CurrentMonthName = "July " + year;
+                        ViewBag.NextMonthName = "August " + year;
+                        break;
+                    case 8: // AUG
+                        ViewBag.CurrentMonthName = "August " + year;
+                        ViewBag.NextMonthName = "September " + year;
+                        break;
+                    case 9: // SEP
+                        ViewBag.CurrentMonthName = "September " + year;
+                        ViewBag.NextMonthName = "October " + year;
+                        break;
+                    case 10: // OCT
+                        ViewBag.CurrentMonthName = "October " + year;
+                        ViewBag.NextMonthName = "November " + year;
+                        break;
+                    case 11: // NOV
+                        ViewBag.CurrentMonthName = "November " + year;
+                        ViewBag.NextMonthName = "December " + year;
+                        break;
+                    case 12: // DEC
+                        ViewBag.CurrentMonthName = "December " + year;
+                        ViewBag.NextMonthName = "January " + year + 1;
+                        break;
+                    default:
+                        break;
                 }
-                ViewBag.DatesCurrentMonth = selectDatesCurrentMonth;
 
+                // CURRENT MONTH:
+                List<DayAllocationsComments> allocationsCurrent = new List<DayAllocationsComments>();
 
-                // Next month's info:
-                ViewBag.NextMonthName = "October " + DateTime.Today.AddMonths(1).Date.Year;
-
-                foreach (var date in db.SESSION.Where(x => x.DateID.Month == 10 && x.SlotID == 1))
+                foreach (var allocation in db.SESSION_USER.Where(a => a.SESSION.DateID.Month == thisMonth && a.SESSION.SlotID == 1))
                 {
-                    selectDatesNextMonth.Add(new SelectListItem { Value = date.DateID.ToString(), Text = date.DateID.ToString("ddd dd MMM") });
+                    // Make a new allocation:
+                    DayAllocationsComments currentMonthAllocation = new DayAllocationsComments();
+
+                    // Set its date equal to the allocation's date:
+                    currentMonthAllocation.Date = allocation.SESSION.DateID;
+
+                    // Set its date string equal to the string conversion of the allocation's date:
+                    currentMonthAllocation.DateString = allocation.SESSION.DateID.ToString("ddd dd MMM");
+
+                    if (allocation.SESSION.DateID.DayOfWeek != DayOfWeek.Saturday && allocation.SESSION.DateID.DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        // Allocate its 1A UserID:
+                        currentMonthAllocation.Slot1AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 1).FirstOrDefault().UserID;
+                        // Allocate its 1B UserID:
+                        currentMonthAllocation.Slot1BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 2).FirstOrDefault().UserID;
+                        // Allocate its 1C UserID:
+                        currentMonthAllocation.Slot1CUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 3).FirstOrDefault().UserID;
+                        // Allocate its 2A UserID:
+                        currentMonthAllocation.Slot2AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 4).FirstOrDefault().UserID;
+                        // Allocate its 2B UserID:
+                        currentMonthAllocation.Slot2BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 5).FirstOrDefault().UserID;
+                        // Allocate its CALL UserID:
+                        currentMonthAllocation.SlotCallUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 6).FirstOrDefault().UserID;
+                    }
+
+                    // Fetch its comments:
+                    currentMonthAllocation.DayComments = db.MDR_DAY_COMMENT.Where(c => c.DateID == allocation.SESSION.DateID).FirstOrDefault().CommentsValue;
+
+                    // Add it to the allocations list:
+                    allocationsCurrent.Add(currentMonthAllocation);
                 }
-                ViewBag.DatesNextMonth = selectDatesNextMonth;
+                model.currentMonthAllocations = allocationsCurrent;
+
+                // NEXT MONTH:
+                List<DayAllocationsComments> allocationsNext = new List<DayAllocationsComments>();
+
+                foreach (var allocation in db.SESSION_USER.Where(a => a.SESSION.DateID.Month == nextMonth && a.SESSION.SlotID == 1))
+                {
+                    // Make a new allocation:
+                    DayAllocationsComments nextMonthAllocation = new DayAllocationsComments();
+
+                    // Set its date equal to the allocation's date:
+                    nextMonthAllocation.Date = allocation.SESSION.DateID;
+
+                    // Set its date string equal to the string conversion of the allocation's date:
+                    nextMonthAllocation.DateString = allocation.SESSION.DateID.ToString("ddd dd MMM");
+
+                    // Allocate its 1A UserID:
+                    nextMonthAllocation.Slot1AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 1).FirstOrDefault().UserID;
+                    // Allocate its 1B UserID:
+                    nextMonthAllocation.Slot1BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 2).FirstOrDefault().UserID;
+                    // Allocate its 1C UserID:
+                    nextMonthAllocation.Slot1CUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 3).FirstOrDefault().UserID;
+                    // Allocate its 2A UserID:
+                    nextMonthAllocation.Slot2AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 4).FirstOrDefault().UserID;
+                    // Allocate its 2B UserID:
+                    nextMonthAllocation.Slot2BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 5).FirstOrDefault().UserID;
+                    // Allocate its CALL UserID:
+                    nextMonthAllocation.SlotCallUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 6).FirstOrDefault().UserID;
+
+                    // Fetch its comments:
+                    nextMonthAllocation.DayComments = db.MDR_DAY_COMMENT.Where(c => c.DateID == allocation.SESSION.DateID).FirstOrDefault().CommentsValue;
+
+                    // Add it to the allocations list:
+                    allocationsNext.Add(nextMonthAllocation);
+                }
+                model.nextMonthAllocations = allocationsNext;
+
+                //List<string> selectDatesCurrentMonth = new List<string>();
+
+                //foreach (var date in db.SESSION.Where(x => x.DateID.Month == DateTime.Today.Date.Month && x.SlotID == 1))
+                //{
+                //    selectDatesCurrentMonth.Add(date.DateID.ToString("ddd dd MMM"));
+                //}
+                //model.currentMonthDates = selectDatesCurrentMonth;
+
+                //// NEXT MONTH:
+                //List<string> selectDatesNextMonth = new List<string>();
+                //foreach (var date in db.SESSION.Where(x => x.DateID.Month == 10 && x.SlotID == 1))
+                //{
+                //    selectDatesNextMonth.Add(date.DateID.ToString("ddd dd MMM"));
+                //}
+                //model.nextMonthDates = selectDatesNextMonth;
+
+                //foreach (var allocation in db.SESSION_USER.Where(a => a.SESSION.DateID.Month == thisMonth))
+                //{
+                //    DayAllocationsComments allocationToGet = new DayAllocationsComments();
+                //    switch (allocation.SESSION.SlotID)
+                //    {
+                //        case 1: // SLOT 1A
+                //            allocationToGet.
+                //            break;
+                //        case 2: // SLOT 1B
+                //            break;
+                //        case 3: // SLOT 1C
+                //            break;
+                //        case 4: // SLOT 2A
+                //            break;
+                //        case 5: // SLOT 2B
+                //            break;
+                //        case 6: // SLOT CALL
+                //            break;
+                //        default:
+                //            break;
+                //    }
+
+                //}
+
+
+
+                //List<SESSION_USER> allocationsCurrent = new List<SESSION_USER>();
+                //foreach (var allocation in db.SESSION_USER.Where(a => a.SESSION.DateID.Month == thisMonth))
+                //{
+
+                //}
+
+                ////for (int cur = 0; cur < selectDatesCurrentMonth.Count; cur++)
+                ////{
+                ////    if (db.SESSION_USER.Where(s => s.UserID == -1).)
+                ////    {
+
+                ////    }
+                ////}
+                //model.currentMonthAllocations = allocationsCurrent;
+
+                //List<SESSION_USER> allocationsNext = new List<SESSION_USER>();
+                //model.nextMonthAllocations = allocationsNext;
 
                 #region AUDIT_WRITE
                 AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.CalendarPushSuccess, "Scheduling");
                 #endregion
-                return View();
+                return View(model);
             }
             catch (Exception x)
             {

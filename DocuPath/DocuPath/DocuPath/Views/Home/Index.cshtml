@@ -238,3 +238,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        shortcut.add("F8", function (e) { e.preventDefault(); window.location.href = "@Url.Action("Error", "Home")"; });
+    </script>
+    }

@@ -13468,6 +13468,9 @@ a.cal-event-week {
 .insight-actions-subgrid {
     grid-gap: 5px;
     grid-template-columns: auto auto;
+    justify-content: center;
+    /*margin-left: 50% !important;*/
+    /*transform: translateX(-50%);*/
     /*grid-template-areas: "generate download";*/
 }
 
