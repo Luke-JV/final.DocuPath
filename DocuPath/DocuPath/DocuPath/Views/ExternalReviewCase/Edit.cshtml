@@ -66,7 +66,7 @@
                             </dt>
 
                             <dd>
-                                @Html.EditorFor(model => model.ExternalDRNumber, new { htmlAttributes = new { @class = "form-control large-identifier" } })
+                                @Html.EditorFor(model => model.ExternalDRNumber, new { htmlAttributes = new { @id="ecdr",@class = "form-control large-identifier" } })
                             </dd>
 
                             <dt style="padding-top: 5.2px">
@@ -265,7 +265,8 @@
 
                     // Create FormData object
                     var coverData = new FormData();
-                    //coverData.append('ECDR', document.getElementById("drnum").value);
+                    coverData.append('ECDR', document.getElementById("ecdr").value);
+                    coverData.append('instr','cover' );
                     // Looping over all files and add it to FormData object
                     for (var i = 0; i < cover.length; i++) {
                         coverData.append(cover[i].name, cover[i]);
@@ -297,7 +298,8 @@
 
                     // Create FormData object
                     var reportData = new FormData();
-                    //reportData.append('ECDR', document.getElementById("drnum").value);
+                    reportData.append('ECDR', document.getElementById("ecdr").value);
+                    reportData.append('instr', 'report');
                     // Looping over all files and add it to FormData object
                     for (var i = 0; i < report.length; i++) {
                         reportData.append(report[i].name, report[i]);
