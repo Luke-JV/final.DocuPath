@@ -57,7 +57,7 @@
                         <span class="mdl2icon mdl2-login panel-mdl2icon"></span>
                         <span>LEVEL DETAILS</span>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="height: 71.4px">
                         @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.AccessLevelID, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -833,7 +833,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#nofxgroups").show(),
+            $("#nofxgroups").hide(),
                 $("#timelinecontainer").show(),
                 $("#timelineFC").show(),
                 $("#timelineERC").show(),
