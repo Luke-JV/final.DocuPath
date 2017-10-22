@@ -109,10 +109,10 @@ namespace DocuPath.Controllers
                         if (UserManager.FindById(id).IsDeactivated == true)
                         {
                             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                            VERTEBRAE.sendSMS("+27" + UserManager.FindById(id).CellNum.Substring(1), "DocuPath: You were unable to log in as your User Profile has been deactivated. You may no longer access the DocuPath system. Please contact your Head of Department if you feel that this is incorrect.");
+                          //GTFO! // VERTEBRAE.sendSMS("+27" + UserManager.FindById(id).CellNum.Substring(1), "DocuPath: You were unable to log in as your User Profile has been deactivated. You may no longer access the DocuPath system. Please contact your Head of Department if you feel that this is incorrect.");
                             return RedirectToAction("Index", "Home");
                         }
-                        VERTEBRAE.sendSMS("+27"+UserManager.FindById(id).CellNum.Substring(1),"DocuPath: You logged in to the system at: "+DateTime.Now.ToString()+". If this was not you please contact your system administrator as soon as possible.");
+                        //GTFO! VERTEBRAE.sendSMS("+27"+UserManager.FindById(id).CellNum.Substring(1),"DocuPath: You logged in to the system at: "+DateTime.Now.ToString()+". If this was not you please contact your system administrator as soon as possible.");
                         return RedirectToAction("Index", "Home");
                     }
                 case SignInStatus.LockedOut:

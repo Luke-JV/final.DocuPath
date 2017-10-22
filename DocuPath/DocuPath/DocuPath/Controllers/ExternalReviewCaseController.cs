@@ -242,9 +242,9 @@ namespace DocuPath.Controllers
             try
             {
                 #region DB UPDATE
-                db.EXTERNAL_REVIEW_CASE.Attach(updatedERC);
-                db.Entry(updatedERC).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.EXTERNAL_REVIEW_CASE.Attach(updatedERC);
+                //db.Entry(updatedERC).State = EntityState.Modified;
+                //db.SaveChanges();
                 #endregion
                 // TODO: Add update logic here
                 #region AUDIT_WRITE
@@ -408,7 +408,7 @@ namespace DocuPath.Controllers
         public ActionResult UpdateERFiles()
         {
             #region AUDIT_WRITE
-            AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
+            //AuditModel.WriteTransaction(VERTEBRAE.getCurrentUser().UserID, TxTypes.UploadInit, "Legacy Case");
             #endregion
             // Checking no of files injected in Request object  
             if (Request.Files.Count > 0)

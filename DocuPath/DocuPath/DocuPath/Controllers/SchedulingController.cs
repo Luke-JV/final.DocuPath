@@ -278,17 +278,21 @@ namespace DocuPath.Controllers
                     if (allocation.SESSION.DateID.DayOfWeek != DayOfWeek.Saturday && allocation.SESSION.DateID.DayOfWeek != DayOfWeek.Sunday)
                     {
                         // Allocate its 1A UserID:
-                        currentMonthAllocation.Slot1AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 1).FirstOrDefault().UserID;
+                        currentMonthAllocation.Slot1AUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 1).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
                         // Allocate its 1B UserID:
-                        currentMonthAllocation.Slot1BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 2).FirstOrDefault().UserID;
+                        currentMonthAllocation.Slot1BUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 2).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
                         // Allocate its 1C UserID:
-                        currentMonthAllocation.Slot1CUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 3).FirstOrDefault().UserID;
+                        currentMonthAllocation.Slot1CUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 3).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
                         // Allocate its 2A UserID:
-                        currentMonthAllocation.Slot2AUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 4).FirstOrDefault().UserID;
+                        currentMonthAllocation.Slot2AUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 4).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
                         // Allocate its 2B UserID:
-                        currentMonthAllocation.Slot2BUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 5).FirstOrDefault().UserID;
+                        currentMonthAllocation.Slot2BUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 5).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
                         // Allocate its CALL UserID:
-                        currentMonthAllocation.SlotCallUID = db.SESSION_USER.Where(su => su.SESSION.DateID == allocation.SESSION.DateID && su.SESSION.SlotID == 6).FirstOrDefault().UserID;
+                        currentMonthAllocation.SlotCallUID = db.SESSION.Where(su => su.DateID == allocation.SESSION.DateID && su.SlotID == 6).FirstOrDefault().SESSION_USER.FirstOrDefault().UserID;
+                    }
+                    else
+                    {
+                        var x = allocation;
                     }
 
                     // Fetch its comments:

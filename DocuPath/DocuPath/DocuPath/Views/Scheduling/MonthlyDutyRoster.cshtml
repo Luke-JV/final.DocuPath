@@ -99,22 +99,22 @@
                                     @Model.currentMonthAllocations[i].DateString
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1AUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1AUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x=>x.uID == Model.currentMonthAllocations[i].Slot1AUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1BUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1BUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x => x.uID == Model.currentMonthAllocations[i].Slot1BUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1CUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot1CUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x => x.uID == Model.currentMonthAllocations[i].Slot1CUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot2AUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot2AUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x => x.uID == Model.currentMonthAllocations[i].Slot2AUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot2BUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].Slot2BUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x => x.uID == Model.currentMonthAllocations[i].Slot2BUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-allocationsizing">
-                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].SlotCallUID, new SelectList(Model.users, "uID", "uInitials"), "...", htmlAttributes: new { @class = "form-control frmctrl-small" })
+                                    @Html.DropDownListFor(model => model.currentMonthAllocations[i].SlotCallUID, new SelectList(Model.users, "uID", "uInitials"), Model.users.Where(x => x.uID == Model.currentMonthAllocations[i].SlotCallUID).FirstOrDefault().uInitials, htmlAttributes: new { @class = "form-control frmctrl-small" })
                                 </td>
                                 <td class="mdr-commentsizing">
                                     @Html.EditorFor(model => model.currentMonthAllocations[i].DayComments, new { htmlAttributes = new { @class = "form-control frmctrl-small", @style = "width: 100%", @placeholder = "Type comments here..." } })
