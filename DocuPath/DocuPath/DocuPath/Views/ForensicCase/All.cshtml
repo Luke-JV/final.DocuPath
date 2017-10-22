@@ -150,35 +150,35 @@
     if (fc.STATUS.StatusValue != "Pending" || fc.STATUS.StatusValue != "Locked")
     {
         <div id="del-modal-@fc.ForensicCaseID" class="modal-background hidden">
-        <div class="modalbox">
-            <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
-            <div class="modalbox-message-text">
-                Are you sure you want to <idntwarn>DELETE</idntwarn> Forensic Case <idntwarn>@fc.ForensicDRNumber</idntwarn>?                
-            </div>
-            @* HELP/INFO *@
-            <div class="panel-group" id="delete-modal-help-@fc.ForensicCaseID">
-                    <div class="modal-help-panel">
-                        <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#delete-modal-helpbody-@fc.ForensicCaseID" data-parent="#delete-modal-help-@fc.ForensicCaseID">More Information</div>
-                        <div id="delete-modal-helpbody-@fc.ForensicCaseID" class="panel-collapse collapse modalbox-help-panel-text">
-                            <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
-                            <hr class="modal-help-hr-warning" />
-                            <ul style="margin-bottom: 0">
-                                <li>This action cannot be reverted.</li>
-                            </ul>
+            <div class="modalbox">
+                <div class="modalbox-title-warning"><img class="modalbox-title-mdl2icon" src="~/Content/Resources/icoWarn.png" />WARNING</div>
+                <div class="modalbox-message-text">
+                    Are you sure you want to <idntwarn>DELETE</idntwarn> Forensic Case <idntwarn>@fc.ForensicDRNumber</idntwarn>?                
+                </div>
+                @* HELP/INFO *@
+                <div class="panel-group" id="delete-modal-help-@fc.ForensicCaseID">
+                        <div class="modal-help-panel">
+                            <div class="panel-heading modalbox-help-panel-heading"  data-toggle="collapse" data-target="#delete-modal-helpbody-@fc.ForensicCaseID" data-parent="#delete-modal-help-@fc.ForensicCaseID">More Information</div>
+                            <div id="delete-modal-helpbody-@fc.ForensicCaseID" class="panel-collapse collapse modalbox-help-panel-text">
+                                <p style="margin-bottom: 0px; font-weight: bold">Code: W001</p>
+                                <hr class="modal-help-hr-warning" />
+                                <ul style="margin-bottom: 0">
+                                    <li>This action cannot be reverted.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                @* BUTTONS *@
+                <div class="modalbox-button-bar col-md-12 modal-btn-col">                
+                    @*<div class="">*@
+                    <form action="~/ForensicCase/Delete/@fc.ForensicCaseID" method="post">
+                        <input type="submit" id="del-yes-@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
+                        <input type="button" id="del-no-@fc.ForensicCaseID" onclick="$('#del-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
+                    </form>
+                    @*</div>*@
                 </div>
-            @* BUTTONS *@
-            <div class="modalbox-button-bar col-md-12 modal-btn-col">                
-                @*<div class="">*@
-                <form action="~/ForensicCase/Delete/@fc.ForensicCaseID" method="post">
-                    <input type="submit" id="del-yes-@fc.ForensicCaseID" value="Yes" class="btn btn-modal-generic" />
-                    <input type="button" id="del-no-@fc.ForensicCaseID" onclick="$('#del-modal-'+@fc.ForensicCaseID).addClass('hidden')" value="No" class="btn btn-modal-generic" />
-                </form>
-                @*</div>*@
             </div>
         </div>
-    </div>
     }
 
     if (fc.STATUS.StatusValue == "Active")
